@@ -23,4 +23,5 @@
     </div> 
 </div><!--/content-body -->
 <div style="height:10px;"></div>
-<script id="popup_editor" type="text/x-kendo-template"></script>
+<script id="popup_editor" type="text/x-kendo-template">
+</script>

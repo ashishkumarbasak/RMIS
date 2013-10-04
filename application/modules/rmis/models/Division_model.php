@@ -28,6 +28,23 @@ class Division_model extends MY_Model {
         	return 'BARIDIV'.str_pad(($row[0]['id']+1), 4, "0", STR_PAD_LEFT);
 		}
 	}
-    
 	
+	public function get_details($id=NULL){
+		if($id!=NULL){
+			$this->db->select('*');
+			$this->db->from('rmis_divisions');
+			$this->db->where('id',$id);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result[0];
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;	
+		}
+	}	
 }
+?>

@@ -28,5 +28,22 @@ class Implementation_model extends MY_Model {
         	return 'BARIIMS'.str_pad(($row[0]['id']+1), 4, "0", STR_PAD_LEFT);
 		}
 	}
-    
+    public function get_details($id=NULL){
+		if($id!=NULL){
+			$this->db->select('*');
+			$this->db->from('rmis_implementation_sites');
+			$this->db->where('id',$id);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result[0];
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;	
+		}
+	}	
 }
+?>

@@ -11,7 +11,7 @@ class ProgramAreas extends MX_Controller{
 						->set_layout('extensive/main_layout');
     }
     
-    public function index(){
+    public function index($program_area_id=NULL){
         $this->template->title('Research Management(RM)', ' Setup Info.', 'Program Area Information');
         
 		if($this->input->post('save_Programarea')){
@@ -171,12 +171,23 @@ class ProgramAreas extends MX_Controller{
 		
 		$this->template->set('newPAID',$this->programarea->get_new_id());
 		
+		if($program_area_id!=NULL){
+			
+			if($this->input->post('save_update')){
+				$request = json_encode($this->input->post());
+				$this->dataUpdate($request);
+			}
+				
+			$program_area_detail = $this->programarea->get_details($program_area_id);
+			$this->template->set('program_area_detail', serialize($program_area_detail));
+		}
+		
         $this->template->set('content_header_icon', 'class="icofont-file"');
         $this->template->set('content_header_title', 'Program Area Information');
         
         $breadcrumb = '<ul class="breadcrumb">
-						<li><a href="#"><i class="icofont-home"></i> RMIS</a> <span class="divider">›</span></li>
-						<li><a href="#">Setup info.</a><span class="divider">›</span></li><li class="active">Performing Unit/Division</li>
+						<li><a href="#"><i class="icofont-home"></i> RMIS</a> <span class="divider">&raquo;</span></li>
+						<li><a href="#">Setup info.</a><span class="divider">&raquo;</span></li><li class="active">Performing Unit/Division</li>
 					  </ul>';
         $this->template->set('breadcrumb', $breadcrumb);
         $this->template->set_partial('programareainfoform','setup/program_areas/form');
@@ -191,7 +202,7 @@ class ProgramAreas extends MX_Controller{
      	//$request->models[0]->fund_type = $request->models[0]->fund_type->fund_type;
         
         $this->form_validation->set_rules($this->programarea->validation);
-        $this->programarea->isValidate((array) $request->models[0]);
+        $this->programarea->isValidate((array) $request);
         if ($this->form_validation->run() === false) {
             header("HTTP/1.1 500 Internal Server Error");
             echo "Wrong data ! try again" ;
@@ -199,15 +210,13 @@ class ProgramAreas extends MX_Controller{
         }
        
         $columns = array('program_area_id', 'program_area_name', 'program_area_order');
-        //$columns[] = 'organization_id';
-        //$request->models[0]->organization_id = 20;
         $columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
         
         $data= $this->grid->create('rmis_program_areas', $columns, $request, 'id'); 
-        //$data['success'] ="Data created successfuly.";
+        $data['success'] ="Data created successfuly.";
        // echo json_encode($data , JSON_NUMERIC_CHECK); 
     }
     
@@ -224,29 +233,28 @@ class ProgramAreas extends MX_Controller{
         echo json_encode($data , JSON_NUMERIC_CHECK); 
     }
     	
-	public function dataUpdate(){
-        header('Content-Type: application/json');
-        $request = json_decode(file_get_contents('php://input'));
+	public function dataUpdate($request){
+        //header('Content-Type: application/json');
+        //$request = json_decode(file_get_contents('php://input'));
+        $request = json_decode($request);
         
-        $this->form_validation->set_rules($this->division->validation);
-        $this->division->isValidate((array) $request->models[0]);
+        $this->form_validation->set_rules($this->programarea->validation);
+        $this->programarea->isValidate((array) $request);
         if ($this->form_validation->run() === false) {
             header("HTTP/1.1 500 Internal Server Error");
             echo "Wrong data ! try again" ;
             exit;
         }
         
-        $columns = array('program_area_id', 'program_area_name', 'program_area_order');
-        //$columns[] = 'organization_id';
-        //$request->models[0]->organization_id = 20;
-        $columns[] = 'updated_at';        
-        $request->models[0]->updated_at = date('Y-m-d H:i:s');            
-        $columns[] = 'updated_by';
-        $request->models[0]->updated_by = 1;
+        $columns = array('id', 'program_area_name', 'program_area_order');
+        $columns[] = 'modified_at';        
+        $request->modified_at = date('Y-m-d H:i:s');            
+        $columns[] = 'modified_by';
+        $request->modified_by = 1;
         
-        $data= $this->grid->update('rmis_program_areas', $columns, $request->models, 'id'); 
-        //$data['success'] ="Data updated successfuly.";
-        echo json_encode($data , JSON_NUMERIC_CHECK);  
+        $data= $this->grid->update('rmis_program_areas', $columns, $request, 'id'); 
+        $data['success'] ="Data updated successfuly.";
+        //echo json_encode($data , JSON_NUMERIC_CHECK);  
     }
                 
 } 

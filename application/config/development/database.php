@@ -88,7 +88,7 @@ $db['default'] = array(
     'dsn' => 'mysql:host=localhost;dbname=natp_rmis;charset=utf8;',
     'hostname' => 'localhost',
     'username' => 'root',
-    'password' => '',
+    'password' => 'root',
     'database' => '',
     'dbdriver' => 'pdo',
     'dbprefix' => '',

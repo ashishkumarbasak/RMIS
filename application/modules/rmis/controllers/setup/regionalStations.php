@@ -11,7 +11,7 @@ class RegionalStations extends MX_Controller{
 						->set_layout('extensive/main_layout');
     }
     
-    public function index(){
+    public function index($station_id=NULL){
         $this->template->title('Research Management(RM)', ' Setup Info.', ' Regional Station Information');
         
 		if($this->input->post('save_station')){
@@ -189,12 +189,23 @@ class RegionalStations extends MX_Controller{
 		
 		$this->template->set('newStationID',$this->station->get_new_id());
 		
+		if($station_id!=NULL){
+			
+			if($this->input->post('save_update')){
+				$request = json_encode($this->input->post());
+				$this->dataUpdate($request);
+			}
+				
+			$station_detail = $this->station->get_details($station_id);
+			$this->template->set('station_detail', serialize($station_detail));
+		}
+		
         $this->template->set('content_header_icon', 'class="icofont-file"');
         $this->template->set('content_header_title', 'Regional Station Information');
         
         $breadcrumb = '<ul class="breadcrumb">
-						<li><a href="#"><i class="icofont-home"></i> RMIS</a> <span class="divider">›</span></li>
-						<li><a href="#">Setup info.</a><span class="divider">›</span></li><li class="active">Performing Unit/Division</li>
+						<li><a href="#"><i class="icofont-home"></i> RMIS</a> <span class="divider">&raquo;</span></li>
+						<li><a href="#">Setup info.</a><span class="divider">&raquo;</span></li><li class="active">Performing Unit/Division</li>
 					  </ul>';
         $this->template->set('breadcrumb', $breadcrumb);
         $this->template->set_partial('regionalInfoForm','setup/regional_stations/form');
@@ -217,15 +228,13 @@ class RegionalStations extends MX_Controller{
         }
        
         $columns = array('station_id', 'station_name', 'station_contact_person', 'station_phone', 'station_email', 'station_order', 'station_address');
-        //$columns[] = 'organization_id';
-        //$request->models[0]->organization_id = 20;
         $columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
         
         $data= $this->grid->create('rmis_regional_stations', $columns, $request, 'id'); 
-        //$data['success'] ="Data created successfuly.";
+        $data['success'] ="Data created successfuly.";
        // echo json_encode($data , JSON_NUMERIC_CHECK); 
     }
     
@@ -242,29 +251,28 @@ class RegionalStations extends MX_Controller{
         echo json_encode($data , JSON_NUMERIC_CHECK); 
     }
     	
-	public function dataUpdate(){
-        header('Content-Type: application/json');
-        $request = json_decode(file_get_contents('php://input'));
+	public function dataUpdate($request){
+        //header('Content-Type: application/json');
+        //$request = json_decode(file_get_contents('php://input'));
+        $request = json_decode($request);
         
-        $this->form_validation->set_rules($this->division->validation);
-        $this->division->isValidate((array) $request->models[0]);
+        $this->form_validation->set_rules($this->station->validation);
+        $this->station->isValidate((array) $request);
         if ($this->form_validation->run() === false) {
             header("HTTP/1.1 500 Internal Server Error");
             echo "Wrong data ! try again" ;
             exit;
         }
         
-        $columns = array('station_id', 'station_name', 'station_contact_person', 'station_phone', 'station_email', 'station_order', 'station_address');
-        //$columns[] = 'organization_id';
-        //$request->models[0]->organization_id = 20;
-        $columns[] = 'updated_at';        
-        $request->models[0]->updated_at = date('Y-m-d H:i:s');            
-        $columns[] = 'updated_by';
-        $request->models[0]->updated_by = 1;
+        $columns = array('id', 'station_name', 'station_contact_person', 'station_phone', 'station_email', 'station_order', 'station_address');
+        $columns[] = 'modified_at';        
+        $request->modified_at = date('Y-m-d H:i:s');            
+        $columns[] = 'modified_by';
+        $request->modified_by = 1;
         
-        $data= $this->grid->update('rmis_regional_stations', $columns, $request->models, 'id'); 
-        //$data['success'] ="Data updated successfuly.";
-        echo json_encode($data , JSON_NUMERIC_CHECK);  
+        $data= $this->grid->update('rmis_regional_stations', $columns, $request, 'id'); 
+        $data['success'] ="Data updated successfuly.";
+        //echo json_encode($data , JSON_NUMERIC_CHECK);  
     }
                 
 } 
