@@ -177,7 +177,7 @@ class Divisions extends MX_Controller{
             ->operators($operators);
 		*/	
         
-        $grid->addColumn($ID, $divName, $divHead, $divPhone, $divEmail, $command)
+        $grid->addColumn($ID, $divName, $divHead, $divPhone, $divEmail,$command)
              ->dataSource($dataSource) 
 			 //->addToolbarItem($btnAdd)
 			 ->height(450)

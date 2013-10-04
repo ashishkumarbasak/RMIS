@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 30, 2013 at 06:55 PM
+-- Generation Time: Oct 04, 2013 at 05:54 PM
 -- Server version: 5.5.8
 -- PHP Version: 5.3.5
 
@@ -122,14 +122,14 @@ CREATE TABLE IF NOT EXISTS `rmis_divisions` (
   `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`,`division_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `rmis_divisions`
 --
 
 INSERT INTO `rmis_divisions` (`id`, `division_id`, `division_name`, `division_head`, `division_phone`, `division_email`, `division_order`, `division_about`, `created_at`, `created_by`, `modified_at`, `modified_by`) VALUES
-(1, 'BARIDIV1', 'Dhaka', '101', '01558755441', 'ashish021@gmail.com', 1, 'Test Division', '2013-09-30 17:53:34', 1, '2013-09-30 23:53:34', NULL);
+(2, 'BARIDIV0002', 'dhaka', '101', '0177828883', 'dena@yahoo.com', 123, 'dhaka', '2013-10-01 13:42:35', 1, '2013-10-01 19:42:35', NULL);
 
 -- --------------------------------------------------------
 
@@ -204,7 +204,7 @@ CREATE TABLE IF NOT EXISTS `rmis_regional_stations` (
   `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`,`station_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
 -- Dumping data for table `rmis_regional_stations`
