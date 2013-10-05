@@ -119,10 +119,6 @@ class Divisions extends MX_Controller{
 
         $grid = new \Kendo\UI\Grid('grid');
 		
-		
-        //$IDFilterable = new \Kendo\UI\GridColumnFilterable();
-        //$IDFilterable->ui(new \Kendo\JavaScriptFunction('fundTypeFilter'));
-		
         $ID = new \Kendo\UI\GridColumn();
         $ID->field('division_id') //->filterable($fundTypeFilterable)
                  ->title('ID');
@@ -144,15 +140,23 @@ class Divisions extends MX_Controller{
                  ->title('Email');
 		
 		$command = new \Kendo\UI\GridColumn();
-        $command->addCommandItem('edit')
-                ->addCommandItem('destroy')
+        $command->addCommandItem('destroy')
                 ->title('&nbsp;')
-                ->width(160);
+                ->width(90);
+				
+		$command2 = new \Kendo\UI\GridColumnCommandItem();
+		$command2->click('ClickEdit')
+				 ->text('Edit');
+		
+		$commandColumn = new \Kendo\UI\GridColumn();
+		$commandColumn->addCommandItem($command2)
+        ->title('&nbsp;')
+        ->width(80);
         
         $editable = new \Kendo\UI\GridEditable();
-        $editable -> templateId("popup_editor")
-                ->confirmation("Are you sure you want to delete this record?")
-                -> mode("popup");
+        $editable 	-> templateId("popup_editor")
+                	->confirmation("Are you sure you want to delete this record?")
+               	 	-> mode("inline");
         
         $sortable = new \Kendo\UI\GridSortable();
         $sortable->mode('single')
@@ -177,7 +181,7 @@ class Divisions extends MX_Controller{
             ->operators($operators);
 		*/	
         
-        $grid->addColumn($ID, $divName, $divHead, $divPhone, $divEmail,$command)
+        $grid->addColumn($ID, $divName, $divHead, $divPhone, $divEmail, $commandColumn, $command)
              ->dataSource($dataSource) 
 			 //->addToolbarItem($btnAdd)
 			 ->height(450)

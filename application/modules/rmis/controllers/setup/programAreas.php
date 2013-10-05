@@ -125,10 +125,18 @@ class ProgramAreas extends MX_Controller{
 		
 		
 		$command = new \Kendo\UI\GridColumn();
-        $command->addCommandItem('edit')
-                ->addCommandItem('destroy')
+        $command->addCommandItem('destroy')
                 ->title('&nbsp;')
-                ->width(160);
+                ->width(90);
+				
+		$command2 = new \Kendo\UI\GridColumnCommandItem();
+		$command2->click('ClickEdit')
+				 ->text('Edit');
+		
+		$commandColumn = new \Kendo\UI\GridColumn();
+		$commandColumn->addCommandItem($command2)
+        ->title('&nbsp;')
+        ->width(80);
         
         $editable = new \Kendo\UI\GridEditable();
         $editable -> templateId("popup_editor")
@@ -158,7 +166,7 @@ class ProgramAreas extends MX_Controller{
             ->operators($operators);
 		*/	
         
-        $grid->addColumn($ID, $impName,$command)
+        $grid->addColumn($ID, $impName, $commandColumn, $command)
              ->dataSource($dataSource) //->addToolbarItem($btnAdd)
              //->addToolbarItem($btnAdd)
 			 ->height(450)
@@ -187,7 +195,7 @@ class ProgramAreas extends MX_Controller{
         
         $breadcrumb = '<ul class="breadcrumb">
 						<li><a href="#"><i class="icofont-home"></i> RMIS</a> <span class="divider">&raquo;</span></li>
-						<li><a href="#">Setup info.</a><span class="divider">&raquo;</span></li><li class="active">Performing Unit/Division</li>
+						<li><a href="#">Setup info.</a><span class="divider">&raquo;</span></li><li class="active">Program Area</li>
 					  </ul>';
         $this->template->set('breadcrumb', $breadcrumb);
         $this->template->set_partial('programareainfoform','setup/program_areas/form');

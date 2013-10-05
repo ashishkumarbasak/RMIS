@@ -143,11 +143,19 @@ class RegionalStations extends MX_Controller{
                  ->title('Email');
 		
 		$command = new \Kendo\UI\GridColumn();
-        $command->addCommandItem('edit')
-                ->addCommandItem('destroy')
+        $command->addCommandItem('destroy')
                 ->title('&nbsp;')
-                ->width(160);
+                ->width(90);
         
+		$command2 = new \Kendo\UI\GridColumnCommandItem();
+		$command2->click('ClickEdit')
+				 ->text('Edit');
+		
+		$commandColumn = new \Kendo\UI\GridColumn();
+		$commandColumn->addCommandItem($command2)
+        ->title('&nbsp;')
+        ->width(80);
+		
         $editable = new \Kendo\UI\GridEditable();
         $editable -> templateId("popup_editor")
                 ->confirmation("Are you sure you want to delete this record?")
@@ -176,7 +184,7 @@ class RegionalStations extends MX_Controller{
             ->operators($operators);
 		*/	
         
-        $grid->addColumn($ID, $staName, $staHead, $staPhone, $staEmail, $command)
+        $grid->addColumn($ID, $staName, $staHead, $staPhone, $staEmail, $commandColumn, $command)
              ->dataSource($dataSource) //->addToolbarItem($btnAdd)
              //->addToolbarItem($btnAdd)
 			 ->height(450)
@@ -205,7 +213,7 @@ class RegionalStations extends MX_Controller{
         
         $breadcrumb = '<ul class="breadcrumb">
 						<li><a href="#"><i class="icofont-home"></i> RMIS</a> <span class="divider">&raquo;</span></li>
-						<li><a href="#">Setup info.</a><span class="divider">&raquo;</span></li><li class="active">Performing Unit/Division</li>
+						<li><a href="#">Setup info.</a><span class="divider">&raquo;</span></li><li class="active">Regional Station</li>
 					  </ul>';
         $this->template->set('breadcrumb', $breadcrumb);
         $this->template->set_partial('regionalInfoForm','setup/regional_stations/form');

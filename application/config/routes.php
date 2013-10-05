@@ -77,5 +77,10 @@ $route['default_controller'] = 'Welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+
+$route['rmis/setup/divisions/edit/(:num)'] = 'rmis/setup/divisions/index/$1';
+$route['rmis/setup/regionalStations/edit/(:num)'] = 'rmis/setup/regionalStations/index/$1';
+$route['rmis/setup/implementationSites/edit/(:num)'] = 'rmis/setup/implementationSites/index/$1';
+$route['rmis/setup/programAreas/edit/(:num)'] = 'rmis/setup/programAreas/index/$1';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
