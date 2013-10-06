@@ -1,19 +1,27 @@
 <?php
-
 class Information extends MX_Controller{
     private $_data;
+	public $error=array();
+	public $data =array();
+	
     public function __construct(){
         parent::__construct();
         $this->load->model('Kendodatasource_model', 'grid');
         $this->load->model('Division_model', 'division');
+		$this->load->model('Program_model', 'program');
 
         $this->template->set_partial('header', 'layouts/header')
 						->set_layout('extensive/main_layout');
     }
     
-    public function index(){
+    public function index($program_id=NULL){
         $this->template->title('Research Management(RM)', ' Programs', ' Information');
         
+		if($this->input->post('save_program_information')){
+			$request = json_encode($this->input->post());
+			$this->dataCreate($request);
+		}
+		
         $_data['dashboard_menu_active'] = '';
         $_data['setup_menu_active'] = 'class="active"';
         $_data['setup_funds_menu_active'] ='class="active"';
@@ -31,25 +39,25 @@ class Information extends MX_Controller{
 
         $create = new \Kendo\Data\DataSourceTransportCreate();
 
-        $create->url(site_url('rmis/setup/divisions/dataCreate'))
+        $create->url(site_url('rmis/program/information/dataCreate'))
              ->contentType('application/json')
              ->type('POST');
 
         $read = new \Kendo\Data\DataSourceTransportRead();
 
-        $read->url(site_url('rmis/setup/divisions/dataRead'))
+        $read->url(site_url('rmis/program/information/dataRead'))
              ->contentType('application/json')
              ->type('POST');
 
         $update = new \Kendo\Data\DataSourceTransportUpdate();
 
-        $update->url(site_url('rmis/setup/divisions/dataUpdate'))
+        $update->url(site_url('rmis/program/information/dataUpdate'))
              ->contentType('application/json')
              ->type('POST');
 
         $destroy = new \Kendo\Data\DataSourceTransportDestroy();
 
-        $destroy->url(site_url('rmis/setup/divisions/dataDestroy'))
+        $destroy->url(site_url('rmis/program/information/dataDestroy'))
              ->contentType('application/json')
              ->type('POST');
 
@@ -63,37 +71,37 @@ class Information extends MX_Controller{
 
         $model = new \Kendo\Data\DataSourceSchemaModel();
 
-        $IDField = new \Kendo\Data\DataSourceSchemaModelField('id');
-        $IDField->type('number')
+        $programIdField = new \Kendo\Data\DataSourceSchemaModelField('program_id');
+        $programIdField->type('number')
                        ->editable(false)
                        ->nullable(true);
 					   
-		$divisionIDField = new \Kendo\Data\DataSourceSchemaModelField('division_id');
-        $divisionIDField->type('string');
+		$programTitleField = new \Kendo\Data\DataSourceSchemaModelField('title_of_research_program');
+        $programTitleField->type('string');
                        //->editable(false)
                        //->nullable(true);
         
-        $divisionNameField = new \Kendo\Data\DataSourceSchemaModelField('division_name');
-        $divisionNameField->type('string')
+        $programAreaField = new \Kendo\Data\DataSourceSchemaModelField('program_area');
+        $programAreaField->type('string')
                 ->properties();
 
-        $divisionHeadField = new \Kendo\Data\DataSourceSchemaModelField('division_head');
-        $divisionHeadField->type('string');
+        $regionalStationNameField = new \Kendo\Data\DataSourceSchemaModelField('regional_station_name');
+        $regionalStationNameField->type('string');
 
 
-        $divisionPhoneField = new \Kendo\Data\DataSourceSchemaModelField('division_phone');
-        $divisionPhoneField->type('string');
+        $DivisionUnitField = new \Kendo\Data\DataSourceSchemaModelField('division_or_unit_name');
+        $DivisionUnitField->type('string');
 		
-		$divisionEmailField = new \Kendo\Data\DataSourceSchemaModelField('division_email');
-        $divisionEmailField->type('string');
+		$departmentNameField = new \Kendo\Data\DataSourceSchemaModelField('department_name');
+        $departmentNameField->type('string');
 
-        $model->id('id')
-            ->addField($IDField)
-            ->addField($divisionIDField)
-            ->addField($divisionNameField)
-			->addField($divisionHeadField)
-			->addField($divisionPhoneField)
-			->addField($divisionEmailField);
+        $model->id('program_id')
+            ->addField($programIdField)
+            ->addField($programTitleField)
+            ->addField($programAreaField)
+			->addField($regionalStationNameField)
+			->addField($DivisionUnitField)
+			->addField($departmentNameField);
 
         $schema = new \Kendo\Data\DataSourceSchema();
         $schema->data('data')
@@ -113,65 +121,51 @@ class Information extends MX_Controller{
 
         $grid = new \Kendo\UI\Grid('grid');
 		
-		
-        //$IDFilterable = new \Kendo\UI\GridColumnFilterable();
-        //$IDFilterable->ui(new \Kendo\JavaScriptFunction('fundTypeFilter'));
-		
-        $ID = new \Kendo\UI\GridColumn();
-        $ID->field('division_id') //->filterable($fundTypeFilterable)
-                 ->title('ID');
+        $programTitle = new \Kendo\UI\GridColumn();
+        $programTitle->field('title_of_research_program') //->filterable($fundTypeFilterable)
+                 ->title('Program Title');
 				 
-		$divName = new \Kendo\UI\GridColumn();
-        $divName->field('division_name')
-                 ->title('Division / Unit Name');
+		$programArea = new \Kendo\UI\GridColumn();
+        $programArea->field('program_area')
+                 ->title('Program Area');
 				 
-		$divHead = new \Kendo\UI\GridColumn();
-        $divHead->field('division_head')
-                 ->title('Division of Head');
+		$regionalStationName = new \Kendo\UI\GridColumn();
+        $regionalStationName->field('regional_station_name')
+                 ->title('Regional Station Name');
 				 
-		$divPhone = new \Kendo\UI\GridColumn();
-        $divPhone->field('division_phone')
-                 ->title('Phone No');
+		$divisionUnitName = new \Kendo\UI\GridColumn();
+        $divisionUnitName->field('division_or_unit_name')
+                 ->title('Division or Unit Name');
 				 
-		$divEmail = new \Kendo\UI\GridColumn();
-        $divEmail->field('division_email')
-                 ->title('Email');
+		$departmentName = new \Kendo\UI\GridColumn();
+        $departmentName->field('department_name')
+                 ->title('Department Name');
 		
 		$command = new \Kendo\UI\GridColumn();
-        $command->addCommandItem('edit')
-                ->addCommandItem('destroy')
+        $command->addCommandItem('destroy')
                 ->title('&nbsp;')
-                ->width(160);
+                ->width(100);
+				
+		$command2 = new \Kendo\UI\GridColumnCommandItem();
+		$command2->click('ClickEdit')
+				 ->text('Edit');
+		
+		$commandColumn = new \Kendo\UI\GridColumn();
+		$commandColumn->addCommandItem($command2)
+        ->title('&nbsp;')
+        ->width(100);
+		
         
-        //$editable = new \Kendo\UI\GridEditable();
-        //$editable -> templateId("popup_editor")
-        //        ->confirmation("Are you sure you want to delete this record?")
-        //        -> mode("popup");
+        $editable = new \Kendo\UI\GridEditable();
+        $editable 	-> templateId("popup_editor")
+                	->confirmation("Are you sure you want to delete this record?")
+               	 	-> mode("inline");
         
         $sortable = new \Kendo\UI\GridSortable();
         $sortable->mode('single')
             ->allowUnsort(false);
-        
-        //$btnAdd = new \Kendo\UI\GridToolbarItem('create');
-        //$btnAdd->text("Add New Performing Unit/Division");
-		
-        /*
-        $stringOperators = new \Kendo\UI\GridFilterableOperatorsString();
-        $stringOperators
-                ->startsWith('Starts with')
-                ->eq('Is equal to')
-                ->neq('Is not equal to');
-		
-		
-        $operators = new \Kendo\UI\GridFilterableOperators();
-        $operators->string($stringOperators);
-
-        $filterable = new \Kendo\UI\GridFilterable();
-        $filterable->extra(false)
-            ->operators($operators);
-		*/	
-        
-        $grid->addColumn($ID, $divName, $divHead, $divPhone, $divEmail, $command)
+         
+        $grid->addColumn($programTitle, $programArea, $regionalStationName, $divisionUnitName, $departmentName, $commandColumn, $command)
              ->dataSource($dataSource) //->addToolbarItem($btnAdd)
              //->addToolbarItem($btnAdd)
 			 ->height(450)
@@ -181,62 +175,126 @@ class Information extends MX_Controller{
         
         $gridData =  $grid->render();
         $this->template->set('grid_data', $gridData);
-       	
-		//print_r($gridData);
-		//echo "ashish";
-		//exit(0);
+		
+		if($program_id!=NULL){
+			
+			if($this->input->post('save_update')){
+				$request = json_encode($this->input->post());
+				$this->dataUpdate($request);
+			}
+				
+			$program_detail = $this->program->get_program_details($program_id);
+			$this->template->set('program_detail', serialize($program_detail));
+			
+			$institute_detail = $this->program->get_institute_id_from_program_id($program_id);
+			$this->template->set('institute_detail', serialize($institute_detail));
+			
+			$commodity_detail = $this->program->get_commodity_from_program_id($program_id);
+			$this->template->set('commodity_detail', serialize($commodity_detail));
+			
+			$aez_detail = $this->program->get_aez_from_program_id($program_id);
+			$this->template->set('aez_detail', serialize($aez_detail));
+			
+			$expected_output_detail = $this->program->get_expected_output_from_program_id($program_id);
+			$this->template->set('expected_output_detail', serialize($expected_output_detail));
+		}
 		
         $this->template->set('content_header_icon', 'class="icofont-file"');
-        $this->template->set('content_header_title', 'Performing Unit/division Information');
-        
+        $this->template->set('content_header_title', 'Program Information');
+		
+        $this->template->set('program_area',$this->program->get_program_area());
+		$this->template->set('division_or_unit',$this->program->get_division_or_unit());
+		$this->template->set('department_name',$this->program->get_department_name());
+		$this->template->set('regional_station_name',$this->program->get_regional_station_name());
+		$this->template->set('implementation_location',$this->program->get_implementation_location());
+		$this->template->set('institute_name',$this->program->get_institute_name());
+		
         $breadcrumb = '<ul class="breadcrumb">
-						<li><a href="#"><i class="icofont-home"></i> RMIS</a> <span class="divider">›</span></li>
-						<li><a href="#">Setup info.</a><span class="divider">›</span></li><li class="active">Performing Unit/Division</li>
+						<li><a href="#"><i class="icofont-home"></i> RMIS</a> <span class="divider">&raquo;</span></li>
+						<li><a href="#">Program</a><span class="divider">&raquo;</span></li><li class="active">Information</li>
 					  </ul>';
         $this->template->set('breadcrumb', $breadcrumb);
         $this->template->set_partial('progInfoForm','program/information/form');
 		$this->template->set_partial('tab_menu','program/form_tabs');
         $this->template->set_partial('sidebar', 'layouts/sidebar',$_data)
-               ->build('program/information/index');
+             ->build('program/information/index');			 	 
     }
 	
-	public function dataCreate(){
-        header('Content-Type: application/json');
-        $request = json_decode(file_get_contents('php://input'));
+	public function dataCreate($request)
+	{
+		$request = json_decode($request);
         
-     	//$request->models[0]->fund_type = $request->models[0]->fund_type->fund_type;
-        
-        $this->form_validation->set_rules($this->division->validation);
-        $this->division->isValidate((array) $request->models[0]);
+        $this->form_validation->set_rules($this->program->validation);
+        $this->program->isValidate((array) $request->models[0]);
         if ($this->form_validation->run() === false) {
             header("HTTP/1.1 500 Internal Server Error");
             echo "Wrong data ! try again" ;
             exit;
         }
        
-        $columns = array('division_id', 'division_name', 'division_head', 'division_phone', 'division_email', 'division_order', 'division_about');
-        //$columns[] = 'organization_id';
-        //$request->models[0]->organization_id = 20;
-        $columns[] = 'created_at';
-        $request->models[0]->created_at = date('Y-m-d H:i:s');            
-        $columns[] = 'created_by';
-        $request->models[0]->created_by = 1;
-        
-        $data= $this->grid->create('mis_divisions', $columns, $request->models, 'id'); 
-        //$data['success'] ="Data created successfuly.";
-        echo json_encode($data , JSON_NUMERIC_CHECK); 
+		$this->data['title_of_research_program']= $this->input->post('title_of_research_program');
+		$this->data['is_collaborate']			= $this->input->post('is_collaborate');
+		$this->data['programme_area']			= $this->input->post('programme_area');
+		$this->data['regional_station_name']	= $this->input->post('regional_station_name');
+		$this->data['division_or_unit_name']	= $this->input->post('division_or_unit_name');
+		$this->data['department_name']			= $this->input->post('department_name');
+		$this->data['implementation_location']	= $this->input->post('implementation_location');
+		$this->data['keyword']					= $this->input->post('keyword');
+		$this->data['research_priority']		= $this->input->post('research_priority');
+		$this->data['research_type']			= $this->input->post('research_type');
+		$this->data['research_status']			= $this->input->post('research_status');		
+		$this->data['program_manager']			= $this->input->post('program_manager');
+		$this->data['designation']				= $this->input->post('designation');
+		$this->data['planned_start_date']		= date("Y-m-d", strtotime($this->input->post('planned_start_date')));
+		$this->data['planned_end_date']			= date("Y-m-d", strtotime($this->input->post('planned_end_date')));
+		$this->data['initiation_date']			= date("Y-m-d", strtotime($this->input->post('initiation_date')));
+		$this->data['completion_date']			= date("Y-m-d", strtotime($this->input->post('completion_date')));
+		$this->data['planned_budget']			= $this->input->post('planned_budget');
+		$this->data['approved_budget']			= $this->input->post('approved_budget');
+		$this->data['program_goal']				= $this->input->post('program_goal');
+		$this->data['purpose_or_objective']		= $this->input->post('purpose_or_objective');
+		
+		//multiple checkbox
+	   	$this->data['institute_name']	= $this->input->post('institute_name');
+		$this->data['commodity']		= $this->input->post('commodity');
+		$this->data['aez']				= $this->input->post('aez');		
+		$this->data['expected_output']	= $this->input->post('expected_output');		
+
+		$program_id=$this->program->insert_program_information($this->data);
+		
+		foreach($this->input->post('institute_name') as $institute_name) {
+			$institute_data = array('program_id' =>$program_id, 'institute_id'=>$institute_name);
+			$this->program->insert_institute_name($institute_data);
+		}
+		
+		foreach($this->input->post('commodity') as $commodity) {
+			$commodity_data = array('program_id' =>$program_id, 'commodity'=>$commodity);
+			$this->program->insert_commodity($commodity_data);
+		}
+		
+		foreach($this->input->post('aez') as $aez) {
+			$aez_data = array('program_id' =>$program_id, 'aez_id'=>$aez);
+			$this->program->insert_aez($aez_data);
+		}
+		
+		foreach($this->input->post('expected_output') as $expected_output) {
+			$expected_output_data = array('program_id' =>$program_id, 'expected_output'=>$expected_output);
+			$this->program->insert_expected_output($expected_output_data);
+		}
+		$data['success'] ="Data created successfuly.";
     }
     
-    public function dataRead(){
-        header('Content-Type: application/json');
+    public function dataRead(){		
+		header('Content-Type: application/json');
         $request = json_decode(file_get_contents('php://input'));
-        $data= $this->grid->read('mis_divisions', array('id','division_id', 'division_name', 'division_head','division_phone','division_email'), $request);       
+        $data= $this->grid->read('rmis_program_information', array('program_id', 'title_of_research_program', 'program_area', 'regional_station_name', 'division_or_unit_name', 'department_name'));       
         echo json_encode($data, JSON_NUMERIC_CHECK);
     }
+	
     public function dataDestroy(){   
         header('Content-Type: application/json');
         $request = json_decode(file_get_contents('php://input'));
-        $data = $this->grid->destroy('mis_divisions', $request->models, 'id'); 
+        $data = $this->grid->destroy('rmis_program_information', $request->models, 'program_id1'); 
         echo json_encode($data , JSON_NUMERIC_CHECK); 
     }
     	
@@ -252,7 +310,7 @@ class Information extends MX_Controller{
             exit;
         }
         
-        $columns = array('division_id', 'division_name', 'division_head', 'division_phone', 'division_email', 'division_order', 'division_about');
+       $columns = array('title_of_research_program', 'is_collaborate', 'program_area', 'regional_station_name', 'division_or_unit_name', 'department_name', 'implementation_location', 'keyword', 'research_priority', 'research_type', 'research_status', 'program_manager', 'designation', 'planned_start_date', 'planned_end_date', 'initiation_date', 'completion_date', 'planned_budget', 'approved_budget', 'program_goal', 'purpose_or_objective');
         //$columns[] = 'organization_id';
         //$request->models[0]->organization_id = 20;
         $columns[] = 'updated_at';        
