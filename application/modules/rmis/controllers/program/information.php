@@ -18,8 +18,18 @@ class Information extends MX_Controller{
         $this->template->title('Research Management(RM)', ' Programs', ' Information');
         
 		if($this->input->post('save_program_information')){
-			$request = json_encode($this->input->post());
-			$this->dataCreate($request);
+			//$request = json_encode($this->input->post());
+			$this->dataCreate();
+		}
+		
+		if($this->input->post('update_program_information')){
+			//$request = json_encode($this->input->post());
+			$this->dataUpdate();
+		}
+		
+		if($this->input->post('delete_program_information')){
+			//$request = json_encode($this->input->post());			
+			$this->dataDelete();
 		}
 		
         $_data['dashboard_menu_active'] = '';
@@ -177,11 +187,6 @@ class Information extends MX_Controller{
         $this->template->set('grid_data', $gridData);
 		
 		if($program_id!=NULL){
-			
-			if($this->input->post('save_update')){
-				$request = json_encode($this->input->post());
-				$this->dataUpdate($request);
-			}
 				
 			$program_detail = $this->program->get_program_details($program_id);
 			$this->template->set('program_detail', serialize($program_detail));
@@ -220,18 +225,130 @@ class Information extends MX_Controller{
              ->build('program/information/index');			 	 
     }
 	
-	public function dataCreate($request)
-	{
-		$request = json_decode($request);
-        
-        $this->form_validation->set_rules($this->program->validation);
-        $this->program->isValidate((array) $request->models[0]);
-        if ($this->form_validation->run() === false) {
-            header("HTTP/1.1 500 Internal Server Error");
+    public function dataRead(){		
+		header('Content-Type: application/json');
+        $request = json_decode(file_get_contents('php://input'));
+        $data= $this->grid->read('rmis_program_information', array('program_id', 'title_of_research_program', 'program_area', 'regional_station_name', 'division_or_unit_name', 'department_name'));       
+        echo json_encode($data, JSON_NUMERIC_CHECK);
+    }
+		
+	public function dataCreate()
+	{		
+		$submit_ok=$this->validation_program_information();
+		if($submit_ok)
+		{
+			$program_id=$this->program->insert_program_information($this->data);
+			if(sizeof($this->input->post('institute_name'))>0)
+			{
+				foreach($this->input->post('institute_name') as $institute_name) {
+					$institute_data = array('program_id' =>$program_id, 'institute_id'=>$institute_name);
+					$this->program->insert_institute_name($institute_data);
+				}
+			}
+			if(sizeof($this->input->post('commodity'))>0)
+			{
+				foreach($this->input->post('commodity') as $commodity) {
+					$commodity_data = array('program_id' =>$program_id, 'commodity'=>$commodity);
+					$this->program->insert_commodity($commodity_data);
+				}
+			}
+			if(sizeof($this->input->post('aez'))>0)
+			{
+				foreach($this->input->post('aez') as $aez) {
+					$aez_data = array('program_id' =>$program_id, 'aez_id'=>$aez);
+					$this->program->insert_aez($aez_data);
+				}
+			}
+			if(sizeof($this->input->post('expected_output'))>0)
+			{
+				foreach(array_filter($this->input->post('expected_output')) as $expected_output) {
+					$expected_output_data = array('program_id' =>$program_id, 'expected_output'=>$expected_output);
+					$this->program->insert_expected_output($expected_output_data);
+				}
+			}
+			$data['success'] ="Data created successfuly.";
+		}
+		else {
+			header("HTTP/1.1 500 Internal Server Error");
             echo "Wrong data ! try again" ;
             exit;
-        }
-       
+		}
+    }
+    
+/*    public function dataDestroy(){   
+        header('Content-Type: application/json');
+        $request = json_decode(file_get_contents('php://input'));
+        $data = $this->grid->destroy('rmis_program_information', $request->models, 'program_id'); 
+        echo json_encode($data , JSON_NUMERIC_CHECK); 
+    }
+*/    	
+	public function dataUpdate()
+	{		
+		$submit_ok=$this->validation_program_information();
+		if($submit_ok)
+		{
+			$program_id=$this->program->update_program_information($this->data, $this->data['program_id']);
+				
+			$this->program->delete_program_collaborated_institute_name($this->data['program_id']);
+			$this->program->delete_commodity_from_program_id($this->data['program_id']);
+			$this->program->delete_aez_from_program_id($this->data['program_id']);
+			$this->program->delete_expected_output_from_program_id($this->data['program_id']);
+			
+			if(sizeof($this->input->post('institute_name'))>0)
+			{
+				foreach($this->input->post('institute_name') as $institute_name) {
+					$institute_data = array('program_id' =>$this->data['program_id'], 'institute_id'=>$institute_name);
+					$this->program->insert_institute_name($institute_data);
+				}
+			}
+			
+			if(sizeof($this->input->post('commodity'))>0)
+			{
+				foreach($this->input->post('commodity') as $commodity) {
+					$commodity_data = array('program_id' =>$this->data['program_id'], 'commodity'=>$commodity);
+					$this->program->insert_commodity($commodity_data);
+				}
+			}
+			if(sizeof($this->input->post('aez'))>0)
+			{
+				foreach($this->input->post('aez') as $aez) {
+					$aez_data = array('program_id' =>$this->data['program_id'], 'aez_id'=>$aez);
+					$this->program->insert_aez($aez_data);
+				}
+			}
+			if(sizeof($this->input->post('expected_output'))>0)
+			{
+				foreach(array_filter($this->input->post('expected_output')) as $expected_output) {
+					$expected_output_data = array('program_id' =>$this->data['program_id'], 'expected_output'=>$expected_output);
+					$this->program->insert_expected_output($expected_output_data);
+				}
+			}
+			redirect(current_url());		
+		}
+		else {
+			header("HTTP/1.1 500 Internal Server Error");
+            echo "Wrong data ! try again" ;
+            exit;
+		}				
+    }
+	
+	public function dataDelete()
+	{   
+        $this->data['program_id'] = $this->input->post('program_id');
+		if($this->data['program_id']!=NULL)
+		{
+			$this->program->delete_program_information($this->data['program_id']);
+			$this->program->delete_program_collaborated_institute_name($this->data['program_id']);
+			$this->program->delete_commodity_from_program_id($this->data['program_id']);
+			$this->program->delete_aez_from_program_id($this->data['program_id']);
+			$this->program->delete_expected_output_from_program_id($this->data['program_id']);
+			redirect("/rmis/program/information");  //for example
+		}
+    }
+	
+	function validation_program_information()
+	{
+		$this->data['program_id']				= $this->input->post('program_id');
 		$this->data['title_of_research_program']= $this->input->post('title_of_research_program');
 		$this->data['is_collaborate']			= $this->input->post('is_collaborate');
 		$this->data['programme_area']			= $this->input->post('programme_area');
@@ -245,10 +362,10 @@ class Information extends MX_Controller{
 		$this->data['research_status']			= $this->input->post('research_status');		
 		$this->data['program_manager']			= $this->input->post('program_manager');
 		$this->data['designation']				= $this->input->post('designation');
-		$this->data['planned_start_date']		= date("Y-m-d", strtotime($this->input->post('planned_start_date')));
-		$this->data['planned_end_date']			= date("Y-m-d", strtotime($this->input->post('planned_end_date')));
-		$this->data['initiation_date']			= date("Y-m-d", strtotime($this->input->post('initiation_date')));
-		$this->data['completion_date']			= date("Y-m-d", strtotime($this->input->post('completion_date')));
+		$this->data['planned_start_date']		= $this->input->post('planned_start_date');
+		$this->data['planned_end_date']			= $this->input->post('planned_end_date');
+		$this->data['initiation_date']			= $this->input->post('initiation_date');
+		$this->data['completion_date']			= $this->input->post('completion_date');
 		$this->data['planned_budget']			= $this->input->post('planned_budget');
 		$this->data['approved_budget']			= $this->input->post('approved_budget');
 		$this->data['program_goal']				= $this->input->post('program_goal');
@@ -258,70 +375,93 @@ class Information extends MX_Controller{
 	   	$this->data['institute_name']	= $this->input->post('institute_name');
 		$this->data['commodity']		= $this->input->post('commodity');
 		$this->data['aez']				= $this->input->post('aez');		
-		$this->data['expected_output']	= $this->input->post('expected_output');		
+		$this->data['expected_output']	= $this->input->post('expected_output');
+				
+		if ($this->data['title_of_research_program'] == '')
+		{
+			array_push($this->error,'title_of_research_program_blank');
+		}
+		
+		if ($this->data['programme_area'] == '')
+		{
+			array_push($this->error,'programme_area_blank');
+		}
+		
+		if ($this->data['division_or_unit_name'] == '')
+		{
+			array_push($this->error,'division_or_unit_name_blank');
+		}
+		
+		if ($this->data['research_type'] == '')
+		{
+			array_push($this->error,'research_type_blank');
+		}
+		
+		if ($this->data['research_status'] == '')
+		{
+			array_push($this->error,'research_status_blank');
+		}
+		
+		if ($this->data['research_priority'] == '')
+		{
+			array_push($this->error,'research_priority_blank');
+		}
+		
+		if ($this->data['program_manager'] == '')
+		{
+			array_push($this->error,'program_manager_blank');
+		}
+		
+		if ($this->data['planned_start_date'] == '')
+		{
+			array_push($this->error,'planned_start_date_blank');
+		}
+		if ($this->data['planned_end_date'] == '')
+		{
+			array_push($this->error,'planned_end_date_blank');
+		}
+		if($this->data['planned_start_date'] != '' && $this->data['planned_end_date'] != '')
+		{		
+			if($this->data['planned_start_date'] > $this->data['planned_end_date'])
+			{
+				array_push($this->error,'planned_start_date_large');
+			}
+		}
+		if ($this->data['initiation_date'] == '')
+		{
+			array_push($this->error,'initiation_date_blank');
+		}
+		if ($this->data['completion_date'] == '')
+		{
+			array_push($this->error,'completion_date_blank');
+		}
+		if($this->data['initiation_date'] != '' && $this->data['completion_date'] != '')
+		{		
+			if($this->data['initiation_date'] > $this->data['completion_date'])
+			{
+				array_push($this->error,'initiation_date_large');
+			}
+		}
+		if ($this->data['program_goal'] == '')
+		{
+			array_push($this->error,'program_goal_blank');
+		}
+		
+		if ($this->data['purpose_or_objective'] == '')
+		{
+			array_push($this->error,'purpose_or_objective_blank');
+		}
+		
+		if (sizeof($this->data['expected_output']) == 0)
+		{
+			array_push($this->error,'expected_output_blank');
+		}
 
-		$program_id=$this->program->insert_program_information($this->data);
-		
-		foreach($this->input->post('institute_name') as $institute_name) {
-			$institute_data = array('program_id' =>$program_id, 'institute_id'=>$institute_name);
-			$this->program->insert_institute_name($institute_data);
-		}
-		
-		foreach($this->input->post('commodity') as $commodity) {
-			$commodity_data = array('program_id' =>$program_id, 'commodity'=>$commodity);
-			$this->program->insert_commodity($commodity_data);
-		}
-		
-		foreach($this->input->post('aez') as $aez) {
-			$aez_data = array('program_id' =>$program_id, 'aez_id'=>$aez);
-			$this->program->insert_aez($aez_data);
-		}
-		
-		foreach($this->input->post('expected_output') as $expected_output) {
-			$expected_output_data = array('program_id' =>$program_id, 'expected_output'=>$expected_output);
-			$this->program->insert_expected_output($expected_output_data);
-		}
-		$data['success'] ="Data created successfuly.";
-    }
-    
-    public function dataRead(){		
-		header('Content-Type: application/json');
-        $request = json_decode(file_get_contents('php://input'));
-        $data= $this->grid->read('rmis_program_information', array('program_id', 'title_of_research_program', 'program_area', 'regional_station_name', 'division_or_unit_name', 'department_name'));       
-        echo json_encode($data, JSON_NUMERIC_CHECK);
-    }
-	
-    public function dataDestroy(){   
-        header('Content-Type: application/json');
-        $request = json_decode(file_get_contents('php://input'));
-        $data = $this->grid->destroy('rmis_program_information', $request->models, 'program_id1'); 
-        echo json_encode($data , JSON_NUMERIC_CHECK); 
-    }
-    	
-	public function dataUpdate(){
-        header('Content-Type: application/json');
-        $request = json_decode(file_get_contents('php://input'));
-        
-        $this->form_validation->set_rules($this->division->validation);
-        $this->division->isValidate((array) $request->models[0]);
-        if ($this->form_validation->run() === false) {
-            header("HTTP/1.1 500 Internal Server Error");
-            echo "Wrong data ! try again" ;
-            exit;
-        }
-        
-       $columns = array('title_of_research_program', 'is_collaborate', 'program_area', 'regional_station_name', 'division_or_unit_name', 'department_name', 'implementation_location', 'keyword', 'research_priority', 'research_type', 'research_status', 'program_manager', 'designation', 'planned_start_date', 'planned_end_date', 'initiation_date', 'completion_date', 'planned_budget', 'approved_budget', 'program_goal', 'purpose_or_objective');
-        //$columns[] = 'organization_id';
-        //$request->models[0]->organization_id = 20;
-        $columns[] = 'updated_at';        
-        $request->models[0]->updated_at = date('Y-m-d H:i:s');            
-        $columns[] = 'updated_by';
-        $request->models[0]->updated_by = 1;
-        
-        $data= $this->grid->update('mis_divisions', $columns, $request->models, 'id'); 
-        //$data['success'] ="Data updated successfuly.";
-        echo json_encode($data , JSON_NUMERIC_CHECK);  
-    }
+		if(empty($this->error))
+			return true;
+		else
+			return false;
+	}
                 
 } 
 ?>

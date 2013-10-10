@@ -127,7 +127,7 @@ $(document).ready(function() {
      <div class="form_element">
         <div class="label">Designation </div>
         <div class="field">
-        <input type="text" name="designation" id="designation" value="<?php if($program_detail) echo $program_detail->program_manager;?>" class="textbox">
+        <input type="text" name="designation" id="designation" value="<?php if($program_detail) echo $program_detail->designation;?>" class="textbox">
         </div>
         <div class="clear"></div>
     </div>
@@ -135,7 +135,7 @@ $(document).ready(function() {
     <div class="form_element">
         <div class="label">Planned Start Date <span class="mandatory">*</span> </div>
         <div class="field">
-        <input type="text" class="form-control hasDatepicker" name="planned_start_date" id="planned_start_date" value="<?php if($program_detail) echo $program_detail->planned_start_date;?>">
+        <input type="text" class="form-control hasDatepicker" readonly="readonly" name="planned_start_date" id="planned_start_date" value="<?php if($program_detail) echo date("m/d/Y", strtotime($program_detail->planned_start_date));?>">
         <span class="input-group-addon">
             <i class="icon-calendar"></i>
         </span>
@@ -146,7 +146,7 @@ $(document).ready(function() {
     <div class="form_element">
         <div class="label">Planned End Date <span class="mandatory">*</span></div>
         <div class="field">
-        <input type="text" class="form-control hasDatepicker" name="planned_end_date" id="planned_end_date" value="<?php if($program_detail) echo $program_detail->planned_end_date;?>">
+        <input type="text" class="form-control hasDatepicker" readonly="readonly" name="planned_end_date" id="planned_end_date" value="<?php if($program_detail) echo date("m/d/Y", strtotime($program_detail->planned_end_date));?>">
         <span class="input-group-addon">
             <i class="icon-calendar"></i>
         </span>
@@ -157,7 +157,7 @@ $(document).ready(function() {
        <div class="form_element">
         <div class="label">Initial Date </div>
         <div class="field">
-        <input type="text" class="form-control hasDatepicker" name="initiation_date" id="initiation_date" value="<?php if($program_detail) echo $program_detail->initiation_date;?>">
+        <input type="text" class="form-control hasDatepicker" readonly="readonly" name="initiation_date" id="initiation_date" value="<?php if($program_detail) echo date("m/d/Y", strtotime($program_detail->initiation_date));?>">
         <span class="input-group-addon">
             <i class="icon-calendar"></i>
         </span>
@@ -169,7 +169,7 @@ $(document).ready(function() {
    <div class="form_element">
         <div class="label">Completion Date </div>
         <div class="field">
-        <input type="text" class="form-control hasDatepicker" name="completion_date" id="completion_date" value="<?php if($program_detail) echo $program_detail->completion_date;?>">
+        <input type="text" class="form-control hasDatepicker" readonly="readonly" name="completion_date" id="completion_date" value="<?php if($program_detail) echo date("m/d/Y", strtotime($program_detail->completion_date));?>">
         <span class="input-group-addon">
             <i class="icon-calendar"></i>
         </span>
@@ -194,18 +194,27 @@ $(document).ready(function() {
         <div class="field">
             <div class="multiple_checkbox">
             <?php 
-			foreach($institute_name as $key=>$value) 
-			{ 
-				if($institute_detail!=NULL && in_array($value->institute_id, objectToArray($institute_detail[0])))
-				{
-					$institute_selected= 1;
-					echo "<input name=\"institute_name[]\" type=\"checkbox\" id=\"institute_name[]\" class=\"checkbox\" value=\"$value->institute_id\""; if($institute_selected==1) echo ' checked="checked"'; echo" />$value->institute_sort_code<br />";
-				}
-				else {
-					$institute_selected= 0;
+			if(isset($institute_detail)) 
+			{
+				foreach($institute_name as $key=>$value) 
+				{ 
+					if(in_array($value->institute_id, objectToArray($institute_detail[0])))
+					{
+						$institute_selected= 1;
+						echo "<input name=\"institute_name[]\" type=\"checkbox\" id=\"institute_name[]\" class=\"checkbox\" value=\"$value->institute_id\""; if($institute_selected==1) echo ' checked="checked"'; echo" />$value->institute_sort_code<br />";
+					}
+					else {
+						$institute_selected= 0;
+						echo "<input name=\"institute_name[]\" type=\"checkbox\" id=\"institute_name[]\" class=\"checkbox\" value=\"$value->institute_id\" />$value->institute_sort_code<br />";
+					}
+				  }
+			}
+			else{
+				foreach($institute_name as $key=>$value) 
+				{ 
 					echo "<input name=\"institute_name[]\" type=\"checkbox\" id=\"institute_name[]\" class=\"checkbox\" value=\"$value->institute_id\" />$value->institute_sort_code<br />";
 				}
-			  } 
+			}
 			?>
             </div>
         </div>
@@ -278,23 +287,30 @@ $(document).ready(function() {
 							return $d;
 						}
 					}
-                	if($commodity_detail!=NULL && in_array("Cereal crops", objectToArray($commodity_detail[0])))
+					if(isset($commodity_detail)) 
 					{
-						$commodity_selected= 1;
-						echo "<input name=\"commodity[]\" type=\"checkbox\" id=\"commodity[]\" class=\"checkbox\" value=\"Cereal crops\""; if($commodity_selected==1) echo ' checked="checked"'; echo" />Cereal crops<br />";
+						if(in_array("Cereal crops", objectToArray($commodity_detail[0])))
+						{
+							$commodity_selected= 1;
+							echo "<input name=\"commodity[]\" type=\"checkbox\" id=\"commodity[]\" class=\"checkbox\" value=\"Cereal crops\""; if($commodity_selected==1) echo ' checked="checked"'; echo" />Cereal crops<br />";
+						}
+						else {
+							$commodity_selected= 0;
+							echo "<input name=\"commodity[]\" type=\"checkbox\" id=\"commodity[]\" class=\"checkbox\" value=\"Cereal crops\" />Cereal crops<br />";
+						}
+						
+						if(in_array("Oilseed Crops", objectToArray($commodity_detail[0])))
+						{
+							$commodity_selected= 1;
+							echo "<input name=\"commodity[]\" type=\"checkbox\" id=\"commodity[]\" class=\"checkbox\" value=\"Cereal crops\""; if($commodity_selected==1) echo ' checked="checked"'; echo" />Oilseed Crops<br />";
+						}
+						else {
+							$commodity_selected= 0;
+							echo "<input name=\"commodity[]\" type=\"checkbox\" id=\"commodity[]\" class=\"checkbox\" value=\"Cereal crops\" />Oilseed Crops<br />";
+						}
 					}
 					else {
-					 	$commodity_selected= 0;
 						echo "<input name=\"commodity[]\" type=\"checkbox\" id=\"commodity[]\" class=\"checkbox\" value=\"Cereal crops\" />Cereal crops<br />";
-					}
-					
-					if($commodity_detail!=NULL && in_array("Oilseed Crops", objectToArray($commodity_detail[0])))
-					{
-						$commodity_selected= 1;
-						echo "<input name=\"commodity[]\" type=\"checkbox\" id=\"commodity[]\" class=\"checkbox\" value=\"Cereal crops\""; if($commodity_selected==1) echo ' checked="checked"'; echo" />Oilseed Crops<br />";
-					}
-					else {
-					 	$commodity_selected= 0;
 						echo "<input name=\"commodity[]\" type=\"checkbox\" id=\"commodity[]\" class=\"checkbox\" value=\"Cereal crops\" />Oilseed Crops<br />";
 					}
 				?>
@@ -308,17 +324,26 @@ $(document).ready(function() {
         <div class="field">
         	<div class="multiple_checkbox">
             <?php 
-			for($i=0; $i<10; $i++) 
-			{ 
-				if($aez_detail!=NULL && in_array($i, objectToArray($aez_detail[0])))
-				{
-					$aez_selected= 1;
-					echo "<input name=\"aez[]\" type=\"checkbox\" id=\"aez[]\" class=\"checkbox\" value=\"$i\""; if($aez_selected==1) echo ' checked="checked"'; echo" />AEZ- $i<br />";
-				}
-				else {
-					$aez_selected= 0;
-					echo "<input name=\"aez[]\" type=\"checkbox\" id=\"aez[]\" class=\"checkbox\" value=\"$i\" />AEZ- $i<br />";
-				}
+			if(isset($aez_detail)) 
+			{
+				for($i=0; $i<10; $i++) 
+				{ 
+					if(in_array($i, objectToArray($aez_detail[0])))
+					{
+						$aez_selected= 1;
+						echo "<input name=\"aez[]\" type=\"checkbox\" id=\"aez[]\" class=\"checkbox\" value=\"$i\""; if($aez_selected==1) echo ' checked="checked"'; echo" />AEZ- $i<br />";
+					}
+					else {
+						$aez_selected= 0;
+						echo "<input name=\"aez[]\" type=\"checkbox\" id=\"aez[]\" class=\"checkbox\" value=\"$i\" />AEZ- $i<br />";
+					}
+				 }
+			}
+			  else {
+				  for($i=0; $i<10; $i++) 
+				  {
+				 	 echo "<input name=\"aez[]\" type=\"checkbox\" id=\"aez[]\" class=\"checkbox\" value=\"$i\" />AEZ- $i<br />";
+				  }
 			  } 
 			?>
             </div>
@@ -363,11 +388,11 @@ $(document).ready(function() {
         <div class="label">Expected output <span class="mandatory">*</span></div>
         <div class="field"> 
         <?php 
-        	$i=0;
-			if($expected_output_detail!=NULL) 
-        	foreach($expected_output_detail as $key=>$value){ ?>            
+			if(isset($expected_output_detail)) 
+			{
+				$i=0; foreach($expected_output_detail as $key=>$value){ ?>            
                 <textarea id="expected_output" name="expected_output[]" class="textarea width_100_percent"><?php echo $value->expected_output; ?></textarea>
-            <?php $i++;} ?>     
+            <?php $i++;}} ?>     
         <span id='duplicate2'>
             <textarea name="expected_output[]" id="expected_output[]" class="textarea width_100_percent"></textarea>
             <span style="font-size:16px;"><a id="minus2" href="">[-]</a> <a id="plus2" href="">[+]</a></span>
@@ -381,7 +406,7 @@ $(document).ready(function() {
         		<?php if(isset($program_detail) && $program_detail->program_id!=NULL) { ?>
                 	<input type="hidden" name="program_id" id="program_id" value="<?php echo $program_detail->program_id; ?>">
         			<input type="submit" name="update_program_information" id="update_program_information" value="Update" class="k-button button">
-            		<input type="reset" name="delete_program_information" id="delete_program_information" value="Delete" class="k-button button">
+            		<input type="submit" name="delete_program_information" id="delete_program_information" onclick="javascript:return confirm('Do you want to delete this program?');" value="Delete" class="k-button button">
                 <?php } else { ?>
                 	<input type="submit" name="save_program_information" id="save_program_information" value="Save" class="k-button button">
             		<input type="reset" name="reset_program_information" id="reset_program_information" value="Reset" class="k-button button">

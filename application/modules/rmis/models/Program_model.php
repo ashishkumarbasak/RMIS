@@ -66,10 +66,10 @@ class Program_model extends MY_Model {
 		$this->db->set('research_status',$data['research_status']);		
 		$this->db->set('program_manager',$data['program_manager']);
 		$this->db->set('designation',$data['designation']);
-		$this->db->set('planned_start_date',$data['planned_start_date']);
-		$this->db->set('planned_end_date',$data['planned_end_date']);
-		$this->db->set('initiation_date',$data['initiation_date']);		
-		$this->db->set('completion_date',$data['completion_date']);
+		$this->db->set('planned_start_date',date("Y-m-d", strtotime($data['planned_start_date'])));
+		$this->db->set('planned_end_date',date("Y-m-d", strtotime($data['planned_end_date'])));
+		$this->db->set('initiation_date',date("Y-m-d", strtotime($data['initiation_date'])));		
+		$this->db->set('completion_date',date("Y-m-d", strtotime($data['completion_date'])));
 		$this->db->set('planned_budget',$data['planned_budget']);
 		$this->db->set('approved_budget',$data['approved_budget']);
 		$this->db->set('program_goal',$data['program_goal']);
@@ -77,11 +77,51 @@ class Program_model extends MY_Model {
 		//$this->db->set('created_by', $this->session->userdata('session_user_email'));
 		$this->db->set('created_by',1);
 		$this->db->set('created_at',date("Y-m-d H:m:s"));
-		$this->db->set('modified_by',1);
+		$this->db->set('modified_by','');
 		$this->db->set('modified_at',date("0000-00-00 00:00:00"));
 		
 		$this->db->insert('rmis_program_information');
 		return $this->db->insert_id();
+	}
+	
+	function update_program_information($data, $program_id)
+	{
+		$data = array(
+			'title_of_research_program'=>$data['title_of_research_program'],
+			'is_collaborate'=>$data['is_collaborate'],
+			'program_area'=>$data['programme_area'],
+			'regional_station_name'=>$data['regional_station_name'],
+			'division_or_unit_name'=>$data['division_or_unit_name'],
+			'department_name'=>$data['department_name'],
+			'implementation_location'=>$data['implementation_location'],
+			'keyword'=>$data['keyword'],
+			'research_priority'=>$data['research_priority'],
+			'research_type'=>$data['research_type'],
+			'research_status'=>$data['research_status'],		
+			'program_manager'=>$data['program_manager'],
+			'designation'=>$data['designation'],
+			'planned_start_date'=>date("Y-m-d", strtotime($data['planned_start_date'])),
+			'planned_end_date'=>date("Y-m-d", strtotime($data['planned_end_date'])),
+			'initiation_date'=>date("Y-m-d", strtotime($data['initiation_date'])),		
+			'completion_date'=>date("Y-m-d", strtotime($data['completion_date'])),
+			'planned_budget'=>$data['planned_budget'],
+			'approved_budget'=>$data['approved_budget'],
+			'program_goal'=>$data['program_goal'],
+			'purpose_or_objective'=>$data['purpose_or_objective'],
+			'modified_by'=>1,
+			'modified_at'=>date("Y-m-d H:m:s")
+		);
+		$this->db->where('program_id', $program_id);
+		$this->db->update('rmis_program_information', $data);
+	}
+	
+	public function delete_program_information($program_id=NULL)
+    {
+		if($program_id!=NULL)
+		{
+			$this->db->where('program_id', $program_id);
+			$this->db->delete('rmis_program_information');		
+		}
 	}
 	
 	function insert_institute_name($data)
@@ -241,6 +281,42 @@ class Program_model extends MY_Model {
 			}
 		}else{
 			return NULL;	
+		}
+	}
+	
+	public function delete_program_collaborated_institute_name($program_id=NULL)
+    {
+		if($program_id!=NULL)
+		{
+			$this->db->where('program_id', $program_id);
+			$this->db->delete('rmis_program_collaborate_institute_name');		
+		}
+	}
+	
+	public function delete_commodity_from_program_id($program_id=NULL)
+    {
+		if($program_id!=NULL)
+		{
+			$this->db->where('program_id', $program_id);
+			$this->db->delete('rmis_program_commodity');		
+		}
+	}
+	
+	public function delete_aez_from_program_id($program_id=NULL)
+    {
+		if($program_id!=NULL)
+		{
+			$this->db->where('program_id', $program_id);
+			$this->db->delete('rmis_program_aez');		
+		}
+	}
+	
+	public function delete_expected_output_from_program_id($program_id=NULL)
+    {
+		if($program_id!=NULL)
+		{
+			$this->db->where('program_id', $program_id);
+			$this->db->delete('rmis_program_expected_output');		
 		}
 	}
     
