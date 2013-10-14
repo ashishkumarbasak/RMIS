@@ -115,6 +115,22 @@ class Program_model extends MY_Model {
 		$this->db->update('rmis_program_information', $data);
 	}
 	
+	/*public function get_program_information_from_program_id($program_id=NULL)
+    {
+		if($program_id!=NULL)
+		{			
+			$this->db->select('*');
+			$this->db->from('rmis_program_information');
+			$this->db->where('program_id', $program_id);
+			
+			$query=$this->db->get();
+			if($query->num_rows() > 0)
+				return $query->result();
+			else
+				return false;				
+		}
+	}*/
+	
 	public function delete_program_information($program_id=NULL)
     {
 		if($program_id!=NULL)
@@ -163,7 +179,7 @@ class Program_model extends MY_Model {
 	}
 	
 	public function get_department_name(){
-		$query = $this->db->get('rmis_divisions');
+		$query = $this->db->get('hrm_employees');
 		if ($query->num_rows() > 0){
         	return $query->result();
 		}else{
@@ -198,6 +214,51 @@ class Program_model extends MY_Model {
 		}
 	}
 	
+	public function get_research_priority(){
+		$query = $this->db->get('rmis_research_priority');
+		if ($query->num_rows() > 0){
+        	return $query->result();
+		}else{
+			return NULL;
+		}
+	}
+	
+	public function get_research_status(){
+		$query = $this->db->get('rmis_research_status');
+		if ($query->num_rows() > 0){
+        	return $query->result();
+		}else{
+			return NULL;
+		}
+	}
+	
+	public function get_research_type(){
+		$query = $this->db->get('rmis_research_type');
+		if ($query->num_rows() > 0){
+        	return $query->result();
+		}else{
+			return NULL;
+		}
+	}
+	
+	public function get_commodity(){
+		$query = $this->db->get('rmis_commodity');
+		if ($query->num_rows() > 0){
+        	return $query->result();
+		}else{
+			return NULL;
+		}
+	}
+	
+	public function get_aez(){
+		$query = $this->db->get('rmis_aez');
+		if ($query->num_rows() > 0){
+        	return $query->result();
+		}else{
+			return NULL;
+		}
+	}
+	
 	public function get_program_details($program_id=NULL){
 		if($program_id!=NULL){
 			$this->db->select('*');
@@ -216,11 +277,31 @@ class Program_model extends MY_Model {
 		}
 	}
 	
+	public function get_program_area_from_program_id($program_id=NULL){
+		if($program_id!=NULL){
+			$this->db->select('id, program_id, program_area_name');
+			$this->db->from('rmis_program_areas');
+			$this->db->join('rmis_program_information', 'rmis_program_information.program_area = rmis_program_areas.id');
+			$this->db->where('program_id',$program_id);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result[0];
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;	
+		}
+	}
+	
 	public function get_institute_id_from_program_id($program_id=NULL){
 		if($program_id!=NULL){
-			$this->db->select('*');
-			$this->db->from('rmis_program_collaborate_institute_name');
-			$this->db->where('program_id',$program_id);
+			$this->db->select('id, IN.program_id AS program_id, institute_id');
+			$this->db->from('rmis_program_collaborate_institute_name AS IN');
+			$this->db->join('rmis_program_information', 'rmis_program_information.program_id = IN.program_id');
+			$this->db->where('IN.program_id',$program_id);
 			
 			$query = $this->db->get();
 			if($query->num_rows() > 0){
@@ -235,9 +316,10 @@ class Program_model extends MY_Model {
 	
 	public function get_commodity_from_program_id($program_id=NULL){
 		if($program_id!=NULL){
-			$this->db->select('*');
+			$this->db->select('id, rmis_program_commodity.program_id AS program_id, commodity_id');
 			$this->db->from('rmis_program_commodity');
-			$this->db->where('program_id',$program_id);
+			$this->db->join('rmis_program_information', 'rmis_program_information.program_id = rmis_program_commodity.program_id');
+			$this->db->where('rmis_program_commodity.program_id',$program_id);
 			
 			$query = $this->db->get();
 			if($query->num_rows() > 0){
@@ -252,9 +334,10 @@ class Program_model extends MY_Model {
 	
 	public function get_aez_from_program_id($program_id=NULL){
 		if($program_id!=NULL){
-			$this->db->select('*');
+			$this->db->select('id, rmis_program_aez.program_id AS program_id, aez_id');
 			$this->db->from('rmis_program_aez');
-			$this->db->where('program_id',$program_id);
+			$this->db->join('rmis_program_information', 'rmis_program_information.program_id = rmis_program_aez.program_id');
+			$this->db->where('rmis_program_aez.program_id',$program_id);
 			
 			$query = $this->db->get();
 			if($query->num_rows() > 0){
@@ -269,9 +352,10 @@ class Program_model extends MY_Model {
 	
 	public function get_expected_output_from_program_id($program_id=NULL){
 		if($program_id!=NULL){
-			$this->db->select('*');
+			$this->db->select('id, rmis_program_expected_output.program_id AS program_id, expected_output');
 			$this->db->from('rmis_program_expected_output');
-			$this->db->where('program_id',$program_id);
+			$this->db->join('rmis_program_information', 'rmis_program_information.program_id = rmis_program_expected_output.program_id');
+			$this->db->where('rmis_program_expected_output.program_id',$program_id);
 			
 			$query = $this->db->get();
 			if($query->num_rows() > 0){
@@ -319,6 +403,89 @@ class Program_model extends MY_Model {
 			$this->db->delete('rmis_program_expected_output');		
 		}
 	}
+	
+	/******************** Program other Information*************************/
+	
+	public function get_program_other_information($program_id=NULL){
+		if($program_id!=NULL){
+			$this->db->select('*');
+			$this->db->from('rmis_program_other_information');
+			$this->db->where('program_id',$program_id);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result[0];
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;	
+		}
+	}
+	
+	function insert_program_other_information($data)
+	{
+		$this->db->set('program_id',$data['program_id']);
+		$this->db->set('program_other_info_rational',$data['program_other_info_rational']);
+		$this->db->set('program_other_info_methodology',$data['program_other_info_methodology']);
+		$this->db->set('program_other_info_background',$data['program_other_info_background']);
+		$this->db->set('program_other_info_impact',$data['program_other_info_impact']);
+		$this->db->set('program_other_info_environmental',$data['program_other_info_environmental']);
+		$this->db->set('program_other_info_beneficiary',$data['program_other_info_beneficiary']);
+		$this->db->set('program_other_info_reference',$data['program_other_info_reference']);
+		$this->db->set('program_other_info_affiliation',$data['program_other_info_affiliation']);
+		$this->db->set('program_other_info_organization_policy',$data['program_other_info_organization_policy']);
+		$this->db->set('program_other_info_risk',$data['program_other_info_risk']);
+		/*$this->db->set('created_by',1);
+		$this->db->set('created_at',date("Y-m-d H:m:s"));
+		$this->db->set('modified_by','');
+		$this->db->set('modified_at',date("0000-00-00 00:00:00"));*/
+		
+		$this->db->insert('rmis_program_other_information');
+		return $this->db->insert_id();
+	}
+	
+	function update_program_other_information($data, $program_id)
+	{
+		$data = array(
+			'program_other_info_rational'=>$data['program_other_info_rational'],
+			'program_other_info_methodology'=>$data['program_other_info_methodology'],
+			'program_other_info_background'=>$data['program_other_info_background'],
+			'program_other_info_impact'=>$data['program_other_info_impact'],
+			'program_other_info_environmental'=>$data['program_other_info_environmental'],
+			'program_other_info_beneficiary'=>$data['program_other_info_beneficiary'],
+			'program_other_info_reference'=>$data['program_other_info_reference'],
+			'program_other_info_affiliation'=>$data['program_other_info_affiliation'],
+			'program_other_info_organization_policy'=>$data['program_other_info_organization_policy'],
+			'program_other_info_risk'=>$data['program_other_info_risk']
+			/*'purpose_or_objective'=>$data['purpose_or_objective'],
+			'modified_by'=>1,
+			'modified_at'=>date("Y-m-d H:m:s")*/
+		);
+		$this->db->where('program_id', $program_id);
+		$this->db->update('rmis_program_other_information', $data);
+	}
+	
+	public function delete_other_program_information($program_id=NULL)
+    {
+		if($program_id!=NULL)
+		{
+			$this->db->where('program_id', $program_id);
+			$this->db->delete('rmis_program_other_information');		
+		}
+	}
+	
+	/******************** employee autocomplete *************************/
+	
+	public function get_employee_name_auto_complete($options = array())
+	{		
+		$this->db->select("CONCAT(employee_name, ', ', designation_id) AS employee_name", FALSE);
+		$this->db->like('employee_name', $options['keyword'], 'after');
+		$query = $this->db->get('hrm_employees');
+		return $query->result();
+	}
+	
     
 }
 ?>

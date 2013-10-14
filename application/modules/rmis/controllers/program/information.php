@@ -208,12 +208,17 @@ class Information extends MX_Controller{
         $this->template->set('content_header_title', 'Program Information');
 		
         $this->template->set('program_area',$this->program->get_program_area());
+		$this->template->set('research_priority',$this->program->get_research_priority());
+		$this->template->set('research_status',$this->program->get_research_status());
+		$this->template->set('research_type',$this->program->get_research_type());
 		$this->template->set('division_or_unit',$this->program->get_division_or_unit());
 		$this->template->set('department_name',$this->program->get_department_name());
 		$this->template->set('regional_station_name',$this->program->get_regional_station_name());
 		$this->template->set('implementation_location',$this->program->get_implementation_location());
 		$this->template->set('institute_name',$this->program->get_institute_name());
-		
+		$this->template->set('commodity',$this->program->get_commodity());
+		$this->template->set('aez',$this->program->get_aez());		
+				
         $breadcrumb = '<ul class="breadcrumb">
 						<li><a href="#"><i class="icofont-home"></i> RMIS</a> <span class="divider">&raquo;</span></li>
 						<li><a href="#">Program</a><span class="divider">&raquo;</span></li><li class="active">Information</li>
@@ -231,6 +236,21 @@ class Information extends MX_Controller{
         $data= $this->grid->read('rmis_program_information', array('program_id', 'title_of_research_program', 'program_area', 'regional_station_name', 'division_or_unit_name', 'department_name'));       
         echo json_encode($data, JSON_NUMERIC_CHECK);
     }
+	
+	public function autocomplete()
+	{		
+		$term = $this->input->post('term',TRUE);
+
+		if (strlen($term) < 2) break;
+	
+		$rows = $this->program->get_employee_name_auto_complete(array('keyword' => $term));
+	
+		$json_array = array();
+		foreach ($rows as $row)
+			 array_push($json_array, $row->employee_name);
+	
+		echo json_encode($json_array);
+	}
 		
 	public function dataCreate()
 	{		
@@ -248,7 +268,7 @@ class Information extends MX_Controller{
 			if(sizeof($this->input->post('commodity'))>0)
 			{
 				foreach($this->input->post('commodity') as $commodity) {
-					$commodity_data = array('program_id' =>$program_id, 'commodity'=>$commodity);
+					$commodity_data = array('program_id' =>$program_id, 'commodity_id'=>$commodity);
 					$this->program->insert_commodity($commodity_data);
 				}
 			}
@@ -305,7 +325,7 @@ class Information extends MX_Controller{
 			if(sizeof($this->input->post('commodity'))>0)
 			{
 				foreach($this->input->post('commodity') as $commodity) {
-					$commodity_data = array('program_id' =>$this->data['program_id'], 'commodity'=>$commodity);
+					$commodity_data = array('program_id' =>$this->data['program_id'], 'commodity_id'=>$commodity);
 					$this->program->insert_commodity($commodity_data);
 				}
 			}
@@ -323,7 +343,7 @@ class Information extends MX_Controller{
 					$this->program->insert_expected_output($expected_output_data);
 				}
 			}
-			redirect(current_url());		
+			redirect(current_url());	
 		}
 		else {
 			header("HTTP/1.1 500 Internal Server Error");
@@ -350,7 +370,13 @@ class Information extends MX_Controller{
 	{
 		$this->data['program_id']				= $this->input->post('program_id');
 		$this->data['title_of_research_program']= $this->input->post('title_of_research_program');
-		$this->data['is_collaborate']			= $this->input->post('is_collaborate');
+		
+		if($this->input->post('is_collaborate')==''){
+			$this->data['is_collaborate']		= 0;
+		}
+		else{
+			$this->data['is_collaborate']		= $this->input->post('is_collaborate');
+		}
 		$this->data['programme_area']			= $this->input->post('programme_area');
 		$this->data['regional_station_name']	= $this->input->post('regional_station_name');
 		$this->data['division_or_unit_name']	= $this->input->post('division_or_unit_name');
@@ -461,7 +487,6 @@ class Information extends MX_Controller{
 			return true;
 		else
 			return false;
-	}
-                
+	}                
 } 
 ?>

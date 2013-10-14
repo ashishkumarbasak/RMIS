@@ -34,7 +34,6 @@ $(document).ready(function() {
 	if(isset($expected_output_detail)){
 		$expected_output_detail = unserialize($expected_output_detail);
 	}
-	//print_r($institute_detail); 
 ?>
 <form name="program_info" id="program_info" method="post" action="">
 <div class="main_form">
@@ -80,9 +79,9 @@ $(document).ready(function() {
         <div class="field">
         <select name="research_type" id="research_type" class="selectionbox">
             <option value="">Select Research Type</option>
-            <option value="Basic"<?php if(isset($program_detail) && $program_detail->research_type=="Basic") { ?> selected="selected" <?php } ?>>Basic</option>
-            <option value="Strategic"<?php if(isset($program_detail) && $program_detail->research_type=="Strategic") { ?> selected="selected" <?php } ?>>Strategic</option>
-            <option value="Impact Study"<?php if(isset($program_detail) && $program_detail->research_type=="Impact Study") { ?> selected="selected" <?php } ?>>Impact Study</option>
+ 			<?php foreach($research_type as $key=>$value) { ?>
+            <option value="<?php echo $value->id; ?>" <?php if(isset($program_detail) && $program_detail->research_type==$value->id) { ?> selected="selected" <?php } ?>><?php echo $value->research_type; ?></option>
+            <?php } ?>
         </select>
         </div>
         <div class="clear"></div>
@@ -93,11 +92,10 @@ $(document).ready(function() {
         <div class="field">
         <select name="research_priority" id="research_priority" class="selectionbox">
             <option value="">Select Research Priority</option>
-            <option value="1st"<?php if(isset($program_detail) && $program_detail->research_priority=="1st") { ?> selected="selected" <?php } ?>>1st</option>
-            <option value="2nd"<?php if(isset($program_detail) && $program_detail->research_priority=="2nd") { ?> selected="selected" <?php } ?>>2nd</option>
-            <option value="3rd"<?php if(isset($program_detail) && $program_detail->research_priority=="3rd") { ?> selected="selected" <?php } ?>>3rd</option>
-            <option value="4th"<?php if(isset($program_detail) && $program_detail->research_priority=="4th") { ?> selected="selected" <?php } ?>>4th</option>
-        </select>
+			<?php foreach($research_priority as $key=>$value) { ?>
+            <option value="<?php echo $value->id; ?>" <?php if(isset($program_detail) && $program_detail->research_priority==$value->id) { ?> selected="selected" <?php } ?>><?php echo $value->research_priority; ?></option>
+            <?php } ?>
+         </select>
         </div>
         <div class="clear"></div>
     </div>
@@ -107,11 +105,9 @@ $(document).ready(function() {
         <div class="field">
         <select name="research_status" id="research_status" class="selectionbox">
             <option value="">Select Research Status</option>
-            <option value="New"<?php if(isset($program_detail) && $program_detail->research_status=="New") { ?> selected="selected" <?php } ?>>New</option>
-            <option value="On-Going"<?php if(isset($program_detail) && $program_detail->research_status=="On-Going") { ?> selected="selected" <?php } ?>>On-Going</option>
-            <option value="Completed"<?php if(isset($program_detail) && $program_detail->research_status=="Completed") { ?> selected="selected" <?php } ?>>Completed</option>
-            <option value="Stop"<?php if(isset($program_detail) && $program_detail->research_status=="Stop") { ?> selected="selected" <?php } ?>>Stop</option>
-        </select>
+			<?php foreach($research_status as $key=>$value) { ?>
+            <option value="<?php echo $value->id; ?>" <?php if(isset($program_detail) && $program_detail->research_status==$value->id) { ?> selected="selected" <?php } ?>><?php echo $value->research_status; ?></option>
+            <?php } ?>        </select>
         </div>
         <div class="clear"></div>
     </div>
@@ -124,13 +120,13 @@ $(document).ready(function() {
         <div class="clear"></div>
     </div>
     
-     <div class="form_element">
+     <!--<div class="form_element">
         <div class="label">Designation </div>
         <div class="field">
-        <input type="text" name="designation" id="designation" value="<?php if($program_detail) echo $program_detail->designation;?>" class="textbox">
+        <input type="text" name="designation" id="designation" value="<?php //if($program_detail) echo $program_detail->designation;?>" class="textbox">
         </div>
         <div class="clear"></div>
-    </div>
+    </div>-->
     
     <div class="form_element">
         <div class="label">Planned Start Date <span class="mandatory">*</span> </div>
@@ -194,6 +190,19 @@ $(document).ready(function() {
         <div class="field">
             <div class="multiple_checkbox">
             <?php 
+			function objectToArray($d) {
+				if (is_object($d)) {
+					$d = get_object_vars($d);
+				}
+		 
+				if (is_array($d)) {
+					return array_map(__FUNCTION__, $d);
+				}
+				else {
+					return $d;
+				}
+			}
+			
 			if(isset($institute_detail)) 
 			{
 				foreach($institute_name as $key=>$value) 
@@ -227,7 +236,7 @@ $(document).ready(function() {
         <select name="department_name" id="department_name" class="selectionbox">
             <option value="">Select Department Name</option>
 			<?php foreach($department_name as $key=>$value) { ?>
-            <option value="<?php echo $value->id; ?>" <?php if(isset($program_detail) && $program_detail->department_name==$value->id) { ?> selected="selected" <?php } ?>><?php echo $value->program_area_name; ?></option>
+            <option value="<?php echo $value->id; ?>" <?php if(isset($program_detail) && $program_detail->department_name==$value->type_id) { ?> selected="selected" <?php } ?>><?php echo $value->type_id; ?></option>
             <?php } ?>
         </select>
         </div>
@@ -272,46 +281,28 @@ $(document).ready(function() {
     <div class="form_element">
         <div class="label">Commodity </div>
         <div class="field">
-        	<div class="multiple_checkbox">
-            
-            	<?php				
-					function objectToArray($d) {
-						if (is_object($d)) {
-							$d = get_object_vars($d);
-						}
-				 
-						if (is_array($d)) {
-							return array_map(__FUNCTION__, $d);
-						}
-						else {
-							return $d;
-						}
-					}
+        	<div class="multiple_checkbox">            
+            	<?php	
 					if(isset($commodity_detail)) 
-					{
-						if(in_array("Cereal crops", objectToArray($commodity_detail[0])))
-						{
-							$commodity_selected= 1;
-							echo "<input name=\"commodity[]\" type=\"checkbox\" id=\"commodity[]\" class=\"checkbox\" value=\"Cereal crops\""; if($commodity_selected==1) echo ' checked="checked"'; echo" />Cereal crops<br />";
-						}
-						else {
-							$commodity_selected= 0;
-							echo "<input name=\"commodity[]\" type=\"checkbox\" id=\"commodity[]\" class=\"checkbox\" value=\"Cereal crops\" />Cereal crops<br />";
-						}
-						
-						if(in_array("Oilseed Crops", objectToArray($commodity_detail[0])))
-						{
-							$commodity_selected= 1;
-							echo "<input name=\"commodity[]\" type=\"checkbox\" id=\"commodity[]\" class=\"checkbox\" value=\"Cereal crops\""; if($commodity_selected==1) echo ' checked="checked"'; echo" />Oilseed Crops<br />";
-						}
-						else {
-							$commodity_selected= 0;
-							echo "<input name=\"commodity[]\" type=\"checkbox\" id=\"commodity[]\" class=\"checkbox\" value=\"Cereal crops\" />Oilseed Crops<br />";
-						}
+					{						
+						foreach($commodity as $key=>$value) 
+						{ 
+							if(in_array($value->commodity_id, objectToArray($commodity_detail[0])))
+							{
+								$commodity_selected= 1;
+								echo "<input name=\"commodity[]\" type=\"checkbox\" id=\"commodity[]\" class=\"checkbox\" value=\"$value->commodity_id\""; if($commodity_selected==1) echo ' checked="checked"'; echo" />$value->commodity_name<br />";
+							}
+							else {
+								$commodity_selected= 0;
+								echo "<input name=\"commodity[]\" type=\"checkbox\" id=\"commodity[]\" class=\"checkbox\" value=\"$value->commodity_id\" />$value->commodity_name<br />";
+							}
+						  }
 					}
-					else {
-						echo "<input name=\"commodity[]\" type=\"checkbox\" id=\"commodity[]\" class=\"checkbox\" value=\"Cereal crops\" />Cereal crops<br />";
-						echo "<input name=\"commodity[]\" type=\"checkbox\" id=\"commodity[]\" class=\"checkbox\" value=\"Cereal crops\" />Oilseed Crops<br />";
+					else{
+						foreach($commodity as $key=>$value) 
+						{ 
+							echo "<input name=\"commodity[]\" type=\"checkbox\" id=\"commodity[]\" class=\"checkbox\" value=\"$value->commodity_id\" />$value->commodity_name<br />";
+						}
 					}
 				?>
             </div>
@@ -326,23 +317,23 @@ $(document).ready(function() {
             <?php 
 			if(isset($aez_detail)) 
 			{
-				for($i=0; $i<10; $i++) 
+				foreach($aez as $key=>$value) 
 				{ 
-					if(in_array($i, objectToArray($aez_detail[0])))
+					if(in_array($value->aez_id, objectToArray($aez_detail[0])))
 					{
 						$aez_selected= 1;
-						echo "<input name=\"aez[]\" type=\"checkbox\" id=\"aez[]\" class=\"checkbox\" value=\"$i\""; if($aez_selected==1) echo ' checked="checked"'; echo" />AEZ- $i<br />";
+						echo "<input name=\"aez[]\" type=\"checkbox\" id=\"aez[]\" class=\"checkbox\" value=\"$value->aez_id\""; if($aez_selected==1) echo ' checked="checked"'; echo" />$value->aez_name<br />";
 					}
 					else {
 						$aez_selected= 0;
-						echo "<input name=\"aez[]\" type=\"checkbox\" id=\"aez[]\" class=\"checkbox\" value=\"$i\" />AEZ- $i<br />";
+						echo "<input name=\"aez[]\" type=\"checkbox\" id=\"aez[]\" class=\"checkbox\" value=\"$value->aez_id\" />$value->aez_name<br />";
 					}
-				 }
+				  }
 			}
 			  else {
-				  for($i=0; $i<10; $i++) 
+				  foreach($aez as $key=>$value)  
 				  {
-				 	 echo "<input name=\"aez[]\" type=\"checkbox\" id=\"aez[]\" class=\"checkbox\" value=\"$i\" />AEZ- $i<br />";
+				 	 echo "<input name=\"aez[]\" type=\"checkbox\" id=\"aez[]\" class=\"checkbox\" value=\"$value->id\" />$value->aez_name<br />";
 				  }
 			  } 
 			?>
@@ -403,15 +394,14 @@ $(document).ready(function() {
     
     <div class="form_element">
         <div class="button_panel">
-        		<?php if(isset($program_detail) && $program_detail->program_id!=NULL) { ?>
-                	<input type="hidden" name="program_id" id="program_id" value="<?php echo $program_detail->program_id; ?>">
-        			<input type="submit" name="update_program_information" id="update_program_information" value="Update" class="k-button button">
-            		<input type="submit" name="delete_program_information" id="delete_program_information" onclick="javascript:return confirm('Do you want to delete this program?');" value="Delete" class="k-button button">
-                <?php } else { ?>
-                	<input type="submit" name="save_program_information" id="save_program_information" value="Save" class="k-button button">
-            		<input type="reset" name="reset_program_information" id="reset_program_information" value="Reset" class="k-button button">
-                <?php } ?>
-                
+			<?php if(isset($program_detail) && $program_detail->program_id!=NULL) { ?>
+                <input type="hidden" name="program_id" id="program_id" value="<?php echo $program_detail->program_id; ?>">
+                <input type="submit" name="update_program_information" id="update_program_information" value="Update" class="k-button button">
+                <input type="submit" name="delete_program_information" id="delete_program_information" onclick="javascript:return confirm('Do you want to delete this program?');" value="Delete" class="k-button button">
+            <?php } else { ?>
+                <input type="submit" name="save_program_information" id="save_program_information" value="Save" class="k-button button">
+                <input type="reset" name="reset_program_information" id="reset_program_information" value="Reset" class="k-button button">
+            <?php } ?>                
             
         </div>
         <div class="clear"></div>

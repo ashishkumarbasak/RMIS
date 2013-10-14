@@ -247,3 +247,9 @@
 .no-margin{ margin:0px !important;}
 .width-100{ width:100%; }
 .gap{ height: 20px;}
+.width_68_percent{
+	width:68%;
+}
+.width_170px{
+	width:170px !important;
+}
