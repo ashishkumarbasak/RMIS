@@ -375,10 +375,6 @@ class Kendodatasource_model extends CI_Model
                 }
             }
 
-
-            
-
-
             $columns = implode(', ', $columns);
             $values = implode(', ', $values);
 

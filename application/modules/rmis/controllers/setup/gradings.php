@@ -5,8 +5,7 @@ class Gradings extends MX_Controller{
     public function __construct(){
         parent::__construct();
         $this->load->model('Kendodatasource_model', 'grid');
-        $this->load->model('Division_model', 'division');
-		$this->load->model('Employee_model', 'employee');
+        $this->load->model('Grading_model', 'grading');
 
         $this->template->set_partial('header', 'layouts/header')
 						->set_layout('extensive/main_layout');
@@ -15,7 +14,7 @@ class Gradings extends MX_Controller{
     public function index($division_id=NULL){
         $this->template->title('Research Management(RM)', ' Setup Info.', ' Grading Information');
         
-		if($this->input->post('save_division')){
+		if($this->input->post('save_gradings')){
 			$request = json_encode($this->input->post());
 			$this->dataCreate($request);
 		}
@@ -37,25 +36,25 @@ class Gradings extends MX_Controller{
 
         $create = new \Kendo\Data\DataSourceTransportCreate();
 
-        $create->url(site_url('rmis/setup/divisions/dataCreate'))
+        $create->url(site_url('rmis/setup/gradings/dataCreate'))
              ->contentType('application/json')
              ->type('POST');
 
         $read = new \Kendo\Data\DataSourceTransportRead();
 
-        $read->url(site_url('rmis/setup/divisions/dataRead'))
+        $read->url(site_url('rmis/setup/gradings/dataRead'))
              ->contentType('application/json')
              ->type('POST');
 
         $update = new \Kendo\Data\DataSourceTransportUpdate();
 
-        $update->url(site_url('rmis/setup/divisions/dataUpdate'))
+        $update->url(site_url('rmis/setup/gradings/dataUpdate'))
              ->contentType('application/json')
              ->type('POST');
 
         $destroy = new \Kendo\Data\DataSourceTransportDestroy();
 
-        $destroy->url(site_url('rmis/setup/divisions/dataDestroy'))
+        $destroy->url(site_url('rmis/setup/gradings/dataDestroy'))
              ->contentType('application/json')
              ->type('POST');
 
@@ -74,32 +73,19 @@ class Gradings extends MX_Controller{
                        ->editable(false)
                        ->nullable(true);
 					   
-		$divisionIDField = new \Kendo\Data\DataSourceSchemaModelField('division_id');
-        $divisionIDField->type('string');
+		$gradingTitleField = new \Kendo\Data\DataSourceSchemaModelField('grading_title');
+        $gradingTitleField->type('string');
                        //->editable(false)
                        //->nullable(true);
         
-        $divisionNameField = new \Kendo\Data\DataSourceSchemaModelField('division_name');
-        $divisionNameField->type('string')
+        $effectDateField = new \Kendo\Data\DataSourceSchemaModelField('effect_date');
+        $effectDateField->type('string')
                 ->properties();
-
-        $divisionHeadField = new \Kendo\Data\DataSourceSchemaModelField('division_head');
-        $divisionHeadField->type('string');
-
-
-        $divisionPhoneField = new \Kendo\Data\DataSourceSchemaModelField('division_phone');
-        $divisionPhoneField->type('string');
-		
-		$divisionEmailField = new \Kendo\Data\DataSourceSchemaModelField('division_email');
-        $divisionEmailField->type('string');
 
         $model->id('id')
             ->addField($IDField)
-            ->addField($divisionIDField)
-            ->addField($divisionNameField)
-			->addField($divisionHeadField)
-			->addField($divisionPhoneField)
-			->addField($divisionEmailField);
+            ->addField($gradingTitleField)
+            ->addField($effectDateField);
 
         $schema = new \Kendo\Data\DataSourceSchema();
         $schema->data('data')
@@ -120,24 +106,16 @@ class Gradings extends MX_Controller{
         $grid = new \Kendo\UI\Grid('grid');
 		
         $ID = new \Kendo\UI\GridColumn();
-        $ID->field('division_id') //->filterable($fundTypeFilterable)
+        $ID->field('id') //->filterable($fundTypeFilterable)
                  ->title('ID');
 				 
-		$divName = new \Kendo\UI\GridColumn();
-        $divName->field('division_name')
-                 ->title('Division / Unit Name');
+		$gradingTitle = new \Kendo\UI\GridColumn();
+        $gradingTitle->field('grading_title')
+                 ->title('Grading Title');
 				 
-		$divHead = new \Kendo\UI\GridColumn();
-        $divHead->field('division_head')
-                 ->title('Head of Division');
-				 
-		$divPhone = new \Kendo\UI\GridColumn();
-        $divPhone->field('division_phone')
-                 ->title('Phone No');
-				 
-		$divEmail = new \Kendo\UI\GridColumn();
-        $divEmail->field('division_email')
-                 ->title('Email');
+		$effectDate = new \Kendo\UI\GridColumn();
+        $effectDate->field('effect_date')
+                 ->title('Effect Date');
 		
 		$command = new \Kendo\UI\GridColumn();
         $command->addCommandItem('destroy')
@@ -161,29 +139,9 @@ class Gradings extends MX_Controller{
         $sortable = new \Kendo\UI\GridSortable();
         $sortable->mode('single')
             ->allowUnsort(false);
-        
-        //$btnAdd = new \Kendo\UI\GridToolbarItem('create');
-        //$btnAdd->text("Add New Performing Unit/Division");
-		
-        /*
-        $stringOperators = new \Kendo\UI\GridFilterableOperatorsString();
-        $stringOperators
-                ->startsWith('Starts with')
-                ->eq('Is equal to')
-                ->neq('Is not equal to');
-		
-		
-        $operators = new \Kendo\UI\GridFilterableOperators();
-        $operators->string($stringOperators);
-
-        $filterable = new \Kendo\UI\GridFilterable();
-        $filterable->extra(false)
-            ->operators($operators);
-		*/	
-        
-        $grid->addColumn($ID, $divName, $divHead, $divPhone, $divEmail, $commandColumn, $command)
-             ->dataSource($dataSource) 
-			 //->addToolbarItem($btnAdd)
+                
+        $grid->addColumn($gradingTitle, $effectDate, $commandColumn, $command)
+             ->dataSource($dataSource)
 			 ->height(450)
              ->editable($editable)
              ->sortable($sortable)   
@@ -192,8 +150,6 @@ class Gradings extends MX_Controller{
         $gridData =  $grid->render();
         $this->template->set('grid_data', $gridData);
 		
-		$this->template->set('newDivID',$this->division->get_new_id());
-		
 		if($division_id!=NULL){
 			
 			if($this->input->post('save_update')){
@@ -201,14 +157,13 @@ class Gradings extends MX_Controller{
 				$this->dataUpdate($request);
 			}
 				
-			$division_detail = $this->division->get_details($division_id);
+			$division_detail = $this->grading->get_details($division_id);
 			$this->template->set('division_detail', serialize($division_detail));
 		}
 		
 		
         $this->template->set('content_header_icon', 'class="icofont-file"');
         $this->template->set('content_header_title', 'Grading Information');
-        $this->template->set('employees',$this->employee->get_employees());
 		
         $breadcrumb = '<ul class="breadcrumb">
 						<li><a href="#"><i class="icofont-home"></i> RMIS</a> <span class="divider">&raquo;</span></li>
@@ -226,21 +181,40 @@ class Gradings extends MX_Controller{
         $request = json_decode($request);
 		//print_r($request);
 		
-        $this->form_validation->set_rules($this->division->validation);
-        $this->division->isValidate((array) $request);
+        $this->form_validation->set_rules($this->grading->validation);
+        $this->grading->isValidate((array) $request);
         if ($this->form_validation->run() === false) {
             header("HTTP/1.1 500 Internal Server Error");
             echo "Wrong data ! try again" ;
             exit;
         }
        
-        $columns = array('division_id', 'division_name', 'division_head', 'division_phone', 'division_email', 'division_order', 'division_about');
+        $columns = array('grading_title', 'effect_date');
         $columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
         
-        $data= $this->grid->create('rmis_divisions', $columns, $request, 'id'); 
+        $data= $this->grid->create('rmis_gradings', $columns, $request, 'id');
+		
+		$columns = array('lower_range', 'upper_range','letter_grade','grade_point','qualitative_status','description','grading_id');
+		$request->grading_id = $request->id;
+		$i=0;
+		if(!empty($request->lower_range)>0){
+			foreach($request->lower_range as $lower_range_key=>$lower_range_value){
+				if($lower_range_value!=NULL){
+					$request->lower_range = $lower_range_value;
+					$request->upper_range = $request->upper_range[$i];
+					$request->letter_grade = $request->letter_grade[$i];
+					$request->grade_point = $request->grade_point[$i];
+					$request->qualitative_status = $request->qualitative_status[$i];
+					$request->description = $request->description[$i];
+					$this->grid->create('rmis_grade_point_informations', $columns, $request, 'id');
+					$i++;	
+				}
+			}
+		}
+		 
         $data['success'] ="Data created successfuly.";
         //echo json_encode($data , JSON_NUMERIC_CHECK); 
     }
@@ -248,13 +222,14 @@ class Gradings extends MX_Controller{
     public function dataRead(){
         header('Content-Type: application/json');
         $request = json_decode(file_get_contents('php://input'));
-        $data= $this->grid->read_with_join_table('rmis_divisions', array('rmis_divisions.id','division_id', 'division_name', 'hrm_employees.employee_name as division_head','division_phone','division_email'), $request, 'hrm_employees', 'rmis_divisions.division_head = hrm_employees.employee_id');       
+        $data= $this->grid->read('rmis_gradings', array('rmis_gradings.id', 'rmis_gradings.id as grading_id', 'grading_title', 'effect_date'), $request);       
         echo json_encode($data, JSON_NUMERIC_CHECK);
     }
     public function dataDestroy(){   
         header('Content-Type: application/json');
         $request = json_decode(file_get_contents('php://input'));
-        $data = $this->grid->destroy('rmis_divisions', $request->models, 'id'); 
+        $data = $this->grid->destroy('rmis_gradings', $request->models, 'id'); 
+		$data = $this->grid->destroy('rmis_grade_point_informations', $request->models, 'grading_id');
         echo json_encode($data , JSON_NUMERIC_CHECK); 
     }
     	
@@ -263,8 +238,8 @@ class Gradings extends MX_Controller{
         //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
        // print_r($request);
-        $this->form_validation->set_rules($this->division->validation);
-        $this->division->isValidate((array) $request);
+        $this->form_validation->set_rules($this->grading->validation);
+        $this->grading->isValidate((array) $request);
         if ($this->form_validation->run() === false) {
             header("HTTP/1.1 500 Internal Server Error");
             echo "Wrong data ! try again" ;
@@ -277,7 +252,7 @@ class Gradings extends MX_Controller{
         $columns[] = 'modified_by';
         $request->modified_by = 1;
         
-        $data = $this->grid->update('rmis_divisions', $columns, $request, 'id'); 
+        $data = $this->grid->update('rmis_gradings', $columns, $request, 'id'); 
         $data['success'] ="Data updated successfuly.";
         //echo json_encode($data , JSON_NUMERIC_CHECK);  
     }
