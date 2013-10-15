@@ -1,6 +1,6 @@
 <?php
 
-class CostBreakDown extends MX_Controller{
+class FundSources extends MX_Controller{
     private $_data;
     public function __construct(){
         parent::__construct();
@@ -37,25 +37,25 @@ class CostBreakDown extends MX_Controller{
 
         $create = new \Kendo\Data\DataSourceTransportCreate();
 
-        $create->url(site_url('rmis/setup/divisions/dataCreate'))
+        $create->url(site_url('rmis/program/costBreakDown/dataCreate'))
              ->contentType('application/json')
              ->type('POST');
 
         $read = new \Kendo\Data\DataSourceTransportRead();
 
-        $read->url(site_url('rmis/setup/divisions/dataRead'))
+        $read->url(site_url('rmis/program/costBreakDown/dataRead'))
              ->contentType('application/json')
              ->type('POST');
 
         $update = new \Kendo\Data\DataSourceTransportUpdate();
 
-        $update->url(site_url('rmis/setup/divisions/dataUpdate'))
+        $update->url(site_url('rmis/program/costBreakDown/dataUpdate'))
              ->contentType('application/json')
              ->type('POST');
 
         $destroy = new \Kendo\Data\DataSourceTransportDestroy();
 
-        $destroy->url(site_url('rmis/setup/divisions/dataDestroy'))
+        $destroy->url(site_url('rmis/program/costBreakDown/dataDestroy'))
              ->contentType('application/json')
              ->type('POST');
 
@@ -215,10 +215,10 @@ class CostBreakDown extends MX_Controller{
 						<li><a href="#">Program info.</a><span class="divider">&raquo;</span></li><li class="active">Program Fund Source & Cost Breakdown Info</li>
 					  </ul>';
         $this->template->set('breadcrumb', $breadcrumb);		
-        $this->template->set_partial('progOtherInfoForm','program/otherInfo/form');
+        $this->template->set_partial('progFundSourcesForm','program/fundSources/form');
 		$this->template->set_partial('tab_menu','program/form_tabs');
         $this->template->set_partial('sidebar', 'layouts/sidebar',$_data)
-               ->build('program/otherInfo/index');
+               ->build('program/fundSources/index');
     }
 	
 	public function dataCreate($request){

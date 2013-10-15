@@ -1,6 +1,6 @@
 <?php
 
-class ActivityLists extends MX_Controller{
+class ImplementationCommittees extends MX_Controller{
     private $_data;
     public function __construct(){
         parent::__construct();
@@ -13,7 +13,7 @@ class ActivityLists extends MX_Controller{
     }
     
     public function index($division_id=NULL){
-        $this->template->title('Research Management(RM)', ' Programs', ' Program Steering Committee Information');
+        $this->template->title('Research Management(RM)', ' Programs', ' Program Implementation Committee Information');
         
 		if($this->input->post('save_division')){
 			$request = json_encode($this->input->post());
@@ -212,13 +212,13 @@ class ActivityLists extends MX_Controller{
 		
         $breadcrumb = '<ul class="breadcrumb">
 						<li><a href="#"><i class="icofont-home"></i> RMIS</a> <span class="divider">&raquo;</span></li>
-						<li><a href="#">Program info.</a><span class="divider">&raquo;</span></li><li class="active">Program Steering Committee Information</li>
+						<li><a href="#">Program info.</a><span class="divider">&raquo;</span></li><li class="active">Program Implementation Committee Information</li>
 					  </ul>';
         $this->template->set('breadcrumb', $breadcrumb);		
-        $this->template->set_partial('steeringCommitteeForm','program/ActivityLists/form');
+        $this->template->set_partial('implCommitteeForm','program/ImplementationCommittees/form');
 		$this->template->set_partial('tab_menu','program/form_tabs');
         $this->template->set_partial('sidebar', 'layouts/sidebar',$_data)
-               ->build('program/ActivityLists/index');
+               ->build('program/ImplementationCommittees/index');
     }
 	
 	public function dataCreate($request){

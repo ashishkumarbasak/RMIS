@@ -1,6 +1,6 @@
 <?php
 
-class ActivityLists extends MX_Controller{
+class SteeringCommittees extends MX_Controller{
     private $_data;
     public function __construct(){
         parent::__construct();
@@ -215,10 +215,10 @@ class ActivityLists extends MX_Controller{
 						<li><a href="#">Program info.</a><span class="divider">&raquo;</span></li><li class="active">Program Steering Committee Information</li>
 					  </ul>';
         $this->template->set('breadcrumb', $breadcrumb);		
-        $this->template->set_partial('steeringCommitteeForm','program/ActivityLists/form');
+        $this->template->set_partial('steeringCommitteeForm','program/steeringCommittees/form');
 		$this->template->set_partial('tab_menu','program/form_tabs');
         $this->template->set_partial('sidebar', 'layouts/sidebar',$_data)
-               ->build('program/ActivityLists/index');
+               ->build('program/steeringCommittees/index');
     }
 	
 	public function dataCreate($request){
