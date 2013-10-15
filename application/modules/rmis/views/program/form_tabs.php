@@ -6,7 +6,7 @@
     <li<?php if($this->uri->segment($uri_segment_level)=='researchTeams') echo " class=\"active\"";?>><a href="<?php echo site_url('rmis/program/researchTeams');?>">Research Team Info</a></li>
     <li<?php if($this->uri->segment($uri_segment_level)=='steeringCommittees') echo " class=\"active\"";?>><a href="<?php echo site_url('rmis/program/steeringCommittees');?>">Steering Committee Info</a></li>
     <li<?php if($this->uri->segment($uri_segment_level)=='implementationCommittees') echo " class=\"active\"";?>><a href="<?php echo site_url('rmis/program/implementationCommittees');?>">Implementation Committee Info</a></li>
-    <li<?php if($this->uri->segment($uri_segment_level)=='activityLists') echo " class=\"active\"";?>><a href="<?php echo site_url('rmis/program/activityList');?>">Activity List</a></li>
-    <li<?php if($this->uri->segment($uri_segment_level)=='monitorEvaluation') echo " class=\"active\"";?>><a href="<?php echo site_url('rmis/program/monitorEvaluation');?>">M&E Info</a></li>
-    <li<?php if($this->uri->segment($uri_segment_level)=='relatedDocument') echo " class=\"active\"";?>><a href="<?php echo site_url('rmis/program/relatedDocument');?>">Related Document</a></li>
+    <li<?php if($this->uri->segment($uri_segment_level)=='activityLists') echo " class=\"active\"";?>><a href="<?php echo site_url('rmis/program/activityLists');?>">Activity List</a></li>
+    <li<?php if($this->uri->segment($uri_segment_level)=='monitorEvaluations') echo " class=\"active\"";?>><a href="<?php echo site_url('rmis/program/monitorEvaluations');?>">M&E Info</a></li>
+    <li<?php if($this->uri->segment($uri_segment_level)=='relatedDocuments') echo " class=\"active\"";?>><a href="<?php echo site_url('rmis/program/relatedDocuments');?>">Related Document</a></li>
 </ul>

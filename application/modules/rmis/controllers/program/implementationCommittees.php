@@ -215,10 +215,10 @@ class ImplementationCommittees extends MX_Controller{
 						<li><a href="#">Program info.</a><span class="divider">&raquo;</span></li><li class="active">Program Implementation Committee Information</li>
 					  </ul>';
         $this->template->set('breadcrumb', $breadcrumb);		
-        $this->template->set_partial('implCommitteeForm','program/ImplementationCommittees/form');
+        $this->template->set_partial('implCommitteeForm','program/implementationCommittees/form');
 		$this->template->set_partial('tab_menu','program/form_tabs');
         $this->template->set_partial('sidebar', 'layouts/sidebar',$_data)
-               ->build('program/ImplementationCommittees/index');
+               ->build('program/implementationCommittees/index');
     }
 	
 	public function dataCreate($request){

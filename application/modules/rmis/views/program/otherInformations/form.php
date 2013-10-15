@@ -8,7 +8,7 @@
 	<div class="main_form">
     	<div class="form_element">
         	<div class="label width_170px">Title of Research Programme</div>
-            <div class="textarea_field"><textarea name="research_program_title" id="research_program_title" class="textarea_small width_68_percent"></textarea></div>
+            <div class="textarea_field"><textarea name="research_program_title" id="research_program_title" class="textarea_small disabled width_68_percent" readonly="readonly"></textarea></div>
             <div class="clear"></div>
         </div>
         
@@ -16,7 +16,7 @@
         	<div class="form_element">
             	<div class="label width_170px">Programme Area </div>
                 <div class="field">
-                	<input type="text" name="program_area" id="program_area" value="" class="textbox">
+                	<input type="text" name="program_area" id="program_area" value="" class="textbox disabled" readonly="readonly">
                	</div>
                	<div class="clear"></div>
       		</div>      
@@ -26,7 +26,7 @@
         	<div class="form_element">
         		<div class="label">Principal Investigator <br />(or PM/Coordinator)</div>
         		<div class="field">
-                	<input type="text" name="principal_investor" id="principal_investor" value="" class="textbox">
+                	<input type="text" name="principal_investor" id="principal_investor" value="" class="textbox disabled" readonly="readonly">
     			</div>
   				<div class="clear"></div>
  			</div>
