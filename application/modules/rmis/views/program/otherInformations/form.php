@@ -118,7 +118,7 @@
         	</div>
         	
         	<div class="form_element">
-	            <div class="button_panel">
+	            <div class="button_panel" style="margin-right: 112px;">
 	                <?php if(isset($division_detail) && $division_detail->division_id!=NULL) { ?>
 	                	<input type="hidden" name="id" id="id" value="<?php echo $division_detail->id; ?>">
 	        			<input type="submit" name="update_program_otherinfo" id="update_program_otherinfo" value="Update" class="k-button button">
