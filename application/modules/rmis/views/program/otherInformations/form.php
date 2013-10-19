@@ -115,6 +115,18 @@
                		<textarea name="program_risks" id="program_risks" class="textarea width_68_percent"></textarea>
               	</div>
             	<div class="clear"></div>
-        	</div>        
+        	</div>
+        	
+        	<div class="form_element">
+	            <div class="button_panel">
+	                <?php if(isset($division_detail) && $division_detail->division_id!=NULL) { ?>
+	                	<input type="hidden" name="id" id="id" value="<?php echo $division_detail->id; ?>">
+	        			<input type="submit" name="update_program_otherinfo" id="update_program_otherinfo" value="Update" class="k-button button">
+	                <?php } else { ?>
+	                	<input type="submit" name="save_program_otherinfo" id="save_program_otherinfo" value="Save" class="k-button button">
+	                <?php } ?>
+	            </div>
+	            <div class="clear"></div>
+	        </div>        
 	</div>
 </form>

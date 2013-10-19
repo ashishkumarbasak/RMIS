@@ -5,7 +5,7 @@ class OtherInformations extends MX_Controller{
     public function __construct(){
         parent::__construct();
         $this->load->model('Kendodatasource_model', 'grid');
-        $this->load->model('Division_model', 'division');
+        $this->load->model('Program_model', 'program');
 		$this->load->model('Employee_model', 'employee');
 
         $this->template->set_partial('header', 'layouts/header')
@@ -15,7 +15,7 @@ class OtherInformations extends MX_Controller{
     public function index($division_id=NULL){
         $this->template->title('Research Management(RM)', ' Programs', ' Program Other Information');
         
-		if($this->input->post('save_division')){
+		if($this->input->post('save_program_otherinfo')){
 			$request = json_encode($this->input->post());
 			$this->dataCreate($request);
 		}
@@ -37,25 +37,25 @@ class OtherInformations extends MX_Controller{
 
         $create = new \Kendo\Data\DataSourceTransportCreate();
 
-        $create->url(site_url('rmis/program/otherInfo/dataCreate'))
+        $create->url(site_url('rmis/program/OtherInformations/dataCreate'))
              ->contentType('application/json')
              ->type('POST');
 
         $read = new \Kendo\Data\DataSourceTransportRead();
 
-        $read->url(site_url('rmis/program/otherInfo/dataRead'))
+        $read->url(site_url('rmis/program/OtherInformations/dataRead'))
              ->contentType('application/json')
              ->type('POST');
 
         $update = new \Kendo\Data\DataSourceTransportUpdate();
 
-        $update->url(site_url('rmis/program/otherInfo/dataUpdate'))
+        $update->url(site_url('rmis/program/OtherInformations/dataUpdate'))
              ->contentType('application/json')
              ->type('POST');
 
         $destroy = new \Kendo\Data\DataSourceTransportDestroy();
 
-        $destroy->url(site_url('rmis/program/otherInfo/dataDestroy'))
+        $destroy->url(site_url('rmis/program/OtherInformations/dataDestroy'))
              ->contentType('application/json')
              ->type('POST');
 
@@ -162,25 +162,6 @@ class OtherInformations extends MX_Controller{
         $sortable->mode('single')
             ->allowUnsort(false);
         
-        //$btnAdd = new \Kendo\UI\GridToolbarItem('create');
-        //$btnAdd->text("Add New Performing Unit/Division");
-		
-        /*
-        $stringOperators = new \Kendo\UI\GridFilterableOperatorsString();
-        $stringOperators
-                ->startsWith('Starts with')
-                ->eq('Is equal to')
-                ->neq('Is not equal to');
-		
-		
-        $operators = new \Kendo\UI\GridFilterableOperators();
-        $operators->string($stringOperators);
-
-        $filterable = new \Kendo\UI\GridFilterable();
-        $filterable->extra(false)
-            ->operators($operators);
-		*/	
-        
         $grid->addColumn($ID, $divName, $divHead, $divPhone, $divEmail, $commandColumn, $command)
              ->dataSource($dataSource) 
 			 //->addToolbarItem($btnAdd)
@@ -191,8 +172,6 @@ class OtherInformations extends MX_Controller{
         
         $gridData =  $grid->render();
         $this->template->set('grid_data', $gridData);
-		
-		$this->template->set('newDivID',$this->division->get_new_id());
 		
 		if($division_id!=NULL){
 			
@@ -225,23 +204,18 @@ class OtherInformations extends MX_Controller{
         //header('Content-Type: application/json');
         //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
-		//print_r($request);
-		
-        $this->form_validation->set_rules($this->division->validation);
-        $this->division->isValidate((array) $request);
-        if ($this->form_validation->run() === false) {
-            header("HTTP/1.1 500 Internal Server Error");
-            echo "Wrong data ! try again" ;
-            exit;
-        }
        
-        $columns = array('division_id', 'division_name', 'division_head', 'division_phone', 'division_email', 'division_order', 'division_about');
+        $columns = array('program_rationale', 'program_methodology', 'program_background', 'program_socio_economical_impact', 
+        				'program_environmental_impact', 'program_targeted_beneficiary', 'program_reference', 'program_external_affiliation',
+        				'program_organization_policy', 'program_risks');
         $columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
+		$columns[] = 'program_id';
+        $request->program_id = 1;
         
-        $data= $this->grid->create('rmis_divisions', $columns, $request, 'id'); 
+        $data= $this->grid->create('rmis_program_other_informations', $columns, $request, 'id'); 
         $data['success'] ="Data created successfuly.";
         //echo json_encode($data , JSON_NUMERIC_CHECK); 
     }

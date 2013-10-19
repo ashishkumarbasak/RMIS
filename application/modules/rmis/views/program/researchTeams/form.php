@@ -1,3 +1,12 @@
+<script src="<?php echo site_url('/assets/js/jquery-dynamic-form.js'); ?>"></script>
+<script src="<?php echo site_url('/assets/js/bootstrap-datepicker.js'); ?>"></script>
+<link rel="stylesheet" href="<?php echo site_url('assets/extensive/css/datepicker.css'); ?>" />
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#duplicate2").dynamicForm("#plus2", "#minus2", {limit:10});		
+	return false;
+});
+</script>
 <?php 
 	if(isset($division_detail)){
 		$division_detail = unserialize($division_detail);
@@ -63,4 +72,81 @@
            	</div>                        
 		</div>                                                 
 	</div>
+	
+	
+	<div class="main_form">
+		<div class="left_form">
+        	<div class="form_element">
+           		<div class="label width_170px">Team Formation Date </div>
+                <div class="field">
+              		<input type="text" name="team_formation_date" id="team_formation_date" value="" class="textbox disabled" readonly="readonly">
+               	</div>
+           		<div class="clear"></div>
+        	</div>
+		</div>
+                    
+		<div class="form">
+	    	<div class="form_element">
+	            <div class="label">Team Information</div>
+	            <div class="clear"></div>
+	        </div>
+	    	<div class="row">
+	    		<div class="grid-1-6 left">
+	        		<div class="heading">Member Type</div>
+	    		</div>
+	    		<div class="grid-1-6 left">
+	        		<div class="heading">Institute Name</div>
+	    		</div>
+	    		<div class="grid-1-6 left">
+	        		<div class="heading">Member Name</div>
+	    		</div>
+	    		<div class="grid-1-6 left">
+	        		<div class="heading">Designation</div>
+	    		</div>
+	    		<div class="grid-1-6 left">
+	        		<div class="heading">Contact No</div>
+	    		</div>
+	    		<div class="grid-1-6 left">
+	        		<div class="heading">Email</div>
+	    		</div>
+	    		<div class="clear"></div>
+	    	</div>
+	    	
+	    	<div id='duplicate2'>
+		    	<div class="row">
+			    	<div class="grid-1-6 left">
+			        	<input class="textbox no-margin width-89" type="text" name="member_type[]" id="lower_range" value=""/>
+			    	</div>
+			    	<div class="grid-1-6 left">
+			        	<input class="textbox no-margin width-89" type="text" name="institute_name[]" id="upper_range" value=""/>
+			    	</div>
+			    	<div class="grid-1-6 left">
+			        	<input class="textbox no-margin width-89" type="text" name="member_name[]" id="letter_grade" value=""/>	
+			    	</div>
+			    	<div class="grid-1-6 left">
+			        	<input class="textbox no-margin width-89" type="text" name="designation[]" id="grade_point" value=""/>	
+			    	</div>
+			    	<div class="grid-1-6 left">
+			        	<input class="textbox no-margin width-89" type="text" name="contact_no[]" id="qualitative_status" value=""/>	
+			    	</div>
+			    	<div class="grid-1-6 left">
+			        	<input class="textbox no-margin width-89" type="text" name="email[]" id="description" value=""/>	
+			    	</div>
+			    </div>
+			    <div class="row add-more">
+			    	<a id="minus2" href="javascript:void(0);">[-]</a>
+			    	<a id="plus2" href="javascript:void(0);">[+]</a>
+			    </div>
+			    <div class="clear"></div>
+			</div>
+	    </div>
+	</div>
+	
+	
 </form>
+<script language="javascript">
+	$('#team_formation_date').datepicker('setStartDate');
+</script>
+
+
+
