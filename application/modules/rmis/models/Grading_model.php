@@ -36,6 +36,38 @@ class Grading_model extends MY_Model {
 		}else{
 			return NULL;	
 		}
+	}
+	
+	public function get_grade_point_informations($grading_id=NULL){
+		if($grading_id!=NULL){
+			$this->db->select('*');
+			$this->db->from('rmis_grade_point_informations');
+			$this->db->where('grading_id',$grading_id);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result;
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;	
+		}
+	}
+	
+	function deleteGradePointInformation($grade_point_id=NULL){
+		if($grade_point_id!=NULL){
+			$this->db->where('id',$grade_point_id);
+			$this->db->delete('rmis_grade_point_informations');
+		}
+	}
+	
+	function clean_gradePointInformation($grading_id=NULL){
+		if($grading_id!=NULL){
+			$this->db->where('grading_id',$grading_id);
+			$this->db->delete('rmis_grade_point_informations');
+		}
 	}	
 }
 ?>

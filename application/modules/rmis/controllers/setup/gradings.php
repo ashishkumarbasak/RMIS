@@ -11,7 +11,7 @@ class Gradings extends MX_Controller{
 						->set_layout('extensive/main_layout');
     }
     
-    public function index($division_id=NULL){
+    public function index($grading_id=NULL){
         $this->template->title('Research Management(RM)', ' Setup Info.', ' Grading Information');
         
 		if($this->input->post('save_gradings')){
@@ -150,15 +150,16 @@ class Gradings extends MX_Controller{
         $gridData =  $grid->render();
         $this->template->set('grid_data', $gridData);
 		
-		if($division_id!=NULL){
-			
-			if($this->input->post('save_update')){
+		if($grading_id!=NULL){
+			if($this->input->post('update_gradings')){
 				$request = json_encode($this->input->post());
 				$this->dataUpdate($request);
 			}
-				
-			$division_detail = $this->grading->get_details($division_id);
-			$this->template->set('division_detail', serialize($division_detail));
+			$grading_detail = $this->grading->get_details($grading_id);
+			$this->template->set('grading_detail', serialize($grading_detail));
+			
+			$grade_point_informations = $this->grading->get_grade_point_informations($grading_id);
+			$this->template->set('grade_point_informations', serialize($grade_point_informations));
 		}
 		
 		
@@ -200,15 +201,15 @@ class Gradings extends MX_Controller{
 		$columns = array('lower_range', 'upper_range','letter_grade','grade_point','qualitative_status','description','grading_id');
 		$request->grading_id = $request->id;
 		$i=0;
-		if(!empty($request->lower_range)>0){
-			foreach($request->lower_range as $lower_range_key=>$lower_range_value){
+		if(!empty($request->lower_ranges)>0){
+			foreach($request->lower_ranges as $lower_range_key=>$lower_range_value){
 				if($lower_range_value!=NULL){
 					$request->lower_range = $lower_range_value;
-					$request->upper_range = $request->upper_range[$i];
-					$request->letter_grade = $request->letter_grade[$i];
-					$request->grade_point = $request->grade_point[$i];
-					$request->qualitative_status = $request->qualitative_status[$i];
-					$request->description = $request->description[$i];
+					$request->upper_range = $request->upper_ranges[$i];
+					$request->letter_grade = $request->letter_grades[$i];
+					$request->grade_point = $request->grade_points[$i];
+					$request->qualitative_status = $request->qualitative_statuses[$i];
+					$request->description = $request->descriptions[$i];
 					$this->grid->create('rmis_grade_point_informations', $columns, $request, 'id');
 					$i++;	
 				}
@@ -237,7 +238,7 @@ class Gradings extends MX_Controller{
         //header('Content-Type: application/json');
         //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
-       // print_r($request);
+		
         $this->form_validation->set_rules($this->grading->validation);
         $this->grading->isValidate((array) $request);
         if ($this->form_validation->run() === false) {
@@ -245,17 +246,43 @@ class Gradings extends MX_Controller{
             echo "Wrong data ! try again" ;
             exit;
         }
-        
-        $columns = array('id', 'division_name', 'division_head', 'division_phone', 'division_email', 'division_order', 'division_about');
-        $columns[] = 'modified_at';        
+       
+        $columns = array('id','grading_title', 'effect_date');
+        $columns[] = 'modified_at';
         $request->modified_at = date('Y-m-d H:i:s');            
         $columns[] = 'modified_by';
         $request->modified_by = 1;
         
-        $data = $this->grid->update('rmis_gradings', $columns, $request, 'id'); 
+        $data= $this->grid->update('rmis_gradings', $columns, $request, 'id');
+		
+		$columns = array('lower_range', 'upper_range','letter_grade','grade_point','qualitative_status','description','grading_id');
+		$request->grading_id = $request->id;
+		$i=0;
+		if(!empty($request->lower_ranges)>0){
+			$this->grading->clean_gradePointInformation($request->grading_id);
+			foreach($request->lower_ranges as $lower_range_key=>$lower_range_value){
+				if($lower_range_value!=NULL){
+					$request->lower_range = $lower_range_value;
+					$request->upper_range = $request->upper_ranges[$i];
+					$request->letter_grade = $request->letter_grades[$i];
+					$request->grade_point = $request->grade_points[$i];
+					$request->qualitative_status = $request->qualitative_statuses[$i];
+					$request->description = $request->descriptions[$i];
+					$this->grid->create('rmis_grade_point_informations', $columns, $request, 'id');
+					$i++;	
+				}
+			}
+		}
+
         $data['success'] ="Data updated successfuly.";
         //echo json_encode($data , JSON_NUMERIC_CHECK);  
     }
+
+	public function deleteGradePoint(){
+		$grade_point_id = $this->input->post('grade_point_id');
+		$this->grading->deleteGradePointInformation($grade_point_id);
+	}
+	
                 
 } 
 ?>

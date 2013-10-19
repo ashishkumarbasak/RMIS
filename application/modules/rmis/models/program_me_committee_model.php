@@ -22,9 +22,10 @@ class program_me_committee_model extends MY_Model {
 	
 	public function get_details($id=NULL){
 		if($id!=NULL){
-			$this->db->select('*');
+			$this->db->select('*, rmis_program_me_committees.id as committee_id ');
 			$this->db->from('rmis_program_me_committees');
-			$this->db->where('id',$id);
+			$this->db->join('hrm_employees','rmis_program_me_committees.committee_chairman=hrm_employees.employee_id','left');
+			$this->db->where('rmis_program_me_committees.id',$id);
 			
 			$query = $this->db->get();
 			if($query->num_rows() > 0){
@@ -35,6 +36,41 @@ class program_me_committee_model extends MY_Model {
 			}
 		}else{
 			return NULL;	
+		}
+	}
+	
+	public function get_members($id=NULL){
+		if($id!=NULL){
+			$this->db->select('*');
+			$this->db->from('rmis_program_me_committee_members');
+			$this->db->join('hrm_employees','rmis_program_me_committee_members.member_id=hrm_employees.employee_id','left');
+			$this->db->where('rmis_program_me_committee_members.committee_id',$id);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result;
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;	
+		}
+	}
+	
+	public function deleteMember($committee_id=NULL, $member_id=NULL){
+		if($committee_id!=NULL && $member_id!=NULL){
+			$this->db->where('committee_id',$committee_id);
+			$this->db->where('member_id',$member_id);
+			
+			$this->db->delete('rmis_program_me_committee_members');
+		}
+	}
+
+	public function clean_committeeMembers($committee_id=NULL){
+		if($committee_id!=NULL){
+			$this->db->where('committee_id',$committee_id);
+			$this->db->delete('rmis_program_me_committee_members');
 		}
 	}	
 }

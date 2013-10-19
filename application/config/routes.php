@@ -82,6 +82,8 @@ $route['rmis/setup/divisions/edit/(:num)'] = 'rmis/setup/divisions/index/$1';
 $route['rmis/setup/regionalStations/edit/(:num)'] = 'rmis/setup/regionalStations/index/$1';
 $route['rmis/setup/implementationSites/edit/(:num)'] = 'rmis/setup/implementationSites/index/$1';
 $route['rmis/setup/programAreas/edit/(:num)'] = 'rmis/setup/programAreas/index/$1';
+$route['rmis/setup/programCommittees/edit/(:num)'] = 'rmis/setup/programCommittees/index/$1';
+$route['rmis/setup/gradings/edit/(:num)'] = 'rmis/setup/gradings/index/$1';
 
 $route['rmis/program/information/edit/(:num)'] = 'rmis/program/information/index/$1';
 $route['rmis/program/otherInfo/edit/(:num)'] = 'rmis/program/otherInfo/index/$1';

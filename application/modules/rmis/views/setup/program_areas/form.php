@@ -30,6 +30,7 @@
             <div class="button_panel" style="margin-right:130px;">
             	<?php if(isset($program_area_detail) && $program_area_detail->program_area_id!=NULL) { ?>
                 	<input type="hidden" name="id" id="id" value="<?php echo $program_area_detail->id; ?>">
+        			<input type="submit" name="delete_programarea" id="delete_programarea" value="Delete" class="k-button button">
         			<input type="submit" name="save_update" id="save_update" value="Update" class="k-button button">
                 <?php } else { ?>
                 	<input type="submit" name="save_Programarea" id="save" value="Save" class="k-button button">
