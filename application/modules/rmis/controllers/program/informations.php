@@ -1,5 +1,5 @@
 <?php
-class Information extends MX_Controller{
+class Informations extends MX_Controller{
     private $_data;
 	public $error=array();
 	public $data =array();
@@ -7,6 +7,7 @@ class Information extends MX_Controller{
     public function __construct(){
         parent::__construct();
         $this->load->model('Kendodatasource_model', 'grid');
+        
         $this->load->model('Division_model', 'division');
 		$this->load->model('Program_model', 'program');
 
@@ -38,154 +39,7 @@ class Information extends MX_Controller{
         $_data['setup_training_program_type_menu_active'] ='';
         $_data['setup_institutes_menu_active'] ='';
         
-        $this->template->append_metadata('<link href="/assets/kendoui/css/web/kendo.common.min.css"  rel="stylesheet"/>');
-        $this->template->append_metadata('<link href="/assets/kendoui/css/web/kendo.default.min.css"  rel="stylesheet"/>');
-        $this->template->append_metadata('<script src="/assets/kendoui/js/kendo.all.min.js"></script>');
-        $this->template->append_metadata('<script src="/assets/js/custom/tmis.js"></script>');
-                
-        require_once APPPATH.'third_party/kendoui/Autoload.php';
         
-        $transport = new \Kendo\Data\DataSourceTransport();
-
-        $create = new \Kendo\Data\DataSourceTransportCreate();
-
-        $create->url(site_url('rmis/program/information/dataCreate'))
-             ->contentType('application/json')
-             ->type('POST');
-
-        $read = new \Kendo\Data\DataSourceTransportRead();
-
-        $read->url(site_url('rmis/program/information/dataRead'))
-             ->contentType('application/json')
-             ->type('POST');
-
-        $update = new \Kendo\Data\DataSourceTransportUpdate();
-
-        $update->url(site_url('rmis/program/information/dataUpdate'))
-             ->contentType('application/json')
-             ->type('POST');
-
-        $destroy = new \Kendo\Data\DataSourceTransportDestroy();
-
-        $destroy->url(site_url('rmis/program/information/dataDestroy'))
-             ->contentType('application/json')
-             ->type('POST');
-
-        $transport->create($create)
-                  ->read($read)
-                  ->update($update)
-                  ->destroy($destroy)
-                  ->parameterMap('function(data) {
-                      return kendo.stringify(data);
-                  }');
-
-        $model = new \Kendo\Data\DataSourceSchemaModel();
-
-        $programIdField = new \Kendo\Data\DataSourceSchemaModelField('program_id');
-        $programIdField->type('number')
-                       ->editable(false)
-                       ->nullable(true);
-					   
-		$programTitleField = new \Kendo\Data\DataSourceSchemaModelField('title_of_research_program');
-        $programTitleField->type('string');
-                       //->editable(false)
-                       //->nullable(true);
-        
-        $programAreaField = new \Kendo\Data\DataSourceSchemaModelField('program_area');
-        $programAreaField->type('string')
-                ->properties();
-
-        $regionalStationNameField = new \Kendo\Data\DataSourceSchemaModelField('regional_station_name');
-        $regionalStationNameField->type('string');
-
-
-        $DivisionUnitField = new \Kendo\Data\DataSourceSchemaModelField('division_or_unit_name');
-        $DivisionUnitField->type('string');
-		
-		$departmentNameField = new \Kendo\Data\DataSourceSchemaModelField('department_name');
-        $departmentNameField->type('string');
-
-        $model->id('program_id')
-            ->addField($programIdField)
-            ->addField($programTitleField)
-            ->addField($programAreaField)
-			->addField($regionalStationNameField)
-			->addField($DivisionUnitField)
-			->addField($departmentNameField);
-
-        $schema = new \Kendo\Data\DataSourceSchema();
-        $schema->data('data')
-               ->errors('errors')
-               ->model($model)
-               ->total('total');
-
-        $dataSource = new \Kendo\Data\DataSource();
-
-        $dataSource->transport($transport)
-                   ->batch(true)
-                   ->pageSize(10)
-                   ->error('onError')
-                   ->requestEnd('onRequestEnd')
-                   ->serverSorting(true)
-                   ->schema($schema);
-
-        $grid = new \Kendo\UI\Grid('grid');
-		
-        $programTitle = new \Kendo\UI\GridColumn();
-        $programTitle->field('title_of_research_program') //->filterable($fundTypeFilterable)
-                 ->title('Program Title');
-				 
-		$programArea = new \Kendo\UI\GridColumn();
-        $programArea->field('program_area')
-                 ->title('Program Area');
-				 
-		$regionalStationName = new \Kendo\UI\GridColumn();
-        $regionalStationName->field('regional_station_name')
-                 ->title('Regional Station Name');
-				 
-		$divisionUnitName = new \Kendo\UI\GridColumn();
-        $divisionUnitName->field('division_or_unit_name')
-                 ->title('Division or Unit Name');
-				 
-		$departmentName = new \Kendo\UI\GridColumn();
-        $departmentName->field('department_name')
-                 ->title('Department Name');
-		
-		$command = new \Kendo\UI\GridColumn();
-        $command->addCommandItem('destroy')
-                ->title('&nbsp;')
-                ->width(100);
-				
-		$command2 = new \Kendo\UI\GridColumnCommandItem();
-		$command2->click('ClickEdit')
-				 ->text('Edit');
-		
-		$commandColumn = new \Kendo\UI\GridColumn();
-		$commandColumn->addCommandItem($command2)
-        ->title('&nbsp;')
-        ->width(100);
-		
-        
-        $editable = new \Kendo\UI\GridEditable();
-        $editable 	-> templateId("popup_editor")
-                	->confirmation("Are you sure you want to delete this record?")
-               	 	-> mode("inline");
-        
-        $sortable = new \Kendo\UI\GridSortable();
-        $sortable->mode('single')
-            ->allowUnsort(false);
-         
-        $grid->addColumn($programTitle, $programArea, $regionalStationName, $divisionUnitName, $departmentName, $commandColumn, $command)
-             ->dataSource($dataSource) //->addToolbarItem($btnAdd)
-             //->addToolbarItem($btnAdd)
-			 ->height(450)
-             //->editable($editable)
-             ->sortable($sortable)   
-             ->pageable(true);
-        
-        $gridData =  $grid->render();
-        $this->template->set('grid_data', $gridData);
-		
 		if($program_id!=NULL){
 				
 			$program_detail = $this->program->get_program_details($program_id);
@@ -207,14 +61,30 @@ class Information extends MX_Controller{
         $this->template->set('content_header_icon', 'class="icofont-file"');
         $this->template->set('content_header_title', 'Program Information');
 		
-        $this->template->set('program_area',$this->program->get_program_area());
-		$this->template->set('research_priority',$this->program->get_research_priority());
-		$this->template->set('research_status',$this->program->get_research_status());
-		$this->template->set('research_type',$this->program->get_research_type());
-		$this->template->set('division_or_unit',$this->program->get_division_or_unit());
+		
+		$program_areas = $this->grid->read('rmis_program_areas', array('id','program_area_id', 'program_area_name'), $request); 
+		$this->template->set('program_areas',$program_areas); //$this->program->get_program_area()
+		
+		$divisions = $this->grid->read('rmis_divisions', array('id','division_id', 'division_name'), $request);  
+		$this->template->set('divisions',$divisions); //$this->program->get_division_or_unit()
+		
+		$research_types = $this->grid->read('rmis_research_types', array('id','research_type', 'is_active'), $request); 
+		$this->template->set('research_types',$research_types); //$this->program->get_research_type()
+		
+		$research_priorities = $this->grid->read('rmis_research_priorities', array('id','research_priority', 'is_active'), $request); 
+		$this->template->set('research_priorities', $research_priorities); //$this->program->get_research_priority()
+		
+		$research_statuses = $this->grid->read('rmis_research_statuses', array('id','research_status', 'is_active'), $request);
+		$this->template->set('research_statuses',$research_statuses); //$this->program->get_research_status()
+		
+		$regional_stations = $this->grid->read('rmis_regional_stations', array('id','station_id', 'station_name'), $request);
+		$this->template->set('regional_stations',$regional_stations); //$this->program->get_regional_station_name()
+		
+		$implementation_locations = $this->grid->read('rmis_implementation_sites', array('id','implementation_site_id', 'implementation_site_name'), $request);
+		$this->template->set('implementation_locations',$implementation_locations); //$this->program->get_implementation_location()
+		
+		
 		$this->template->set('department_name',$this->program->get_department_name());
-		$this->template->set('regional_station_name',$this->program->get_regional_station_name());
-		$this->template->set('implementation_location',$this->program->get_implementation_location());
 		$this->template->set('institute_name',$this->program->get_institute_name());
 		$this->template->set('commodity',$this->program->get_commodity());
 		$this->template->set('aez',$this->program->get_aez());		

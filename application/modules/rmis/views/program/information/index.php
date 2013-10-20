@@ -18,7 +18,7 @@
         	<div class="row-fluid">
              	<?php echo $template['partials']['tab_menu']; ?>
                 <div class="tabs-container">
-                    <div class="tab-contents">
+                    <div class="tab-contents" style="padding: 0px;">
                         <?php echo $template['partials']['progInfoForm']; ?>    
                     </div>
                 </div>

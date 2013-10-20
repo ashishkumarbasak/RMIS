@@ -1,11 +1,7 @@
 <script src="<?php echo site_url('/assets/js/jquery-dynamic-form.js'); ?>"></script>
 <script src="<?php echo site_url('/assets/js/bootstrap-datepicker.js'); ?>"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-	$("#duplicate2").dynamicForm("#plus2", "#minus2", {limit:10});		
-	return false;
-});
-</script>
+<link rel="stylesheet" href="<?php echo site_url('assets/extensive/css/datepicker.css'); ?>" />
+
 <?php 
 	if(isset($division_detail)){
 		$division_detail = unserialize($division_detail);
@@ -93,7 +89,7 @@ $(document).ready(function() {
         	<div class="form_element">
            		<div class="label width_170px">Committee Formation Date </div>
                 <div class="field">
-               		<input type="text" name="fund_area" id="fund_area" value="" class="textbox disabled" readonly="readonly">
+               		<input type="text" name="committee_formation_date" id="committee_formation_date" value="" data-date-format="yyyy-mm-dd" class="textbox disabled" readonly="readonly">
                	</div>
            		<div class="clear"></div>
         	</div>
@@ -123,28 +119,52 @@ $(document).ready(function() {
 	    		<div class="clear"></div>
 	    	</div>
 	    	
-	    	<div id='duplicate2' class="row">
-		    	<div class="grid-1-5 left">
-		        	<input class="textbox no-margin" type="text" name="lower_range[]" id="lower_range" value=""/>
-		    	</div>
-		    	<div class="grid-1-5 left">
-		        	<input class="textbox no-margin" type="text" name="upper_range[]" id="upper_range" value=""/>
-		    	</div>
-		    	<div class="grid-1-5 left">
-		        	<input class="textbox no-margin width-100" type="text" name="letter_grade[]" id="letter_grade" value=""/>	
-		    	</div>
-		    	<div class="grid-1-5 left">
-		        	<input class="textbox no-margin width-100" type="text" name="qualitative_status[]" id="qualitative_status" value=""/>	
-		    	</div>
-		    	<div class="grid-1-5 left">
-		        	<input class="textbox no-margin width-100" type="text" name="description[]" id="description" value=""/>	
-		    	</div>
-		    	<span style="font-size:16px; position: relative; left: 50px;">
-		    		<a id="minus2" href="javascript:void(0);">[-]</a> 
-		    		<a id="plus2" href="javascript:void(0);">[+]</a>
-		    	</span>
-		    </div>
+	    	<div id='duplicate2'>
+		    	<div class="row">
+			    	<div class="grid-1-5 left">
+			        	<input class="textbox no-margin width-91" type="text" name="lower_range[]" id="lower_range" value=""/>
+			    	</div>
+			    	<div class="grid-1-5 left">
+			        	<input class="textbox no-margin width-91" type="text" name="upper_range[]" id="upper_range" value=""/>
+			    	</div>
+			    	<div class="grid-1-5 left">
+			        	<input class="textbox no-margin width-91" type="text" name="letter_grade[]" id="letter_grade" value=""/>	
+			    	</div>
+			    	<div class="grid-1-5 left">
+			        	<input class="textbox no-margin width-91" type="text" name="qualitative_status[]" id="qualitative_status" value=""/>	
+			    	</div>
+			    	<div class="grid-1-5 left">
+			        	<input class="textbox no-margin width-91" type="text" name="description[]" id="description" value=""/>	
+			    	</div>
+			    </div>
+			    <div class="row add-more">
+			    	<a id="minus2" href="javascript:void(0);">[-]</a> 
+			    	<a id="plus2" href="javascript:void(0);">[+]</a>
+			    </div>
+			</div>
 	    </div>
 	</div>
 	
+	<div class="form_element">
+    	<div class="button_panel" style="margin-right: 15px;">
+        	<?php if(isset($committee_detail) && $committee_detail->id!=NULL) { ?>
+                <input type="hidden" name="id" id="id" value="<?php echo $committee_detail->committee_id; ?>">
+                <input type="submit" name="delete_committee" id="delete_committee" value="Delete" class="k-button button">
+        		<input type="submit" name="save_update" id="save_update" value="Update" class="k-button button">
+            <?php } else { ?>
+                <input type="submit" name="save_program_committee" id="save_program_committee" value="Save" class="k-button button">
+            <?php } ?>
+        </div>
+        <div class="clear"></div>
+    </div>
+	
 </form>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#duplicate2").dynamicForm("#plus2", "#minus2", {limit:10});		
+	return false;
+});
+</script>
+<script language="javascript">
+	$('#committee_formation_date').datepicker('setStartDate');
+</script>
