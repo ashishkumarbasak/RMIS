@@ -79,7 +79,7 @@ $(document).ready(function() {
         	<div class="form_element">
            		<div class="label width_170px">Team Formation Date </div>
                 <div class="field">
-              		<input type="text" name="team_formation_date" id="team_formation_date" value="" class="textbox disabled" readonly="readonly">
+              		<input type="text" name="team_formation_date" id="team_formation_date" data-date-format="yyyy-mm-dd"  value="" class="textbox disabled" readonly="readonly">
                	</div>
            		<div class="clear"></div>
         	</div>
@@ -142,6 +142,19 @@ $(document).ready(function() {
 	    </div>
 	</div>
 	
+	
+	<div class="form_element">
+    	<div class="button_panel" style="margin-right:15px;">
+        	<?php if(isset($committee_detail) && $committee_detail->id!=NULL) { ?>
+                <input type="hidden" name="id" id="id" value="<?php echo $committee_detail->committee_id; ?>">
+                <input type="submit" name="delete_committee" id="delete_committee" value="Delete" class="k-button button">
+        		<input type="submit" name="save_update" id="save_update" value="Update" class="k-button button">
+            <?php } else { ?>
+                <input type="submit" name="save_researchTeam" id="save_researchTeam" value="Save" class="k-button button">
+            <?php } ?>
+        </div>
+        <div class="clear"></div>
+    </div>
 	
 </form>
 <script language="javascript">

@@ -25,7 +25,7 @@
      <li <?php echo $setup_menu_active; ?> > <a href="#" class="dropdown-toggle"> <i class="icon-desktop"></i> <span>Program</span> <b class="arrow icon-angle-down"></b> </a>
       <ul class="submenu">
         <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/program/search');?>"> <i class="icon-double-angle-right"></i>Program search</a></li>
-        <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/program/information');?>"> <i class="icon-double-angle-right"></i>Program Information </a></li>
+        <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/program/informations');?>"> <i class="icon-double-angle-right"></i>Program Information </a></li>
         <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/program/otherInformations');?>"> <i class="icon-double-angle-right"></i>Program Other Information </a></li>
         <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/program/fundSources');?>"> <i class="icon-double-angle-right"></i>Fund Source & Cost Breakdown</a></li>
         <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/program/researchTeams');?>"> <i class="icon-double-angle-right"></i>Research Team Information </a></li>

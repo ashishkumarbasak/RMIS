@@ -15,7 +15,7 @@ class ResearchTeams extends MX_Controller{
     public function index($division_id=NULL){
         $this->template->title('Research Management(RM)', ' Programs', ' Research Program Team Information');
         
-		if($this->input->post('save_division')){
+		if($this->input->post('save_researchTeam')){
 			$request = json_encode($this->input->post());
 			$this->dataCreate($request);
 		}
@@ -31,170 +31,7 @@ class ResearchTeams extends MX_Controller{
         $this->template->append_metadata('<script src="/assets/kendoui/js/kendo.all.min.js"></script>');
         $this->template->append_metadata('<script src="/assets/js/custom/tmis.js"></script>');
                 
-        require_once APPPATH.'third_party/kendoui/Autoload.php';
-        
-        $transport = new \Kendo\Data\DataSourceTransport();
-
-        $create = new \Kendo\Data\DataSourceTransportCreate();
-
-        $create->url(site_url('rmis/program/otherInfo/dataCreate'))
-             ->contentType('application/json')
-             ->type('POST');
-
-        $read = new \Kendo\Data\DataSourceTransportRead();
-
-        $read->url(site_url('rmis/program/otherInfo/dataRead'))
-             ->contentType('application/json')
-             ->type('POST');
-
-        $update = new \Kendo\Data\DataSourceTransportUpdate();
-
-        $update->url(site_url('rmis/program/otherInfo/dataUpdate'))
-             ->contentType('application/json')
-             ->type('POST');
-
-        $destroy = new \Kendo\Data\DataSourceTransportDestroy();
-
-        $destroy->url(site_url('rmis/program/otherInfo/dataDestroy'))
-             ->contentType('application/json')
-             ->type('POST');
-
-        $transport->create($create)
-                  ->read($read)
-                  ->update($update)
-                  ->destroy($destroy)
-                  ->parameterMap('function(data) {
-                      return kendo.stringify(data);
-                  }');
-
-        $model = new \Kendo\Data\DataSourceSchemaModel();
-
-        $IDField = new \Kendo\Data\DataSourceSchemaModelField('id');
-        $IDField->type('number')
-                       ->editable(false)
-                       ->nullable(true);
-					   
-		$divisionIDField = new \Kendo\Data\DataSourceSchemaModelField('division_id');
-        $divisionIDField->type('string');
-                       //->editable(false)
-                       //->nullable(true);
-        
-        $divisionNameField = new \Kendo\Data\DataSourceSchemaModelField('division_name');
-        $divisionNameField->type('string')
-                ->properties();
-
-        $divisionHeadField = new \Kendo\Data\DataSourceSchemaModelField('division_head');
-        $divisionHeadField->type('string');
-
-
-        $divisionPhoneField = new \Kendo\Data\DataSourceSchemaModelField('division_phone');
-        $divisionPhoneField->type('string');
-		
-		$divisionEmailField = new \Kendo\Data\DataSourceSchemaModelField('division_email');
-        $divisionEmailField->type('string');
-
-        $model->id('id')
-            ->addField($IDField)
-            ->addField($divisionIDField)
-            ->addField($divisionNameField)
-			->addField($divisionHeadField)
-			->addField($divisionPhoneField)
-			->addField($divisionEmailField);
-
-        $schema = new \Kendo\Data\DataSourceSchema();
-        $schema->data('data')
-               ->errors('errors')
-               ->model($model)
-               ->total('total');
-
-        $dataSource = new \Kendo\Data\DataSource();
-
-        $dataSource->transport($transport)
-                   ->batch(true)
-                   ->pageSize(10)
-                   ->error('onError')
-                   ->requestEnd('onRequestEnd')
-                   ->serverSorting(true)
-                   ->schema($schema);
-
-        $grid = new \Kendo\UI\Grid('grid');
-		
-        $ID = new \Kendo\UI\GridColumn();
-        $ID->field('division_id') //->filterable($fundTypeFilterable)
-                 ->title('ID');
-				 
-		$divName = new \Kendo\UI\GridColumn();
-        $divName->field('division_name')
-                 ->title('Division / Unit Name');
-				 
-		$divHead = new \Kendo\UI\GridColumn();
-        $divHead->field('division_head')
-                 ->title('Head of Division');
-				 
-		$divPhone = new \Kendo\UI\GridColumn();
-        $divPhone->field('division_phone')
-                 ->title('Phone No');
-				 
-		$divEmail = new \Kendo\UI\GridColumn();
-        $divEmail->field('division_email')
-                 ->title('Email');
-		
-		$command = new \Kendo\UI\GridColumn();
-        $command->addCommandItem('destroy')
-                ->title('&nbsp;')
-                ->width(90);
-				
-		$command2 = new \Kendo\UI\GridColumnCommandItem();
-		$command2->click('ClickEdit')
-				 ->text('Edit');
-		
-		$commandColumn = new \Kendo\UI\GridColumn();
-		$commandColumn->addCommandItem($command2)
-        ->title('&nbsp;')
-        ->width(80);
-        
-        $editable = new \Kendo\UI\GridEditable();
-        $editable 	-> templateId("popup_editor")
-                	->confirmation("Are you sure you want to delete this record?")
-               	 	-> mode("inline");
-        
-        $sortable = new \Kendo\UI\GridSortable();
-        $sortable->mode('single')
-            ->allowUnsort(false);
-        
-        //$btnAdd = new \Kendo\UI\GridToolbarItem('create');
-        //$btnAdd->text("Add New Performing Unit/Division");
-		
-        /*
-        $stringOperators = new \Kendo\UI\GridFilterableOperatorsString();
-        $stringOperators
-                ->startsWith('Starts with')
-                ->eq('Is equal to')
-                ->neq('Is not equal to');
-		
-		
-        $operators = new \Kendo\UI\GridFilterableOperators();
-        $operators->string($stringOperators);
-
-        $filterable = new \Kendo\UI\GridFilterable();
-        $filterable->extra(false)
-            ->operators($operators);
-		*/	
-        
-        $grid->addColumn($ID, $divName, $divHead, $divPhone, $divEmail, $commandColumn, $command)
-             ->dataSource($dataSource) 
-			 //->addToolbarItem($btnAdd)
-			 ->height(450)
-             ->editable($editable)
-             ->sortable($sortable)   
-             ->pageable(true);
-        
-        $gridData =  $grid->render();
-        $this->template->set('grid_data', $gridData);
-		
-		$this->template->set('newDivID',$this->division->get_new_id());
-		
-		if($division_id!=NULL){
+        if($division_id!=NULL){
 			
 			if($this->input->post('save_update')){
 				$request = json_encode($this->input->post());
@@ -225,8 +62,8 @@ class ResearchTeams extends MX_Controller{
         //header('Content-Type: application/json');
         //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
-		//print_r($request);
-		
+		print_r($request);
+		exit(0);
         $this->form_validation->set_rules($this->division->validation);
         $this->division->isValidate((array) $request);
         if ($this->form_validation->run() === false) {

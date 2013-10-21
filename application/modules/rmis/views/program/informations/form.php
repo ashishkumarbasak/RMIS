@@ -161,10 +161,10 @@ $(document).ready(function() {
 
 	<div class="right_form">	
 		<div class="form_element" style="margin-left: 5px;">
-			<input type="checkbox" name="is_collaborate" id="is_collaborate" value="1" class="checkbox" />Is collaborate
+			<input type="checkbox" name="is_collaborate" id="is_collaborate" value="1" class="checkbox" onclick="$('#institute_name_div').toggle();" />Is collaborate
 		</div>
      
-     	<div class="form_element">
+     	<div class="form_element display-none" id="institute_name_div">
         	<div class="label">Institute Name </div>
         	<div class="field">
         		<select name="program_instituteName" id="program_instituteName" class="selectionbox">
@@ -177,7 +177,7 @@ $(document).ready(function() {
     	<div class="form_element">
         	<div class="label">Department Name </div>
         	<div class="field">
-        		<select name="program_departmentName" id="program_departmentName" class="selectionbox">
+        		<select name="program_departmentName" id="program_departmentName" class="selectionbox" multiple="multiple">
             		<option value="">Select Department Name</option>
             	</select>
         	</div>
@@ -221,8 +221,10 @@ $(document).ready(function() {
     	<div class="form_element">
         	<div class="label">Commodity </div>
         	<div class="field">
-        		<select name="program_commodity" id="program_commodity" class="selectionbox">
-            		<option value="">Select Commodity</option>
+        		<select name="program_commodity" id="program_commodity" class="selectionbox" multiple="multiple">
+            		<?php foreach($comodities['data'] as $key=>$comodity) { ?>
+            			<option value="<?php echo $comodity['commodity_id']; ?>" <?php if(isset($program_detail) && $program_detail->implementation_location==$comodity['commodity_id']) { ?> selected="selected" <?php } ?>><?php echo $comodity['commodity_name']; ?></option>
+            		<?php } ?>
             	</select>
         	</div>
         	<div class="clear"></div>
@@ -231,8 +233,10 @@ $(document).ready(function() {
    		<div class="form_element">
         	<div class="label">AEZs </div>
         	<div class="field">
-        		<select name="program_aez" id="program_aez" class="selectionbox">
-            		<option value="">Select AEZ</option>
+        		<select name="program_aez" id="program_aez" class="selectionbox" multiple="multiple">
+            		<?php foreach($aezs['data'] as $key=>$aez) { ?>
+            			<option value="<?php echo $aez['aez_id']; ?>" <?php if(isset($program_detail) && $program_detail->implementation_location==$aez['aez_id']) { ?> selected="selected" <?php } ?>><?php echo $aez['aez_name']; ?></option>
+            		<?php } ?>
             	</select>
         	</div>
         	<div class="clear"></div>

@@ -38,7 +38,10 @@ class Informations extends MX_Controller{
         $_data['setup_funds_menu_active'] ='class="active"';
         $_data['setup_training_program_type_menu_active'] ='';
         $_data['setup_institutes_menu_active'] ='';
-        
+        $this->template->append_metadata('<link href="/assets/kendoui/css/web/kendo.common.min.css"  rel="stylesheet"/>');
+        $this->template->append_metadata('<link href="/assets/kendoui/css/web/kendo.default.min.css"  rel="stylesheet"/>');
+        $this->template->append_metadata('<script src="/assets/kendoui/js/kendo.all.min.js"></script>');
+        $this->template->append_metadata('<script src="/assets/js/custom/tmis.js"></script>');
         
 		if($program_id!=NULL){
 				
@@ -83,21 +86,26 @@ class Informations extends MX_Controller{
 		$implementation_locations = $this->grid->read('rmis_implementation_sites', array('id','implementation_site_id', 'implementation_site_name'), $request);
 		$this->template->set('implementation_locations',$implementation_locations); //$this->program->get_implementation_location()
 		
+		$comodities = $this->grid->read('rmis_commodities', array('commodity_id','commodity_name', 'is_active'), $request);
+		$this->template->set('comodities',$comodities); //$this->program->get_commodity()
+		
+		$aezs = $this->grid->read('rmis_aezs', array('aez_id','aez_name', 'is_active'), $request);
+		$this->template->set('aezs',$aezs);	//$this->program->get_aez()
+		
 		
 		$this->template->set('department_name',$this->program->get_department_name());
 		$this->template->set('institute_name',$this->program->get_institute_name());
-		$this->template->set('commodity',$this->program->get_commodity());
-		$this->template->set('aez',$this->program->get_aez());		
-				
+		
+		
         $breadcrumb = '<ul class="breadcrumb">
 						<li><a href="#"><i class="icofont-home"></i> RMIS</a> <span class="divider">&raquo;</span></li>
 						<li><a href="#">Program</a><span class="divider">&raquo;</span></li><li class="active">Information</li>
 					  </ul>';
         $this->template->set('breadcrumb', $breadcrumb);
-        $this->template->set_partial('progInfoForm','program/information/form');
+        $this->template->set_partial('progInfoForm','program/informations/form');
 		$this->template->set_partial('tab_menu','program/form_tabs');
         $this->template->set_partial('sidebar', 'layouts/sidebar',$_data)
-             ->build('program/information/index');			 	 
+             ->build('program/informations/index');			 	 
     }
 	
     public function dataRead(){		

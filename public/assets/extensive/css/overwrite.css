@@ -59,28 +59,35 @@
 .textbox {
 	width: 200px;
 	border: solid #bababa 1px;
+	font-size: 13px !important;
 }
 .textbox_small {
 	width: 97px;
 	border: solid #bababa 1px;
+	font-size: 13px !important;
 }
 .textarea_small {
 	width: 300px;
 	height: 40px;
+	font-size: 13px !important;
 }
 .textarea_medium {
 	width: 200px;
-	height: 70px;;
+	height: 70px;
+	border: solid #bababa 1px;
+	font-size: 13px !important;
 }
 .textarea {
 	width: 300px;
 	height: 100px;
 	border: solid #bababa 1px;
+	font-size:13px !important;
 }
 .textarea_large {
 	width: 400px;
 	height: 220px;
 	border: solid #bababa 1px;
+	font-size:13px !important;
 }
 .width_100_percent {
 	width: 91%;
@@ -93,6 +100,7 @@
 .selectionbox {
 	width: 214px;
 	border: solid #bababa 1px;
+	font-size:13px !important;
 }
 .checkbox {
 	opacity: 1 !important;;
@@ -123,14 +131,6 @@
 }
 .k-edit-form-container {
 	margin-bottom: 20px;
-}
-
-.multiple_checkbox {
-	border: 1px solid #ddd;
-	height: 83px;
-	width: 214px;
-	overflow-y: scroll;
-	margin-bottom: 5px;
 }
 
 /* =============================================================== */
@@ -272,3 +272,4 @@
 	width:91%;
 }
 .add-more{width:40px; float: left; display:inline; border: 0px; font-size:14px; line-height:30px;}
+.display-none{ display:none; }
