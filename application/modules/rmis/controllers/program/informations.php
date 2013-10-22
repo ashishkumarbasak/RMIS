@@ -7,8 +7,6 @@ class Informations extends MX_Controller{
     public function __construct(){
         parent::__construct();
         $this->load->model('Kendodatasource_model', 'grid');
-        
-        $this->load->model('Division_model', 'division');
 		$this->load->model('Program_model', 'program');
 
         $this->template->set_partial('header', 'layouts/header')
@@ -19,8 +17,8 @@ class Informations extends MX_Controller{
         $this->template->title('Research Management(RM)', ' Programs', ' Information');
         
 		if($this->input->post('save_program_information')){
-			//$request = json_encode($this->input->post());
-			$this->dataCreate();
+			$request = json_encode($this->input->post());
+			$this->dataCreate($request);
 		}
 		
 		if($this->input->post('update_program_information')){
@@ -92,10 +90,11 @@ class Informations extends MX_Controller{
 		$aezs = $this->grid->read('rmis_aezs', array('aez_id','aez_name', 'is_active'), $request);
 		$this->template->set('aezs',$aezs);	//$this->program->get_aez()
 		
+		$institues = $this->grid->read('rmis_institutes', array('institute_id','institute_sort_code', 'institute_name'), $request);
+		$this->template->set('institues',$institues);
 		
-		$this->template->set('department_name',$this->program->get_department_name());
-		$this->template->set('institute_name',$this->program->get_institute_name());
-		
+		$departments = $this->grid->read('rmis_departments', array('department_id','department_name', 'institute_id'), $request);
+		$this->template->set('departments',$departments);
 		
         $breadcrumb = '<ul class="breadcrumb">
 						<li><a href="#"><i class="icofont-home"></i> RMIS</a> <span class="divider">&raquo;</span></li>
@@ -108,7 +107,49 @@ class Informations extends MX_Controller{
              ->build('program/informations/index');			 	 
     }
 	
-    public function dataRead(){		
+    public function dataCreate($request){
+        //header('Content-Type: application/json');
+        //$request = json_decode(file_get_contents('php://input'));
+        $request = json_decode($request);
+		$request->program_instituteNames = implode(",", $request->program_instituteNames);
+		$request->program_commodities = implode(",", $request->program_commodities);
+		$request->program_aezs = implode(",", $request->program_aezs);
+		$request->program_expectedOutputs = implode("---##########---", $request->program_expectedOutputs);
+		
+        $this->form_validation->set_rules($this->program->validation);
+        $this->program->isValidate((array) $request);
+        if ($this->form_validation->run() === false) {
+            header("HTTP/1.1 500 Internal Server Error");
+            echo "Wrong data ! try again" ;
+            //exit;
+        }
+       
+        $columns = array('research_program_title', 'program_area', 'program_division', 'program_researchType', 'program_researchPriority', 'program_researchStatus', 
+        					'program_coordinator', 'program_coordinatorDesignation', 'program_plannedStartDate', 'program_plannedEndDate', 'program_plannedBudget',
+							'program_approvedBudget', 'is_collaborate', 'program_instituteNames', 'program_departmentName', 'program_regionalStationName',
+							'program_implementationLocation', 'program_keywords', 'program_commodities', 'program_aezs', 'program_initiationDate', 'program_completionDate',
+							'program_goal', 'program_objective', 'program_expectedOutputs');
+		
+        $columns[] = 'created_at';
+        $request->created_at = date('Y-m-d H:i:s');            
+        $columns[] = 'created_by';
+        $request->created_by = 1;
+        
+        $data = $this->grid->create('rmis_program_informations', $columns, $request, 'program_id');
+		redirect('rmis/program/otherInformations/'.$request->program_id, 'refresh'); 
+        $data['success'] ="Data created successfuly.";
+        //echo json_encode($data , JSON_NUMERIC_CHECK); 
+    }
+    
+/*    public function dataDestroy(){   
+        header('Content-Type: application/json');
+        $request = json_decode(file_get_contents('php://input'));
+        $data = $this->grid->destroy('rmis_program_information', $request->models, 'program_id'); 
+        echo json_encode($data , JSON_NUMERIC_CHECK); 
+    }
+*/   
+
+	public function dataRead(){		
 		header('Content-Type: application/json');
         $request = json_decode(file_get_contents('php://input'));
         $data= $this->grid->read('rmis_program_information', array('program_id', 'title_of_research_program', 'program_area', 'regional_station_name', 'division_or_unit_name', 'department_name'));       
@@ -129,57 +170,7 @@ class Informations extends MX_Controller{
 	
 		echo json_encode($json_array);
 	}
-		
-	public function dataCreate()
-	{		
-		$submit_ok=$this->validation_program_information();
-		if($submit_ok)
-		{
-			$program_id=$this->program->insert_program_information($this->data);
-			if(sizeof($this->input->post('institute_name'))>0)
-			{
-				foreach($this->input->post('institute_name') as $institute_name) {
-					$institute_data = array('program_id' =>$program_id, 'institute_id'=>$institute_name);
-					$this->program->insert_institute_name($institute_data);
-				}
-			}
-			if(sizeof($this->input->post('commodity'))>0)
-			{
-				foreach($this->input->post('commodity') as $commodity) {
-					$commodity_data = array('program_id' =>$program_id, 'commodity_id'=>$commodity);
-					$this->program->insert_commodity($commodity_data);
-				}
-			}
-			if(sizeof($this->input->post('aez'))>0)
-			{
-				foreach($this->input->post('aez') as $aez) {
-					$aez_data = array('program_id' =>$program_id, 'aez_id'=>$aez);
-					$this->program->insert_aez($aez_data);
-				}
-			}
-			if(sizeof($this->input->post('expected_output'))>0)
-			{
-				foreach(array_filter($this->input->post('expected_output')) as $expected_output) {
-					$expected_output_data = array('program_id' =>$program_id, 'expected_output'=>$expected_output);
-					$this->program->insert_expected_output($expected_output_data);
-				}
-			}
-			$data['success'] ="Data created successfuly.";
-		}
-		else {
-			header("HTTP/1.1 500 Internal Server Error");
-            echo "Wrong data ! try again" ;
-            exit;
-		}
-    }
-    
-/*    public function dataDestroy(){   
-        header('Content-Type: application/json');
-        $request = json_decode(file_get_contents('php://input'));
-        $data = $this->grid->destroy('rmis_program_information', $request->models, 'program_id'); 
-        echo json_encode($data , JSON_NUMERIC_CHECK); 
-    }
-*/    	
+	 	
 	public function dataUpdate()
 	{		
 		$submit_ok=$this->validation_program_information();

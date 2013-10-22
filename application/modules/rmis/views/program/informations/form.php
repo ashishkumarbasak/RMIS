@@ -1,46 +1,18 @@
 <script src="<?php echo site_url('/assets/js/jquery-dynamic-form.js'); ?>"></script>
 <script src="<?php echo site_url('/assets/js/bootstrap-datepicker.js'); ?>"></script>
 <link rel="stylesheet" href="<?php echo site_url('assets/extensive/css/datepicker.css'); ?>" />
-<script type="text/javascript">
-$(document).ready(function() {
-	$("#duplicate2").dynamicForm("#plus2", "#minus2", {limit:10});		
-	return false;
-});
-$(document).ready(function() {
-	
-	$('#showInstituteName').change(function() {
-    	$('#collaborate_institute_name').toggle();
-	});
-});
-</script> 
-
 <?php 
 	if(isset($program_detail)){
 		$program_detail = unserialize($program_detail);
 	}
-	
-	if(isset($institute_detail)){
-		$institute_detail = unserialize($institute_detail);
-	}
-	
-	if(isset($commodity_detail)){
-		$commodity_detail = unserialize($commodity_detail);			
-	}
-	
-	if(isset($aez_detail)){
-		$aez_detail = unserialize($aez_detail);
-	}
-	
-	if(isset($expected_output_detail)){
-		$expected_output_detail = unserialize($expected_output_detail);
-	}
 ?>
+
 <form name="program_info" id="program_info" method="post" action="">
 <div class="main_form">
 	
 	<div class="form_element">
     	<div class="label width_170px">Title of Research Programme <span class="mandatory">*</span></div>
-       	<div class="textarea_field"><textarea name="title_of_research_program" id="title_of_research_program" class="textarea_small width_68_percent"><?php if($program_detail) echo $program_detail->title_of_research_program;?></textarea></div>
+       	<div class="textarea_field"><textarea name="research_program_title" id="research_program_title" class="textarea_small width_68_percent"><?php if($program_detail) echo $program_detail->title_of_research_program;?></textarea></div>
         <div class="clear"></div>
   	</div>
 	
@@ -156,6 +128,14 @@ $(document).ready(function() {
        	 		<input type="text" name="program_plannedBudget" id="program_plannedBudget" value="<?php if($program_detail) echo $program_detail->planned_budget;?>" class="textbox">
         	</div>
         	<div class="clear"></div>
+    	</div>
+    	
+    	<div class="form_element">
+        	<div class="label width_170px">Approved Budget(in Taka) </div>
+        	<div class="field">
+        		<input type="text" name="program_approvedBudget" id="program_approvedBudget" value="<?php if($program_detail) echo $program_detail->approved_budget;?>" class="textbox">
+        	</div>
+        	<div class="clear"></div>
     	</div>        
 	</div>
 
@@ -167,8 +147,10 @@ $(document).ready(function() {
      	<div class="form_element display-none" id="institute_name_div">
         	<div class="label">Institute Name </div>
         	<div class="field">
-        		<select name="program_instituteName" id="program_instituteName" class="selectionbox">
-            		<option value="">Select Institute Name</option>
+        		<select name="program_instituteNames[]" id="program_instituteNames" class="selectionbox" multiple="multiple">
+            		<?php foreach($institues['data'] as $key=>$institue) { ?>
+            			<option value="<?php echo $institue['institute_id']; ?>" <?php if(isset($program_detail) && $program_detail->implementation_location==$institue['institute_id']) { ?> selected="selected" <?php } ?>><?php echo $institue['institute_name']; ?></option>
+            		<?php } ?>
             	</select>
         	</div>
         	<div class="clear"></div>
@@ -177,8 +159,11 @@ $(document).ready(function() {
     	<div class="form_element">
         	<div class="label">Department Name </div>
         	<div class="field">
-        		<select name="program_departmentName" id="program_departmentName" class="selectionbox" multiple="multiple">
-            		<option value="">Select Department Name</option>
+        		<select name="program_departmentName" id="program_departmentName" class="selectionbox">
+            		<option value="">Select Department</option>
+            		<?php foreach($departments['data'] as $key=>$department) { ?>
+            			<option value="<?php echo $department['department_id']; ?>" <?php if(isset($program_detail) && $program_detail->implementation_location==$department['department_id']) { ?> selected="selected" <?php } ?>><?php echo $department['department_name']; ?></option>
+            		<?php } ?>
             	</select>
         	</div>
         	<div class="clear"></div>
@@ -213,7 +198,7 @@ $(document).ready(function() {
     	<div class="form_element">
         	<div class="label">Key Words </div>
         	<div class="field">
-        		<input type="text" name="program_keyword" id="program_keyword" class="textbox" value="<?php if($program_detail) echo $program_detail->keyword;?>">
+        		<input type="text" name="program_keywords" id="program_keywords" class="textbox" value="<?php if($program_detail) echo $program_detail->keyword;?>">
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -221,7 +206,7 @@ $(document).ready(function() {
     	<div class="form_element">
         	<div class="label">Commodity </div>
         	<div class="field">
-        		<select name="program_commodity" id="program_commodity" class="selectionbox" multiple="multiple">
+        		<select name="program_commodities[]" id="program_commodities" class="selectionbox" multiple="multiple">
             		<?php foreach($comodities['data'] as $key=>$comodity) { ?>
             			<option value="<?php echo $comodity['commodity_id']; ?>" <?php if(isset($program_detail) && $program_detail->implementation_location==$comodity['commodity_id']) { ?> selected="selected" <?php } ?>><?php echo $comodity['commodity_name']; ?></option>
             		<?php } ?>
@@ -233,7 +218,7 @@ $(document).ready(function() {
    		<div class="form_element">
         	<div class="label">AEZs </div>
         	<div class="field">
-        		<select name="program_aez" id="program_aez" class="selectionbox" multiple="multiple">
+        		<select name="program_aezs[]" id="program_aezs" class="selectionbox" multiple="multiple">
             		<?php foreach($aezs['data'] as $key=>$aez) { ?>
             			<option value="<?php echo $aez['aez_id']; ?>" <?php if(isset($program_detail) && $program_detail->implementation_location==$aez['aez_id']) { ?> selected="selected" <?php } ?>><?php echo $aez['aez_name']; ?></option>
             		<?php } ?>
@@ -263,14 +248,6 @@ $(document).ready(function() {
         	</div>
         	<div class="clear"></div>
     	</div>
-    
-    	<div class="form_element">
-        	<div class="label">Approved Budget(in Taka) </div>
-        	<div class="field">
-        		<input type="text" name="program_approvedBudget" id="program_approvedBudget" value="<?php if($program_detail) echo $program_detail->approved_budget;?>" class="textbox">
-        	</div>
-        	<div class="clear"></div>
-    	</div>
     </div>
     <div class="clear"></div>
 	
@@ -292,7 +269,7 @@ $(document).ready(function() {
         <div class="label width_170px">Expected output <span class="mandatory">*</span></div>
         <div class="textarea_field" style="width:75%; float: left; display: inline;"> 
         	<div id='duplicate2'>
-            	<textarea name="program_expectedOutput[]" id="program_expectedOutput[]" class="textarea width-91"></textarea>
+            	<textarea name="program_expectedOutputs[]" id="program_expectedOutputs[]" class="textarea width-91"></textarea>
             	<span style="font-size:16px;"><a id="minus2" href="">[-]</a> <a id="plus2" href="">[+]</a></span>
         	</div>
         </div>
@@ -300,14 +277,14 @@ $(document).ready(function() {
     </div>
     
     <div class="form_element">
-        <div class="button_panel">
+        <div class="button_panel" style="margin-right: 110px;">
 			<?php if(isset($program_detail) && $program_detail->program_id!=NULL) { ?>
                 <input type="hidden" name="program_id" id="program_id" value="<?php echo $program_detail->program_id; ?>">
                 <input type="submit" name="update_program_information" id="update_program_information" value="Update" class="k-button button">
                 <input type="submit" name="delete_program_information" id="delete_program_information" onclick="javascript:return confirm('Do you want to delete this program?');" value="Delete" class="k-button button">
             <?php } else { ?>
+            	<input type="reset" name="reset_program_information" id="reset_program_information" value="Reset" class="k-button button">
                 <input type="submit" name="save_program_information" id="save_program_information" value="Save" class="k-button button">
-                <input type="reset" name="reset_program_information" id="reset_program_information" value="Reset" class="k-button button">
             <?php } ?>                
             
         </div>
@@ -323,3 +300,14 @@ $(document).ready(function() {
 	$('#program_initiationDate').datepicker('setStartDate');
 	$('#program_completionDate').datepicker('setEndDate');
 </script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#duplicate2").dynamicForm("#plus2", "#minus2", {limit:10});		
+	return false;
+});
+$(document).ready(function() {
+	$('#showInstituteName').change(function() {
+    	$('#collaborate_institute_name').toggle();
+	});
+});
+</script> 

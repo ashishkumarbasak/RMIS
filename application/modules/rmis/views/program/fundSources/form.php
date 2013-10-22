@@ -1,10 +1,9 @@
 <script src="<?php echo site_url('/assets/js/jquery-dynamic-form.js'); ?>"></script>
 <script src="<?php echo site_url('/assets/js/bootstrap-datepicker.js'); ?>"></script>
 <link rel="stylesheet" href="<?php echo site_url('assets/extensive/css/datepicker.css'); ?>" />
-
 <?php 
-	if(isset($division_detail)){
-		$division_detail = unserialize($division_detail);
+	if(isset($program_detail)){
+		$program_detail = unserialize($program_detail);
 	} 
 ?>
 
@@ -12,7 +11,7 @@
 	<div class="main_form">
     	<div class="form_element">
         	<div class="label width_170px">Title of Research Programme</div>
-            <div class="textarea_field"><textarea name="fund_program" id="fund_program" readonly="readonly" class="textarea_small disabled width_68_percent"></textarea></div>
+            <div class="textarea_field"><textarea name="research_program_title" id="research_program_title" readonly="readonly" class="textarea_small disabled width_68_percent"><?php if($program_detail!=NULL) echo $program_detail->research_program_title; ?></textarea></div>
             <div class="clear"></div>
         </div>
                     
@@ -20,7 +19,7 @@
         	<div class="form_element">
            		<div class="label width_170px">Programme Area </div>
                 <div class="field">
-               		<input type="text" name="fund_area" id="fund_area" value="" class="textbox disabled" readonly="readonly">
+               		<input type="text" name="program_area" id="program_area" value="<?php if($program_detail!=NULL) echo $program_detail->program_area; ?>" class="textbox disabled" readonly="readonly">
                	</div>
            		<div class="clear"></div>
         	</div>
@@ -28,7 +27,7 @@
            	<div class="form_element">
             	<div class="label width_170px">Planned Budget (in Taka) </div>
                	<div class="field">
-               		<input type="text" name="fund_budget" id="fund_budget" value="" class="textbox disabled" readonly="readonly">
+               		<input type="text" name="program_plannedBudget" id="program_plannedBudget" value="<?php if($program_detail!=NULL) echo $program_detail->program_plannedBudget; ?>" class="textbox disabled" readonly="readonly">
               	</div>
                	<div class="clear"></div>
          	</div> 
@@ -38,7 +37,7 @@
        		<div class="form_element">
           		<div class="label">Principal Investigator <br />(or PM/Coordinator)</div>
                	<div class="field">
-              		<input type="text" name="programme_other_info_investigator" id="programme_other_info_investigator" value="" class="textbox disabled" readonly="readonly">
+              		<input type="text" name="program_coordinator" id="program_coordinator" value="<?php if($program_detail!=NULL) echo $program_detail->program_coordinator; ?>" class="textbox disabled" readonly="readonly">
                	</div>
                	<div class="clear"></div>
         	</div>
@@ -46,7 +45,7 @@
             <div class="form_element">
            		<div class="label">Approved Budget (in Taka)</div>
                	<div class="field">
-                	<input type="text" name="fund_investigator" id="fund_investigator" value="" class="textbox disabled" readonly="readonly">
+                	<input type="text" name="program_approvedBudget" id="program_approvedBudget" value="<?php if($program_detail!=NULL) echo $program_detail->program_approvedBudget; ?>" class="textbox disabled" readonly="readonly">
                	</div>
                 <div class="clear"></div>
         	</div>

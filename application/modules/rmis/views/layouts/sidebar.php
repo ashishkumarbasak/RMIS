@@ -25,15 +25,7 @@
      <li <?php echo $setup_menu_active; ?> > <a href="#" class="dropdown-toggle"> <i class="icon-desktop"></i> <span>Program</span> <b class="arrow icon-angle-down"></b> </a>
       <ul class="submenu">
         <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/program/search');?>"> <i class="icon-double-angle-right"></i>Program search</a></li>
-        <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/program/informations');?>"> <i class="icon-double-angle-right"></i>Program Information </a></li>
-        <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/program/otherInformations');?>"> <i class="icon-double-angle-right"></i>Program Other Information </a></li>
-        <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/program/fundSources');?>"> <i class="icon-double-angle-right"></i>Fund Source & Cost Breakdown</a></li>
-        <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/program/researchTeams');?>"> <i class="icon-double-angle-right"></i>Research Team Information </a></li>
-        <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/program/steeringCommittees');?>"> <i class="icon-double-angle-right"></i>Program Steering Comittee </a></li>
-           <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/program/implementationCommittees');?>"> <i class="icon-double-angle-right"></i>Program Implementation Comittee </a></li>
-      <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/program/activityLists');?>"> <i class="icon-double-angle-right"></i>Program Activity List </a></li>
-       <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/program/monitorEvaluations');?>"> <i class="Programe M & E Information"></i>Program M&E Information </a></li>
-        <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/program/relatedDocuments');?>"> <i class="icon-double-angle-right"></i>Program Related Documents</a></li>
+        <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/program/informations');?>"> <i class="icon-double-angle-right"></i>Add New Program </a></li>
       </ul>
     </li>
   </ul>
