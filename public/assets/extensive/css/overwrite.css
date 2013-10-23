@@ -198,6 +198,9 @@
 	background: #fff;
 	border-bottom: 2px solid #fff;
 }
+.tabs-nav li a.disabled:hover{
+	border-bottom: 2px solid #ddd;
+}
 
 .tabs-container {
 	border: 1px solid #ddd;

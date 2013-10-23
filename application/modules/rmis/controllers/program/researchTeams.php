@@ -5,14 +5,13 @@ class ResearchTeams extends MX_Controller{
     public function __construct(){
         parent::__construct();
         $this->load->model('Kendodatasource_model', 'grid');
-        $this->load->model('Division_model', 'division');
-		$this->load->model('Employee_model', 'employee');
+        $this->load->model('Program_model', 'program');
 
         $this->template->set_partial('header', 'layouts/header')
 						->set_layout('extensive/main_layout');
     }
     
-    public function index($division_id=NULL){
+    public function index($program_id=NULL){
         $this->template->title('Research Management(RM)', ' Programs', ' Research Program Team Information');
         
 		if($this->input->post('save_researchTeam')){
@@ -31,21 +30,16 @@ class ResearchTeams extends MX_Controller{
         $this->template->append_metadata('<script src="/assets/kendoui/js/kendo.all.min.js"></script>');
         $this->template->append_metadata('<script src="/assets/js/custom/tmis.js"></script>');
                 
-        if($division_id!=NULL){
+        if($program_id!=NULL){
+			$program_detail = $this->program->get_details($program_id);
+			$this->template->set('program_detail', serialize($program_detail));
 			
-			if($this->input->post('save_update')){
-				$request = json_encode($this->input->post());
-				$this->dataUpdate($request);
-			}
-				
-			$division_detail = $this->division->get_details($division_id);
-			$this->template->set('division_detail', serialize($division_detail));
+			$this->template->set('program_id',$program_id);
 		}
 		
 		
         $this->template->set('content_header_icon', 'class="icofont-file"');
         $this->template->set('content_header_title', 'Program Other Information');
-        $this->template->set('employees',$this->employee->get_employees());
 		
         $breadcrumb = '<ul class="breadcrumb">
 						<li><a href="#"><i class="icofont-home"></i> RMIS</a> <span class="divider">&raquo;</span></li>
@@ -62,23 +56,34 @@ class ResearchTeams extends MX_Controller{
         //header('Content-Type: application/json');
         //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
-		print_r($request);
-		exit(0);
-        $this->form_validation->set_rules($this->division->validation);
-        $this->division->isValidate((array) $request);
-        if ($this->form_validation->run() === false) {
-            header("HTTP/1.1 500 Internal Server Error");
-            echo "Wrong data ! try again" ;
-            exit;
-        }
-       
-        $columns = array('division_id', 'division_name', 'division_head', 'division_phone', 'division_email', 'division_order', 'division_about');
+		//print_r((array) $request);
+		
+       	$columns = array('team_formation_date', 'program_id');
         $columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
         
-        $data= $this->grid->create('rmis_divisions', $columns, $request, 'id'); 
+		$data = $this->grid->create('rmis_program_research_teams', $columns, $request, 'id'); 
+        
+		$columns = array('member_type', 'institute_name','member_name','designation', 'contact_no', 'email', 'team_id');
+		$request->team_id = $request->id;
+		$i=0;
+		if(!empty($request->member_types)>0){
+			foreach($request->member_types as $team_member_key=>$team_member_type){
+				if($team_member_type!=NULL){
+					$request->member_type = $team_member_type;
+					$request->institute_name = $request->institute_names[$i];
+					$request->member_name = $request->member_names[$i];
+					$request->designation = $request->designations[$i];
+					$request->contact_no = $request->contact_nos[$i];
+					$request->email = $request->emails[$i];
+					$this->grid->create('rmis_program_research_team_members', $columns, $request, 'id');
+					$i++;	
+				}
+			}
+		}
+		
         $data['success'] ="Data created successfuly.";
         //echo json_encode($data , JSON_NUMERIC_CHECK); 
     }
@@ -100,25 +105,50 @@ class ResearchTeams extends MX_Controller{
         //header('Content-Type: application/json');
         //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
-       // print_r($request);
-        $this->form_validation->set_rules($this->division->validation);
-        $this->division->isValidate((array) $request);
+        //print_r($request);
+        $this->form_validation->set_rules($this->ProgramCommitte->validation);
+        $this->ProgramCommitte->isValidate((array) $request);
         if ($this->form_validation->run() === false) {
             header("HTTP/1.1 500 Internal Server Error");
             echo "Wrong data ! try again" ;
             exit;
         }
         
-        $columns = array('id', 'division_name', 'division_head', 'division_phone', 'division_email', 'division_order', 'division_about');
-        $columns[] = 'modified_at';        
+		$columns = array('id', 'committee_chairman', 'committee_formation_date');
+       	$columns[] = 'modified_at';        
         $request->modified_at = date('Y-m-d H:i:s');            
         $columns[] = 'modified_by';
         $request->modified_by = 1;
         
-        $data = $this->grid->update('rmis_divisions', $columns, $request, 'id'); 
+		$data = $this->grid->update('rmis_program_me_committees', $columns, $request, 'id'); 
+        
+		$columns = array('committee_id', 'member_id','designation','role_in_committee');
+		$request->committee_id = $request->id;
+		$i=0;
+		if(!empty($request->committe_member_names)>0){
+			$this->ProgramCommitte->clean_committeeMembers($request->committee_id);
+			//print_r($request);
+			//exit(0);
+			foreach($request->committe_member_names as $committee_member_key=>$committee_member_name){
+				if($committee_member_name!=NULL){
+					$request->member_id = $committee_member_name;
+					$request->designation = $request->committe_member_designations[$i];
+					$request->role_in_committee = $request->committe_member_roles[$i];	
+					$this->grid->create('rmis_program_me_committee_members', $columns, $request, 'id');
+					$i++;	
+				}
+			}
+		}
+        
         $data['success'] ="Data updated successfuly.";
         //echo json_encode($data , JSON_NUMERIC_CHECK);  
     }
+
+	public function deleteMember(){
+		$committee_id = $this->input->post('committee_id');
+		$member_id = $this->input->post('member_id');
+		$this->ProgramCommitte->deleteMember($committee_id,$member_id);
+	}
                 
 } 
 ?>

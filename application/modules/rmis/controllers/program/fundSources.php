@@ -33,6 +33,8 @@ class FundSources extends MX_Controller{
         if($program_id!=NULL){
 			$program_detail = $this->program->get_details($program_id);
 			$this->template->set('program_detail', serialize($program_detail));
+			
+			$this->template->set('program_id',$program_id);
 		}
 		
 		

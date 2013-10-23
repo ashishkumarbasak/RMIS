@@ -33,6 +33,8 @@ class OtherInformations extends MX_Controller{
         if($program_id!=NULL){
 			$program_detail = $this->program->get_details($program_id);
 			$this->template->set('program_detail', serialize($program_detail));
+			
+			$this->template->set('program_id',$program_id);
 		}
 		
         $this->template->set('content_header_icon', 'class="icofont-file"');
@@ -62,7 +64,6 @@ class OtherInformations extends MX_Controller{
         $request->created_by = 1;
         
         $data= $this->grid->create('rmis_program_other_informations', $columns, $request, 'id'); 
-		redirect('rmis/program/fundSources/'.$request->program_id, 'refresh'); 
         $data['success'] ="Data created successfuly.";
         //echo json_encode($data , JSON_NUMERIC_CHECK); 
     }

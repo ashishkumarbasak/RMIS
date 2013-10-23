@@ -12,7 +12,7 @@
 	
 	<div class="form_element">
     	<div class="label width_170px">Title of Research Programme <span class="mandatory">*</span></div>
-       	<div class="textarea_field"><textarea name="research_program_title" id="research_program_title" class="textarea_small width_68_percent"><?php if($program_detail) echo $program_detail->title_of_research_program;?></textarea></div>
+       	<div class="textarea_field"><textarea name="research_program_title" id="research_program_title" class="textarea_small width_68_percent"><?php if($program_detail) echo $program_detail->research_program_title;?></textarea></div>
         <div class="clear"></div>
   	</div>
 	
@@ -38,7 +38,7 @@
         		<select name="program_division" id="program_division" class="selectionbox">
             		<option value="">Select Division/Unit Name</option>
 					<?php foreach($divisions['data'] as $key=>$division) { ?>
-            			<option value="<?php echo $division['division_id']; ?>" <?php if(isset($program_detail) && $program_detail->division_or_unit_name==$division['division_id']) { ?> selected="selected" <?php } ?>><?php echo $division['division_name']; ?></option>
+            			<option value="<?php echo $division['division_id']; ?>" <?php if(isset($program_detail) && $program_detail->program_division==$division['division_id']) { ?> selected="selected" <?php } ?>><?php echo $division['division_name']; ?></option>
             		<?php } ?>
         		</select>
         	</div>
@@ -51,7 +51,7 @@
         		<select name="program_researchType" id="program_researchType" class="selectionbox">
             		<option value="">Select Research Type</option>
  					<?php foreach($research_types['data'] as $key=>$researchType) { ?>
-            			<option value="<?php echo $researchType['id']; ?>" <?php if(isset($program_detail) && $program_detail->research_type==$researchType['id']) { ?> selected="selected" <?php } ?>><?php echo $researchType['research_type']; ?></option>
+            			<option value="<?php echo $researchType['id']; ?>" <?php if(isset($program_detail) && $program_detail->program_researchType==$researchType['id']) { ?> selected="selected" <?php } ?>><?php echo $researchType['research_type']; ?></option>
             		<?php } ?>
         		</select>
         	</div>
@@ -64,7 +64,7 @@
         		<select name="program_researchPriority" id="program_researchPriority" class="selectionbox">
             		<option value="">Select Research Priority</option>
 					<?php foreach($research_priorities['data'] as $key=>$research_priority) { ?>
-            			<option value="<?php echo $research_priority['id']; ?>" <?php if(isset($program_detail) && $program_detail->research_priority==$research_priority['id']) { ?> selected="selected" <?php } ?>><?php echo $research_priority['research_priority']; ?></option>
+            			<option value="<?php echo $research_priority['id']; ?>" <?php if(isset($program_detail) && $program_detail->program_researchPriority==$research_priority['id']) { ?> selected="selected" <?php } ?>><?php echo $research_priority['research_priority']; ?></option>
             		<?php } ?>
          		</select>
         	</div>
@@ -77,7 +77,7 @@
         		<select name="program_researchStatus" id="program_researchStatus" class="selectionbox">
             		<option value="">Select Research Status</option>
 					<?php foreach($research_statuses['data'] as $key=>$research_status) { ?>
-           	 			<option value="<?php echo $research_status['id']; ?>" <?php if(isset($program_detail) && $program_detail->research_status==$research_status['id']) { ?> selected="selected" <?php } ?>><?php echo $research_status['research_status']; ?></option>
+           	 			<option value="<?php echo $research_status['id']; ?>" <?php if(isset($program_detail) && $program_detail->program_researchStatus==$research_status['id']) { ?> selected="selected" <?php } ?>><?php echo $research_status['research_status']; ?></option>
             		<?php } ?>
             	</select>
         	</div>
@@ -87,7 +87,7 @@
     	<div class="form_element">
         	<div class="label width_170px">Principal Investigator<br />(Or Pm/Coordintor) <span class="mandatory">*</span></div>
         	<div class="field">
-        		<input type="text" name="program_coordinator" id="program_coordinator" value="<?php if($program_detail) echo $program_detail->program_manager;?>" class="textbox">
+        		<input type="text" name="program_coordinator" id="program_coordinator" value="<?php if($program_detail) echo $program_detail->program_coordinator;?>" class="textbox">
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -95,7 +95,7 @@
      	<div class="form_element">
         	<div class="label width_170px">Designation </div>
         	<div class="field">
-        		<input type="text" name="program_coordinatorDesignation" id="program_coordinatorDesignation" value="<?php if($program_detail) echo $program_detail->program_coordinator_designation; ?>" class="textbox">
+        		<input type="text" name="program_coordinatorDesignation" id="program_coordinatorDesignation" value="<?php if($program_detail) echo $program_detail->program_coordinatorDesignation; ?>" class="textbox">
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -103,7 +103,7 @@
     	<div class="form_element">
         	<div class="label width_170px">Planned Start Date <span class="mandatory">*</span> </div>
         	<div class="field">
-        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="program_plannedStartDate" id="program_plannedStartDate" value="" />
+        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="program_plannedStartDate" id="program_plannedStartDate" value="<?php if($program_detail) echo $program_detail->program_plannedStartDate; ?>" />
         		<span class="input-group-addon">
             		<i class="icon-calendar"></i>
         		</span>
@@ -114,7 +114,7 @@
     	<div class="form_element">
         	<div class="label width_170px">Planned End Date <span class="mandatory">*</span></div>
         	<div class="field">
-        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="program_plannedEndDate" id="program_plannedEndDate" value="" />
+        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="program_plannedEndDate" id="program_plannedEndDate" value="<?php if($program_detail) echo $program_detail->program_plannedEndDate; ?>" />
         		<span class="input-group-addon">
             		<i class="icon-calendar"></i>
         		</span>
@@ -125,7 +125,7 @@
       	<div class="form_element">
         	<div class="label width_170px">Planned Budget(in Taka) </div>
         	<div class="field">
-       	 		<input type="text" name="program_plannedBudget" id="program_plannedBudget" value="<?php if($program_detail) echo $program_detail->planned_budget;?>" class="textbox">
+       	 		<input type="text" name="program_plannedBudget" id="program_plannedBudget" value="<?php if($program_detail) echo $program_detail->program_plannedBudget;?>" class="textbox">
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -133,7 +133,7 @@
     	<div class="form_element">
         	<div class="label width_170px">Approved Budget(in Taka) </div>
         	<div class="field">
-        		<input type="text" name="program_approvedBudget" id="program_approvedBudget" value="<?php if($program_detail) echo $program_detail->approved_budget;?>" class="textbox">
+        		<input type="text" name="program_approvedBudget" id="program_approvedBudget" value="<?php if($program_detail) echo $program_detail->program_approvedBudget;?>" class="textbox">
         	</div>
         	<div class="clear"></div>
     	</div>        
@@ -198,7 +198,7 @@
     	<div class="form_element">
         	<div class="label">Key Words </div>
         	<div class="field">
-        		<input type="text" name="program_keywords" id="program_keywords" class="textbox" value="<?php if($program_detail) echo $program_detail->keyword;?>">
+        		<input type="text" name="program_keywords" id="program_keywords" class="textbox" value="<?php if($program_detail) echo $program_detail->program_keywords;?>">
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -230,7 +230,7 @@
     	<div class="form_element">
         	<div class="label">Initial Date </div>
         	<div class="field">
-        		<input type="text" class="textbox disabled" readonly="readonly" name="program_initiationDate" id="program_initiationDate" data-date-format="yyyy-mm-dd" value="" />
+        		<input type="text" class="textbox disabled" readonly="readonly" name="program_initiationDate" id="program_initiationDate" data-date-format="yyyy-mm-dd" value="<?php if($program_detail) echo $program_detail->program_initiationDate;?>" />
         		<span class="input-group-addon">
            	 		<i class="icon-calendar"></i>
         		</span>
@@ -241,7 +241,7 @@
     	<div class="form_element">
         	<div class="label">Completion Date </div>
         	<div class="field">
-        		<input type="text" class="textbox disabled" readonly="readonly" name="program_completionDate" id="program_completionDate" data-date-format="yyyy-mm-dd" value="" />
+        		<input type="text" class="textbox disabled" readonly="readonly" name="program_completionDate" id="program_completionDate" data-date-format="yyyy-mm-dd" value="<?php if($program_detail) echo $program_detail->program_completionDate;?>" />
         		<span class="input-group-addon">
             		<i class="icon-calendar"></i>
         		</span>
@@ -260,7 +260,7 @@
   	
   	<div class="form_element">
     	<div class="label width_170px">Purpose/Objective <span class="mandatory">*</span></div>
-       	<div class="textarea_field"><textarea name="program_objective" id="program_objective" class="textarea width_68_percent"><?php if($program_detail) echo $program_detail->purpose_or_objective;?></textarea></div>
+       	<div class="textarea_field"><textarea name="program_objective" id="program_objective" class="textarea width_68_percent"><?php if($program_detail) echo $program_detail->program_objective;?></textarea></div>
         <div class="clear"></div>
   	</div>
 

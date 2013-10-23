@@ -86,8 +86,12 @@ $route['rmis/setup/programCommittees/edit/(:num)'] = 'rmis/setup/programCommitte
 $route['rmis/setup/gradings/edit/(:num)'] = 'rmis/setup/gradings/index/$1';
 
 //program form
+$route['rmis/program/informations/(:num)'] = 'rmis/program/informations/index/$1';
 $route['rmis/program/otherInformations/(:num)'] = 'rmis/program/otherInformations/index/$1';
 $route['rmis/program/fundSources/(:num)'] = 'rmis/program/fundSources/index/$1';
+$route['rmis/program/researchTeams/(:num)'] = 'rmis/program/researchTeams/index/$1';
+$route['rmis/program/steeringCommittees/(:num)'] = 'rmis/program/steeringCommittees/index/$1';
+$route['rmis/program/implementationCommittees/(:num)'] = 'rmis/program/implementationCommittees/index/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

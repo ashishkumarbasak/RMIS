@@ -41,22 +41,11 @@ class Informations extends MX_Controller{
         $this->template->append_metadata('<script src="/assets/kendoui/js/kendo.all.min.js"></script>');
         $this->template->append_metadata('<script src="/assets/js/custom/tmis.js"></script>');
         
-		if($program_id!=NULL){
-				
-			$program_detail = $this->program->get_program_details($program_id);
+		if($program_id!=NULL){	
+			$program_detail = $this->program->get_details($program_id);
 			$this->template->set('program_detail', serialize($program_detail));
 			
-			$institute_detail = $this->program->get_institute_id_from_program_id($program_id);
-			$this->template->set('institute_detail', serialize($institute_detail));
-			
-			$commodity_detail = $this->program->get_commodity_from_program_id($program_id);
-			$this->template->set('commodity_detail', serialize($commodity_detail));
-			
-			$aez_detail = $this->program->get_aez_from_program_id($program_id);
-			$this->template->set('aez_detail', serialize($aez_detail));
-			
-			$expected_output_detail = $this->program->get_expected_output_from_program_id($program_id);
-			$this->template->set('expected_output_detail', serialize($expected_output_detail));
+			$this->template->set('program_id',$program_id);
 		}
 		
         $this->template->set('content_header_icon', 'class="icofont-file"');
