@@ -92,6 +92,8 @@ $route['rmis/program/fundSources/(:num)'] = 'rmis/program/fundSources/index/$1';
 $route['rmis/program/researchTeams/(:num)'] = 'rmis/program/researchTeams/index/$1';
 $route['rmis/program/steeringCommittees/(:num)'] = 'rmis/program/steeringCommittees/index/$1';
 $route['rmis/program/implementationCommittees/(:num)'] = 'rmis/program/implementationCommittees/index/$1';
+$route['rmis/program/activityLists/(:num)'] = 'rmis/program/activityLists/index/$1';
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

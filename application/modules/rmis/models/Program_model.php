@@ -52,8 +52,9 @@ class Program_model extends MY_Model {
 	
 	public function get_details($id=NULL){
 		if($id!=NULL){
-			$this->db->select('*');
+			$this->db->select('* , hrm_employees.employee_name as program_coordinator');
 			$this->db->from('rmis_program_informations');
+			$this->db->join('hrm_employees','rmis_program_informations.program_coordinator=hrm_employees.employee_id');
 			$this->db->where('program_id',$id);
 			
 			$query = $this->db->get();

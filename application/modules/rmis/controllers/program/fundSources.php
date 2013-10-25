@@ -14,7 +14,7 @@ class FundSources extends MX_Controller{
     public function index($program_id=NULL){
         $this->template->title('Research Management(RM)', ' Programs', ' Program Fund Source & Cost Breakdown Info');
         
-		if($this->input->post('save_division')){
+		if($this->input->post('save_fundSources')){
 			$request = json_encode($this->input->post());
 			$this->dataCreate($request);
 		}
@@ -56,23 +56,51 @@ class FundSources extends MX_Controller{
         //header('Content-Type: application/json');
         //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
-		//print_r($request);
+		//print_r((array) $request);
 		
-        $this->form_validation->set_rules($this->division->validation);
-        $this->division->isValidate((array) $request);
-        if ($this->form_validation->run() === false) {
-            header("HTTP/1.1 500 Internal Server Error");
-            echo "Wrong data ! try again" ;
-            exit;
-        }
-       
-        $columns = array('division_id', 'division_name', 'division_head', 'division_phone', 'division_email', 'division_order', 'division_about');
+		$columns = array('fund_source', 'amount','currency','exchange_rate', 'date_of_exchange_rate', 'amount_in_taka', 'program_id');
+		$columns[] = 'created_at';
+        $request->created_at = date('Y-m-d H:i:s');            
+        $columns[] = 'created_by';
+        $request->created_by = 1;
+		$i=0;
+		if(!empty($request->fund_sources)>0){
+			foreach($request->fund_sources as $fund_source_key=>$fund_source){
+				if($fund_source!=NULL){
+					$request->fund_source = $fund_source;
+					$request->amount = $request->amounts[$i];
+					$request->currency = $request->currencies[$i];
+					$request->exchange_rate = $request->exchange_rates[$i];
+					$request->date_of_exchange_rate = $request->date_of_exchange_rates[$i];
+					$request->amount_in_taka = $request->amounts_in_taka[$i];
+					$this->grid->create('rmis_program_funding_sources', $columns, $request, 'id');
+					$i++;	
+				}
+			}
+		}
+		
+		$columns = array('estimate_date', 'financial_year','program_id');
         $columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
+		$data = $this->grid->create('rmis_program_cost_estimations', $columns, $request, 'id'); 
         
-        $data= $this->grid->create('rmis_divisions', $columns, $request, 'id'); 
+		$columns = array('s_o', 'ac_head_code','ac_head_title','amount', 'program_id');
+		$i=0;
+		if(!empty($request->s_os)>0){
+			foreach($request->s_os as $s_o_key=>$s_o){
+				if($s_o!=NULL){
+					$request->s_o = $s_o;
+					$request->ac_head_code = $request->ac_head_codes[$i];
+					$request->ac_head_title = $request->ac_head_titles[$i];
+					$request->amount = $request->cost_amounts[$i];
+					$this->grid->create('rmis_program_cost_breakdowns', $columns, $request, 'id');
+					$i++;	
+				}
+			}
+		}
+		
         $data['success'] ="Data created successfuly.";
         //echo json_encode($data , JSON_NUMERIC_CHECK); 
     }

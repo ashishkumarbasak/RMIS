@@ -37,6 +37,8 @@ class ResearchTeams extends MX_Controller{
 			$this->template->set('program_id',$program_id);
 		}
 		
+		$program_areas = $this->grid->read('rmis_program_areas', array('id','program_area_id', 'program_area_name'), $request); 
+		$this->template->set('program_areas',$program_areas); //$this->program->get_program_area()
 		
         $this->template->set('content_header_icon', 'class="icofont-file"');
         $this->template->set('content_header_title', 'Program Other Information');
