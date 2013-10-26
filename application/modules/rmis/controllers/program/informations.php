@@ -346,5 +346,5 @@ class Informations extends MX_Controller{
 		else
 			return false;
 	}                
-} 
+}
 ?>

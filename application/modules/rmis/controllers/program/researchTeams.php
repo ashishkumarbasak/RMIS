@@ -34,6 +34,13 @@ class ResearchTeams extends MX_Controller{
 			$program_detail = $this->program->get_details($program_id);
 			$this->template->set('program_detail', serialize($program_detail));
 			
+			$researchTeam = $this->program->get_researchTeam($program_id);
+			$this->template->set('researchTeam', serialize($researchTeam));
+			
+			$teamMembers = $this->program->get_researchTeamMembers($program_id);
+			$this->template->set('teamMembers', serialize($teamMembers));
+			
+			
 			$this->template->set('program_id',$program_id);
 		}
 		
@@ -41,7 +48,7 @@ class ResearchTeams extends MX_Controller{
 		$this->template->set('program_areas',$program_areas); //$this->program->get_program_area()
 		
         $this->template->set('content_header_icon', 'class="icofont-file"');
-        $this->template->set('content_header_title', 'Program Other Information');
+        $this->template->set('content_header_title', 'Research Program Team Information');
 		
         $breadcrumb = '<ul class="breadcrumb">
 						<li><a href="#"><i class="icofont-home"></i> RMIS</a> <span class="divider">&raquo;</span></li>
@@ -68,8 +75,8 @@ class ResearchTeams extends MX_Controller{
         
 		$data = $this->grid->create('rmis_program_research_teams', $columns, $request, 'id'); 
         
-		$columns = array('member_type', 'institute_name','member_name','designation', 'contact_no', 'email', 'team_id');
-		$request->team_id = $request->id;
+		$columns = array('member_type', 'institute_name','member_name','designation', 'contact_no', 'email', 'program_id');
+		$request->program_id = $request->id;
 		$i=0;
 		if(!empty($request->member_types)>0){
 			foreach($request->member_types as $team_member_key=>$team_member_type){

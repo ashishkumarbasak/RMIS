@@ -5,6 +5,12 @@
 	if(isset($program_detail)){
 		$program_detail = unserialize($program_detail);
 	}
+	if(isset($researchTeam)){
+		$researchTeam = unserialize($researchTeam);
+	}
+	if(isset($teamMembers)){
+		$teamMembers = unserialize($teamMembers);
+	}
 ?>
 <form name="research_info" id="research_info" method="post" action="">
 	<div class="main_form">
@@ -80,7 +86,7 @@
         	<div class="form_element">
            		<div class="label width_170px">Team Formation Date </div>
                 <div class="field">
-              		<input type="text" name="team_formation_date" id="team_formation_date" data-date-format="yyyy-mm-dd"  value="" class="textbox disabled" readonly="readonly">
+              		<input type="text" name="team_formation_date" id="team_formation_date" data-date-format="yyyy-mm-dd"  value="<?php if($researchTeam) echo $researchTeam->team_formation_date;?>" class="textbox disabled" readonly="readonly">
                		<span class="input-group-addon">
 	            		<i class="icon-calendar"></i>
 	        		</span>
@@ -116,25 +122,56 @@
 	    		<div class="clear"></div>
 	    	</div>
 	    	
+	    	<?php if(isset($teamMembers) && $teamMembers!=NULL) { 
+	    			foreach($teamMembers as $key=>$member){
+	    	?>
+	    			<div id="row-<?php echo $key; ?>">
+	    			<div class="row">
+				    	<div class="grid-1-6 left">
+				        	<input class="textbox no-margin width-89" type="text" name="member_types[]" id="member_types" value="<?php echo $member->member_type; ?>"/>
+				    	</div>
+				    	<div class="grid-1-6 left">
+				        	<input class="textbox no-margin width-89" type="text" name="institute_names[]" id="institute_names" value="<?php echo $member->institute_name; ?>"/>
+				    	</div>
+				    	<div class="grid-1-6 left">
+				        	<input class="textbox no-margin width-89" type="text" name="member_names[]" id="member_names" value="<?php echo $member->member_name; ?>"/>	
+				    	</div>
+				    	<div class="grid-1-6 left">
+				        	<input class="textbox no-margin width-89" type="text" name="designations[]" id="designations" value="<?php echo $member->designation; ?>"/>	
+				    	</div>
+				    	<div class="grid-1-6 left">
+				        	<input class="textbox no-margin width-89" type="text" name="contact_nos[]" id="contact_nos" value="<?php echo $member->contact_no; ?>"/>	
+				    	</div>
+				    	<div class="grid-1-6 left">
+				        	<input class="textbox no-margin width-89" type="text" name="emails[]" id="emails" value="<?php echo $member->email; ?>"/>	
+				    	</div>
+				    </div>
+				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_committee_member(<?php echo $member->committee_id;?> , <?php echo $member->member_id; ?>, <?php echo $key; ?> );">[-]</a></div>
+				    </div>
+	    	<?php				
+	    			}
+	    	 	  } 
+	    	?>
+	    	
 	    	<div id='duplicate2'>
 		    	<div class="row">
 			    	<div class="grid-1-6 left">
-			        	<input class="textbox no-margin width-89" type="text" name="member_types[]" id="lower_range" value=""/>
+			        	<input class="textbox no-margin width-89" type="text" name="member_types[]" id="member_types" value=""/>
 			    	</div>
 			    	<div class="grid-1-6 left">
-			        	<input class="textbox no-margin width-89" type="text" name="institute_names[]" id="upper_range" value=""/>
+			        	<input class="textbox no-margin width-89" type="text" name="institute_names[]" id="institute_names" value=""/>
 			    	</div>
 			    	<div class="grid-1-6 left">
-			        	<input class="textbox no-margin width-89" type="text" name="member_names[]" id="letter_grade" value=""/>	
+			        	<input class="textbox no-margin width-89" type="text" name="member_names[]" id="member_names" value=""/>	
 			    	</div>
 			    	<div class="grid-1-6 left">
-			        	<input class="textbox no-margin width-89" type="text" name="designations[]" id="grade_point" value=""/>	
+			        	<input class="textbox no-margin width-89" type="text" name="designations[]" id="designations" value=""/>	
 			    	</div>
 			    	<div class="grid-1-6 left">
-			        	<input class="textbox no-margin width-89" type="text" name="contact_nos[]" id="qualitative_status" value=""/>	
+			        	<input class="textbox no-margin width-89" type="text" name="contact_nos[]" id="contact_nos" value=""/>	
 			    	</div>
 			    	<div class="grid-1-6 left">
-			        	<input class="textbox no-margin width-89" type="text" name="emails[]" id="description" value=""/>	
+			        	<input class="textbox no-margin width-89" type="text" name="emails[]" id="emails" value=""/>	
 			    	</div>
 			    </div>
 			    <div class="row add-more">
