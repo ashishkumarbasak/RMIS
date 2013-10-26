@@ -315,8 +315,8 @@
         <div class="button_panel" style="margin-right: 110px;">
 			<?php if(isset($program_detail) && $program_detail->program_id!=NULL) { ?>
                 <input type="hidden" name="program_id" id="program_id" value="<?php echo $program_detail->program_id; ?>">
-                <input type="submit" name="update_program_information" id="update_program_information" value="Update" class="k-button button">
                 <input type="submit" name="delete_program_information" id="delete_program_information" onclick="javascript:return confirm('Do you want to delete this program?');" value="Delete" class="k-button button">
+            	<input type="submit" name="update_program_information" id="update_program_information" value="Update" class="k-button button">
             <?php } else { ?>
             	<input type="reset" name="reset_program_information" id="reset_program_information" value="Reset" class="k-button button">
                 <input type="submit" name="save_program_information" id="save_program_information" value="Save" class="k-button button">

@@ -119,8 +119,14 @@
         	
         	<div class="form_element">
 	            <div class="button_panel" style="margin-right: 112px;">
+	            	<?php if(isset($program_detail) && $program_detail->other_information_id!=NULL) { ?>
+		                <input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
+		                <input type="hidden" name="id" id="id" value="<?php echo $program_detail->other_information_id; ?>">
+		                <input type="submit" name="update_program_otherinfo" id="update_program_otherinfo" value="Update" class="k-button button">
+		            <?php } else { ?>
 	                <input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
 	        		<input type="submit" name="save_program_otherinfo" id="save_program_otherinfo" value="Save" class="k-button button">
+	        		<?php } ?>
 	            </div>
 	            <div class="clear"></div>
 	        </div>        

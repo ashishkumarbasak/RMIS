@@ -302,3 +302,93 @@ ERROR - 2013-10-26 19:46:27 --> 404 Page Not Found -->
 ERROR - 2013-10-26 19:46:28 --> Severity: Warning  --> Invalid argument supplied for foreach() /Applications/MAMP/htdocs/RMIS/application/modules/rmis/views/program/activityLists/form.php 25
 ERROR - 2013-10-26 19:46:28 --> 404 Page Not Found --> 
 ERROR - 2013-10-26 19:46:28 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 19:55:21 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 19:55:21 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 19:57:54 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 19:57:54 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:03:27 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:03:27 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:03:34 --> Severity: Warning  --> Missing argument 1 for Informations::dataUpdate(), called in /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php on line 26 and defined /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 168
+ERROR - 2013-10-26 20:03:34 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 172
+ERROR - 2013-10-26 20:03:34 --> Severity: Warning  --> Creating default object from empty value /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 172
+ERROR - 2013-10-26 20:03:34 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 173
+ERROR - 2013-10-26 20:03:34 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 174
+ERROR - 2013-10-26 20:03:34 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 175
+ERROR - 2013-10-26 20:03:34 --> Severity: Warning  --> Cannot modify header information - headers already sent by (output started at /Applications/MAMP/htdocs/RMIS/system/core/Exceptions.php:186) /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 180
+ERROR - 2013-10-26 20:03:34 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 172
+ERROR - 2013-10-26 20:03:34 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 173
+ERROR - 2013-10-26 20:03:34 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 174
+ERROR - 2013-10-26 20:03:34 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 175
+ERROR - 2013-10-26 20:03:34 --> Severity: Warning  --> Cannot modify header information - headers already sent by (output started at /Applications/MAMP/htdocs/RMIS/system/core/Exceptions.php:186) /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 180
+ERROR - 2013-10-26 20:03:34 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:03:34 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:04:35 --> Severity: Warning  --> Missing argument 1 for Informations::dataUpdate(), called in /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php on line 26 and defined /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 168
+ERROR - 2013-10-26 20:04:35 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 172
+ERROR - 2013-10-26 20:04:35 --> Severity: Warning  --> Creating default object from empty value /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 172
+ERROR - 2013-10-26 20:04:35 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 173
+ERROR - 2013-10-26 20:04:35 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 174
+ERROR - 2013-10-26 20:04:35 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 175
+ERROR - 2013-10-26 20:04:35 --> Severity: Warning  --> Cannot modify header information - headers already sent by (output started at /Applications/MAMP/htdocs/RMIS/system/core/Exceptions.php:186) /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 180
+ERROR - 2013-10-26 20:04:35 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 172
+ERROR - 2013-10-26 20:04:35 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 173
+ERROR - 2013-10-26 20:04:35 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 174
+ERROR - 2013-10-26 20:04:35 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 175
+ERROR - 2013-10-26 20:04:35 --> Severity: Warning  --> Cannot modify header information - headers already sent by (output started at /Applications/MAMP/htdocs/RMIS/system/core/Exceptions.php:186) /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 180
+ERROR - 2013-10-26 20:04:36 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:04:36 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:05:04 --> Severity: Warning  --> Missing argument 1 for Informations::dataUpdate(), called in /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php on line 26 and defined /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 168
+ERROR - 2013-10-26 20:05:04 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 173
+ERROR - 2013-10-26 20:05:04 --> Severity: Warning  --> Creating default object from empty value /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 173
+ERROR - 2013-10-26 20:05:04 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 174
+ERROR - 2013-10-26 20:05:04 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 175
+ERROR - 2013-10-26 20:05:04 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 176
+ERROR - 2013-10-26 20:05:04 --> Severity: Warning  --> Cannot modify header information - headers already sent by (output started at /Applications/MAMP/htdocs/RMIS/system/core/Exceptions.php:186) /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 181
+ERROR - 2013-10-26 20:05:04 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 173
+ERROR - 2013-10-26 20:05:04 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 174
+ERROR - 2013-10-26 20:05:04 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 175
+ERROR - 2013-10-26 20:05:04 --> Severity: Warning  --> implode(): Invalid arguments passed /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 176
+ERROR - 2013-10-26 20:05:04 --> Severity: Warning  --> Cannot modify header information - headers already sent by (output started at /Applications/MAMP/htdocs/RMIS/system/core/Exceptions.php:186) /Applications/MAMP/htdocs/RMIS/application/modules/rmis/controllers/program/Informations.php 181
+ERROR - 2013-10-26 20:05:04 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:05:04 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:06:14 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:06:14 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:06:45 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:06:45 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:06:52 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:06:52 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:19:46 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:19:46 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:19:50 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:19:50 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:19:56 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:19:56 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:20:03 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:20:03 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:20:20 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:20:20 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:20:24 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:20:24 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:20:54 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:20:54 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:11 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:11 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:16 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:16 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:19 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:19 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:27 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:27 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:31 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:31 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:37 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:37 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:40 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:40 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:43 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:43 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:43 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:43 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:44 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:44 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:48 --> 404 Page Not Found --> 
+ERROR - 2013-10-26 20:24:48 --> 404 Page Not Found --> 
