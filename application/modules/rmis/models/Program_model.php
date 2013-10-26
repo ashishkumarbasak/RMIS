@@ -54,8 +54,10 @@ class Program_model extends MY_Model {
 		if($id!=NULL){
 			$this->db->select('* , hrm_employees.employee_name as program_coordinator');
 			$this->db->from('rmis_program_informations');
-			$this->db->join('hrm_employees','rmis_program_informations.program_coordinator=hrm_employees.employee_id');
-			$this->db->where('program_id',$id);
+			$this->db->join('rmis_program_other_informations','rmis_program_informations.program_id=rmis_program_other_informations.program_id','left');
+			$this->db->join('hrm_employees','rmis_program_informations.program_coordinator=hrm_employees.employee_id','left');
+			
+			$this->db->where('rmis_program_informations.program_id',$id);
 			
 			$query = $this->db->get();
 			if($query->num_rows() > 0){
@@ -67,6 +69,182 @@ class Program_model extends MY_Model {
 		}else{
 			return NULL;	
 		}
+	}
+	
+	function get_fundSources($id=NULL){
+		if($id!=NULL){
+			$this->db->select('*');
+			$this->db->from('rmis_program_funding_sources');
+			$this->db->where('rmis_program_funding_sources.program_id',$id);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result;
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;	
+		}
+	}
+
+	function get_costEstimation($id=NULL){
+		if($id!=NULL){
+			$this->db->select('*');
+			$this->db->from('rmis_program_cost_estimations');
+			$this->db->where('rmis_program_cost_estimations.program_id',$id);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result[0];
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;	
+		}
+	}
+
+	function get_costBreakdowns($id=NULL){
+		if($id!=NULL){
+			$this->db->select('*');
+			$this->db->from('rmis_program_cost_breakdowns');
+			$this->db->where('rmis_program_cost_breakdowns.program_id',$id);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result;
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;	
+		}
+	}
+
+	function get_researchTeam($id=NULL){
+		if($id!=NULL){
+			$this->db->select('*');
+			$this->db->from('rmis_program_research_teams');
+			$this->db->where('rmis_program_research_teams.program_id',$id);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result[0];
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;	
+		}
+	}
+
+	function get_researchTeamMembers($id=NULL){
+		if($id!=NULL){
+			$this->db->select('*');
+			$this->db->from('rmis_program_research_team_members');
+			$this->db->where('rmis_program_research_team_members.program_id',$id);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result;
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;	
+		}
+	}
+
+	function get_steeringCommittee($id=NULL){
+		if($id!=NULL){
+			$this->db->select('*');
+			$this->db->from('rmis_program_steering_committees');
+			$this->db->where('rmis_program_steering_committees.program_id',$id);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result[0];
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;	
+		}
+	}
+
+	function get_steeringCommitteeTeamMembers($id=NULL){
+		if($id!=NULL){
+			$this->db->select('*');
+			$this->db->from('rmis_program_steering_committee_members');
+			$this->db->where('rmis_program_steering_committee_members.program_id',$id);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result;
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;	
+		}
+	}
+	
+	function get_implementationCommittee($id=NULL){
+		if($id!=NULL){
+			$this->db->select('*');
+			$this->db->from('rmis_program_implementation_committees');
+			$this->db->where('rmis_program_implementation_committees.program_id',$id);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result[0];
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;	
+		}
+	}
+
+	function get_implementationCommitteeTeamMembers($id=NULL){
+		if($id!=NULL){
+			$this->db->select('*');
+			$this->db->from('rmis_program_implementation_committee_members');
+			$this->db->where('rmis_program_implementation_committee_members.program_id',$id);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result;
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;	
+		}
+	}
+
+	function delete($id=NULL){
+		//Truncate `rmis_program_informations`;
+		//Truncate `rmis_program_other_informations`;
+		//Truncate `rmis_program_funding_sources`;
+		//Truncate `rmis_program_cost_estimations`; 
+		//Truncate `rmis_program_cost_breakdowns`;
+		//Truncate `rmis_program_research_teams`;
+		//Truncate `rmis_program_research_team_members`;
+		//Truncate `rmis_program_steering_committees`;
+		//Truncate `rmis_program_steering_committee_members`;
+		//Truncate `rmis_program_implementation_committees`;
+		//Truncate `rmis_program_implementation_committee_members`;
 	}
 	
 	

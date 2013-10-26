@@ -34,6 +34,15 @@ class FundSources extends MX_Controller{
 			$program_detail = $this->program->get_details($program_id);
 			$this->template->set('program_detail', serialize($program_detail));
 			
+			$fundSources = $this->program->get_fundSources($program_id);
+			$this->template->set('fundSources', serialize($fundSources));
+			
+			$costEstimations = $this->program->get_costEstimation($program_id);
+			$this->template->set('costEstimations', serialize($costEstimations));
+			
+			$costBreakdowns = $this->program->get_costBreakdowns($program_id);
+			$this->template->set('costBreakdowns', serialize($costBreakdowns));
+			
 			$this->template->set('program_id',$program_id);
 		}
 		

@@ -34,6 +34,12 @@ class ImplementationCommittees extends MX_Controller{
 			$program_detail = $this->program->get_details($program_id);
 			$this->template->set('program_detail', serialize($program_detail));
 			
+			$implementationCommittee = $this->program->get_implementationCommittee($program_id);
+			$this->template->set('implementationCommittee', serialize($implementationCommittee));
+			
+			$teamMembers = $this->program->get_implementationCommitteeTeamMembers($program_id);
+			$this->template->set('teamMembers', serialize($teamMembers));
+			
 			$this->template->set('program_id',$program_id);
 		}
 
@@ -68,8 +74,8 @@ class ImplementationCommittees extends MX_Controller{
         
 		$data = $this->grid->create('rmis_program_implementation_committees', $columns, $request, 'id'); 
         
-		$columns = array('committee_member_type','member_name','designation', 'contact_no', 'email', 'committee_id');
-		$request->committee_id = $request->id;
+		$columns = array('committee_member_type','member_name','designation', 'contact_no', 'email', 'program_id');
+		$request->program_id = $request->id;
 		$i=0;
 		if(!empty($request->member_names)>0){
 			foreach($request->member_names as $team_member_key=>$team_member_name){

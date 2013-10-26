@@ -4,7 +4,16 @@
 <?php 
 	if(isset($program_detail)){
 		$program_detail = unserialize($program_detail);
-	} 
+	}
+	if(isset($fundSources)){
+		$fundSources = unserialize($fundSources);
+	}
+	if(isset($costEstimations)){
+		$costEstimations = unserialize($costEstimations);
+	}
+	if(isset($costBreakdowns)){
+		$costBreakdowns = unserialize($costBreakdowns);
+	}
 ?>
 
 <form name="other_info" id="other_info" method="post" action="">
@@ -79,7 +88,36 @@
 	    		</div>
 	    		<div class="clear"></div>
 	    	</div>
-	    	
+	    	<?php if(isset($fundSources) && $fundSources!=NULL) { 
+	    			foreach($fundSources as $key=>$fundSource){
+	    	?>
+	    			<div id="row-<?php echo $key; ?>">
+	    			<div class="row">
+				    	<div class="grid-1-6 left">
+				        	<input class="textbox no-margin width-89" type="text" name="fund_sources[]" id="fund_sources" value="<?php echo $fundSource->fund_source; ?>"/>
+				    	</div>
+				    	<div class="grid-1-6 left">
+				        	<input class="textbox no-margin width-89" type="text" name="amounts[]" id="amounts" value="<?php echo $fundSource->amount; ?>"/>
+				    	</div>
+				    	<div class="grid-1-6 left">
+				        	<input class="textbox no-margin width-89" type="text" name="currencies[]" id="currencies" value="<?php echo $fundSource->currency; ?>"/>	
+				    	</div>
+				    	<div class="grid-1-6 left">
+				        	<input class="textbox no-margin width-89" type="text" name="exchange_rates[]" id="exchange_rates" value="<?php echo $fundSource->exchange_rate; ?>"/>	
+				    	</div>
+				    	<div class="grid-1-6 left">
+				        	<input class="textbox no-margin width-89" type="text" name="date_of_exchange_rates[]" id="date_of_exchange_rates" value="<?php echo $fundSource->date_of_exchange_rate; ?>"/>	
+				    	</div>
+				    	<div class="grid-1-6 left">
+				        	<input class="textbox no-margin width-89" type="text" name="amounts_in_taka[]" id="amounts_in_taka" value="<?php echo $fundSource->amount_in_taka; ?>"/>	
+				    	</div>
+				    </div>
+				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_committee_member(<?php echo $member->committee_id;?> , <?php echo $member->member_id; ?>, <?php echo $key; ?> );">[-]</a></div>
+				    </div>
+	    	<?php				
+	    			}
+	    	 	  } 
+	    	?>
 	    	<div id='duplicate2'>
 	    	<div class="row">
 		    	<div class="grid-1-6 left">
@@ -114,7 +152,7 @@
         	<div class="form_element">
            		<div class="label width_170px">Estimate Date </div>
                 <div class="field">
-               		<input type="text" name="estimate_date" id="estimate_date" value="" data-date-format="yyyy-mm-dd"  class="textbox no-margin disabled" readonly="readonly">
+               		<input type="text" name="estimate_date" id="estimate_date" value="<?php if(isset($costEstimations)) echo $costEstimations->estimate_date; ?>" data-date-format="yyyy-mm-dd"  class="textbox no-margin disabled" readonly="readonly">
                	</div>
            		<div class="clear"></div>
         	</div>
@@ -124,7 +162,7 @@
        		<div class="form_element">
           		<div class="label">Financial Year </div>
                	<div class="field">
-              		<input type="text" name="financial_year" id="financial_year" value="" class="textbox no-margin">
+              		<input type="text" name="financial_year" id="financial_year" value="<?php if(isset($costEstimations)) echo $costEstimations->financial_year; ?>" class="textbox no-margin">
                	</div>
                	<div class="clear"></div>
         	</div>
@@ -149,33 +187,59 @@
 	    		</div>
 	    		<div class="clear"></div>
 	    	</div>
+	    	
+	    	<?php if(isset($costBreakdowns) && $costBreakdowns!=NULL) { 
+	    			foreach($costBreakdowns as $key=>$costBreakdown){
+	    	?>
+	    			<div id="row-<?php echo $key; ?>">
+	    			<div class="row">
+				    	<div class="grid-1-4 left">
+				        	<input class="textbox no-margin width-92" type="text" name="s_os[]" id="s_os" value="<?php echo $costBreakdown->s_o;?>"/>
+				    	</div>
+				    	<div class="grid-1-4 left">
+				        	<input class="textbox no-margin width-92" type="text" name="ac_head_codes[]" id="ac_head_codes" value="<?php echo $costBreakdown->ac_head_code;?>"/>
+				    	</div>
+				    	<div class="grid-1-4 left">
+				        	<input class="textbox no-margin width-92" type="text" name="ac_head_titles[]" id="ac_head_titles" value="<?php echo $costBreakdown->ac_head_title;?>"/>	
+				    	</div>
+				    	<div class="grid-1-4 left">
+				        	<input class="textbox no-margin width-92" type="text" name="cost_amounts[]" id="cost_amounts" value="<?php echo $costBreakdown->amount;?>"/>	
+				    	</div>
+				    </div>
+				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_committee_member(<?php echo $member->committee_id;?> , <?php echo $member->member_id; ?>, <?php echo $key; ?> );">[-]</a></div>
+				    </div>
+	    	<?php				
+	    			}
+	    	 	  } 
+	    	?>
+	    	
 	    	<div id='duplicate3'>
-	    	<div class="row">
-		    	<div class="grid-1-4 left">
-		        	<input class="textbox no-margin width-92" type="text" name="s_os[]" id="s_os" value=""/>
-		    	</div>
-		    	<div class="grid-1-4 left">
-		        	<input class="textbox no-margin width-92" type="text" name="ac_head_codes[]" id="ac_head_codes" value=""/>
-		    	</div>
-		    	<div class="grid-1-4 left">
-		        	<input class="textbox no-margin width-92" type="text" name="ac_head_titles[]" id="ac_head_titles" value=""/>	
-		    	</div>
-		    	<div class="grid-1-4 left">
-		        	<input class="textbox no-margin width-92" type="text" name="cost_amounts[]" id="cost_amounts" value=""/>	
-		    	</div>
-		    </div>
-		    <div class="row add-more">
-		    	<a id="minus3" href="javascript:void(0);">[-]</a> 
-		    	<a id="plus3" href="javascript:void(0);">[+]</a>
-		    </div>
+		    	<div class="row">
+			    	<div class="grid-1-4 left">
+			        	<input class="textbox no-margin width-92" type="text" name="s_os[]" id="s_os" value=""/>
+			    	</div>
+			    	<div class="grid-1-4 left">
+			        	<input class="textbox no-margin width-92" type="text" name="ac_head_codes[]" id="ac_head_codes" value=""/>
+			    	</div>
+			    	<div class="grid-1-4 left">
+			        	<input class="textbox no-margin width-92" type="text" name="ac_head_titles[]" id="ac_head_titles" value=""/>	
+			    	</div>
+			    	<div class="grid-1-4 left">
+			        	<input class="textbox no-margin width-92" type="text" name="cost_amounts[]" id="cost_amounts" value=""/>	
+			    	</div>
+			    </div>
+			    <div class="row add-more">
+			    	<a id="minus3" href="javascript:void(0);">[-]</a> 
+			    	<a id="plus3" href="javascript:void(0);">[+]</a>
+			    </div>
 		    </div>	
 	    </div>
 	</div>
 	
 	<div class="form_element">
     	<div class="button_panel" style="margin-right: 15px;">
-        	<?php if(isset($program_detail) && $program_detail->program_id!=NULL) { ?>
-                <input type="hidden" name="program_id" id="program_id" value="<?php echo $program_detail->program_id; ?>">
+        	<?php if(isset($program_id)) { ?>
+                <input type="hidden" name="program_id" id="program_id" value="<?php echo $program_id; ?>">
             <?php } ?>
                 <input type="submit" name="save_fundSources" id="save_fundSources" value="Save" class="k-button button">
         </div>

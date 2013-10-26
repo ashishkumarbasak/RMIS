@@ -5,6 +5,12 @@
 	if(isset($program_detail)){
 		$program_detail = unserialize($program_detail);
 	}
+	if(isset($implementationCommittee)){
+		$implementationCommittee = unserialize($implementationCommittee);
+	}
+	if(isset($teamMembers)){
+		$teamMembers = unserialize($teamMembers);
+	}
 ?>
 
 <form name="research_info" id="research_info" method="post" action="">
@@ -96,7 +102,7 @@
         	<div class="form_element">
            		<div class="label width_170px">Committee Formation Date </div>
                 <div class="field">
-               		<input type="text" name="committee_formation_date" id="committee_formation_date" value="" data-date-format="yyyy-mm-dd" class="textbox disabled" readonly="readonly">
+               		<input type="text" name="committee_formation_date" id="committee_formation_date" value="<?php if($implementationCommittee) echo $implementationCommittee->committee_formation_date;?>" data-date-format="yyyy-mm-dd" class="textbox disabled" readonly="readonly">
                		<span class="input-group-addon">
 	            		<i class="icon-calendar"></i>
 	        		</span>
@@ -128,6 +134,34 @@
 	    		</div>
 	    		<div class="clear"></div>
 	    	</div>
+	    	
+	    	<?php if(isset($teamMembers) && $teamMembers!=NULL) { 
+	    			foreach($teamMembers as $key=>$member){
+	    	?>
+	    			<div id="row-<?php echo $key; ?>">
+	    			<div class="row">
+				    	<div class="grid-1-5 left">
+				        	<input class="textbox no-margin width-91" type="text" name="member_names[]" id="member_names" value="<?php echo $member->member_name; ?>"/>
+				    	</div>
+				    	<div class="grid-1-5 left">
+				        	<input class="textbox no-margin width-91" type="text" name="designations[]" id="designations" value="<?php echo $member->designation; ?>"/>
+				    	</div>
+				    	<div class="grid-1-5 left">
+				        	<input class="textbox no-margin width-91" type="text" name="committee_member_types[]" id="committee_member_types" value="<?php echo $member->committee_member_type; ?>"/>	
+				    	</div>
+				    	<div class="grid-1-5 left">
+				        	<input class="textbox no-margin width-91" type="text" name="contact_nos[]" id="contact_nos" value="<?php echo $member->contact_no; ?>"/>	
+				    	</div>
+				    	<div class="grid-1-5 left">
+				        	<input class="textbox no-margin width-91" type="text" name="emails[]" id="emails" value="<?php echo $member->email; ?>"/>	
+				    	</div>
+				    </div>
+				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_committee_member(<?php echo $member->committee_id;?> , <?php echo $member->member_id; ?>, <?php echo $key; ?> );">[-]</a></div>
+				    </div>
+	    	<?php				
+	    			}
+	    	 	  } 
+	    	?>
 	    	
 	    	<div id='duplicate2'>
 		    	<div class="row">
