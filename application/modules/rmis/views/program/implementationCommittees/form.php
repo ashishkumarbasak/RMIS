@@ -156,7 +156,7 @@
 				        	<input class="textbox no-margin width-91" type="text" name="emails[]" id="emails" value="<?php echo $member->email; ?>"/>	
 				    	</div>
 				    </div>
-				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_committee_member(<?php echo $member->committee_id;?> , <?php echo $member->member_id; ?>, <?php echo $key; ?> );">[-]</a></div>
+				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_implementationCommittee_member(<?php echo $member->id;?> , <?php echo $member->program_id; ?>, <?php echo $key; ?> );">[-]</a></div>
 				    </div>
 	    	<?php				
 	    			}
@@ -191,10 +191,14 @@
 	
 	<div class="form_element">
     	<div class="button_panel" style="margin-right: 15px;">
-        		<?php if(isset($program_detail) && $program_detail->program_id!=NULL) { ?>
-	                <input type="hidden" name="program_id" id="program_id" value="<?php echo $program_detail->program_id; ?>">
-	            <?php } ?>
-                <input type="submit" name="save_program_implcommittee" id="save_program_implcommittee" value="Save" class="k-button button">
+        		<?php if(isset($program_detail) && ($researchTeam!=NULL || $teamMembers!=NULL)) { ?>
+		    		<input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
+		    		<input type="button" name="delete_program_implcommittee" id="delete_program_implcommittee" value="Delete" class="k-button button">
+		            <input type="submit" name="update_program_implcommittee" id="update_program_implcommittee" value="Update" class="k-button button">
+		    	<?php } else { ?>
+	                <input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
+	            	<input type="submit" name="save_program_implcommittee" id="save_program_implcommittee" value="Save" class="k-button button">
+                <?php } ?>
         </div>
         <div class="clear"></div>
     </div>
@@ -208,4 +212,17 @@ $(document).ready(function() {
 </script>
 <script language="javascript">
 	$('#committee_formation_date').datepicker('setStartDate');
+</script>
+<script type="text/javascript">
+	function delete_implementationCommittee_member(team_member_id, program_id, row_id){
+		var r=confirm("Are you sure you want to delete this team member?");
+		if (r==true){
+		  	var jqxhr = $.post( "<?php echo site_url("rmis/program/implementationCommittees/deleteTeamMember"); ?>", { team_member_id: team_member_id, program_id: program_id }, function() {
+			  $("#row-" + parseInt(row_id)).remove();
+			})
+			.fail(function() {
+				alert( "error" );
+			})
+		}
+	}
 </script>

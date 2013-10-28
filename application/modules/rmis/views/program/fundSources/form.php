@@ -91,7 +91,7 @@
 	    	<?php if(isset($fundSources) && $fundSources!=NULL) { 
 	    			foreach($fundSources as $key=>$fundSource){
 	    	?>
-	    			<div id="row-<?php echo $key; ?>">
+	    			<div id="frow-<?php echo $key; ?>">
 	    			<div class="row">
 				    	<div class="grid-1-6 left">
 				        	<input class="textbox no-margin width-89" type="text" name="fund_sources[]" id="fund_sources" value="<?php echo $fundSource->fund_source; ?>"/>
@@ -111,8 +111,9 @@
 				    	<div class="grid-1-6 left">
 				        	<input class="textbox no-margin width-89" type="text" name="amounts_in_taka[]" id="amounts_in_taka" value="<?php echo $fundSource->amount_in_taka; ?>"/>	
 				    	</div>
+				    	<input type="hidden" name="fundSourceID[]" id="fundSourceID" value="<?php echo $fundSource->id; ?> ">
 				    </div>
-				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_committee_member(<?php echo $member->committee_id;?> , <?php echo $member->member_id; ?>, <?php echo $key; ?> );">[-]</a></div>
+				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_found_source(<?php echo $fundSource->id;?> , <?php echo $program_id; ?>, <?php echo $key; ?> );">[-]</a></div>
 				    </div>
 	    	<?php				
 	    			}
@@ -191,7 +192,7 @@
 	    	<?php if(isset($costBreakdowns) && $costBreakdowns!=NULL) { 
 	    			foreach($costBreakdowns as $key=>$costBreakdown){
 	    	?>
-	    			<div id="row-<?php echo $key; ?>">
+	    			<div id="cbrow-<?php echo $key; ?>">
 	    			<div class="row">
 				    	<div class="grid-1-4 left">
 				        	<input class="textbox no-margin width-92" type="text" name="s_os[]" id="s_os" value="<?php echo $costBreakdown->s_o;?>"/>
@@ -205,8 +206,9 @@
 				    	<div class="grid-1-4 left">
 				        	<input class="textbox no-margin width-92" type="text" name="cost_amounts[]" id="cost_amounts" value="<?php echo $costBreakdown->amount;?>"/>	
 				    	</div>
+				    		<input type="hidden" name="costBreakdownID[]" id="costBreakdownID" value="<?php echo $costBreakdown->id; ?> ">
 				    </div>
-				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_committee_member(<?php echo $member->committee_id;?> , <?php echo $member->member_id; ?>, <?php echo $key; ?> );">[-]</a></div>
+				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_costbreakdown_item(<?php echo $costBreakdown->id;?> , <?php echo $program_id; ?>, <?php echo $key; ?> );">[-]</a></div>
 				    </div>
 	    	<?php				
 	    			}
@@ -238,10 +240,14 @@
 	
 	<div class="form_element">
     	<div class="button_panel" style="margin-right: 15px;">
-        	<?php if(isset($program_id)) { ?>
-                <input type="hidden" name="program_id" id="program_id" value="<?php echo $program_id; ?>">
+        	<?php if(isset($program_detail) && ($fundSources!=NULL || $costEstimations!=NULL || $costBreakdowns!=NULL)) { ?>
+		    		<input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
+		    		<input type="button" name="delete_fundSources" id="delete_fundSources" value="Delete" class="k-button button">
+		            <input type="submit" name="update_fundSources" id="update_fundSources" value="Update" class="k-button button">
+		    <?php } else { ?>
+                <input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
+            	<input type="submit" name="save_fundSources" id="save_fundSources" value="Save" class="k-button button">
             <?php } ?>
-                <input type="submit" name="save_fundSources" id="save_fundSources" value="Save" class="k-button button">
         </div>
         <div class="clear"></div>
     </div>
@@ -260,4 +266,30 @@ $(document).ready(function() {
 </script>
 <script language="javascript">
 	$('#estimate_date').datepicker('setStartDate');
+</script>
+<script type="text/javascript">
+	function delete_found_source(fundSource_id, program_id, row_id){
+		var r=confirm("Are you sure you want to delete this fund source?");
+		if (r==true){
+		  	var jqxhr = $.post( "<?php echo site_url("rmis/program/fundSources/deleteFundSource"); ?>", { fundSource_id: fundSource_id, program_id: program_id }, function() {
+			  $("#frow-" + parseInt(row_id)).remove();
+			})
+			.fail(function() {
+				alert( "error" );
+			})
+		}
+	}
+</script>
+<script type="text/javascript">
+	function delete_costbreakdown_item(cbitem_id, program_id, row_id){
+		var r=confirm("Are you sure you want to delete this item?");
+		if (r==true){
+		  	var jqxhr = $.post( "<?php echo site_url("rmis/program/fundSources/deleteCostBreakDown"); ?>", { cbitem_id: cbitem_id, program_id: program_id }, function() {
+			  $("#cbrow-" + parseInt(row_id)).remove();
+			})
+			.fail(function() {
+				alert( "error" );
+			})
+		}
+	}
 </script>

@@ -31,6 +31,11 @@ class ImplementationCommittees extends MX_Controller{
         $this->template->append_metadata('<script src="/assets/js/custom/tmis.js"></script>');
                 
         if($program_id!=NULL){
+			if($this->input->post('update_program_implcommittee')){
+				$request = json_encode($this->input->post());
+				$this->dataUpdate($request);
+			}
+			
 			$program_detail = $this->program->get_details($program_id);
 			$this->template->set('program_detail', serialize($program_detail));
 			
@@ -112,25 +117,41 @@ class ImplementationCommittees extends MX_Controller{
         //header('Content-Type: application/json');
         //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
-       // print_r($request);
-        $this->form_validation->set_rules($this->division->validation);
-        $this->division->isValidate((array) $request);
-        if ($this->form_validation->run() === false) {
-            header("HTTP/1.1 500 Internal Server Error");
-            echo "Wrong data ! try again" ;
-            exit;
-        }
-        
-        $columns = array('id', 'division_name', 'division_head', 'division_phone', 'division_email', 'division_order', 'division_about');
+		//print_r((array) $request);
+		
+       	$columns = array('committee_formation_date', 'program_id');
         $columns[] = 'modified_at';        
         $request->modified_at = date('Y-m-d H:i:s');            
         $columns[] = 'modified_by';
         $request->modified_by = 1;
         
-        $data = $this->grid->update('rmis_divisions', $columns, $request, 'id'); 
+		$data = $this->grid->update('rmis_program_implementation_committees', $columns, $request, 'program_id'); 
+        
+		$columns = array('committee_member_type','member_name','designation', 'contact_no', 'email', 'program_id');
+		$i=0;
+		if(!empty($request->member_names)>0){
+			$this->program->clean_programImplCommitteeMembers($request->program_id);
+			foreach($request->member_names as $team_member_key=>$team_member_name){
+				if($team_member_name!=NULL){
+					$request->member_name = $team_member_name;
+					$request->designation = $request->designations[$i];
+					$request->committee_member_type = $request->committee_member_types[$i];
+					$request->contact_no = $request->contact_nos[$i];
+					$request->email = $request->emails[$i];
+					$this->grid->create('rmis_program_implementation_committee_members', $columns, $request, 'id');
+					$i++;	
+				}
+			}
+		}
+		
         $data['success'] ="Data updated successfuly.";
-        //echo json_encode($data , JSON_NUMERIC_CHECK);  
+        //echo json_encode($data , JSON_NUMERIC_CHECK); 
     }
-                
+    
+	public function deleteTeamMember(){
+		$team_member_id = $this->input->post('team_member_id');
+		$program_id = $this->input->post('program_id');
+		$this->program->deleteImplementationCommitteeMemberFromProgram($team_member_id,$program_id);
+	}            
 } 
 ?>

@@ -232,6 +232,81 @@ class Program_model extends MY_Model {
 			return NULL;	
 		}
 	}
+	
+	function deleteFundSourceFromProgram($fundSource_id=NULL,$program_id=NULL){
+		if($fundSource_id!=NULL && $program_id!=NULL){
+			$this->db->where('id',$fundSource_id);
+			$this->db->where('program_id',$program_id);
+			$this->db->delete('rmis_program_funding_sources');
+		}
+	}
+
+	function clean_programFundSources($program_id=NULL){
+		if($program_id!=NULL){
+			$this->db->where('program_id',$program_id);
+			$this->db->delete('rmis_program_funding_sources');
+		}
+	}
+	
+	function clean_programCostBreakDown($program_id=NULL){
+		if($program_id!=NULL){
+			$this->db->where('program_id',$program_id);
+			$this->db->delete('rmis_program_cost_breakdowns');
+		}
+	}
+
+	function deleteCostBreakDownFromProgram($cbitem_id=NULL,$program_id=NULL){
+		if($cbitem_id!=NULL && $program_id!=NULL){
+			$this->db->where('id',$cbitem_id);
+			$this->db->where('program_id',$program_id);
+			$this->db->delete('rmis_program_cost_breakdowns');
+		}
+	}
+	
+	function deleteResearchTeamMemberFromProgram($team_member_id=NULL,$program_id=NULL){
+		if($team_member_id!=NULL && $program_id!=NULL){
+			$this->db->where('id',$team_member_id);
+			$this->db->where('program_id',$program_id);
+			$this->db->delete('rmis_program_research_team_members');
+		}
+	}
+	
+	function clean_programResearchTeamMembers($program_id=NULL){
+		if($program_id!=NULL){
+			$this->db->where('program_id',$program_id);
+			$this->db->delete('rmis_program_research_team_members');
+		}
+	}
+	
+	function deleteSteeringCommitteeTeamMemberFromProgram($team_member_id=NULL,$program_id=NULL){
+		if($team_member_id!=NULL && $program_id!=NULL){
+			$this->db->where('id',$team_member_id);
+			$this->db->where('program_id',$program_id);
+			$this->db->delete('rmis_program_steering_committee_members');
+		}
+	}
+	
+	function clean_programSteeringCommitteeMembers($program_id=NULL){
+		if($program_id!=NULL){
+			$this->db->where('program_id',$program_id);
+			$this->db->delete('rmis_program_steering_committee_members');
+		}
+	}
+	
+	function deleteImplementationCommitteeMemberFromProgram($team_member_id=NULL,$program_id=NULL){
+		if($team_member_id!=NULL && $program_id!=NULL){
+			$this->db->where('id',$team_member_id);
+			$this->db->where('program_id',$program_id);
+			$this->db->delete('rmis_program_implementation_committee_members');
+		}
+	}
+	
+	function clean_programImplCommitteeMembers($program_id=NULL){
+		if($program_id!=NULL){
+			$this->db->where('program_id',$program_id);
+			$this->db->delete('rmis_program_implementation_committee_members');
+		}
+	}
 
 	function delete($id=NULL){
 		//Truncate `rmis_program_informations`;
