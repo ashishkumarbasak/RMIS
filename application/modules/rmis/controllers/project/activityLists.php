@@ -14,7 +14,7 @@ class ActivityLists extends MX_Controller{
     public function index($program_id=NULL){
         $this->template->title('Research Management(RM)', ' Programs', ' ProgramTask/WorkElement/Activity Information');
         
-		if($this->input->post('save_activityLists')){
+		if($this->input->post('save_division')){
 			$request = json_encode($this->input->post());
 			$this->dataCreate($request);
 		}
@@ -31,14 +31,6 @@ class ActivityLists extends MX_Controller{
         $this->template->append_metadata('<script src="/assets/js/custom/tmis.js"></script>');
                 
         if($program_id!=NULL){
-			if($this->input->post('update_activityLists')){
-				$request = json_encode($this->input->post());
-				$this->dataUpdate($request);
-			}
-			
-			$activityLists = $this->program->get_activityLists($program_id);
-			$this->template->set('activityLists', serialize($activityLists));
-			
 			$program_detail = $this->program->get_details($program_id);
 			$this->template->set('program_detail', serialize($program_detail));
 			
@@ -66,76 +58,63 @@ class ActivityLists extends MX_Controller{
         //header('Content-Type: application/json');
         //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
-		//print_r((array) $request);
+		//print_r($request);
 		
-		$columns = array('s_o', 'work_element','planned_startDate','planned_endDate', 'actual_startDate', 'actual_endDate', 'assign_resource', 'program_id');
-		$columns[] = 'created_at';
+        $this->form_validation->set_rules($this->division->validation);
+        $this->division->isValidate((array) $request);
+        if ($this->form_validation->run() === false) {
+            header("HTTP/1.1 500 Internal Server Error");
+            echo "Wrong data ! try again" ;
+            exit;
+        }
+       
+        $columns = array('division_id', 'division_name', 'division_head', 'division_phone', 'division_email', 'division_order', 'division_about');
+        $columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
-		$i=0;
-		if(!empty($request->work_elements)>0){
-			foreach($request->work_elements as $work_element_key=>$work_element){
-				if($work_element!=NULL){
-					$request->work_element = $work_element;
-					$request->s_o = $request->s_os[$i];
-					$request->planned_startDate = $request->planned_startDates[$i];
-					$request->planned_endDate = $request->planned_endDates[$i];
-					$request->actual_startDate = $request->actual_startDates[$i];
-					$request->actual_endDate = $request->actual_endDates[$i];
-					$request->assign_resource = $request->assign_resources[$i];
-					$this->grid->create('rmis_program_activities', $columns, $request, 'id');
-					$i++;	
-				}
-			}
-		}
-		
-		$data['success'] ="Data created successfuly.";
+        
+        $data= $this->grid->create('rmis_divisions', $columns, $request, 'id'); 
+        $data['success'] ="Data created successfuly.";
         //echo json_encode($data , JSON_NUMERIC_CHECK); 
     }
-	
+    
+    public function dataRead(){
+        header('Content-Type: application/json');
+        $request = json_decode(file_get_contents('php://input'));
+        $data= $this->grid->read_with_join_table('rmis_divisions', array('rmis_divisions.id','division_id', 'division_name', 'hrm_employees.employee_name as division_head','division_phone','division_email'), $request, 'hrm_employees', 'rmis_divisions.division_head = hrm_employees.employee_id');       
+        echo json_encode($data, JSON_NUMERIC_CHECK);
+    }
+    public function dataDestroy(){   
+        header('Content-Type: application/json');
+        $request = json_decode(file_get_contents('php://input'));
+        $data = $this->grid->destroy('rmis_divisions', $request->models, 'id'); 
+        echo json_encode($data , JSON_NUMERIC_CHECK); 
+    }
+    	
 	public function dataUpdate($request){
         //header('Content-Type: application/json');
         //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
-		//print_r((array) $request);
-		
-		$columns = array('s_o', 'work_element','planned_startDate','planned_endDate', 'actual_startDate', 'actual_endDate', 'assign_resource', 'program_id');
-		$columns[] = 'created_at';
-        $request->created_at = date('Y-m-d H:i:s');            
-        $columns[] = 'created_by';
-        $request->created_by = 1;
-		$columns[] = 'modified_at';        
+       // print_r($request);
+        $this->form_validation->set_rules($this->division->validation);
+        $this->division->isValidate((array) $request);
+        if ($this->form_validation->run() === false) {
+            header("HTTP/1.1 500 Internal Server Error");
+            echo "Wrong data ! try again" ;
+            exit;
+        }
+        
+        $columns = array('id', 'division_name', 'division_head', 'division_phone', 'division_email', 'division_order', 'division_about');
+        $columns[] = 'modified_at';        
         $request->modified_at = date('Y-m-d H:i:s');            
         $columns[] = 'modified_by';
         $request->modified_by = 1;
-		$i=0;
-		if(!empty($request->work_elements)>0){
-			$this->program->clean_programActivityLists($request->program_id);
-			foreach($request->work_elements as $work_element_key=>$work_element){
-				if($work_element!=NULL){
-					$request->work_element = $work_element;
-					$request->s_o = $request->s_os[$i];
-					$request->planned_startDate = $request->planned_startDates[$i];
-					$request->planned_endDate = $request->planned_endDates[$i];
-					$request->actual_startDate = $request->actual_startDates[$i];
-					$request->actual_endDate = $request->actual_endDates[$i];
-					$request->assign_resource = $request->assign_resources[$i];
-					$this->grid->create('rmis_program_activities', $columns, $request, 'id');
-					$i++;	
-				}
-			}
-		}
-		
-		$data['success'] ="Data created successfuly.";
-        //echo json_encode($data , JSON_NUMERIC_CHECK); 
+        
+        $data = $this->grid->update('rmis_divisions', $columns, $request, 'id'); 
+        $data['success'] ="Data updated successfuly.";
+        //echo json_encode($data , JSON_NUMERIC_CHECK);  
     }
-
-	public function deleteActivity(){
-		$activity_id = $this->input->post('activity_id');
-		$program_id = $this->input->post('program_id');
-		$this->program->deleteActivityFromProgram($activity_id,$program_id);
-	}
                 
 } 
 ?>

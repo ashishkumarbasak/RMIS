@@ -307,6 +307,39 @@ class Program_model extends MY_Model {
 			$this->db->delete('rmis_program_implementation_committee_members');
 		}
 	}
+	
+	function clean_programActivityLists($program_id=NULL){
+		if($program_id!=NULL){
+			$this->db->where('program_id',$program_id);
+			$this->db->delete('rmis_program_activities');
+		}
+	}
+	
+	function get_activityLists($id=NULL){
+		if($id!=NULL){
+			$this->db->select('*');
+			$this->db->from('rmis_program_activities');
+			$this->db->where('rmis_program_activities.program_id',$id);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result;
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;	
+		}
+	}
+	
+	function deleteActivityFromProgram($activity_id=NULL,$program_id=NULL){
+		if($activity_id!=NULL && $program_id!=NULL){
+			$this->db->where('id',$activity_id);
+			$this->db->where('program_id',$program_id);
+			$this->db->delete('rmis_program_activities');
+		}
+	}
 
 	function delete($id=NULL){
 		//Truncate `rmis_program_informations`;
