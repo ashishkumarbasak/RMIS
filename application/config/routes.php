@@ -93,6 +93,8 @@ $route['rmis/program/researchTeams/(:num)'] = 'rmis/program/researchTeams/index/
 $route['rmis/program/steeringCommittees/(:num)'] = 'rmis/program/steeringCommittees/index/$1';
 $route['rmis/program/implementationCommittees/(:num)'] = 'rmis/program/implementationCommittees/index/$1';
 $route['rmis/program/activityLists/(:num)'] = 'rmis/program/activityLists/index/$1';
+$route['rmis/program/monitorEvaluations/(:num)'] = 'rmis/program/monitorEvaluations/index/$1';
+$route['rmis/program/relatedDocuments/(:num)'] = 'rmis/program/relatedDocuments/index/$1';
 
 
 /* End of file routes.php */
