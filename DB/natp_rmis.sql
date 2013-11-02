@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 26, 2013 at 07:47 PM
+-- Generation Time: Nov 02, 2013 at 08:19 AM
 -- Server version: 5.5.29
 -- PHP Version: 5.4.10
 
@@ -96,6 +96,57 @@ INSERT INTO `hrm_employees` (`id`, `organization_id`, `employee_id`, `personal_f
 (7, 1, '02321', 'tesd', 3, 2, 2, NULL, 2, 2, NULL, NULL, NULL, 'sdfsd', 'ewrqer', '', NULL, NULL, NULL, '0000-00-00', 'Male', NULL, 0, 0, 0, 0, NULL, '2013-09-17', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2013-09-15 09:20:13', 7, '2013-09-15 09:16:05', NULL),
 (8, 1, 'test', 'dasdf', 1, 2, 2, NULL, 1, 2, NULL, NULL, NULL, 'sdfsad', 'sdfsd', '', NULL, NULL, NULL, '0000-00-00', 'Male', NULL, 0, 0, 0, 0, NULL, '2013-09-15', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2013-09-15 09:37:03', 7, '2013-09-15 09:32:55', NULL),
 (9, 1, 'jhjhj', 'jgjh', 2, 2, 2, NULL, 1, 4, NULL, NULL, NULL, 'jjhgjj', 'jhj', '', NULL, NULL, NULL, '0000-00-00', 'Male', NULL, 0, 0, 0, 0, NULL, '2013-10-02', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2013-09-15 10:05:30', 5, '2013-09-15 10:01:22', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hrm_organograms`
+--
+
+CREATE TABLE `hrm_organograms` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
+  `organogram_name` varchar(200) DEFAULT NULL,
+  `reports_to` int(11) DEFAULT '0',
+  `organogram_type` enum('Division','Wing','Centre','Section','Sub-Centre','Regional Office/Lab','Unit','District Office','Department') DEFAULT NULL,
+  `origin_organization_id` int(11) DEFAULT '0',
+  `is_active` tinyint(4) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` bigint(20) unsigned DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`,`organization_id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=72 ;
+
+--
+-- Dumping data for table `hrm_organograms`
+--
+
+INSERT INTO `hrm_organograms` (`id`, `organization_id`, `organogram_name`, `reports_to`, `organogram_type`, `origin_organization_id`, `is_active`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 1, 'Finance - BARC', 0, 'Division', 1, 1, NULL, NULL, '2013-08-13 05:16:13', NULL),
+(2, 1, 'Accounts- BARC ', 0, 'Division', 1, 1, NULL, NULL, '2013-08-13 05:17:00', NULL),
+(3, 1, 'Finance Section - BARC', 1, 'Centre', 0, 1, NULL, NULL, '2013-08-13 05:17:32', NULL),
+(5, 1, 'Finance sub-Centre - BARC', 3, 'Sub-Centre', 0, 1, NULL, NULL, '2013-08-13 05:21:22', NULL),
+(6, 1, 'F-SRD1', 0, 'Regional Office/Lab', 2, NULL, NULL, NULL, '2013-08-13 05:24:05', NULL),
+(7, 1, 'A-SRD1', 0, 'Regional Office/Lab', 2, NULL, NULL, NULL, '2013-08-13 05:24:34', NULL),
+(8, 1, 'F Centre- SRD1', 6, 'Centre', 0, NULL, NULL, NULL, '2013-08-13 05:25:27', NULL),
+(9, 1, 'A Centre - SRD1', 7, 'Centre', 0, NULL, NULL, NULL, '2013-08-13 05:25:58', NULL),
+(10, 20, 'Marketing', 0, 'Division', 1, NULL, '2013-08-19 13:09:37', 200, '2013-08-19 07:30:27', 200),
+(16, 20, 'sub centre mark', 10, 'Sub-Centre', 0, NULL, '2013-08-19 14:06:32', 200, '2013-08-19 08:06:32', NULL),
+(18, 20, 'test 212dfdsaf ', 10, 'Division', 0, NULL, '2013-08-19 14:12:22', 200, '2013-08-20 04:31:46', 200),
+(48, 20, 'ddd dd 333', 10, 'Section', 0, NULL, '2013-08-19 18:36:23', 200, '2013-08-19 13:42:47', 200),
+(61, 20, 'test123', 48, 'District Office', 0, NULL, '2013-08-19 19:17:34', 200, '2013-08-19 13:17:34', NULL),
+(62, 20, 'dfsdfsad 123', 48, 'District Office', 0, NULL, '2013-08-19 19:22:06', 200, '2013-08-19 13:22:06', NULL),
+(63, 20, 'sdfsd', 48, 'Unit', 0, NULL, '2013-08-19 19:22:50', 200, '2013-08-19 13:43:52', 200),
+(64, 20, 'OK..', 18, 'Sub-Centre', 0, NULL, '2013-08-20 10:17:27', 200, '2013-08-20 04:17:27', NULL),
+(65, 20, 'testdd 11', 18, 'Division', 0, NULL, '2013-08-20 10:25:16', 200, '2013-08-20 04:25:16', NULL),
+(66, 20, 'dsfasdfas', 18, 'District Office', 0, NULL, '2013-08-20 10:25:35', 200, '2013-08-20 04:25:35', NULL),
+(67, 20, 'ok123', 18, 'Wing', 0, NULL, '2013-08-20 10:27:38', 200, '2013-08-20 04:27:38', NULL),
+(68, 20, 'test133 123', 10, 'Wing', 0, NULL, '2013-08-20 10:29:54', 200, '2013-08-20 04:42:11', 200),
+(69, 20, '1212', 68, 'Unit', 0, NULL, '2013-08-22 18:13:18', 200, '2013-08-22 12:13:18', NULL),
+(70, 20, 'jggj', 0, 'Division', 1, NULL, '2013-08-26 17:16:50', 200, '2013-08-26 11:13:24', NULL),
+(71, 20, 'jg', 1, 'Wing', 0, NULL, '2013-08-26 17:17:09', 200, '2013-08-26 11:13:42', NULL);
 
 -- --------------------------------------------------------
 
@@ -333,7 +384,15 @@ CREATE TABLE `rmis_program_activities` (
   `modified_by` bigint(20) DEFAULT NULL,
   `program_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+
+--
+-- Dumping data for table `rmis_program_activities`
+--
+
+INSERT INTO `rmis_program_activities` (`id`, `s_o`, `work_element`, `planned_startDate`, `planned_endDate`, `actual_startDate`, `actual_endDate`, `assign_resource`, `created_at`, `created_by`, `modified_at`, `modified_by`, `program_id`) VALUES
+(9, '1', 'Test work element 1', '2013-10-10', '2014-10-10', '2013-11-10', '2014-11-10', 202, '2013-11-01 17:58:37', 1, '2013-11-01 11:58:37', 1, 1),
+(10, '2', 'Test work element 2', '2013-10-10', '2014-10-10', '2013-11-10', '2014-11-10', 101, '2013-11-01 17:58:37', 1, '2013-11-01 11:58:37', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -377,16 +436,17 @@ CREATE TABLE `rmis_program_cost_breakdowns` (
   `amount` float NOT NULL,
   `program_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `rmis_program_cost_breakdowns`
 --
 
 INSERT INTO `rmis_program_cost_breakdowns` (`id`, `s_o`, `ac_head_code`, `ac_head_title`, `amount`, `program_id`) VALUES
-(1, '1', 123, 0, 800000, 1),
-(2, '2', 124, 0, 8000000, 1),
-(3, '3', 125, 0, 80000000, 1);
+(8, '1', 120, 0, 800000, 1),
+(9, '2', 125, 0, 80000000, 1),
+(10, '3', 130, 0, 10000000, 1),
+(11, '4', 135, 0, 5000, 1);
 
 -- --------------------------------------------------------
 
@@ -411,7 +471,7 @@ CREATE TABLE `rmis_program_cost_estimations` (
 --
 
 INSERT INTO `rmis_program_cost_estimations` (`id`, `estimate_date`, `financial_year`, `created_at`, `created_by`, `modified_at`, `modified_by`, `program_id`) VALUES
-(1, '2013-10-25', '2013-2014', '2013-10-26 16:38:40', 1, '2013-10-26 14:38:40', NULL, 1);
+(1, '2013-10-26', '2014-2015', '2013-10-26 16:38:40', 1, '2013-10-28 12:02:03', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -433,16 +493,17 @@ CREATE TABLE `rmis_program_funding_sources` (
   `modified_by` bigint(20) DEFAULT NULL,
   `program_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `rmis_program_funding_sources`
 --
 
 INSERT INTO `rmis_program_funding_sources` (`id`, `fund_source`, `amount`, `currency`, `exchange_rate`, `date_of_exchange_rate`, `amount_in_taka`, `created_at`, `created_by`, `modified_at`, `modified_by`, `program_id`) VALUES
-(1, 12, 10000000, 'USD', 80, '2013-10-03', 800000000, '2013-10-26 16:38:40', 1, '2013-10-26 14:38:40', NULL, 1),
-(2, 13, 10000, 'EUR', 100, '2013-10-03', 1000000, '2013-10-26 16:38:40', 1, '2013-10-26 14:38:40', NULL, 1),
-(3, 14, 20000, 'GB', 120, '2013-10-03', 2400000, '2013-10-26 16:38:40', 1, '2013-10-26 14:38:40', NULL, 1);
+(8, 12, 10000000, 'USD', 80, '2013-10-03', 800000000, NULL, NULL, '2013-10-28 12:02:03', 1, 1),
+(9, 13, 10000, 'EUR', 100, '2013-10-03', 1000000, NULL, NULL, '2013-10-28 12:02:03', 1, 1),
+(10, 14, 2000, 'GB', 120, '2013-10-04', 240000, NULL, NULL, '2013-10-28 12:02:03', 1, 1),
+(11, 15, 5000, 'DK', 7, '2013-10-05', 35000, NULL, NULL, '2013-10-28 12:02:03', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -452,7 +513,7 @@ INSERT INTO `rmis_program_funding_sources` (`id`, `fund_source`, `amount`, `curr
 
 CREATE TABLE `rmis_program_implementation_committees` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `committee_formation_date` datetime NOT NULL,
+  `committee_formation_date` date NOT NULL,
   `program_id` bigint(20) NOT NULL,
   `created_at` datetime DEFAULT NULL,
   `created_by` bigint(20) DEFAULT NULL,
@@ -466,7 +527,7 @@ CREATE TABLE `rmis_program_implementation_committees` (
 --
 
 INSERT INTO `rmis_program_implementation_committees` (`id`, `committee_formation_date`, `program_id`, `created_at`, `created_by`, `modified_at`, `modified_by`) VALUES
-(1, '2013-10-31 00:00:00', 1, '2013-10-26 17:40:06', 1, '2013-10-26 15:40:06', NULL);
+(1, '2013-10-27', 1, '2013-10-26 17:40:06', 1, '2013-10-28 12:22:46', 1);
 
 -- --------------------------------------------------------
 
@@ -483,15 +544,15 @@ CREATE TABLE `rmis_program_implementation_committee_members` (
   `email` varchar(255) DEFAULT NULL,
   `program_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `rmis_program_implementation_committee_members`
 --
 
 INSERT INTO `rmis_program_implementation_committee_members` (`id`, `committee_member_type`, `member_name`, `designation`, `contact_no`, `email`, `program_id`) VALUES
-(1, '1', '1', 'President', '01779021581', 'ashish021@gmail.com', 1),
-(2, '2', '2', 'Vice President', '01779021581', 'debasis@gmail.com', 1);
+(5, '1', '1', 'President', '01779021581', 'ashish021@gmail.com', 1),
+(6, '2', '2', 'Vice President', '01779021581', 'debasis@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -538,7 +599,7 @@ CREATE TABLE `rmis_program_informations` (
 --
 
 INSERT INTO `rmis_program_informations` (`program_id`, `research_program_title`, `program_area`, `program_division`, `program_researchType`, `program_researchPriority`, `program_researchStatus`, `program_coordinator`, `program_coordinatorDesignation`, `is_collaborate`, `program_instituteNames`, `program_departmentName`, `program_regionalStationName`, `program_implementationLocation`, `program_keywords`, `program_commodities`, `program_aezs`, `program_plannedStartDate`, `program_plannedEndDate`, `program_initiationDate`, `program_completionDate`, `program_plannedBudget`, `program_approvedBudget`, `program_goal`, `program_objective`, `program_expectedOutputs`, `created_by`, `created_at`, `modified_by`, `modified_at`) VALUES
-(1, 'This is test program titel', 'BARIPA0005', 'BARIDIV0002', 2, 4, 3, 202, 'Vice President', '1', '1,4', 4, 'BARIRS0001', 'BARIIMS0001', 'Dhaka, Chittagong', '1,5', '1,3,4', '2013-10-26', '2013-11-29', '2013-10-26', '2013-12-31', '10000000', '10000000', 'Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal ', 'Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose ', 'Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output ---##########---Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 ---##########---Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 ', 1, '2013-10-26 16:32:19', 0, '2013-10-26 14:32:19');
+(1, 'This is test program titel edit', 'BARIPA0005', 'BARIDIV0002', 2, 4, 3, 0, 'Vice President', '1', '1,4', 4, 'BARIRS0001', 'BARIIMS0001', 'Dhaka, Chittagong', '1,5', '1,3,4', '2013-10-26', '2013-11-29', '2013-10-26', '2013-12-31', '10000000', '10000000', 'Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal ', 'Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose ', 'Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output ---##########---Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 ---##########---Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 ---##########---', 1, '2013-10-26 16:32:19', 1, '2013-10-26 14:06:45');
 
 -- --------------------------------------------------------
 
@@ -617,7 +678,7 @@ CREATE TABLE `rmis_program_other_informations` (
 --
 
 INSERT INTO `rmis_program_other_informations` (`id`, `program_rationale`, `program_methodology`, `program_background`, `program_socio_economical_impact`, `program_environmental_impact`, `program_targeted_beneficiary`, `program_reference`, `program_external_affiliation`, `program_organization_policy`, `program_risks`, `created_at`, `created_by`, `modified_at`, `modified_by`, `program_id`) VALUES
-(1, 'Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale ', 'Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology ', 'Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background ', 'Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  ', 'Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  ', 'Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   ', 'Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    ', 'Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation ', 'Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy ', 'Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks ', '2013-10-26 16:33:59', 1, '2013-10-26 14:33:59', NULL, 1);
+(1, 'Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Edit', 'Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology ', 'Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background  Fucking Edit', 'Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  ', 'Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  ', 'Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   ', 'Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    ', 'Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation ', 'Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy ', 'Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks ', '2013-10-26 16:33:59', 1, '2013-10-26 14:24:27', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -634,14 +695,15 @@ CREATE TABLE `rmis_program_research_teams` (
   `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `rmis_program_research_teams`
 --
 
 INSERT INTO `rmis_program_research_teams` (`id`, `team_formation_date`, `program_id`, `created_at`, `created_by`, `modified_at`, `modified_by`) VALUES
-(1, '2013-10-26', 1, '2013-10-26 16:44:44', 1, '2013-10-26 14:44:44', NULL);
+(1, '2013-10-27', 1, '2013-10-26 16:44:44', 1, '2013-11-02 01:34:11', 1),
+(2, '2013-10-26', 0, NULL, NULL, '2013-10-28 12:10:42', 1);
 
 -- --------------------------------------------------------
 
@@ -659,15 +721,16 @@ CREATE TABLE `rmis_program_research_team_members` (
   `email` varchar(255) DEFAULT NULL,
   `program_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
 
 --
 -- Dumping data for table `rmis_program_research_team_members`
 --
 
 INSERT INTO `rmis_program_research_team_members` (`id`, `member_type`, `institute_name`, `member_name`, `designation`, `contact_no`, `email`, `program_id`) VALUES
-(1, '1', '1', '202', 'President', '01779021581', 'ashish021@gmail.com', 1),
-(2, '2', '2', '101', 'Vice President', '01711084616', 'debasis@gmail.com', 1);
+(20, '1', '1', '202', 'President', '01779021581', 'ashish021@gmail.com', 1),
+(21, '2', '2', '101', 'Vice President', '01711084616', 'debasis@gmail.com', 1),
+(22, '3', '3', '101', 'Vice President', '01711084616', 'debasis@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -691,7 +754,7 @@ CREATE TABLE `rmis_program_steering_committees` (
 --
 
 INSERT INTO `rmis_program_steering_committees` (`id`, `committee_formation_date`, `program_id`, `created_at`, `created_by`, `modified_at`, `modified_by`) VALUES
-(1, '2013-10-26', 1, '2013-10-26 16:49:01', 1, '2013-10-26 14:49:01', NULL);
+(1, '2013-10-27', 1, '2013-10-26 16:49:01', 1, '2013-10-28 12:17:56', 1);
 
 -- --------------------------------------------------------
 
@@ -708,15 +771,16 @@ CREATE TABLE `rmis_program_steering_committee_members` (
   `email` varchar(255) DEFAULT NULL,
   `program_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `rmis_program_steering_committee_members`
 --
 
 INSERT INTO `rmis_program_steering_committee_members` (`id`, `committee_member_type`, `member_name`, `designation`, `contact_no`, `email`, `program_id`) VALUES
-(1, '1', '1', 'President', '01779021581', 'ashish021@gmail.com', 1),
-(2, '2', '2', 'Vice President', '01711084616', 'debasis@gmail.com', 1);
+(6, '1', '1', 'President', '01779021581', 'ashish021@gmail.com', 1),
+(7, '2', '2', 'Vice President', '01779021581', 'debasis@gmail.com', 1),
+(8, '3', '3', 'programer', '01779021581', 'dhiman@gmail.com', 1);
 
 -- --------------------------------------------------------
 
