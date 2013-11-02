@@ -212,6 +212,11 @@ pip-log.txt
 *.mo
 
 #Mr Developer
-.mr.developer.cfgapplication/logs
+.mr.developer.cfg
+application/logs
 application/config/development
 application/config/production
+
+application/logs/*.*
+application/config/development/*.*
+application/config/production/*.*
