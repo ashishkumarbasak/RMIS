@@ -3,7 +3,7 @@
     	$station_detail = unserialize($station_detail);
     } 
 ?>
-<form name="" id="" method="post" action="">
+<form name="frm_regional_station" id="frm_regional_station" method="post" action="">
 <div class="main_form" style="">
 	<div class="left_form">
         <div class="form_element">
@@ -57,6 +57,7 @@
             	
             	<?php if(isset($station_detail) && $station_detail->station_id!=NULL) { ?>
                 	<input type="hidden" name="id" id="id" value="<?php echo $station_detail->id; ?>">
+                    <input type="button" name="new_station" id="new_station" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('rmis/setup/regionalStations');?>'">
         			<input type="submit" name="delete_station" id="delete_station" value="Delete" class="k-button button">
         			<input type="submit" name="save_update" id="save_update" value="Update" class="k-button button">
                 <?php } else { ?>

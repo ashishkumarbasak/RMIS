@@ -10,7 +10,7 @@
 		$grade_point_informations = unserialize($grade_point_informations);
 	} 
 ?>
-<form name="frm_division" id="frm_division" method="post" action="">
+<form name="frm_grading" id="frm_grading" method="post" action="">
 <div class="main_form">
 	<div class="left_form">
         <div class="form_element">
@@ -121,7 +121,6 @@
     	<div class="button_panel" style="margin-right:125px;">
         		<?php if(isset($grading_detail) && $grading_detail->id!=NULL) { ?>
 	                <input type="hidden" name="id" id="id" value="<?php echo $grading_detail->id; ?>">
-	                <input type="submit" name="delete_gradings" id="delete_gradings" value="Delete" class="k-button button">
 	        		<input type="submit" name="update_gradings" id="update_gradings" value="Update" class="k-button button">
 	            <?php } else { ?>
 	                <input type="submit" name="save_gradings" id="save_gradings" value="Save" class="k-button button">

@@ -1,14 +1,20 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.7
+-- version 3.5.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 02, 2013 at 08:19 AM
--- Server version: 5.5.29
--- PHP Version: 5.4.10
+-- Generation Time: Nov 04, 2013 at 02:02 PM
+-- Server version: 5.5.24-log
+-- PHP Version: 5.3.13
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `natp_rmis`
@@ -20,7 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `hrm_employees`
 --
 
-CREATE TABLE `hrm_employees` (
+CREATE TABLE IF NOT EXISTS `hrm_employees` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `employee_id` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
@@ -103,7 +109,7 @@ INSERT INTO `hrm_employees` (`id`, `organization_id`, `employee_id`, `personal_f
 -- Table structure for table `hrm_organograms`
 --
 
-CREATE TABLE `hrm_organograms` (
+CREATE TABLE IF NOT EXISTS `hrm_organograms` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `organogram_name` varchar(200) DEFAULT NULL,
@@ -154,28 +160,29 @@ INSERT INTO `hrm_organograms` (`id`, `organization_id`, `organogram_name`, `repo
 -- Table structure for table `rmis_aezs`
 --
 
-CREATE TABLE `rmis_aezs` (
-  `aez_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `aez_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+CREATE TABLE IF NOT EXISTS `rmis_aezs` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
+  `value` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `weight` int(11) DEFAULT NULL,
+  `is_default` enum('yes','no') COLLATE utf8_unicode_ci DEFAULT 'no',
   `is_active` tinyint(4) DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` bigint(20) unsigned DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` bigint(20) unsigned DEFAULT NULL,
-  PRIMARY KEY (`aez_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
+  PRIMARY KEY (`id`,`organization_id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `rmis_aezs`
 --
 
-INSERT INTO `rmis_aezs` (`aez_id`, `aez_name`, `is_active`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 'AEZ-1', 1, '0000-00-00 00:00:00', NULL, '2013-10-11 19:56:34', NULL),
-(2, 'AEZ-2', 1, '0000-00-00 00:00:00', NULL, '2013-10-11 19:56:34', NULL),
-(3, 'AEZ-3', 1, '0000-00-00 00:00:00', NULL, '2013-10-11 19:56:47', NULL),
-(4, 'AEZ-4', 1, '0000-00-00 00:00:00', NULL, '2013-10-11 19:56:47', NULL),
-(5, 'AEZ-5', 1, '0000-00-00 00:00:00', NULL, '2013-10-11 19:57:00', NULL),
-(6, 'AEZ-6', 1, '0000-00-00 00:00:00', NULL, '2013-10-11 19:57:00', NULL);
+INSERT INTO `rmis_aezs` (`id`, `organization_id`, `value`, `name`, `weight`, `is_default`, `is_active`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 1, '1', 'AEZ-1', 1, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-11-03 12:50:36', NULL),
+(2, 1, '2', 'AEZ-2', 2, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-11-03 12:50:45', NULL);
 
 -- --------------------------------------------------------
 
@@ -183,25 +190,29 @@ INSERT INTO `rmis_aezs` (`aez_id`, `aez_name`, `is_active`, `created_at`, `creat
 -- Table structure for table `rmis_commodities`
 --
 
-CREATE TABLE `rmis_commodities` (
-  `commodity_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `commodity_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+CREATE TABLE IF NOT EXISTS `rmis_commodities` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
+  `value` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `weight` int(11) DEFAULT NULL,
+  `is_default` enum('yes','no') COLLATE utf8_unicode_ci DEFAULT 'no',
   `is_active` tinyint(4) DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` bigint(20) unsigned DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` bigint(20) unsigned DEFAULT NULL,
-  PRIMARY KEY (`commodity_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+  PRIMARY KEY (`id`,`organization_id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `rmis_commodities`
 --
 
-INSERT INTO `rmis_commodities` (`commodity_id`, `commodity_name`, `is_active`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 'Comodity 1', 1, '0000-00-00 00:00:00', NULL, '2013-10-22 17:15:18', NULL),
-(2, 'Comodity 2', 1, '0000-00-00 00:00:00', NULL, '2013-10-22 17:15:21', NULL),
-(5, 'Comodity 3', 1, '0000-00-00 00:00:00', NULL, '2013-10-22 17:15:31', NULL);
+INSERT INTO `rmis_commodities` (`id`, `organization_id`, `value`, `name`, `weight`, `is_default`, `is_active`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 0, '1', 'Comodity 1', 1, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-11-03 12:52:32', NULL),
+(2, 1, '2', 'Comodity 2', 2, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-11-03 12:52:37', NULL);
 
 -- --------------------------------------------------------
 
@@ -209,7 +220,7 @@ INSERT INTO `rmis_commodities` (`commodity_id`, `commodity_name`, `is_active`, `
 -- Table structure for table `rmis_departments`
 --
 
-CREATE TABLE `rmis_departments` (
+CREATE TABLE IF NOT EXISTS `rmis_departments` (
   `department_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `department_name` varchar(255) NOT NULL,
   `institute_id` bigint(20) DEFAULT NULL,
@@ -232,8 +243,9 @@ INSERT INTO `rmis_departments` (`department_id`, `department_name`, `institute_i
 -- Table structure for table `rmis_divisions`
 --
 
-CREATE TABLE `rmis_divisions` (
+CREATE TABLE IF NOT EXISTS `rmis_divisions` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
   `division_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `division_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `division_head` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -241,20 +253,23 @@ CREATE TABLE `rmis_divisions` (
   `division_email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `division_order` int(11) NOT NULL,
   `division_about` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` bigint(20) DEFAULT NULL,
-  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`,`division_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`,`organization_id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `rmis_divisions`
 --
 
-INSERT INTO `rmis_divisions` (`id`, `division_id`, `division_name`, `division_head`, `division_phone`, `division_email`, `division_order`, `division_about`, `created_at`, `created_by`, `modified_at`, `modified_by`) VALUES
-(1, 'BARIDIV1', 'Dhaka', '101', '01558755441', 'ashish021@gmail.com', 1, 'Test Division', '2013-09-30 17:53:34', 1, '2013-10-11 05:54:32', 1),
-(3, 'BARIDIV0002', 'Rajshahi', '202', '01714532345', 'test2@yahoo.com', 1, 'test division', '2013-10-01 15:39:49', 1, '2013-10-11 05:54:57', 1);
+INSERT INTO `rmis_divisions` (`id`, `organization_id`, `division_id`, `division_name`, `division_head`, `division_phone`, `division_email`, `division_order`, `division_about`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 0, 'BARIDIV1', 'Dhaka', '101', '01558755441', 'ashish021@gmail.com', 1, 'Test Division', '2013-09-30 11:53:34', 1, '2013-10-11 05:54:32', 1),
+(3, 0, 'BARIDIV0002', 'Rajshahi', '202', '01714532345', 'test2@yahoo.com', 1, 'test division', '2013-10-01 09:39:49', 1, '2013-10-11 05:54:57', 1),
+(5, 0, 'BARIDIV0004', 'Sylhet', '202', '017145323451', 'alimul@yahoo.com', 2, 'test organization', '2013-11-03 12:14:11', 1, '2013-11-03 12:15:44', 1),
+(6, 1, 'BARIDIV0006', 'Alimul Division', '101', '01714532345', 'alimul@yahoo.com', 2, 'test', '2013-11-04 03:48:13', 1, '2013-11-04 09:48:13', NULL);
 
 -- --------------------------------------------------------
 
@@ -262,7 +277,7 @@ INSERT INTO `rmis_divisions` (`id`, `division_id`, `division_name`, `division_he
 -- Table structure for table `rmis_grade_point_informations`
 --
 
-CREATE TABLE `rmis_grade_point_informations` (
+CREATE TABLE IF NOT EXISTS `rmis_grade_point_informations` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `lower_range` float NOT NULL,
   `upper_range` float NOT NULL,
@@ -272,17 +287,17 @@ CREATE TABLE `rmis_grade_point_informations` (
   `description` text NOT NULL,
   `grading_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
 
 --
 -- Dumping data for table `rmis_grade_point_informations`
 --
 
 INSERT INTO `rmis_grade_point_informations` (`id`, `lower_range`, `upper_range`, `letter_grade`, `grade_point`, `qualitative_status`, `description`, `grading_id`) VALUES
-(3, 90, 100, 'A+', 5, 'Highly Qualitative', 'Highly Qualititative Research Work', 1),
-(4, 80, 90, 'A', 4.75, 'Qualitative', 'Qualitative Research Work', 1),
-(5, 70, 80, 'A-', 4.5, 'Good', 'Good Work', 1),
-(6, 60, 70, 'B+', 4.25, 'Average', 'Average research work', 1);
+(19, 90, 100, 'A+', 5, 'Highly Qualitative', 'Highly Qualititative Research Work', 1),
+(20, 80, 90, 'A', 4.75, 'Qualitative', 'Qualitative Research Work', 1),
+(21, 70, 80, 'A-', 4.5, 'Good', 'Good Work', 1),
+(22, 60, 70, 'B+', 4.25, 'Average', 'Average research work', 1);
 
 -- --------------------------------------------------------
 
@@ -290,23 +305,24 @@ INSERT INTO `rmis_grade_point_informations` (`id`, `lower_range`, `upper_range`,
 -- Table structure for table `rmis_gradings`
 --
 
-CREATE TABLE `rmis_gradings` (
+CREATE TABLE IF NOT EXISTS `rmis_gradings` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
   `grading_title` varchar(255) NOT NULL,
   `effect_date` date NOT NULL,
-  `created_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` bigint(20) DEFAULT NULL,
-  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`,`organization_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `rmis_gradings`
 --
 
-INSERT INTO `rmis_gradings` (`id`, `grading_title`, `effect_date`, `created_at`, `created_by`, `modified_at`, `modified_by`) VALUES
-(1, 'Test Grade', '2013-10-19', '2013-10-19 20:01:09', 1, '2013-10-19 14:02:47', 1);
+INSERT INTO `rmis_gradings` (`id`, `organization_id`, `grading_title`, `effect_date`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 1, 'Test Grade', '2013-10-19', '2013-10-19 14:01:09', 1, '2013-11-04 08:02:05', 1);
 
 -- --------------------------------------------------------
 
@@ -314,27 +330,30 @@ INSERT INTO `rmis_gradings` (`id`, `grading_title`, `effect_date`, `created_at`,
 -- Table structure for table `rmis_implementation_sites`
 --
 
-CREATE TABLE `rmis_implementation_sites` (
+CREATE TABLE IF NOT EXISTS `rmis_implementation_sites` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
   `implementation_site_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `implementation_site_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `contact_person` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `phone_number` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email_address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `implementation_order` int(11) NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`,`implementation_site_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+  `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
+  `created_by` bigint(20) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`,`organization_id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `rmis_implementation_sites`
 --
 
-INSERT INTO `rmis_implementation_sites` (`id`, `implementation_site_id`, `implementation_site_name`, `contact_person`, `phone_number`, `email_address`, `implementation_order`, `created_at`, `created_by`, `modified_at`, `modified_by`) VALUES
-(2, 'BARIIMS0001', 'Dhaka', '101', '01779021581', 'ashish021@gmail.com', 1, '2013-09-30 18:37:51', 1, '2013-09-30 18:37:51', NULL);
+INSERT INTO `rmis_implementation_sites` (`id`, `organization_id`, `implementation_site_id`, `implementation_site_name`, `contact_person`, `phone_number`, `email_address`, `implementation_order`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(2, 1, 'BARIIMS0001', 'Dhaka', '101', '01779021581', 'ashish021@gmail.com', 1, '2013-09-30 12:37:51', 1, '2013-11-04 13:59:05', 1),
+(3, 1, 'BARIIMS0003', 'Khulna', '202', '01732542342', 'alim@yahoo.com', 1, '2013-11-03 08:36:29', 1, '2013-11-04 13:58:51', 1);
 
 -- --------------------------------------------------------
 
@@ -342,7 +361,7 @@ INSERT INTO `rmis_implementation_sites` (`id`, `implementation_site_id`, `implem
 -- Table structure for table `rmis_institutes`
 --
 
-CREATE TABLE `rmis_institutes` (
+CREATE TABLE IF NOT EXISTS `rmis_institutes` (
   `institute_id` tinyint(4) NOT NULL AUTO_INCREMENT,
   `institute_sort_code` varchar(4) COLLATE utf8_unicode_ci NOT NULL,
   `institute_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
@@ -369,8 +388,9 @@ INSERT INTO `rmis_institutes` (`institute_id`, `institute_sort_code`, `institute
 -- Table structure for table `rmis_program_activities`
 --
 
-CREATE TABLE `rmis_program_activities` (
+CREATE TABLE IF NOT EXISTS `rmis_program_activities` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
   `s_o` varchar(255) NOT NULL,
   `work_element` text NOT NULL,
   `planned_startDate` date NOT NULL,
@@ -378,21 +398,21 @@ CREATE TABLE `rmis_program_activities` (
   `actual_startDate` date NOT NULL,
   `actual_endDate` varchar(255) NOT NULL,
   `assign_resource` bigint(20) NOT NULL,
-  `created_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` bigint(20) DEFAULT NULL,
-  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` bigint(20) DEFAULT NULL,
   `program_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`,`organization_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `rmis_program_activities`
 --
 
-INSERT INTO `rmis_program_activities` (`id`, `s_o`, `work_element`, `planned_startDate`, `planned_endDate`, `actual_startDate`, `actual_endDate`, `assign_resource`, `created_at`, `created_by`, `modified_at`, `modified_by`, `program_id`) VALUES
-(9, '1', 'Test work element 1', '2013-10-10', '2014-10-10', '2013-11-10', '2014-11-10', 202, '2013-11-01 17:58:37', 1, '2013-11-01 11:58:37', 1, 1),
-(10, '2', 'Test work element 2', '2013-10-10', '2014-10-10', '2013-11-10', '2014-11-10', 101, '2013-11-01 17:58:37', 1, '2013-11-01 11:58:37', 1, 1);
+INSERT INTO `rmis_program_activities` (`id`, `organization_id`, `s_o`, `work_element`, `planned_startDate`, `planned_endDate`, `actual_startDate`, `actual_endDate`, `assign_resource`, `created_at`, `created_by`, `updated_at`, `updated_by`, `program_id`) VALUES
+(9, 0, '1', 'Test work element 1', '2013-10-10', '2014-10-10', '2013-11-10', '2014-11-10', 202, '2013-11-01 11:58:37', 1, '2013-11-01 11:58:37', 1, 1),
+(10, 0, '2', 'Test work element 2', '2013-10-10', '2014-10-10', '2013-11-10', '2014-11-10', 101, '2013-11-01 11:58:37', 1, '2013-11-01 11:58:37', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -400,27 +420,27 @@ INSERT INTO `rmis_program_activities` (`id`, `s_o`, `work_element`, `planned_sta
 -- Table structure for table `rmis_program_areas`
 --
 
-CREATE TABLE `rmis_program_areas` (
+CREATE TABLE IF NOT EXISTS `rmis_program_areas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
   `program_area_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `program_area_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `program_area_order` int(11) NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`,`program_area_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+  `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
+  `created_by` bigint(20) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`,`organization_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `rmis_program_areas`
 --
 
-INSERT INTO `rmis_program_areas` (`id`, `program_area_id`, `program_area_name`, `program_area_order`, `created_at`, `created_by`, `modified_at`, `modified_by`) VALUES
-(2, 'BARIPA0001', 'Dhaka', 1, '2013-09-30 18:50:48', 1, '2013-09-30 12:50:48', NULL),
-(3, 'BARIPA0003', 'Khulna', 1, '2013-10-01 15:40:27', 1, '2013-10-01 09:40:27', NULL),
-(4, 'BARIPA0004', 'Chittagong', 1, '2013-10-01 15:40:37', 1, '2013-10-01 09:40:37', NULL),
-(5, 'BARIPA0005', 'Rajshahi', 1, '2013-10-01 15:40:47', 1, '2013-10-01 09:40:47', NULL);
+INSERT INTO `rmis_program_areas` (`id`, `organization_id`, `program_area_id`, `program_area_name`, `program_area_order`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(2, 0, 'BARIPA0001', 'Dhaka', 1, '2013-09-30 12:50:48', 1, '2013-09-30 12:50:48', NULL),
+(3, 0, 'BARIPA0003', 'Khulna', 1, '2013-10-01 09:40:27', 1, '2013-10-01 09:40:27', NULL),
+(6, 1, 'BARIPA0006', 'Onion', 1, '2013-11-03 09:04:40', 1, '2013-11-04 13:59:31', 1);
 
 -- --------------------------------------------------------
 
@@ -428,7 +448,7 @@ INSERT INTO `rmis_program_areas` (`id`, `program_area_id`, `program_area_name`, 
 -- Table structure for table `rmis_program_cost_breakdowns`
 --
 
-CREATE TABLE `rmis_program_cost_breakdowns` (
+CREATE TABLE IF NOT EXISTS `rmis_program_cost_breakdowns` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `s_o` varchar(255) NOT NULL,
   `ac_head_code` bigint(20) NOT NULL,
@@ -454,24 +474,25 @@ INSERT INTO `rmis_program_cost_breakdowns` (`id`, `s_o`, `ac_head_code`, `ac_hea
 -- Table structure for table `rmis_program_cost_estimations`
 --
 
-CREATE TABLE `rmis_program_cost_estimations` (
+CREATE TABLE IF NOT EXISTS `rmis_program_cost_estimations` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
   `estimate_date` date NOT NULL,
   `financial_year` varchar(255) NOT NULL,
-  `created_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` bigint(20) DEFAULT NULL,
-  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` bigint(20) DEFAULT NULL,
   `program_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`,`organization_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `rmis_program_cost_estimations`
 --
 
-INSERT INTO `rmis_program_cost_estimations` (`id`, `estimate_date`, `financial_year`, `created_at`, `created_by`, `modified_at`, `modified_by`, `program_id`) VALUES
-(1, '2013-10-26', '2014-2015', '2013-10-26 16:38:40', 1, '2013-10-28 12:02:03', 1, 1);
+INSERT INTO `rmis_program_cost_estimations` (`id`, `organization_id`, `estimate_date`, `financial_year`, `created_at`, `created_by`, `updated_at`, `updated_by`, `program_id`) VALUES
+(1, 0, '2013-10-26', '2014-2015', '2013-10-26 10:38:40', 1, '2013-10-28 12:02:03', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -479,31 +500,32 @@ INSERT INTO `rmis_program_cost_estimations` (`id`, `estimate_date`, `financial_y
 -- Table structure for table `rmis_program_funding_sources`
 --
 
-CREATE TABLE `rmis_program_funding_sources` (
+CREATE TABLE IF NOT EXISTS `rmis_program_funding_sources` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
   `fund_source` bigint(20) NOT NULL,
   `amount` float NOT NULL,
   `currency` varchar(255) NOT NULL,
   `exchange_rate` float NOT NULL,
   `date_of_exchange_rate` date NOT NULL,
   `amount_in_taka` float NOT NULL,
-  `created_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` bigint(20) DEFAULT NULL,
-  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` bigint(20) DEFAULT NULL,
   `program_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`,`organization_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `rmis_program_funding_sources`
 --
 
-INSERT INTO `rmis_program_funding_sources` (`id`, `fund_source`, `amount`, `currency`, `exchange_rate`, `date_of_exchange_rate`, `amount_in_taka`, `created_at`, `created_by`, `modified_at`, `modified_by`, `program_id`) VALUES
-(8, 12, 10000000, 'USD', 80, '2013-10-03', 800000000, NULL, NULL, '2013-10-28 12:02:03', 1, 1),
-(9, 13, 10000, 'EUR', 100, '2013-10-03', 1000000, NULL, NULL, '2013-10-28 12:02:03', 1, 1),
-(10, 14, 2000, 'GB', 120, '2013-10-04', 240000, NULL, NULL, '2013-10-28 12:02:03', 1, 1),
-(11, 15, 5000, 'DK', 7, '2013-10-05', 35000, NULL, NULL, '2013-10-28 12:02:03', 1, 1);
+INSERT INTO `rmis_program_funding_sources` (`id`, `organization_id`, `fund_source`, `amount`, `currency`, `exchange_rate`, `date_of_exchange_rate`, `amount_in_taka`, `created_at`, `created_by`, `updated_at`, `updated_by`, `program_id`) VALUES
+(8, 0, 12, 10000000, 'USD', 80, '2013-10-03', 800000000, NULL, NULL, '2013-10-28 12:02:03', 1, 1),
+(9, 0, 13, 10000, 'EUR', 100, '2013-10-03', 1000000, NULL, NULL, '2013-10-28 12:02:03', 1, 1),
+(10, 0, 14, 2000, 'GB', 120, '2013-10-04', 240000, NULL, NULL, '2013-10-28 12:02:03', 1, 1),
+(11, 0, 15, 5000, 'DK', 7, '2013-10-05', 35000, NULL, NULL, '2013-10-28 12:02:03', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -511,23 +533,24 @@ INSERT INTO `rmis_program_funding_sources` (`id`, `fund_source`, `amount`, `curr
 -- Table structure for table `rmis_program_implementation_committees`
 --
 
-CREATE TABLE `rmis_program_implementation_committees` (
+CREATE TABLE IF NOT EXISTS `rmis_program_implementation_committees` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
   `committee_formation_date` date NOT NULL,
   `program_id` bigint(20) NOT NULL,
-  `created_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` bigint(20) DEFAULT NULL,
-  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`,`organization_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `rmis_program_implementation_committees`
 --
 
-INSERT INTO `rmis_program_implementation_committees` (`id`, `committee_formation_date`, `program_id`, `created_at`, `created_by`, `modified_at`, `modified_by`) VALUES
-(1, '2013-10-27', 1, '2013-10-26 17:40:06', 1, '2013-10-28 12:22:46', 1);
+INSERT INTO `rmis_program_implementation_committees` (`id`, `organization_id`, `committee_formation_date`, `program_id`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 0, '2013-10-27', 1, '2013-10-26 11:40:06', 1, '2013-10-28 12:22:46', 1);
 
 -- --------------------------------------------------------
 
@@ -535,7 +558,7 @@ INSERT INTO `rmis_program_implementation_committees` (`id`, `committee_formation
 -- Table structure for table `rmis_program_implementation_committee_members`
 --
 
-CREATE TABLE `rmis_program_implementation_committee_members` (
+CREATE TABLE IF NOT EXISTS `rmis_program_implementation_committee_members` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `committee_member_type` varchar(255) DEFAULT NULL,
   `member_name` varchar(255) DEFAULT NULL,
@@ -560,8 +583,9 @@ INSERT INTO `rmis_program_implementation_committee_members` (`id`, `committee_me
 -- Table structure for table `rmis_program_informations`
 --
 
-CREATE TABLE `rmis_program_informations` (
+CREATE TABLE IF NOT EXISTS `rmis_program_informations` (
   `program_id` int(11) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
   `research_program_title` text COLLATE utf8_unicode_ci NOT NULL,
   `program_area` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `program_division` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -587,19 +611,19 @@ CREATE TABLE `rmis_program_informations` (
   `program_goal` longtext COLLATE utf8_unicode_ci NOT NULL,
   `program_objective` longtext COLLATE utf8_unicode_ci NOT NULL,
   `program_expectedOutputs` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `created_by` bigint(20) NOT NULL,
-  `created_at` datetime NOT NULL,
-  `modified_by` bigint(20) NOT NULL,
-  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`program_id`)
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_by` bigint(20) unsigned NOT NULL,
+  `updated_ay` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`program_id`,`organization_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `rmis_program_informations`
 --
 
-INSERT INTO `rmis_program_informations` (`program_id`, `research_program_title`, `program_area`, `program_division`, `program_researchType`, `program_researchPriority`, `program_researchStatus`, `program_coordinator`, `program_coordinatorDesignation`, `is_collaborate`, `program_instituteNames`, `program_departmentName`, `program_regionalStationName`, `program_implementationLocation`, `program_keywords`, `program_commodities`, `program_aezs`, `program_plannedStartDate`, `program_plannedEndDate`, `program_initiationDate`, `program_completionDate`, `program_plannedBudget`, `program_approvedBudget`, `program_goal`, `program_objective`, `program_expectedOutputs`, `created_by`, `created_at`, `modified_by`, `modified_at`) VALUES
-(1, 'This is test program titel edit', 'BARIPA0005', 'BARIDIV0002', 2, 4, 3, 0, 'Vice President', '1', '1,4', 4, 'BARIRS0001', 'BARIIMS0001', 'Dhaka, Chittagong', '1,5', '1,3,4', '2013-10-26', '2013-11-29', '2013-10-26', '2013-12-31', '10000000', '10000000', 'Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal ', 'Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose ', 'Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output ---##########---Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 ---##########---Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 ---##########---', 1, '2013-10-26 16:32:19', 1, '2013-10-26 14:06:45');
+INSERT INTO `rmis_program_informations` (`program_id`, `organization_id`, `research_program_title`, `program_area`, `program_division`, `program_researchType`, `program_researchPriority`, `program_researchStatus`, `program_coordinator`, `program_coordinatorDesignation`, `is_collaborate`, `program_instituteNames`, `program_departmentName`, `program_regionalStationName`, `program_implementationLocation`, `program_keywords`, `program_commodities`, `program_aezs`, `program_plannedStartDate`, `program_plannedEndDate`, `program_initiationDate`, `program_completionDate`, `program_plannedBudget`, `program_approvedBudget`, `program_goal`, `program_objective`, `program_expectedOutputs`, `created_at`, `created_by`, `updated_ay`, `updated_by`) VALUES
+(1, 0, 'This is test program titel edit', 'BARIPA0005', 'BARIDIV0002', 2, 4, 3, 0, 'Vice President', '1', '1,4', 4, 'BARIRS0001', 'BARIIMS0001', 'Dhaka, Chittagong', '1,5', '1,3,4', '2013-10-26', '2013-11-29', '2013-10-26', '2013-12-31', '10000000', '10000000', 'Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal ', 'Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose ', 'Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output ---##########---Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 ---##########---Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 ---##########---', '0000-00-00 00:00:00', 2013, '0000-00-00 00:00:00', 2013);
 
 -- --------------------------------------------------------
 
@@ -607,23 +631,25 @@ INSERT INTO `rmis_program_informations` (`program_id`, `research_program_title`,
 -- Table structure for table `rmis_program_me_committees`
 --
 
-CREATE TABLE `rmis_program_me_committees` (
+CREATE TABLE IF NOT EXISTS `rmis_program_me_committees` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
   `committee_chairman` bigint(20) NOT NULL,
   `committee_formation_date` date NOT NULL,
-  `created_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` bigint(20) DEFAULT NULL,
-  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`,`organization_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `rmis_program_me_committees`
 --
 
-INSERT INTO `rmis_program_me_committees` (`id`, `committee_chairman`, `committee_formation_date`, `created_at`, `created_by`, `modified_at`, `modified_by`) VALUES
-(1, 202, '2013-10-19', '2013-10-19 19:58:55', 1, '2013-10-19 13:59:25', 1);
+INSERT INTO `rmis_program_me_committees` (`id`, `organization_id`, `committee_chairman`, `committee_formation_date`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 0, 202, '2013-10-19', '2013-10-19 13:58:55', 1, '2013-10-19 13:59:25', 1),
+(2, 0, 0, '2013-11-05', '2013-11-03 10:13:03', 1, '2013-11-03 16:15:45', 1);
 
 -- --------------------------------------------------------
 
@@ -631,7 +657,7 @@ INSERT INTO `rmis_program_me_committees` (`id`, `committee_chairman`, `committee
 -- Table structure for table `rmis_program_me_committee_members`
 --
 
-CREATE TABLE `rmis_program_me_committee_members` (
+CREATE TABLE IF NOT EXISTS `rmis_program_me_committee_members` (
   `committee_id` bigint(20) NOT NULL,
   `member_id` bigint(20) NOT NULL,
   `designation` varchar(255) NOT NULL,
@@ -645,7 +671,9 @@ CREATE TABLE `rmis_program_me_committee_members` (
 INSERT INTO `rmis_program_me_committee_members` (`committee_id`, `member_id`, `designation`, `role_in_committee`) VALUES
 (1, 202, 'Vice President', 'Manage Everything'),
 (1, 101, 'President', 'manage All in all'),
-(1, 123, 'Programer', 'Manage the full system');
+(1, 123, 'Programer', 'Manage the full system'),
+(2, 0, 'President', 'Member'),
+(2, 123, 'Vice President', 'Team Leader');
 
 -- --------------------------------------------------------
 
@@ -653,8 +681,9 @@ INSERT INTO `rmis_program_me_committee_members` (`committee_id`, `member_id`, `d
 -- Table structure for table `rmis_program_other_informations`
 --
 
-CREATE TABLE `rmis_program_other_informations` (
+CREATE TABLE IF NOT EXISTS `rmis_program_other_informations` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
   `program_rationale` longtext,
   `program_methodology` longtext,
   `program_background` longtext,
@@ -665,20 +694,20 @@ CREATE TABLE `rmis_program_other_informations` (
   `program_external_affiliation` longtext,
   `program_organization_policy` longtext,
   `program_risks` longtext,
-  `created_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` bigint(20) DEFAULT NULL,
-  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` bigint(20) DEFAULT NULL,
   `program_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`,`organization_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `rmis_program_other_informations`
 --
 
-INSERT INTO `rmis_program_other_informations` (`id`, `program_rationale`, `program_methodology`, `program_background`, `program_socio_economical_impact`, `program_environmental_impact`, `program_targeted_beneficiary`, `program_reference`, `program_external_affiliation`, `program_organization_policy`, `program_risks`, `created_at`, `created_by`, `modified_at`, `modified_by`, `program_id`) VALUES
-(1, 'Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Edit', 'Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology ', 'Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background  Fucking Edit', 'Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  ', 'Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  ', 'Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   ', 'Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    ', 'Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation ', 'Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy ', 'Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks ', '2013-10-26 16:33:59', 1, '2013-10-26 14:24:27', 1, 1);
+INSERT INTO `rmis_program_other_informations` (`id`, `organization_id`, `program_rationale`, `program_methodology`, `program_background`, `program_socio_economical_impact`, `program_environmental_impact`, `program_targeted_beneficiary`, `program_reference`, `program_external_affiliation`, `program_organization_policy`, `program_risks`, `created_at`, `created_by`, `updated_at`, `updated_by`, `program_id`) VALUES
+(1, 0, 'Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Edit', 'Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology ', 'Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background  Fucking Edit', 'Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  ', 'Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  ', 'Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   ', 'Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    ', 'Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation ', 'Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy ', 'Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks ', '2013-10-26 10:33:59', 1, '2013-10-26 14:24:27', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -686,24 +715,25 @@ INSERT INTO `rmis_program_other_informations` (`id`, `program_rationale`, `progr
 -- Table structure for table `rmis_program_research_teams`
 --
 
-CREATE TABLE `rmis_program_research_teams` (
+CREATE TABLE IF NOT EXISTS `rmis_program_research_teams` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
   `team_formation_date` date NOT NULL,
   `program_id` bigint(20) NOT NULL,
-  `created_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` bigint(20) DEFAULT NULL,
-  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`,`organization_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `rmis_program_research_teams`
 --
 
-INSERT INTO `rmis_program_research_teams` (`id`, `team_formation_date`, `program_id`, `created_at`, `created_by`, `modified_at`, `modified_by`) VALUES
-(1, '2013-10-27', 1, '2013-10-26 16:44:44', 1, '2013-11-02 01:34:11', 1),
-(2, '2013-10-26', 0, NULL, NULL, '2013-10-28 12:10:42', 1);
+INSERT INTO `rmis_program_research_teams` (`id`, `organization_id`, `team_formation_date`, `program_id`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 0, '2013-10-27', 1, '2013-10-26 10:44:44', 1, '2013-11-02 01:42:11', 1),
+(2, 0, '2013-10-26', 0, NULL, NULL, '2013-10-28 12:10:42', 1);
 
 -- --------------------------------------------------------
 
@@ -711,7 +741,7 @@ INSERT INTO `rmis_program_research_teams` (`id`, `team_formation_date`, `program
 -- Table structure for table `rmis_program_research_team_members`
 --
 
-CREATE TABLE `rmis_program_research_team_members` (
+CREATE TABLE IF NOT EXISTS `rmis_program_research_team_members` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `member_type` varchar(255) DEFAULT NULL,
   `institute_name` varchar(255) DEFAULT NULL,
@@ -721,16 +751,17 @@ CREATE TABLE `rmis_program_research_team_members` (
   `email` varchar(255) DEFAULT NULL,
   `program_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
 
 --
 -- Dumping data for table `rmis_program_research_team_members`
 --
 
 INSERT INTO `rmis_program_research_team_members` (`id`, `member_type`, `institute_name`, `member_name`, `designation`, `contact_no`, `email`, `program_id`) VALUES
-(20, '1', '1', '202', 'President', '01779021581', 'ashish021@gmail.com', 1),
-(21, '2', '2', '101', 'Vice President', '01711084616', 'debasis@gmail.com', 1),
-(22, '3', '3', '101', 'Vice President', '01711084616', 'debasis@gmail.com', 1);
+(23, '1', '1', '202', 'President', '01779021581', 'ashish021@gmail.com', 1),
+(24, '2', '2', '101', 'Vice President', '01711084616', 'debasis@gmail.com', 1),
+(25, '3', '3', '101', 'Vice President', '01711084616', 'debasis@gmail.com', 1),
+(26, '4', '4', '102', 'Vice President', '01711084616', 'debasis@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -738,23 +769,24 @@ INSERT INTO `rmis_program_research_team_members` (`id`, `member_type`, `institut
 -- Table structure for table `rmis_program_steering_committees`
 --
 
-CREATE TABLE `rmis_program_steering_committees` (
+CREATE TABLE IF NOT EXISTS `rmis_program_steering_committees` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
   `committee_formation_date` date NOT NULL,
   `program_id` bigint(20) NOT NULL,
-  `created_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` bigint(20) DEFAULT NULL,
-  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`,`organization_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `rmis_program_steering_committees`
 --
 
-INSERT INTO `rmis_program_steering_committees` (`id`, `committee_formation_date`, `program_id`, `created_at`, `created_by`, `modified_at`, `modified_by`) VALUES
-(1, '2013-10-27', 1, '2013-10-26 16:49:01', 1, '2013-10-28 12:17:56', 1);
+INSERT INTO `rmis_program_steering_committees` (`id`, `organization_id`, `committee_formation_date`, `program_id`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 0, '2013-10-27', 1, '2013-10-26 10:49:01', 1, '2013-10-28 12:17:56', 1);
 
 -- --------------------------------------------------------
 
@@ -762,7 +794,7 @@ INSERT INTO `rmis_program_steering_committees` (`id`, `committee_formation_date`
 -- Table structure for table `rmis_program_steering_committee_members`
 --
 
-CREATE TABLE `rmis_program_steering_committee_members` (
+CREATE TABLE IF NOT EXISTS `rmis_program_steering_committee_members` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `committee_member_type` varchar(255) DEFAULT NULL,
   `member_name` varchar(255) DEFAULT NULL,
@@ -788,8 +820,9 @@ INSERT INTO `rmis_program_steering_committee_members` (`id`, `committee_member_t
 -- Table structure for table `rmis_regional_stations`
 --
 
-CREATE TABLE `rmis_regional_stations` (
+CREATE TABLE IF NOT EXISTS `rmis_regional_stations` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
   `station_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `station_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `station_contact_person` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -797,19 +830,19 @@ CREATE TABLE `rmis_regional_stations` (
   `station_email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `station_order` int(11) NOT NULL,
   `station_address` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` bigint(20) DEFAULT NULL,
-  `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified_by` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`,`station_id`)
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`,`organization_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `rmis_regional_stations`
 --
 
-INSERT INTO `rmis_regional_stations` (`id`, `station_id`, `station_name`, `station_contact_person`, `station_phone`, `station_email`, `station_order`, `station_address`, `created_at`, `created_by`, `modified_at`, `modified_by`) VALUES
-(1, 'BARIRS0001', 'Tangail', 'Alimul Razi', '01716463156', 'alimulrazi28@gmail.com', 1, 'This is a test data', '2013-10-02 05:22:22', 1, '2013-10-02 05:22:22', NULL);
+INSERT INTO `rmis_regional_stations` (`id`, `organization_id`, `station_id`, `station_name`, `station_contact_person`, `station_phone`, `station_email`, `station_order`, `station_address`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 1, 'BARIRS0001', 'Tangail', 'Alimul Razi', '01716463156', 'alimulrazi28@gmail.com', 1, 'This is a test data', '2013-10-01 23:22:22', 1, '2013-11-04 13:58:25', 1);
 
 -- --------------------------------------------------------
 
@@ -817,26 +850,29 @@ INSERT INTO `rmis_regional_stations` (`id`, `station_id`, `station_name`, `stati
 -- Table structure for table `rmis_research_priorities`
 --
 
-CREATE TABLE `rmis_research_priorities` (
+CREATE TABLE IF NOT EXISTS `rmis_research_priorities` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `research_priority` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `organization_id` int(11) NOT NULL,
+  `value` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `weight` int(11) DEFAULT NULL,
+  `is_default` enum('yes','no') COLLATE utf8_unicode_ci DEFAULT 'no',
   `is_active` tinyint(4) DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` bigint(20) unsigned DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` bigint(20) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+  PRIMARY KEY (`id`,`organization_id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `rmis_research_priorities`
 --
 
-INSERT INTO `rmis_research_priorities` (`id`, `research_priority`, `is_active`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, '1st', 1, '0000-00-00 00:00:00', NULL, '2013-10-11 19:54:32', NULL),
-(2, '2nd', 1, '0000-00-00 00:00:00', NULL, '2013-10-11 19:54:32', NULL),
-(3, '3rd', 1, '0000-00-00 00:00:00', NULL, '2013-10-11 19:54:57', NULL),
-(4, '4th', 1, '0000-00-00 00:00:00', NULL, '2013-10-11 19:54:45', NULL);
+INSERT INTO `rmis_research_priorities` (`id`, `organization_id`, `value`, `name`, `weight`, `is_default`, `is_active`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 0, '1', '1st', 1, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-09-25 05:48:02', NULL),
+(2, 1, '2', '2nd', 2, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-09-25 05:48:19', NULL);
 
 -- --------------------------------------------------------
 
@@ -844,26 +880,31 @@ INSERT INTO `rmis_research_priorities` (`id`, `research_priority`, `is_active`, 
 -- Table structure for table `rmis_research_statuses`
 --
 
-CREATE TABLE `rmis_research_statuses` (
+CREATE TABLE IF NOT EXISTS `rmis_research_statuses` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `research_status` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `organization_id` int(11) NOT NULL,
+  `value` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `weight` int(11) DEFAULT NULL,
+  `is_default` enum('yes','no') COLLATE utf8_unicode_ci DEFAULT 'no',
   `is_active` tinyint(4) DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` bigint(20) unsigned DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` bigint(20) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`,`organization_id`),
+  UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `rmis_research_statuses`
 --
 
-INSERT INTO `rmis_research_statuses` (`id`, `research_status`, `is_active`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 'New', 1, '0000-00-00 00:00:00', NULL, '2013-10-11 19:53:41', NULL),
-(2, 'On-Going', 1, '0000-00-00 00:00:00', NULL, '2013-10-11 19:53:41', NULL),
-(3, 'Completed', 1, '0000-00-00 00:00:00', NULL, '2013-10-11 19:54:01', NULL),
-(4, 'Stop', 1, '0000-00-00 00:00:00', NULL, '2013-10-11 19:54:01', NULL);
+INSERT INTO `rmis_research_statuses` (`id`, `organization_id`, `value`, `name`, `weight`, `is_default`, `is_active`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 0, '1', 'New', 1, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-09-25 05:48:02', NULL),
+(2, 1, '2', 'On-Going', 2, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-09-25 05:48:19', NULL),
+(3, 2, '1', 'Completed', 1, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-09-25 05:48:02', NULL),
+(4, 3, '2', 'Stop', 2, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-09-25 05:48:19', NULL);
 
 -- --------------------------------------------------------
 
@@ -871,22 +912,31 @@ INSERT INTO `rmis_research_statuses` (`id`, `research_status`, `is_active`, `cre
 -- Table structure for table `rmis_research_types`
 --
 
-CREATE TABLE `rmis_research_types` (
+CREATE TABLE IF NOT EXISTS `rmis_research_types` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `research_type` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `organization_id` int(11) NOT NULL,
+  `value` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `weight` int(11) DEFAULT NULL,
+  `is_default` enum('yes','no') COLLATE utf8_unicode_ci DEFAULT 'no',
   `is_active` tinyint(4) DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` bigint(20) unsigned DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` bigint(20) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`,`organization_id`),
+  UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `rmis_research_types`
 --
 
-INSERT INTO `rmis_research_types` (`id`, `research_type`, `is_active`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 'Basic', 1, '0000-00-00 00:00:00', NULL, '2013-10-11 19:52:47', NULL),
-(2, 'Strategic', 1, '0000-00-00 00:00:00', NULL, '2013-10-11 19:52:47', NULL),
-(3, 'Impact Study', 1, '0000-00-00 00:00:00', NULL, '2013-10-11 19:53:02', NULL);
+INSERT INTO `rmis_research_types` (`id`, `organization_id`, `value`, `name`, `weight`, `is_default`, `is_active`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 0, '1', 'Basic', 1, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-09-25 05:48:02', NULL),
+(2, 1, '2', 'Strategic', 2, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-09-25 05:48:19', NULL),
+(3, 2, '1', 'Impact Study', 1, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-09-25 05:48:02', NULL);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -10,7 +10,7 @@
 		$committee_members = unserialize($committee_members);
 	}
 ?>
-<form name="frm_division" id="frm_division" method="post" action="">
+<form name="frm_program_committee" id="frm_program_committee" method="post" action="">
 <div class="main_form">
 	<div class="left_form">
         <div class="form_element">
@@ -90,6 +90,7 @@
     	<div class="button_panel" style="margin-right:125px;">
         	<?php if(isset($committee_detail) && $committee_detail->id!=NULL) { ?>
                 <input type="hidden" name="id" id="id" value="<?php echo $committee_detail->committee_id; ?>">
+                <input type="button" name="new_committee" id="new_committee" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('rmis/setup/programCommittees');?>'">
                 <input type="submit" name="delete_committee" id="delete_committee" value="Delete" class="k-button button">
         		<input type="submit" name="save_update" id="save_update" value="Update" class="k-button button">
             <?php } else { ?>

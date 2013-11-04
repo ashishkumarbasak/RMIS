@@ -142,7 +142,7 @@ class Divisions extends MX_Controller{
 		$command = new \Kendo\UI\GridColumn();
         $command->addCommandItem('destroy')
                 ->title('&nbsp;')
-                ->width(90);
+                ->width(100);
 				
 		$command2 = new \Kendo\UI\GridColumnCommandItem();
 		$command2->click('ClickEdit')
@@ -200,6 +200,11 @@ class Divisions extends MX_Controller{
 				$request = json_encode($this->input->post());
 				$this->dataUpdate($request);
 			}
+			
+			if($this->input->post('delete_division')){
+				$request = json_encode($this->input->post());
+				$this->dataDestroy($request);
+			}
 				
 			$division_detail = $this->division->get_details($division_id);
 			$this->template->set('division_detail', serialize($division_detail));
@@ -221,10 +226,7 @@ class Divisions extends MX_Controller{
     }
 	
 	public function dataCreate($request){
-        //header('Content-Type: application/json');
-        //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
-		//print_r($request);
 		
         $this->form_validation->set_rules($this->division->validation);
         $this->division->isValidate((array) $request);
@@ -232,10 +234,13 @@ class Divisions extends MX_Controller{
             header("HTTP/1.1 500 Internal Server Error");
             echo "Wrong data ! try again" ;
             exit;
-        }
-       
+        }		
+		
         $columns = array('division_id', 'division_name', 'division_head', 'division_phone', 'division_email', 'division_order', 'division_about');
-        $columns[] = 'created_at';
+        
+		$columns[] = 'organization_id';
+		$request->organization_id = 1;		
+		$columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
@@ -251,18 +256,21 @@ class Divisions extends MX_Controller{
         $data= $this->grid->read_with_join_table('rmis_divisions', array('rmis_divisions.id','division_id', 'division_name', 'hrm_employees.employee_name as division_head','division_phone','division_email'), $request, 'hrm_employees', 'rmis_divisions.division_head = hrm_employees.employee_id');       
         echo json_encode($data, JSON_NUMERIC_CHECK);
     }
-    public function dataDestroy(){   
-        header('Content-Type: application/json');
-        $request = json_decode(file_get_contents('php://input'));
-        $data = $this->grid->destroy('rmis_divisions', $request->models, 'id'); 
-        echo json_encode($data , JSON_NUMERIC_CHECK); 
+	
+    public function dataDestroy($request=NULL){
+		if($request!=NULL){
+			 $request = json_decode($request);
+			 $data = $this->grid->destroy('rmis_divisions', $request, 'id');
+		}else{   
+        	header('Content-Type: application/json');
+        	$request = json_decode(file_get_contents('php://input'));
+			$data = $this->grid->destroy('rmis_divisions', $request->models, 'id'); 
+        	echo json_encode($data , JSON_NUMERIC_CHECK);
+		}        
     }
     	
 	public function dataUpdate($request){
-        //header('Content-Type: application/json');
-        //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
-       // print_r($request);
         $this->form_validation->set_rules($this->division->validation);
         $this->division->isValidate((array) $request);
         if ($this->form_validation->run() === false) {
@@ -272,10 +280,13 @@ class Divisions extends MX_Controller{
         }
         
         $columns = array('id', 'division_name', 'division_head', 'division_phone', 'division_email', 'division_order', 'division_about');
-        $columns[] = 'modified_at';        
-        $request->modified_at = date('Y-m-d H:i:s');            
-        $columns[] = 'modified_by';
-        $request->modified_by = 1;
+        
+		$columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'updated_at';        
+        $request->updated_at = date('Y-m-d H:i:s');            
+        $columns[] = 'updated_by';
+        $request->updated_by = 1;
         
         $data = $this->grid->update('rmis_divisions', $columns, $request, 'id'); 
         $data['success'] ="Data updated successfuly.";

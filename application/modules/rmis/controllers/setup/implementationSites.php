@@ -146,7 +146,7 @@ class ImplementationSites extends MX_Controller{
 		$command = new \Kendo\UI\GridColumn();
         $command->addCommandItem('destroy')
                 ->title('&nbsp;')
-                ->width(90);
+                ->width(100);
 				
 		$command2 = new \Kendo\UI\GridColumnCommandItem();
 		$command2->click('ClickEdit')
@@ -204,6 +204,11 @@ class ImplementationSites extends MX_Controller{
 				$request = json_encode($this->input->post());
 				$this->dataUpdate($request);
 			}
+			
+			if($this->input->post('delete_implementation')){
+				$request = json_encode($this->input->post());
+				$this->dataDestroy($request);
+			}
 				
 			$implementation_detail = $this->implementation->get_details($implementation_site_id);
 			$this->template->set('implementation_detail', serialize($implementation_detail));
@@ -224,8 +229,6 @@ class ImplementationSites extends MX_Controller{
     }
 	
 	public function dataCreate($request){
-        //header('Content-Type: application/json');
-        //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
      	//$request->models[0]->fund_type = $request->models[0]->fund_type->fund_type;
         
@@ -238,7 +241,9 @@ class ImplementationSites extends MX_Controller{
         }
        
         $columns = array('implementation_site_id', 'implementation_site_name', 'contact_person', 'phone_number', 'email_address', 'implementation_order');
-        $columns[] = 'created_at';
+        $columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
@@ -254,16 +259,20 @@ class ImplementationSites extends MX_Controller{
         $data= $this->grid->read_with_join_table('rmis_implementation_sites', array('rmis_implementation_sites.id','implementation_site_id', 'implementation_site_name', 'hrm_employees.employee_name as contact_person','phone_number','email_address'), $request, 'hrm_employees', 'rmis_implementation_sites.contact_person = hrm_employees.employee_id');       
         echo json_encode($data, JSON_NUMERIC_CHECK);
     }
-    public function dataDestroy(){   
-        header('Content-Type: application/json');
-        $request = json_decode(file_get_contents('php://input'));
-        $data = $this->grid->destroy('rmis_implementation_sites', $request, 'id'); 
-        echo json_encode($data , JSON_NUMERIC_CHECK); 
+    public function dataDestroy($request=NULL){
+		if($request!=NULL){
+			 $request = json_decode($request);
+			 $data = $this->grid->destroy('rmis_implementation_sites', $request, 'id');
+		}
+		else{   
+			header('Content-Type: application/json');
+			$request = json_decode(file_get_contents('php://input'));
+			$data = $this->grid->destroy('rmis_implementation_sites', $request, 'id'); 
+			echo json_encode($data , JSON_NUMERIC_CHECK); 
+		}
     }
     	
 	public function dataUpdate($request){
-        //header('Content-Type: application/json');
-        //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
         
         $this->form_validation->set_rules($this->implementation->validation);
@@ -275,10 +284,12 @@ class ImplementationSites extends MX_Controller{
         }
         
         $columns = array('id', 'implementation_site_name', 'contact_person', 'phone_number', 'email_address', 'implementation_order');
-        $columns[] = 'modified_at';        
-        $request->modified_at = date('Y-m-d H:i:s');            
-        $columns[] = 'modified_by';
-        $request->modified_by = 1;
+        $columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'updated_at';        
+        $request->updated_by = date('Y-m-d H:i:s');            
+        $columns[] = 'updated_by';
+        $request->updated_by = 1;
         
         $data= $this->grid->update('rmis_implementation_sites', $columns, $request, 'id'); 
         $data['success'] ="Data updated successfuly.";

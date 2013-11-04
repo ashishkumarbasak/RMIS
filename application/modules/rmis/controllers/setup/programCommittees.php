@@ -109,7 +109,7 @@ class programCommittees extends MX_Controller{
 		$command = new \Kendo\UI\GridColumn();
         $command->addCommandItem('destroy')
                 ->title('&nbsp;')
-                ->width(90);
+                ->width(100);
 				
 		$command2 = new \Kendo\UI\GridColumnCommandItem();
 		$command2->click('ClickEdit')
@@ -145,6 +145,12 @@ class programCommittees extends MX_Controller{
 				$request = json_encode($this->input->post());
 				$this->dataUpdate($request);
 			}
+			
+			if($this->input->post('delete_committee')){
+				$request = json_encode($this->input->post());
+				$this->dataDestroy($request);
+			}
+			
 			$committee_detail = $this->ProgramCommitte->get_details($committee_id);
 			$this->template->set('committee_detail', serialize($committee_detail));
 			
@@ -168,11 +174,7 @@ class programCommittees extends MX_Controller{
     }
 	
 	public function dataCreate($request){
-        //header('Content-Type: application/json');
-        //$request = json_decode(file_get_contents('php://input'));
-        $request = json_decode($request);
-		//print_r((array) $request);
-		
+        $request = json_decode($request);		
         $this->form_validation->set_rules($this->ProgramCommitte->validation);
         $this->ProgramCommitte->isValidate((array) $request);
         if ($this->form_validation->run() === false) {
@@ -182,7 +184,9 @@ class programCommittees extends MX_Controller{
         }
        
         $columns = array('committee_chairman', 'committee_formation_date');
-        $columns[] = 'created_at';
+        $columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
@@ -214,19 +218,23 @@ class programCommittees extends MX_Controller{
         $data= $this->grid->read_with_join_table('rmis_program_me_committees', array('rmis_program_me_committees.id','rmis_program_me_committees.id as committee_id','hrm_employees.employee_name as committee_chairman','committee_formation_date'), $request, 'hrm_employees', 'rmis_program_me_committees.committee_chairman = hrm_employees.employee_id');       
         echo json_encode($data, JSON_NUMERIC_CHECK);
     }
-    public function dataDestroy(){   
-        header('Content-Type: application/json');
-        $request = json_decode(file_get_contents('php://input'));
-        $data = $this->grid->destroy('rmis_program_me_committees', $request->models, 'id'); 
-		$data = $this->grid->destroy('rmis_program_me_committee_members', $request->models, 'committee_id'); 
-        echo json_encode($data , JSON_NUMERIC_CHECK); 
+    public function dataDestroy($request=NULL){  
+		if($request!=NULL){
+			 $request = json_decode($request);
+			 $data = $this->grid->destroy('rmis_program_me_committees', $request, 'id'); 
+			 $data = $this->grid->destroy('rmis_program_me_committee_members', $request, 'committee_id');
+		}
+		else{  
+			header('Content-Type: application/json');
+			$request = json_decode(file_get_contents('php://input'));
+			$data = $this->grid->destroy('rmis_program_me_committees', $request->models, 'id'); 
+			$data = $this->grid->destroy('rmis_program_me_committee_members', $request->models, 'committee_id'); 
+			echo json_encode($data , JSON_NUMERIC_CHECK); 
+		}
     }
     	
 	public function dataUpdate($request){
-        //header('Content-Type: application/json');
-        //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
-        //print_r($request);
         $this->form_validation->set_rules($this->ProgramCommitte->validation);
         $this->ProgramCommitte->isValidate((array) $request);
         if ($this->form_validation->run() === false) {
@@ -236,10 +244,12 @@ class programCommittees extends MX_Controller{
         }
         
 		$columns = array('id', 'committee_chairman', 'committee_formation_date');
-       	$columns[] = 'modified_at';        
-        $request->modified_at = date('Y-m-d H:i:s');            
-        $columns[] = 'modified_by';
-        $request->modified_by = 1;
+       	$columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'updated_at';        
+        $request->updated_by = date('Y-m-d H:i:s');            
+        $columns[] = 'updated_by';
+        $request->updated_by = 1;
         
 		$data = $this->grid->update('rmis_program_me_committees', $columns, $request, 'id'); 
         
@@ -248,8 +258,7 @@ class programCommittees extends MX_Controller{
 		$i=0;
 		if(!empty($request->committe_member_names)>0){
 			$this->ProgramCommitte->clean_committeeMembers($request->committee_id);
-			//print_r($request);
-			//exit(0);
+
 			foreach($request->committe_member_names as $committee_member_key=>$committee_member_name){
 				if($committee_member_name!=NULL){
 					$request->member_id = $committee_member_name;

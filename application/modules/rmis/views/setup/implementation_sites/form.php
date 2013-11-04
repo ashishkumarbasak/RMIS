@@ -3,7 +3,7 @@
     	$implementation_detail = unserialize($implementation_detail);
     } 
 ?>
-<form name="" id="" method="post" action="">
+<form name="frm_implementation_site" id="frm_implementation_site" method="post" action="">
 <div class="main_form" style="">
 	<div class="left_form" style="width:55%;">    	
         <div class="form_element">
@@ -51,11 +51,11 @@
             <div class="clear"></div>
        </div> 
        
-       
         <div class="form_element">
             <div class="button_panel" style="margin-right:80px;">
             	<?php if(isset($implementation_detail) && $implementation_detail->implementation_site_id!=NULL) { ?>
                 	<input type="hidden" name="id" id="id" value="<?php echo $implementation_detail->id; ?>">
+                    <input type="button" name="new_implementation" id="new_implementation" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('rmis/setup/implementationSites');?>'">
                 	<input type="submit" name="delete_implementation" id="delete_implementation" value="Delete" class="k-button button">
         			<input type="submit" name="save_update" id="save_update" value="Update" class="k-button button">
                 <?php } else { ?>

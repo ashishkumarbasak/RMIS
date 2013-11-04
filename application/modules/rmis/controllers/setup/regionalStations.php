@@ -145,7 +145,7 @@ class RegionalStations extends MX_Controller{
 		$command = new \Kendo\UI\GridColumn();
         $command->addCommandItem('destroy')
                 ->title('&nbsp;')
-                ->width(90);
+                ->width(100);
         
 		$command2 = new \Kendo\UI\GridColumnCommandItem();
 		$command2->click('ClickEdit')
@@ -203,6 +203,11 @@ class RegionalStations extends MX_Controller{
 				$request = json_encode($this->input->post());
 				$this->dataUpdate($request);
 			}
+			
+			if($this->input->post('delete_station')){
+				$request = json_encode($this->input->post());
+				$this->dataDestroy($request);
+			}
 				
 			$station_detail = $this->station->get_details($station_id);
 			$this->template->set('station_detail', serialize($station_detail));
@@ -222,8 +227,6 @@ class RegionalStations extends MX_Controller{
     }
 	
 	public function dataCreate($request){
-        //header('Content-Type: application/json');
-        //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
      	//$request->models[0]->fund_type = $request->models[0]->fund_type->fund_type;
         
@@ -236,14 +239,15 @@ class RegionalStations extends MX_Controller{
         }
        
         $columns = array('station_id', 'station_name', 'station_contact_person', 'station_phone', 'station_email', 'station_order', 'station_address');
-        $columns[] = 'created_at';
+        $columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
         
         $data= $this->grid->create('rmis_regional_stations', $columns, $request, 'id'); 
         $data['success'] ="Data created successfuly.";
-       // echo json_encode($data , JSON_NUMERIC_CHECK); 
     }
     
     public function dataRead(){
@@ -252,16 +256,20 @@ class RegionalStations extends MX_Controller{
         $data= $this->grid->read('rmis_regional_stations', array('id','station_id', 'station_name', 'station_contact_person','station_phone','station_email'), $request);       
         echo json_encode($data, JSON_NUMERIC_CHECK);
     }
-    public function dataDestroy(){   
-        header('Content-Type: application/json');
-        $request = json_decode(file_get_contents('php://input'));
-        $data = $this->grid->destroy('rmis_regional_stations', $request->models, 'id'); 
-        echo json_encode($data , JSON_NUMERIC_CHECK); 
+    public function dataDestroy($request=NULL){   
+       if($request!=NULL){
+			 $request = json_decode($request);
+			 $data = $this->grid->destroy('rmis_regional_stations', $request, 'id');
+		}
+		else{ 
+			header('Content-Type: application/json');
+			$request = json_decode(file_get_contents('php://input'));
+			$data = $this->grid->destroy('rmis_regional_stations', $request->models, 'id'); 
+			echo json_encode($data , JSON_NUMERIC_CHECK);
+		}
     }
     	
 	public function dataUpdate($request){
-        //header('Content-Type: application/json');
-        //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
         
         $this->form_validation->set_rules($this->station->validation);
@@ -273,10 +281,12 @@ class RegionalStations extends MX_Controller{
         }
         
         $columns = array('id', 'station_name', 'station_contact_person', 'station_phone', 'station_email', 'station_order', 'station_address');
-        $columns[] = 'modified_at';        
-        $request->modified_at = date('Y-m-d H:i:s');            
-        $columns[] = 'modified_by';
-        $request->modified_by = 1;
+        $columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'updated_at';        
+        $request->updated_by = date('Y-m-d H:i:s');            
+        $columns[] = 'updated_by';
+        $request->updated_by = 1;
         
         $data= $this->grid->update('rmis_regional_stations', $columns, $request, 'id'); 
         $data['success'] ="Data updated successfuly.";

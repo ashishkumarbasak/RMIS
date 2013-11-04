@@ -20,21 +20,16 @@ class Grading_model extends MY_Model {
         $this->validate($data);           
     }
 	
-	public function get_details($id=NULL){
-		if($id!=NULL){
-			$this->db->select('*');
-			$this->db->from('rmis_gradings');
-			$this->db->where('id',$id);
-			
-			$query = $this->db->get();
-			if($query->num_rows() > 0){
-				$result = $query->result();
-				return $result[0];
-			}else{
-				return NULL;
-			}
+	public function get_details(){
+		$this->db->select('*');
+		$this->db->from('rmis_gradings');
+		
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			$result = $query->result();
+			return $result[0];
 		}else{
-			return NULL;	
+			return NULL;
 		}
 	}
 	

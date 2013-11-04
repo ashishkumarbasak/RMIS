@@ -28,139 +28,17 @@ class Gradings extends MX_Controller{
         $this->template->append_metadata('<link href="/assets/kendoui/css/web/kendo.common.min.css"  rel="stylesheet"/>');
         $this->template->append_metadata('<link href="/assets/kendoui/css/web/kendo.default.min.css"  rel="stylesheet"/>');
         $this->template->append_metadata('<script src="/assets/kendoui/js/kendo.all.min.js"></script>');
-        $this->template->append_metadata('<script src="/assets/js/custom/tmis.js"></script>');
-                
-        require_once APPPATH.'third_party/kendoui/Autoload.php';
-        
-        $transport = new \Kendo\Data\DataSourceTransport();
-
-        $create = new \Kendo\Data\DataSourceTransportCreate();
-
-        $create->url(site_url('rmis/setup/gradings/dataCreate'))
-             ->contentType('application/json')
-             ->type('POST');
-
-        $read = new \Kendo\Data\DataSourceTransportRead();
-
-        $read->url(site_url('rmis/setup/gradings/dataRead'))
-             ->contentType('application/json')
-             ->type('POST');
-
-        $update = new \Kendo\Data\DataSourceTransportUpdate();
-
-        $update->url(site_url('rmis/setup/gradings/dataUpdate'))
-             ->contentType('application/json')
-             ->type('POST');
-
-        $destroy = new \Kendo\Data\DataSourceTransportDestroy();
-
-        $destroy->url(site_url('rmis/setup/gradings/dataDestroy'))
-             ->contentType('application/json')
-             ->type('POST');
-
-        $transport->create($create)
-                  ->read($read)
-                  ->update($update)
-                  ->destroy($destroy)
-                  ->parameterMap('function(data) {
-                      return kendo.stringify(data);
-                  }');
-
-        $model = new \Kendo\Data\DataSourceSchemaModel();
-
-        $IDField = new \Kendo\Data\DataSourceSchemaModelField('id');
-        $IDField->type('number')
-                       ->editable(false)
-                       ->nullable(true);
-					   
-		$gradingTitleField = new \Kendo\Data\DataSourceSchemaModelField('grading_title');
-        $gradingTitleField->type('string');
-                       //->editable(false)
-                       //->nullable(true);
-        
-        $effectDateField = new \Kendo\Data\DataSourceSchemaModelField('effect_date');
-        $effectDateField->type('string')
-                ->properties();
-
-        $model->id('id')
-            ->addField($IDField)
-            ->addField($gradingTitleField)
-            ->addField($effectDateField);
-
-        $schema = new \Kendo\Data\DataSourceSchema();
-        $schema->data('data')
-               ->errors('errors')
-               ->model($model)
-               ->total('total');
-
-        $dataSource = new \Kendo\Data\DataSource();
-
-        $dataSource->transport($transport)
-                   ->batch(true)
-                   ->pageSize(10)
-                   ->error('onError')
-                   ->requestEnd('onRequestEnd')
-                   ->serverSorting(true)
-                   ->schema($schema);
-
-        $grid = new \Kendo\UI\Grid('grid');
+        $this->template->append_metadata('<script src="/assets/js/custom/tmis.js"></script>');                
 		
-        $ID = new \Kendo\UI\GridColumn();
-        $ID->field('id') //->filterable($fundTypeFilterable)
-                 ->title('ID');
-				 
-		$gradingTitle = new \Kendo\UI\GridColumn();
-        $gradingTitle->field('grading_title')
-                 ->title('Grading Title');
-				 
-		$effectDate = new \Kendo\UI\GridColumn();
-        $effectDate->field('effect_date')
-                 ->title('Effect Date');
-		
-		$command = new \Kendo\UI\GridColumn();
-        $command->addCommandItem('destroy')
-                ->title('&nbsp;')
-                ->width(90);
-				
-		$command2 = new \Kendo\UI\GridColumnCommandItem();
-		$command2->click('ClickEdit')
-				 ->text('Edit');
-		
-		$commandColumn = new \Kendo\UI\GridColumn();
-		$commandColumn->addCommandItem($command2)
-        ->title('&nbsp;')
-        ->width(80);
-        
-        $editable = new \Kendo\UI\GridEditable();
-        $editable 	-> templateId("popup_editor")
-                	->confirmation("Are you sure you want to delete this record?")
-               	 	-> mode("inline");
-        
-        $sortable = new \Kendo\UI\GridSortable();
-        $sortable->mode('single')
-            ->allowUnsort(false);
-                
-        $grid->addColumn($gradingTitle, $effectDate, $commandColumn, $command)
-             ->dataSource($dataSource)
-			 ->height(450)
-             ->editable($editable)
-             ->sortable($sortable)   
-             ->pageable(true);
-        
-        $gridData =  $grid->render();
-        $this->template->set('grid_data', $gridData);
-		
-		if($grading_id!=NULL){
-			if($this->input->post('update_gradings')){
-				$request = json_encode($this->input->post());
-				$this->dataUpdate($request);
-			}
-			$grading_detail = $this->grading->get_details($grading_id);
-			$this->template->set('grading_detail', serialize($grading_detail));
-			
-			$grade_point_informations = $this->grading->get_grade_point_informations($grading_id);
-			$this->template->set('grade_point_informations', serialize($grade_point_informations));
+		$grading_detail = $this->grading->get_details();
+		$this->template->set('grading_detail', serialize($grading_detail));
+
+		if($this->input->post('update_gradings')){
+			$request = json_encode($this->input->post());
+			$this->dataUpdate($request);
 		}
+		$grade_point_informations = $this->grading->get_grade_point_informations($grading_detail->id);
+		$this->template->set('grade_point_informations', serialize($grade_point_informations));
 		
 		
         $this->template->set('content_header_icon', 'class="icofont-file"');
@@ -177,10 +55,7 @@ class Gradings extends MX_Controller{
     }
 	
 	public function dataCreate($request){
-        //header('Content-Type: application/json');
-        //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
-		//print_r($request);
 		
         $this->form_validation->set_rules($this->grading->validation);
         $this->grading->isValidate((array) $request);
@@ -191,6 +66,8 @@ class Gradings extends MX_Controller{
         }
        
         $columns = array('grading_title', 'effect_date');
+		$columns[] = 'organization_id';
+		$request->organization_id = 1;
         $columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
@@ -235,8 +112,6 @@ class Gradings extends MX_Controller{
     }
     	
 	public function dataUpdate($request){
-        //header('Content-Type: application/json');
-        //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
 		
         $this->form_validation->set_rules($this->grading->validation);
@@ -248,10 +123,12 @@ class Gradings extends MX_Controller{
         }
        
         $columns = array('id','grading_title', 'effect_date');
-        $columns[] = 'modified_at';
-        $request->modified_at = date('Y-m-d H:i:s');            
-        $columns[] = 'modified_by';
-        $request->modified_by = 1;
+		$columns[] = 'organization_id';
+		$request->organization_id = 1;
+        $columns[] = 'updated_at';
+        $request->updated_at = date('Y-m-d H:i:s');            
+        $columns[] = 'updated_by';
+        $request->updated_by = 1;
         
         $data= $this->grid->update('rmis_gradings', $columns, $request, 'id');
 		
@@ -275,14 +152,11 @@ class Gradings extends MX_Controller{
 		}
 
         $data['success'] ="Data updated successfuly.";
-        //echo json_encode($data , JSON_NUMERIC_CHECK);  
     }
 
 	public function deleteGradePoint(){
 		$grade_point_id = $this->input->post('grade_point_id');
 		$this->grading->deleteGradePointInformation($grade_point_id);
 	}
-	
-                
 } 
 ?>
