@@ -73,6 +73,8 @@ class ResearchTeams extends MX_Controller{
 		//print_r((array) $request);
 		
        	$columns = array('team_formation_date', 'program_id');
+		$columns[] = 'organization_id';
+		$request->organization_id = 1;
         $columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
@@ -122,10 +124,12 @@ class ResearchTeams extends MX_Controller{
 		//print_r((array) $request);
 		
        	$columns = array('team_formation_date', 'program_id');
-        $columns[] = 'modified_at';        
-        $request->modified_at = date('Y-m-d H:i:s');            
-        $columns[] = 'modified_by';
-        $request->modified_by = 1;
+        $columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'updated_at';        
+        $request->updated_at = date('Y-m-d H:i:s');            
+        $columns[] = 'updated_by';
+        $request->updated_by = 1;
         
 		$data = $this->grid->update('rmis_program_research_teams', $columns, $request, 'program_id'); 
         

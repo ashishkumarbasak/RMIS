@@ -51,7 +51,7 @@
         		<select name="program_researchType" id="program_researchType" class="selectionbox">
             		<option value="">Select Research Type</option>
  					<?php foreach($research_types['data'] as $key=>$researchType) { ?>
-            			<option value="<?php echo $researchType['id']; ?>" <?php if(isset($program_detail) && $program_detail->program_researchType==$researchType['id']) { ?> selected="selected" <?php } ?>><?php echo $researchType['research_type']; ?></option>
+            			<option value="<?php echo $researchType['value']; ?>" <?php if(isset($program_detail) && $program_detail->program_researchType==$researchType['value']) { ?> selected="selected" <?php } ?>><?php echo $researchType['name']; ?></option>
             		<?php } ?>
         		</select>
         	</div>
@@ -64,7 +64,7 @@
         		<select name="program_researchPriority" id="program_researchPriority" class="selectionbox">
             		<option value="">Select Research Priority</option>
 					<?php foreach($research_priorities['data'] as $key=>$research_priority) { ?>
-            			<option value="<?php echo $research_priority['id']; ?>" <?php if(isset($program_detail) && $program_detail->program_researchPriority==$research_priority['id']) { ?> selected="selected" <?php } ?>><?php echo $research_priority['research_priority']; ?></option>
+            			<option value="<?php echo $research_priority['value']; ?>" <?php if(isset($program_detail) && $program_detail->program_researchPriority==$research_priority['value']) { ?> selected="selected" <?php } ?>><?php echo $research_priority['name']; ?></option>
             		<?php } ?>
          		</select>
         	</div>
@@ -77,7 +77,7 @@
         		<select name="program_researchStatus" id="program_researchStatus" class="selectionbox">
             		<option value="">Select Research Status</option>
 					<?php foreach($research_statuses['data'] as $key=>$research_status) { ?>
-           	 			<option value="<?php echo $research_status['id']; ?>" <?php if(isset($program_detail) && $program_detail->program_researchStatus==$research_status['id']) { ?> selected="selected" <?php } ?>><?php echo $research_status['research_status']; ?></option>
+           	 			<option value="<?php echo $research_status['value']; ?>" <?php if(isset($program_detail) && $program_detail->program_researchStatus==$research_status['value']) { ?> selected="selected" <?php } ?>><?php echo $research_status['name']; ?></option>
             		<?php } ?>
             	</select>
         	</div>
@@ -218,7 +218,7 @@
         	<div class="field">
         		<select name="program_commodities[]" id="program_commodities" class="selectionbox" multiple="multiple">
             		<?php foreach($comodities['data'] as $key=>$comodity) { ?>
-            			<option value="<?php echo $comodity['commodity_id']; ?>" <?php if(in_array($comodity['commodity_id'],$program_commodities)) { ?> selected="selected" <?php } ?>><?php echo $comodity['commodity_name']; ?></option>
+            			<option value="<?php echo $comodity['value']; ?>" <?php if(in_array($comodity['value'],$program_commodities)) { ?> selected="selected" <?php } ?>><?php echo $comodity['name']; ?></option>
             		<?php } ?>
             	</select>
         	</div>
@@ -235,7 +235,7 @@
         	<div class="field">
         		<select name="program_aezs[]" id="program_aezs" class="selectionbox" multiple="multiple">
             		<?php foreach($aezs['data'] as $key=>$aez) { ?>
-            			<option value="<?php echo $aez['aez_id']; ?>" <?php if(in_array($aez['aez_id'], $program_aezs)) { ?> selected="selected" <?php } ?>><?php echo $aez['aez_name']; ?></option>
+            			<option value="<?php echo $aez['value']; ?>" <?php if(in_array($aez['value'], $program_aezs)) { ?> selected="selected" <?php } ?>><?php echo $aez['name']; ?></option>
             		<?php } ?>
             	</select>
         	</div>

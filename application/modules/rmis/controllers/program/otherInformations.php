@@ -42,6 +42,9 @@ class OtherInformations extends MX_Controller{
 			$this->template->set('program_id',$program_id);
 		}
 		
+		$program_areas = $this->grid->read('rmis_program_areas', array('id','program_area_id', 'program_area_name'), $request); 
+		$this->template->set('program_areas',$program_areas); //$this->program->get_program_area()
+		
         $this->template->set('content_header_icon', 'class="icofont-file"');
         $this->template->set('content_header_title', 'Program Other Information');
 		
@@ -63,7 +66,9 @@ class OtherInformations extends MX_Controller{
         $columns = array('program_rationale', 'program_methodology', 'program_background', 'program_socio_economical_impact', 
         				'program_environmental_impact', 'program_targeted_beneficiary', 'program_reference', 'program_external_affiliation',
         				'program_organization_policy', 'program_risks', 'program_id');
-        $columns[] = 'created_at';
+        $columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
@@ -81,10 +86,12 @@ class OtherInformations extends MX_Controller{
         				'program_environmental_impact', 'program_targeted_beneficiary', 'program_reference', 'program_external_affiliation',
         				'program_organization_policy', 'program_risks', 'id');
 							
-        $columns[] = 'modified_at';        
-        $request->modified_at = date('Y-m-d H:i:s');            
-        $columns[] = 'modified_by';
-        $request->modified_by = 1;
+        $columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'updated_at';        
+        $request->updated_at = date('Y-m-d H:i:s');            
+        $columns[] = 'updated_by';
+        $request->updated_by = 1;
         
         $data = $this->grid->update('rmis_program_other_informations', $columns, $request, 'id'); 
         $data['success'] ="Data updated successfuly.";

@@ -53,13 +53,13 @@ class Informations extends MX_Controller{
 		$divisions = $this->grid->read('rmis_divisions', array('id','division_id', 'division_name'), $request);  
 		$this->template->set('divisions',$divisions); //$this->program->get_division_or_unit()
 		
-		$research_types = $this->grid->read('rmis_research_types', array('id','research_type', 'is_active'), $request); 
+		$research_types = $this->grid->read('rmis_research_types', array('value','name', 'is_active'), $request); 
 		$this->template->set('research_types',$research_types); //$this->program->get_research_type()
 		
-		$research_priorities = $this->grid->read('rmis_research_priorities', array('id','research_priority', 'is_active'), $request); 
+		$research_priorities = $this->grid->read('rmis_research_priorities', array('value','name', 'is_active'), $request); 
 		$this->template->set('research_priorities', $research_priorities); //$this->program->get_research_priority()
 		
-		$research_statuses = $this->grid->read('rmis_research_statuses', array('id','research_status', 'is_active'), $request);
+		$research_statuses = $this->grid->read('rmis_research_statuses', array('value','name', 'is_active'), $request);
 		$this->template->set('research_statuses',$research_statuses); //$this->program->get_research_status()
 		
 		$regional_stations = $this->grid->read('rmis_regional_stations', array('id','station_id', 'station_name'), $request);
@@ -68,10 +68,10 @@ class Informations extends MX_Controller{
 		$implementation_locations = $this->grid->read('rmis_implementation_sites', array('id','implementation_site_id', 'implementation_site_name'), $request);
 		$this->template->set('implementation_locations',$implementation_locations); //$this->program->get_implementation_location()
 		
-		$comodities = $this->grid->read('rmis_commodities', array('commodity_id','commodity_name', 'is_active'), $request);
+		$comodities = $this->grid->read('rmis_commodities', array('value','name', 'is_active'), $request);
 		$this->template->set('comodities',$comodities); //$this->program->get_commodity()
 		
-		$aezs = $this->grid->read('rmis_aezs', array('aez_id','aez_name', 'is_active'), $request);
+		$aezs = $this->grid->read('rmis_aezs', array('value','name', 'is_active'), $request);
 		$this->template->set('aezs',$aezs);	//$this->program->get_aez()
 		
 		$institues = $this->grid->read('rmis_institutes', array('institute_id','institute_sort_code', 'institute_name'), $request);
@@ -92,8 +92,6 @@ class Informations extends MX_Controller{
     }
 	
     public function dataCreate($request){
-        //header('Content-Type: application/json');
-        //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
 		$request->program_instituteNames = implode(",", $request->program_instituteNames);
 		$request->program_commodities = implode(",", $request->program_commodities);
@@ -114,7 +112,9 @@ class Informations extends MX_Controller{
 							'program_implementationLocation', 'program_keywords', 'program_commodities', 'program_aezs', 'program_initiationDate', 'program_completionDate',
 							'program_goal', 'program_objective', 'program_expectedOutputs');
 		
-        $columns[] = 'created_at';
+        $columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
@@ -141,8 +141,6 @@ class Informations extends MX_Controller{
 	}
 	 	
 	public function dataUpdate($request){
-        //header('Content-Type: application/json');
-        //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
 		$request->program_instituteNames = implode(",", $request->program_instituteNames);
 		$request->program_commodities = implode(",", $request->program_commodities);
@@ -163,11 +161,12 @@ class Informations extends MX_Controller{
 							'program_implementationLocation', 'program_keywords', 'program_commodities', 'program_aezs', 'program_initiationDate', 'program_completionDate',
 							'program_goal', 'program_objective', 'program_expectedOutputs', 'program_id');
 							
-        $columns[] = 'modified_at';        
-        $request->modified_at = date('Y-m-d H:i:s');            
-        $columns[] = 'modified_by';
-        $request->modified_by = 1;
-        
+        $columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'updated_at';        
+        $request->updated_at = date('Y-m-d H:i:s');            
+        $columns[] = 'updated_by';
+        $request->updated_by = 1;
         $data = $this->grid->update('rmis_program_informations', $columns, $request, 'program_id'); 
         $data['success'] ="Data updated successfuly.";
         //echo json_encode($data , JSON_NUMERIC_CHECK);  

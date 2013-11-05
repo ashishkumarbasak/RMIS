@@ -19,16 +19,23 @@
 <form name="other_info" id="other_info" method="post" action="">
 	<div class="main_form">
     	<div class="form_element">
-        	<div class="label width_170px">Title of Research Programme</div>
+        	<div class="label width_170px">Title of Research Program</div>
             <div class="textarea_field"><textarea name="research_program_title" id="research_program_title" disabled="disabled" class="textarea_small disabled width_68_percent"><?php if($program_detail!=NULL) echo $program_detail->research_program_title; ?></textarea></div>
             <div class="clear"></div>
         </div>
                     
 		<div class="left_form">
         	<div class="form_element">
-           		<div class="label width_170px">Programme Area </div>
+           		<div class="label width_170px">Program Area </div>
                 <div class="field">
-               		<input type="text" name="program_area" id="program_area" value="<?php if($program_detail!=NULL) echo $program_detail->program_area; ?>" class="textbox disabled" disabled="disabled" />
+               		<select name="program_area" id="program_area" class="selectionbox disabled" disabled="disabled">
+	            		<option value="">Select Program Area</option>
+						<?php 
+						
+						foreach($program_areas['data'] as $key=>$program_area) { ?>
+	            			<option value="<?php echo $program_area['program_area_id']; ?>" <?php if(isset($program_detail) && $program_detail->program_area==$program_area['program_area_id']) { ?> selected="selected" <?php } ?> ><?php echo $program_area['program_area_name']; ?></option>
+	            		<?php } ?>
+	        		</select>
                	</div>
            		<div class="clear"></div>
         	</div>

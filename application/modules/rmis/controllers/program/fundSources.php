@@ -50,7 +50,8 @@ class FundSources extends MX_Controller{
 			
 			$this->template->set('program_id',$program_id);
 		}
-		
+		$program_areas = $this->grid->read('rmis_program_areas', array('id','program_area_id', 'program_area_name'), $request); 
+		$this->template->set('program_areas',$program_areas); //$this->program->get_program_area()
 		
         $this->template->set('content_header_icon', 'class="icofont-file"');
         $this->template->set('content_header_title', 'Program Fund Source & Cost Breakdown Info');
@@ -73,6 +74,8 @@ class FundSources extends MX_Controller{
 		//print_r((array) $request);
 		
 		$columns = array('fund_source', 'amount','currency','exchange_rate', 'date_of_exchange_rate', 'amount_in_taka', 'program_id');
+		$columns[] = 'organization_id';
+		$request->organization_id = 1;
 		$columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
@@ -94,7 +97,9 @@ class FundSources extends MX_Controller{
 		}
 		
 		$columns = array('estimate_date', 'financial_year','program_id');
-        $columns[] = 'created_at';
+        $columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
@@ -139,10 +144,12 @@ class FundSources extends MX_Controller{
 		//print_r((array) $request);
 		
 		$columns = array('fund_source', 'amount','currency','exchange_rate', 'date_of_exchange_rate', 'amount_in_taka', 'program_id');
-		$columns[] = 'modified_at';        
-        $request->modified_at = date('Y-m-d H:i:s');            
-        $columns[] = 'modified_by';
-        $request->modified_by = 1;
+		$columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'updated_at';        
+        $request->updated_at = date('Y-m-d H:i:s');            
+        $columns[] = 'updated_by';
+        $request->updated_by = 1;
 		$i=0;
 		if(!empty($request->fund_sources)>0){
 			$this->program->clean_programFundSources($request->program_id);
@@ -161,10 +168,12 @@ class FundSources extends MX_Controller{
 		}
 		
 		$columns = array('estimate_date', 'financial_year','program_id');
-        $columns[] = 'modified_at';        
-        $request->modified_at = date('Y-m-d H:i:s');            
-        $columns[] = 'modified_by';
-        $request->modified_by = 1;
+        $columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'updated_at';        
+        $request->updated_at = date('Y-m-d H:i:s');            
+        $columns[] = 'updated_by';
+        $request->updated_by = 1;
 		$data = $this->grid->update('rmis_program_cost_estimations', $columns, $request, 'program_id'); 
         
 		$columns = array('s_o', 'ac_head_code','ac_head_title','amount', 'program_id');

@@ -49,7 +49,7 @@ class SteeringCommittees extends MX_Controller{
 		}
 		
         $this->template->set('content_header_icon', 'class="icofont-file"');
-        $this->template->set('content_header_title', 'Program Other Information');
+        $this->template->set('content_header_title', 'Program Steering Committees Information');
 		
 		$program_areas = $this->grid->read('rmis_program_areas', array('id','program_area_id', 'program_area_name'), $request); 
 		$this->template->set('program_areas',$program_areas);
@@ -72,6 +72,8 @@ class SteeringCommittees extends MX_Controller{
 		//print_r((array) $request);
 		
        	$columns = array('committee_formation_date', 'program_id');
+		$columns[] = 'organization_id';
+		$request->organization_id = 1;
         $columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
@@ -120,10 +122,12 @@ class SteeringCommittees extends MX_Controller{
 		//print_r((array) $request);
 		
        	$columns = array('committee_formation_date', 'program_id');
-        $columns[] = 'modified_at';        
-        $request->modified_at = date('Y-m-d H:i:s');            
-        $columns[] = 'modified_by';
-        $request->modified_by = 1;
+		$columns[] = 'organization_id';
+		$request->organization_id = 1;
+        $columns[] = 'updated_at';        
+        $request->updated_at = date('Y-m-d H:i:s');            
+        $columns[] = 'updated_by';
+        $request->updated_by = 1;
         
 		$data = $this->grid->update('rmis_program_steering_committees', $columns, $request, 'program_id'); 
         

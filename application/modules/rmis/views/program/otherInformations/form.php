@@ -16,7 +16,14 @@
         	<div class="form_element">
             	<div class="label width_170px">Programme Area </div>
                 <div class="field">
-                	<input type="text" name="program_area" id="program_area" value="<?php if($program_detail!=NULL) echo $program_detail->program_area; ?>" class="textbox disabled" disabled="disabled" />
+                	<select name="program_area" id="program_area" class="selectionbox disabled" disabled="disabled">
+	            		<option value="">Select Program Area</option>
+						<?php 
+						
+						foreach($program_areas['data'] as $key=>$program_area) { ?>
+	            			<option value="<?php echo $program_area['program_area_id']; ?>" <?php if(isset($program_detail) && $program_detail->program_area==$program_area['program_area_id']) { ?> selected="selected" <?php } ?> ><?php echo $program_area['program_area_name']; ?></option>
+	            		<?php } ?>
+	        		</select>
                	</div>
                	<div class="clear"></div>
       		</div>      

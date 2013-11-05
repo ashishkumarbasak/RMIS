@@ -46,7 +46,7 @@ class ActivityLists extends MX_Controller{
 		}
 		
         $this->template->set('content_header_icon', 'class="icofont-file"');
-        $this->template->set('content_header_title', 'Program Information');
+        $this->template->set('content_header_title', 'Program Activity List Information');
         
 		$program_areas = $this->grid->read('rmis_program_areas', array('id','program_area_id', 'program_area_name'), $request); 
 		$this->template->set('program_areas',$program_areas);
@@ -63,12 +63,11 @@ class ActivityLists extends MX_Controller{
     }
 	
 	public function dataCreate($request){
-        //header('Content-Type: application/json');
-        //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
-		//print_r((array) $request);
 		
 		$columns = array('s_o', 'work_element','planned_startDate','planned_endDate', 'actual_startDate', 'actual_endDate', 'assign_resource', 'program_id');
+		$columns[] = 'organization_id';
+		$request->organization_id = 1;
 		$columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
@@ -101,14 +100,16 @@ class ActivityLists extends MX_Controller{
 		//print_r((array) $request);
 		
 		$columns = array('s_o', 'work_element','planned_startDate','planned_endDate', 'actual_startDate', 'actual_endDate', 'assign_resource', 'program_id');
+		$columns[] = 'organization_id';
+		$request->organization_id = 1;
 		$columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
-		$columns[] = 'modified_at';        
-        $request->modified_at = date('Y-m-d H:i:s');            
-        $columns[] = 'modified_by';
-        $request->modified_by = 1;
+		$columns[] = 'updated_at';        
+        $request->updated_at = date('Y-m-d H:i:s');            
+        $columns[] = 'updated_by';
+        $request->updated_by = 1;
 		$i=0;
 		if(!empty($request->work_elements)>0){
 			$this->program->clean_programActivityLists($request->program_id);
