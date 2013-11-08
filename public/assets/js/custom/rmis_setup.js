@@ -2,35 +2,36 @@
 		
 		$('#frm_division').validate({
 			errorElement: 'div',
-			errorClass: 'help-inline',
+			errorClass: 'error',
 			focusInvalid: false,
 			rules: {
 				division_name: {
 					required: true
 				},
-				division_head: {
-					required: true
+				division_head_name: {
+					required: true,
+					checkEmployeeName: true
 				},
 				division_email: {
 					email:true
 				},
 			},
-	
 			messages: {
-				division_name: "Please Enter Division Names",
-				division_head: {
-					required: "Please Select Scientist",
+				division_name: "Please enter division name.",
+				division_head_name: {
+					required: "Please select scientist",
+					checkEmployeeName: "Please select head of division."
 				},				
 				division_email: {
-					required: "Please Enter a Valid Email.",
-					email: "Please Enter a Valid Email."
+					required: "Email address can't be left blank.",
+					email: "Please enter a valid email."
 				}
 			},			
 		});
 		
 		$('#frm_regional_station').validate({
 			errorElement: 'div',
-			errorClass: 'help-inline',
+			errorClass: 'error',
 			focusInvalid: false,
 			rules: {
 				station_name: {
@@ -42,10 +43,10 @@
 			},
 			
 			messages: {
-				station_name: "Please Enter Regional Station Name",
+				station_name: "Please enter regional station name",
 				station_email: {
-					required: "Please Enter a Valid Email.",
-					email: "Please Enter a Valid Email."
+					required: "Email address can't be left blank.",
+					email: "Please enter a valid email."
 				}				
 			},
 			
@@ -53,7 +54,7 @@
 	
 		$('#frm_implementation_site').validate({
 			errorElement: 'div',
-			errorClass: 'help-inline',
+			errorClass: 'error',
 			focusInvalid: false,
 			rules: {
 				implementation_site_name: {
@@ -65,10 +66,10 @@
 			},
 			
 			messages: {
-				implementation_site_name: "Enter Implementation Site/Area Name",
+				implementation_site_name: "Enter implementation site/area name",
 				email_address: {
-					required: "Please Enter a Valid Email.",
-					email: "Please Enter a Valid Email."
+					required: "Email address can't be left blank.",
+					email: "Please enter a valid email."
 				}				
 			},
 			
@@ -76,7 +77,7 @@
 		
 		$('#frm_program_area').validate({
 			errorElement: 'div',
-			errorClass: 'help-inline',
+			errorClass: 'error',
 			focusInvalid: false,
 			rules: {
 				program_area_name: {
@@ -86,14 +87,14 @@
 	
 			messages: {
 				program_area_name: {
-					required: "Please Enter Program Area",
+					required: "Please enter program area",
 				}
 			},			
 		});
 		
 		$('#frm_program_committee').validate({
 			errorElement: 'div',
-			errorClass: 'help-inline',
+			errorClass: 'error',
 			focusInvalid: false,
 			rules: {
 				committee_chairman: {
@@ -106,15 +107,15 @@
 	
 			messages: {
 				committee_chairman: {
-					required: "Please Enter Chairman of the Committee",
+					required: "Please enter chairman of the committee",
 				},
-				committee_formation_date: "Please Enter Committe Formation Date",
+				committee_formation_date: "Please enter committe formation date",
 			},			
 		});
 		
 		$('#frm_grading').validate({
 			errorElement: 'div',
-			errorClass: 'help-inline',
+			errorClass: 'error',
 			focusInvalid: false,
 			rules: {
 				grading_title: {
@@ -127,9 +128,9 @@
 	
 			messages: {
 				grading_title: {
-					required: "Please Enter Grading Title",
+					required: "Please enter grading title",
 				},
-				effect_date: "Please Enter Effect Date",
+				effect_date: "Please enter effect date",
 			},			
 		});
 		

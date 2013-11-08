@@ -22,10 +22,16 @@
         <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/setup/gradings');?>"> <i class="icon-double-angle-right"></i> Grading Information </a></li>
       </ul>
     </li>
-     <li <?php echo $setup_menu_active; ?> > <a href="#" class="dropdown-toggle"> <i class="icon-desktop"></i> <span>Program</span> <b class="arrow icon-angle-down"></b> </a>
+    <li <?php echo $setup_menu_active; ?> > <a href="#" class="dropdown-toggle"> <i class="icon-desktop"></i> <span>Program</span> <b class="arrow icon-angle-down"></b> </a>
       <ul class="submenu">
         <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/program/search');?>"> <i class="icon-double-angle-right"></i>Program search</a></li>
         <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/program/informations');?>"> <i class="icon-double-angle-right"></i>Add New Program </a></li>
+      </ul>
+    </li>
+    <li <?php echo $setup_menu_active; ?> > <a href="#" class="dropdown-toggle"> <i class="icon-desktop"></i> <span>Projects</span> <b class="arrow icon-angle-down"></b> </a>
+      <ul class="submenu">
+        <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/project/search');?>"> <i class="icon-double-angle-right"></i>Project search</a></li>
+        <li <?php echo $sub_menu_active; ?>> <a href="<?php echo site_url('rmis/project/informations');?>"> <i class="icon-double-angle-right"></i>Add New Project </a></li>
       </ul>
     </li>
   </ul>

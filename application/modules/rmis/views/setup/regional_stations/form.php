@@ -16,8 +16,8 @@
         
         <div class="form_element">
             <div class="label">Regional Station Name <span class="mandatory">*</span></div>
-            <div class="field"><input class="textbox" type="text" name="station_name" id="station_name" value="<?php if($station_detail) echo $station_detail->station_name; ?>"/></div>
-            <div class="clear"></div>
+            <div class="field"><input class="textbox no-margin" type="text" name="station_name" id="station_name" value="<?php if($station_detail) echo $station_detail->station_name; ?>"/></div>
+            <div class="clear small-gap"></div>
         </div>
         
         <div class="form_element">
@@ -34,8 +34,8 @@
         
         <div class="form_element">
            	<div class="label">Email</div>
-            <div class="field"><input class="textbox" type="text" name="station_email" id="station_email" value="<?php if($station_detail) echo $station_detail->station_email; ?>"/></div>
-            <div class="clear"></div>
+            <div class="field"><input class="textbox no-margin" type="text" name="station_email" id="station_email" value="<?php if($station_detail) echo $station_detail->station_email; ?>"/></div>
+            <div class="clear small-gap"></div>
         </div>
         
         <div class="form_element">

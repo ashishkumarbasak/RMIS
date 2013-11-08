@@ -16,8 +16,8 @@
         
         <div class="form_element">
             <div class="label">Programme Area<span class="mandatory">*</span></div>
-            <div class="field"><input class="textbox" type="text" name="program_area_name" id="program_area_name" value="<?php if($program_area_detail) echo $program_area_detail->program_area_name; ?>"/></div>
-            <div class="clear"></div>
+            <div class="field"><input class="textbox no-margin" type="text" name="program_area_name" id="program_area_name" value="<?php if($program_area_detail) echo $program_area_detail->program_area_name; ?>"/></div>
+            <div class="clear small-gap"></div>
         </div>
         
         <div class="form_element">
@@ -27,7 +27,7 @@
        </div>
        
         <div class="form_element">
-            <div class="button_panel" style="margin-right:130px;">
+            <div class="button_panel" style="margin-right:123px;">
             	<?php if(isset($program_area_detail) && $program_area_detail->program_area_id!=NULL) { ?>
                 	<input type="hidden" name="id" id="id" value="<?php echo $program_area_detail->id; ?>">
                     <input type="button" name="new_programarea" id="new_programarea" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('rmis/setup/programAreas');?>'">

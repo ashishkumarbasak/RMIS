@@ -31,9 +31,10 @@ class Division_model extends MY_Model {
 	
 	public function get_details($id=NULL){
 		if($id!=NULL){
-			$this->db->select('*');
+			$this->db->select('*, rmis_divisions.id as division_pk');
 			$this->db->from('rmis_divisions');
-			$this->db->where('id',$id);
+			$this->db->join('hrm_employees','rmis_divisions.division_head=hrm_employees.employee_id','left');
+			$this->db->where('rmis_divisions.id',$id);
 			
 			$query = $this->db->get();
 			if($query->num_rows() > 0){

@@ -124,21 +124,6 @@ class Informations extends MX_Controller{
         $data['success'] ="Data created successfuly.";
         //echo json_encode($data , JSON_NUMERIC_CHECK); 
     }
-    
-    public function autocomplete()
-	{		
-		$term = $this->input->post('term',TRUE);
-
-		if (strlen($term) < 2) break;
-	
-		$rows = $this->program->get_employee_name_auto_complete(array('keyword' => $term));
-	
-		$json_array = array();
-		foreach ($rows as $row)
-			 array_push($json_array, $row->employee_name);
-	
-		echo json_encode($json_array);
-	}
 	 	
 	public function dataUpdate($request){
         $request = json_decode($request);
