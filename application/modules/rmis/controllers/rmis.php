@@ -7,6 +7,7 @@ class Rmis extends MX_Controller
     {
         parent::__construct();
         //$this->load->model('hrmis_model');
+        $this->load->model('Employee_model', 'employee');
     }
     
     public function index()
@@ -25,4 +26,13 @@ class Rmis extends MX_Controller
                 ->set_layout('extensive/main_layout')
                 ->build('dashboard');
     }
-}    
+	
+	public function employees(){
+		$term = $this->input->post('term',TRUE);
+		if (strlen($term) > 1) {
+			$rows = $this->employee->search_employee(array('keyword' => $term));
+	        echo json_encode($rows);	
+		}
+	}
+}
+?>

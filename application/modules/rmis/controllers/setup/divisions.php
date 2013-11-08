@@ -29,7 +29,10 @@ class Divisions extends MX_Controller{
         $this->template->append_metadata('<link href="/assets/kendoui/css/web/kendo.common.min.css"  rel="stylesheet"/>');
         $this->template->append_metadata('<link href="/assets/kendoui/css/web/kendo.default.min.css"  rel="stylesheet"/>');
         $this->template->append_metadata('<script src="/assets/kendoui/js/kendo.all.min.js"></script>');
-        $this->template->append_metadata('<script src="/assets/js/custom/tmis.js"></script>');
+		$this->template->append_metadata('<script src="/assets/jqueryui/1.8/jquery-ui.min.js"></script>');
+        $this->template->append_metadata('<script src="/assets/js/custom/rmis.js"></script>');
+		$this->template->append_metadata('<script src="/assets/extensive/js/jquery.validate.min.js"></script>');
+		$this->template->append_metadata('<script src="/assets/js/custom/rmis_setup.js"></script>');
                 
         require_once APPPATH.'third_party/kendoui/Autoload.php';
         

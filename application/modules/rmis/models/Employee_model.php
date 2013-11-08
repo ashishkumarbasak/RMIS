@@ -13,6 +13,14 @@ class Employee_model extends MY_Model {
 			return NULL;
 		}
 	}
+	
+	public function search_employee($options = array()){               
+    	$this->db->select("employee_name, employee_id");
+		$this->db->from("hrm_employees");
+        $this->db->like('employee_name', $options['keyword'], 'after');
+        $query = $this->db->get();
+        return $query->result();
+    }
     
 }
 ?>

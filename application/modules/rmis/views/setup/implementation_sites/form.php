@@ -15,8 +15,8 @@
         
         <div class="form_element">
             <div class="label">Implementation Site/Area <span class="mandatory">*</span></div>
-            <div class="field"><input class="textbox" type="text" name="implementation_site_name" id="implementation_site_name" value="<?php if($implementation_detail) echo $implementation_detail->implementation_site_name; ?>"/></div>
-            <div class="clear"></div>
+            <div class="field"><input class="textbox no-margin" type="text" name="implementation_site_name" id="implementation_site_name" value="<?php if($implementation_detail) echo $implementation_detail->implementation_site_name; ?>"/></div>
+            <div class="clear small-gap"></div>
         </div>
         
         <div class="form_element">
@@ -41,8 +41,8 @@
         
         <div class="form_element">
            	<div class="label">Email</div>
-            <div class="field"><input class="textbox" type="text" name="email_address" id="email_address" value="<?php if($implementation_detail) echo $implementation_detail->email_address; ?>"/></div>
-            <div class="clear"></div>
+            <div class="field"><input class="textbox no-margin" type="text" name="email_address" id="email_address" value="<?php if($implementation_detail) echo $implementation_detail->email_address; ?>"/></div>
+            <div class="clear small-gap"></div>
         </div>
         
         <div class="form_element">

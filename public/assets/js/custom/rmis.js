@@ -10,7 +10,6 @@ function onRequestEnd(e) {
     }
 	
 	if(msg){
-	
 	 $( document ).ready(function() {
             var n = noty({
 		text: msg,
@@ -20,21 +19,30 @@ function onRequestEnd(e) {
             });
         });
 	}
-	
 }
-
-    function onError(e) {
-        //console.log(e);
-		$( document ).ready(function() {
-            var n = noty({
+function onError(e) {
+	//console.log(e);
+	$( document ).ready(function() {
+		var n = noty({
 		text: e.xhr.responseText,
 		type: 'alert',
 		layout: 'topRight',
 		closeWith: ['hover'],
-            });
-        });
-		
-       
-    }
+		});
+	});
+}
+
+$(document).ready(function(){
+    $.validator.addMethod(
+        "checkEmployeeName", 
+        function(value, element) {
+            if($("#employee_id").val()=="")
+            	return false;
+            else
+            	return true;
+        },
+        "Employee name not exists"
+    );
+});
 
 

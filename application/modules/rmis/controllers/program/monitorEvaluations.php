@@ -34,6 +34,9 @@ class MonitorEvaluations extends MX_Controller{
 			$program_detail = $this->program->get_details($program_id);
 			$this->template->set('program_detail', serialize($program_detail));
 			
+			$activityLists = $this->program->get_activityLists($program_id);
+			$this->template->set('activityLists', serialize($activityLists));
+			
 			$this->template->set('program_id',$program_id);
 		}
 		

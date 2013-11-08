@@ -15,15 +15,15 @@
 	<div class="left_form">
         <div class="form_element">
             <div class="label">Grading Title <span class="mandatory">*</span></div>
-            <div class="field"><input class="textbox" type="text" name="grading_title" id="grading_title" value="<?php if($grading_detail) echo $grading_detail->grading_title; ?>"/></div>
-            <div class="clear"></div>
+            <div class="field"><input class="textbox no-margin" type="text" name="grading_title" id="grading_title" value="<?php if($grading_detail) echo $grading_detail->grading_title; ?>"/></div>
+            <div class="clear small-gap"></div>
         </div>
     </div>
     <div class="right_form">
     	<div class="form_element">
             <div class="label">Effect Date <span class="mandatory">*</span></div>
-            <div class="field"><input class="textbox disabled" readonly="readonly" type="text" name="effect_date" id="effect_date" data-date-format="yyyy-mm-dd" value="<?php if($grading_detail) echo $grading_detail->effect_date; ?>"/></div>
-            <div class="clear"></div>
+            <div class="field"><input class="textbox disabled no-margin" readonly="readonly" type="text" name="effect_date" id="effect_date" data-date-format="yyyy-mm-dd" value="<?php if($grading_detail) echo $grading_detail->effect_date; ?>"/></div>
+            <div class="clear small-gap"></div>
         </div>
     </div>    
     <div class="clear"></div>

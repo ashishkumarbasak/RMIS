@@ -15,15 +15,15 @@
 	<div class="left_form">
         <div class="form_element">
             <div class="label">Chairman of the Committee <span class="mandatory">*</span></div>
-            <div class="field"><input class="textbox" type="text" name="committee_chairman" id="committe_chairman" value="<?php if($committee_detail) echo $committee_detail->employee_name; ?>" style="margin-left: 10px;"/></div>
-            <div class="clear"></div>
+            <div class="field"><input class="textbox no-margin" type="text" name="committee_chairman" id="committe_chairman" value="<?php if($committee_detail) echo $committee_detail->employee_name; ?>" style="margin-left: 10px;"/></div>
+            <div class="clear small-gap"></div>
         </div>
     </div>
     <div class="right_form">
     	<div class="form_element">
             <div class="label">Committe Formation Date <span class="mandatory">*</span></div>
-            <div class="field"><input class="textbox disabled" readonly="readonly" type="text" name="committee_formation_date" id="committee_formation_date" data-date-format="yyyy-mm-dd"  value="<?php if($committee_detail) echo $committee_detail->committee_formation_date; ?>"/></div>
-            <div class="clear"></div>
+            <div class="field"><input class="textbox disabled no-margin" readonly="readonly" type="text" name="committee_formation_date" id="committee_formation_date" data-date-format="yyyy-mm-dd"  value="<?php if($committee_detail) echo $committee_detail->committee_formation_date; ?>"/></div>
+            <div class="clear small-gap"></div>
         </div>
     </div>    
     <div class="clear"></div>

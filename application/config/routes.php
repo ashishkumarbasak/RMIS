@@ -96,6 +96,16 @@ $route['rmis/program/activityLists/(:num)'] = 'rmis/program/activityLists/index/
 $route['rmis/program/monitorEvaluations/(:num)'] = 'rmis/program/monitorEvaluations/index/$1';
 $route['rmis/program/relatedDocuments/(:num)'] = 'rmis/program/relatedDocuments/index/$1';
 
+//program form
+$route['rmis/project/informations/(:num)'] = 'rmis/project/informations/index/$1';
+$route['rmis/project/otherInformations/(:num)'] = 'rmis/project/otherInformations/index/$1';
+$route['rmis/project/fundSources/(:num)'] = 'rmis/project/fundSources/index/$1';
+$route['rmis/project/researchTeams/(:num)'] = 'rmis/project/researchTeams/index/$1';
+$route['rmis/project/steeringCommittees/(:num)'] = 'rmis/project/steeringCommittees/index/$1';
+$route['rmis/project/implementationCommittees/(:num)'] = 'rmis/project/implementationCommittees/index/$1';
+$route['rmis/project/activityLists/(:num)'] = 'rmis/project/activityLists/index/$1';
+$route['rmis/project/monitorEvaluations/(:num)'] = 'rmis/project/monitorEvaluations/index/$1';
+$route['rmis/project/relatedDocuments/(:num)'] = 'rmis/project/relatedDocuments/index/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
