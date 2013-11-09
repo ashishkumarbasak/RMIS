@@ -28,7 +28,7 @@ class ActivityLists extends MX_Controller{
         $this->template->append_metadata('<link href="/assets/kendoui/css/web/kendo.common.min.css"  rel="stylesheet"/>');
         $this->template->append_metadata('<link href="/assets/kendoui/css/web/kendo.default.min.css"  rel="stylesheet"/>');
         $this->template->append_metadata('<script src="/assets/kendoui/js/kendo.all.min.js"></script>');
-        $this->template->append_metadata('<script src="/assets/js/custom/tmis.js"></script>');
+        $this->template->append_metadata('<script src="/assets/js/custom/rmis.js"></script>');
                 
         if($program_id!=NULL){
 			if($this->input->post('update_activityLists')){

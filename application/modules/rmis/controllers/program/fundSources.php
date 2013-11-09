@@ -28,7 +28,7 @@ class FundSources extends MX_Controller{
         $this->template->append_metadata('<link href="/assets/kendoui/css/web/kendo.common.min.css"  rel="stylesheet"/>');
         $this->template->append_metadata('<link href="/assets/kendoui/css/web/kendo.default.min.css"  rel="stylesheet"/>');
         $this->template->append_metadata('<script src="/assets/kendoui/js/kendo.all.min.js"></script>');
-        $this->template->append_metadata('<script src="/assets/js/custom/tmis.js"></script>');
+        $this->template->append_metadata('<script src="/assets/js/custom/rmis.js"></script>');
         
         if($program_id!=NULL){
 			if($this->input->post('update_fundSources')){
@@ -50,6 +50,7 @@ class FundSources extends MX_Controller{
 			
 			$this->template->set('program_id',$program_id);
 		}
+		
 		$program_areas = $this->grid->read('rmis_program_areas', array('id','program_area_id', 'program_area_name'), $request); 
 		$this->template->set('program_areas',$program_areas); //$this->program->get_program_area()
 		

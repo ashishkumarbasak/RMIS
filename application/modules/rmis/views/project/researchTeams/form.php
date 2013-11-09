@@ -2,8 +2,8 @@
 <script src="<?php echo site_url('/assets/js/bootstrap-datepicker.js'); ?>"></script>
 <link rel="stylesheet" href="<?php echo site_url('assets/extensive/css/datepicker.css'); ?>" />
 <?php 
-	if(isset($program_detail)){
-		$program_detail = unserialize($program_detail);
+	if(isset($project_detail)){
+		$project_detail = unserialize($project_detail);
 	}
 	if(isset($researchTeam)){
 		$researchTeam = unserialize($researchTeam);
@@ -146,7 +146,7 @@
 				        	<input class="textbox no-margin width-89" type="text" name="emails[]" id="emails" value="<?php echo $member->email; ?>"/>	
 				    	</div>
 				    </div>
-				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_research_team_member(<?php echo $member->id;?> , <?php echo $member->program_id; ?>, <?php echo $key; ?> );">[-]</a></div>
+				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_research_team_member(<?php echo $member->id;?> , <?php echo $member->project_id; ?>, <?php echo $key; ?> );">[-]</a></div>
 				    </div>
 	    	<?php				
 	    			}
@@ -186,12 +186,12 @@
 	
 	<div class="form_element">
     	<div class="button_panel" style="margin-right:15px;">
-    		<?php if(isset($program_detail) && ($researchTeam!=NULL || $teamMembers!=NULL)) { ?>
-		    		<input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
+    		<?php if(isset($project_detail) && ($researchTeam!=NULL || $teamMembers!=NULL)) { ?>
+		    		<input type="hidden" name="project_id" id="project_id" value="<?php if($project_id!=NULL) echo $project_id; ?>">
 		    		<input type="button" name="delete_researchTeam" id="delete_researchTeam" value="Delete" class="k-button button">
 		            <input type="submit" name="update_researchTeam" id="update_researchTeam" value="Update" class="k-button button">
 		    <?php } else { ?>
-                <input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
+                <input type="hidden" name="project_id" id="project_id" value="<?php if($project_id!=NULL) echo $project_id; ?>">
             	<input type="submit" name="save_researchTeam" id="save_researchTeam" value="Save" class="k-button button">
         	<?php } ?>
         </div>
@@ -209,10 +209,10 @@ $(document).ready(function() {
 });
 </script>
 <script type="text/javascript">
-	function delete_research_team_member(team_member_id, program_id, row_id){
+	function delete_research_team_member(team_member_id, project_id, row_id){
 		var r=confirm("Are you sure you want to delete this team member?");
 		if (r==true){
-		  	var jqxhr = $.post( "<?php echo site_url("rmis/program/researchTeams/deleteTeamMember"); ?>", { team_member_id: team_member_id, program_id: program_id }, function() {
+		  	var jqxhr = $.post( "<?php echo site_url("rmis/project/researchTeams/deleteTeamMember"); ?>", { team_member_id: team_member_id, project_id: project_id }, function() {
 			  $("#row-" + parseInt(row_id)).remove();
 			})
 			.fail(function() {

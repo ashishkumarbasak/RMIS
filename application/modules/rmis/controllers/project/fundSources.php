@@ -5,14 +5,14 @@ class FundSources extends MX_Controller{
     public function __construct(){
         parent::__construct();
         $this->load->model('Kendodatasource_model', 'grid');
-        $this->load->model('Program_model', 'program');
+        $this->load->model('Project_model', 'project');
 
         $this->template->set_partial('header', 'layouts/header')
 						->set_layout('extensive/main_layout');
     }
     
-    public function index($program_id=NULL){
-        $this->template->title('Research Management(RM)', ' Programs', ' Program Fund Source & Cost Breakdown Info');
+    public function index($project_id=NULL){
+        $this->template->title('Research Management(RM)', ' Project', ' Project Fund Source & Cost Breakdown Info');
         
 		if($this->input->post('save_fundSources')){
 			$request = json_encode($this->input->post());
@@ -28,42 +28,44 @@ class FundSources extends MX_Controller{
         $this->template->append_metadata('<link href="/assets/kendoui/css/web/kendo.common.min.css"  rel="stylesheet"/>');
         $this->template->append_metadata('<link href="/assets/kendoui/css/web/kendo.default.min.css"  rel="stylesheet"/>');
         $this->template->append_metadata('<script src="/assets/kendoui/js/kendo.all.min.js"></script>');
-        $this->template->append_metadata('<script src="/assets/js/custom/tmis.js"></script>');
+        $this->template->append_metadata('<script src="/assets/js/custom/rmis.js"></script>');
         
-        if($program_id!=NULL){
+        if($project_id!=NULL){
 			if($this->input->post('update_fundSources')){
 				$request = json_encode($this->input->post());
 				$this->dataUpdate($request);
 			}
 			
-			$program_detail = $this->program->get_details($program_id);
-			$this->template->set('program_detail', serialize($program_detail));
+			$project_detail = $this->project->get_details($project_id);
+			$this->template->set('project_detail', serialize($project_detail));
 			
-			$fundSources = $this->program->get_fundSources($program_id);
+			$fundSources = $this->project->get_fundSources($project_id);
 			$this->template->set('fundSources', serialize($fundSources));
 			
-			$costEstimations = $this->program->get_costEstimation($program_id);
+			$costEstimations = $this->project->get_costEstimation($project_id);
 			$this->template->set('costEstimations', serialize($costEstimations));
 			
-			$costBreakdowns = $this->program->get_costBreakdowns($program_id);
+			$costBreakdowns = $this->project->get_costBreakdowns($project_id);
 			$this->template->set('costBreakdowns', serialize($costBreakdowns));
 			
-			$this->template->set('program_id',$program_id);
+			$this->template->set('project_id',$project_id);
 		}
 		
+		$program_areas = $this->grid->read('rmis_program_areas', array('id','program_area_id', 'program_area_name'), $request); 
+		$this->template->set('program_areas',$program_areas); //$this->program->get_program_area()
 		
         $this->template->set('content_header_icon', 'class="icofont-file"');
-        $this->template->set('content_header_title', 'Program Fund Source & Cost Breakdown Info');
+        $this->template->set('content_header_title', 'Project Fund Source & Cost Breakdown Info');
 		
         $breadcrumb = '<ul class="breadcrumb">
 						<li><a href="#"><i class="icofont-home"></i> RMIS</a> <span class="divider">&raquo;</span></li>
-						<li><a href="#">Program info.</a><span class="divider">&raquo;</span></li><li class="active">Program Fund Source & Cost Breakdown Info</li>
+						<li><a href="#">Project info.</a><span class="divider">&raquo;</span></li><li class="active">Project Fund Source & Cost Breakdown Info</li>
 					  </ul>';
         $this->template->set('breadcrumb', $breadcrumb);		
-        $this->template->set_partial('progFundSourcesForm','program/fundSources/form');
-		$this->template->set_partial('tab_menu','program/form_tabs');
+        $this->template->set_partial('progFundSourcesForm','project/fundSources/form');
+		$this->template->set_partial('tab_menu','project/form_tabs');
         $this->template->set_partial('sidebar', 'layouts/sidebar',$_data)
-               ->build('program/fundSources/index');
+               ->build('project/fundSources/index');
     }
 	
 	public function dataCreate($request){
@@ -72,7 +74,7 @@ class FundSources extends MX_Controller{
         $request = json_decode($request);
 		//print_r((array) $request);
 		
-		$columns = array('fund_source', 'amount','currency','exchange_rate', 'date_of_exchange_rate', 'amount_in_taka', 'program_id');
+		$columns = array('fund_source', 'amount','currency','exchange_rate', 'date_of_exchange_rate', 'amount_in_taka', 'project_id');
 		$columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
@@ -87,20 +89,20 @@ class FundSources extends MX_Controller{
 					$request->exchange_rate = $request->exchange_rates[$i];
 					$request->date_of_exchange_rate = $request->date_of_exchange_rates[$i];
 					$request->amount_in_taka = $request->amounts_in_taka[$i];
-					$this->grid->create('rmis_program_funding_sources', $columns, $request, 'id');
+					$this->grid->create('rmis_project_funding_sources', $columns, $request, 'id');
 					$i++;	
 				}
 			}
 		}
 		
-		$columns = array('estimate_date', 'financial_year','program_id');
+		$columns = array('estimate_date', 'financial_year','project_id');
         $columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
-		$data = $this->grid->create('rmis_program_cost_estimations', $columns, $request, 'id'); 
+		$data = $this->grid->create('rmis_project_cost_estimations', $columns, $request, 'id'); 
         
-		$columns = array('s_o', 'ac_head_code','ac_head_title','amount', 'program_id');
+		$columns = array('s_o', 'ac_head_code','ac_head_title','amount', 'project_id');
 		$i=0;
 		if(!empty($request->s_os)>0){
 			foreach($request->s_os as $s_o_key=>$s_o){
@@ -109,7 +111,7 @@ class FundSources extends MX_Controller{
 					$request->ac_head_code = $request->ac_head_codes[$i];
 					$request->ac_head_title = $request->ac_head_titles[$i];
 					$request->amount = $request->cost_amounts[$i];
-					$this->grid->create('rmis_program_cost_breakdowns', $columns, $request, 'id');
+					$this->grid->create('rmis_project_cost_breakdowns', $columns, $request, 'id');
 					$i++;	
 				}
 			}
@@ -138,14 +140,14 @@ class FundSources extends MX_Controller{
         $request = json_decode($request);
 		//print_r((array) $request);
 		
-		$columns = array('fund_source', 'amount','currency','exchange_rate', 'date_of_exchange_rate', 'amount_in_taka', 'program_id');
+		$columns = array('fund_source', 'amount','currency','exchange_rate', 'date_of_exchange_rate', 'amount_in_taka', 'project_id');
 		$columns[] = 'modified_at';        
         $request->modified_at = date('Y-m-d H:i:s');            
         $columns[] = 'modified_by';
         $request->modified_by = 1;
 		$i=0;
 		if(!empty($request->fund_sources)>0){
-			$this->program->clean_programFundSources($request->program_id);
+			$this->project->clean_projectFundSources($request->project_id);
 			foreach($request->fund_sources as $fund_source_key=>$fund_source){
 				if($fund_source!=NULL){
 					$request->fund_source = $fund_source;
@@ -154,30 +156,30 @@ class FundSources extends MX_Controller{
 					$request->exchange_rate = $request->exchange_rates[$i];
 					$request->date_of_exchange_rate = $request->date_of_exchange_rates[$i];
 					$request->amount_in_taka = $request->amounts_in_taka[$i];
-					$this->grid->create('rmis_program_funding_sources', $columns, $request, 'id');
+					$this->grid->create('rmis_project_funding_sources', $columns, $request, 'id');
 					$i++;	
 				}
 			}
 		}
 		
-		$columns = array('estimate_date', 'financial_year','program_id');
+		$columns = array('estimate_date', 'financial_year','project_id');
         $columns[] = 'modified_at';        
         $request->modified_at = date('Y-m-d H:i:s');            
         $columns[] = 'modified_by';
         $request->modified_by = 1;
-		$data = $this->grid->update('rmis_program_cost_estimations', $columns, $request, 'program_id'); 
+		$data = $this->grid->update('rmis_project_cost_estimations', $columns, $request, 'project_id'); 
         
-		$columns = array('s_o', 'ac_head_code','ac_head_title','amount', 'program_id');
+		$columns = array('s_o', 'ac_head_code','ac_head_title','amount', 'project_id');
 		$i=0;
 		if(!empty($request->s_os)>0){
-			$this->program->clean_programCostBreakDown($request->program_id);
+			$this->project->clean_projectCostBreakDown($request->project_id);
 			foreach($request->s_os as $s_o_key=>$s_o){
 				if($s_o!=NULL){
 					$request->s_o = $s_o;
 					$request->ac_head_code = $request->ac_head_codes[$i];
 					$request->ac_head_title = $request->ac_head_titles[$i];
 					$request->amount = $request->cost_amounts[$i];
-					$this->grid->create('rmis_program_cost_breakdowns', $columns, $request, 'id');
+					$this->grid->create('rmis_project_cost_breakdowns', $columns, $request, 'id');
 					$i++;	
 				}
 			}
@@ -189,14 +191,14 @@ class FundSources extends MX_Controller{
 
 	public function deleteFundSource(){
 		$fundSource_id = $this->input->post('fundSource_id');
-		$program_id = $this->input->post('program_id');
-		$this->program->deleteFundSourceFromProgram($fundSource_id,$program_id);
+		$project_id = $this->input->post('project_id');
+		$this->project->deleteFundSourceFromProject($fundSource_id,$project_id);
 	}
 	
 	function deleteCostBreakDown(){
 		$cbitem_id = $this->input->post('cbitem_id');
-		$program_id = $this->input->post('program_id');
-		$this->program->deleteCostBreakDownFromProgram($cbitem_id,$program_id);
+		$project_id = $this->input->post('project_id');
+		$this->project->deleteCostBreakDownFromProject($cbitem_id,$project_id);
 	}
                 
 } 

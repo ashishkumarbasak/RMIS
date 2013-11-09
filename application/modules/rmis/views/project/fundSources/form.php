@@ -2,8 +2,8 @@
 <script src="<?php echo site_url('/assets/js/bootstrap-datepicker.js'); ?>"></script>
 <link rel="stylesheet" href="<?php echo site_url('assets/extensive/css/datepicker.css'); ?>" />
 <?php 
-	if(isset($program_detail)){
-		$program_detail = unserialize($program_detail);
+	if(isset($project_detail)){
+		$project_detail = unserialize($project_detail);
 	}
 	if(isset($fundSources)){
 		$fundSources = unserialize($fundSources);
@@ -19,16 +19,23 @@
 <form name="other_info" id="other_info" method="post" action="">
 	<div class="main_form">
     	<div class="form_element">
-        	<div class="label width_170px">Title of Research Programme</div>
+        	<div class="label width_170px">Title of Research Program</div>
             <div class="textarea_field"><textarea name="research_program_title" id="research_program_title" disabled="disabled" class="textarea_small disabled width_68_percent"><?php if($program_detail!=NULL) echo $program_detail->research_program_title; ?></textarea></div>
             <div class="clear"></div>
         </div>
                     
 		<div class="left_form">
         	<div class="form_element">
-           		<div class="label width_170px">Programme Area </div>
+           		<div class="label width_170px">Program Area </div>
                 <div class="field">
-               		<input type="text" name="program_area" id="program_area" value="<?php if($program_detail!=NULL) echo $program_detail->program_area; ?>" class="textbox disabled" disabled="disabled" />
+               		<select name="program_area" id="program_area" class="selectionbox disabled" disabled="disabled">
+	            		<option value="">Select Program Area</option>
+						<?php 
+						
+						foreach($program_areas['data'] as $key=>$program_area) { ?>
+	            			<option value="<?php echo $program_area['program_area_id']; ?>" <?php if(isset($program_detail) && $program_detail->program_area==$program_area['program_area_id']) { ?> selected="selected" <?php } ?> ><?php echo $program_area['program_area_name']; ?></option>
+	            		<?php } ?>
+	        		</select>
                	</div>
            		<div class="clear"></div>
         	</div>
@@ -113,7 +120,7 @@
 				    	</div>
 				    	<input type="hidden" name="fundSourceID[]" id="fundSourceID" value="<?php echo $fundSource->id; ?> ">
 				    </div>
-				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_found_source(<?php echo $fundSource->id;?> , <?php echo $program_id; ?>, <?php echo $key; ?> );">[-]</a></div>
+				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_found_source(<?php echo $fundSource->id;?> , <?php echo $project_id; ?>, <?php echo $key; ?> );">[-]</a></div>
 				    </div>
 	    	<?php				
 	    			}
@@ -208,7 +215,7 @@
 				    	</div>
 				    		<input type="hidden" name="costBreakdownID[]" id="costBreakdownID" value="<?php echo $costBreakdown->id; ?> ">
 				    </div>
-				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_costbreakdown_item(<?php echo $costBreakdown->id;?> , <?php echo $program_id; ?>, <?php echo $key; ?> );">[-]</a></div>
+				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_costbreakdown_item(<?php echo $costBreakdown->id;?> , <?php echo $project_id; ?>, <?php echo $key; ?> );">[-]</a></div>
 				    </div>
 	    	<?php				
 	    			}
@@ -240,12 +247,12 @@
 	
 	<div class="form_element">
     	<div class="button_panel" style="margin-right: 15px;">
-        	<?php if(isset($program_detail) && ($fundSources!=NULL || $costEstimations!=NULL || $costBreakdowns!=NULL)) { ?>
-		    		<input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
+        	<?php if(isset($project_detail) && ($fundSources!=NULL || $costEstimations!=NULL || $costBreakdowns!=NULL)) { ?>
+		    		<input type="hidden" name="project_id" id="project_id" value="<?php if($project_id!=NULL) echo $project_id; ?>">
 		    		<input type="button" name="delete_fundSources" id="delete_fundSources" value="Delete" class="k-button button">
 		            <input type="submit" name="update_fundSources" id="update_fundSources" value="Update" class="k-button button">
 		    <?php } else { ?>
-                <input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
+                <input type="hidden" name="project_id" id="project_id" value="<?php if($project_id!=NULL) echo $project_id; ?>">
             	<input type="submit" name="save_fundSources" id="save_fundSources" value="Save" class="k-button button">
             <?php } ?>
         </div>
@@ -268,10 +275,10 @@ $(document).ready(function() {
 	$('#estimate_date').datepicker('setStartDate');
 </script>
 <script type="text/javascript">
-	function delete_found_source(fundSource_id, program_id, row_id){
+	function delete_found_source(fundSource_id, project_id, row_id){
 		var r=confirm("Are you sure you want to delete this fund source?");
 		if (r==true){
-		  	var jqxhr = $.post( "<?php echo site_url("rmis/program/fundSources/deleteFundSource"); ?>", { fundSource_id: fundSource_id, program_id: program_id }, function() {
+		  	var jqxhr = $.post( "<?php echo site_url("rmis/project/fundSources/deleteFundSource"); ?>", { fundSource_id: fundSource_id, project_id: project_id }, function() {
 			  $("#frow-" + parseInt(row_id)).remove();
 			})
 			.fail(function() {
@@ -281,10 +288,10 @@ $(document).ready(function() {
 	}
 </script>
 <script type="text/javascript">
-	function delete_costbreakdown_item(cbitem_id, program_id, row_id){
+	function delete_costbreakdown_item(cbitem_id, project_id, row_id){
 		var r=confirm("Are you sure you want to delete this item?");
 		if (r==true){
-		  	var jqxhr = $.post( "<?php echo site_url("rmis/program/fundSources/deleteCostBreakDown"); ?>", { cbitem_id: cbitem_id, program_id: program_id }, function() {
+		  	var jqxhr = $.post( "<?php echo site_url("rmis/project/fundSources/deleteCostBreakDown"); ?>", { cbitem_id: cbitem_id, project_id: project_id }, function() {
 			  $("#cbrow-" + parseInt(row_id)).remove();
 			})
 			.fail(function() {

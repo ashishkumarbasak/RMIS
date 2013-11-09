@@ -30,15 +30,6 @@
 <div style="height:10px;"></div>
 <link href="<?php echo site_url('/assets/jqueryui/1.8/themes/base/jquery-ui.css'); ?>" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="<?php echo site_url('/assets/jqueryui/1.8/jquery-ui.min.js'); ?>"></script>
-<script id="popup_editor" type="text/x-kendo-template"></script>
-<script>
-    function ClickEdit(e) {
-        e.preventDefault();
-        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        var edit_url = "/rmis/program/information/edit/"+dataItem.id;
-        window.location = edit_url;
-    }
-</script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$(function() {

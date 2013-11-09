@@ -2,8 +2,8 @@
 <script src="<?php echo site_url('/assets/js/bootstrap-datepicker.js'); ?>"></script>
 <link rel="stylesheet" href="<?php echo site_url('assets/extensive/css/datepicker.css'); ?>" />
 <?php 
-	if(isset($program_detail)){
-		$program_detail = unserialize($program_detail);
+	if(isset($project_detail)){
+		$project_detail = unserialize($project_detail);
 	}
 	if(isset($steeringCommittee)){
 		$steeringCommittee = unserialize($steeringCommittee);
@@ -140,7 +140,7 @@
 				        	<input class="textbox no-margin width-91" type="text" name="emails[]" id="emails" value="<?php echo $member->email; ?>"/>	
 				    	</div>
 				    </div>
-				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_steeringCommittee_team_member(<?php echo $member->id;?> , <?php echo $member->program_id; ?>, <?php echo $key; ?> );">[-]</a></div>
+				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_steeringCommittee_team_member(<?php echo $member->id;?> , <?php echo $member->project_id; ?>, <?php echo $key; ?> );">[-]</a></div>
 				    </div>
 	    	<?php				
 	    			}
@@ -175,12 +175,12 @@
 	
 	<div class="form_element">
     	<div class="button_panel" style="margin-right: 15px;">
-	        	<?php if(isset($program_detail) && ($researchTeam!=NULL || $teamMembers!=NULL)) { ?>
-		    		<input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
+	        	<?php if(isset($project_detail) && ($researchTeam!=NULL || $teamMembers!=NULL)) { ?>
+		    		<input type="hidden" name="project_id" id="project_id" value="<?php if($project_id!=NULL) echo $project_id; ?>">
 		    		<input type="button" name="delete_steering_committee" id="delete_steering_committee" value="Delete" class="k-button button">
 		            <input type="submit" name="update_steering_committee" id="update_steering_committee" value="Update" class="k-button button">
 		    	<?php } else { ?>
-	                <input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
+	                <input type="hidden" name="project_id" id="project_id" value="<?php if($project_id!=NULL) echo $project_id; ?>">
 	            	<input type="submit" name="save_steering_committee" id="save_steering_committee" value="Save" class="k-button button">
                 <?php } ?>
         </div>
@@ -199,10 +199,10 @@ $(document).ready(function() {
 	$('#committee_formation_date').datepicker('setStartDate');
 </script>
 <script type="text/javascript">
-	function delete_steeringCommittee_team_member(team_member_id, program_id, row_id){
+	function delete_steeringCommittee_team_member(team_member_id, project_id, row_id){
 		var r=confirm("Are you sure you want to delete this team member?");
 		if (r==true){
-		  	var jqxhr = $.post( "<?php echo site_url("rmis/program/steeringCommittees/deleteTeamMember"); ?>", { team_member_id: team_member_id, program_id: program_id }, function() {
+		  	var jqxhr = $.post( "<?php echo site_url("rmis/project/steeringCommittees/deleteTeamMember"); ?>", { team_member_id: team_member_id, project_id: project_id }, function() {
 			  $("#row-" + parseInt(row_id)).remove();
 			})
 			.fail(function() {
