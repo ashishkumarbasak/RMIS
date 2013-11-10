@@ -46,6 +46,15 @@ class MonitorEvaluations extends MX_Controller{
 		$program_areas = $this->grid->read('rmis_program_areas', array('id','program_area_id', 'program_area_name'), $request); 
 		$this->template->set('program_areas',$program_areas);
 		
+		$qualitative_status = $this->grid->read('rmis_qualitative_status', array('value','name', 'is_active'), $request); 
+		$this->template->set('qualitative_status', $qualitative_status);
+		
+		$program_rating = $this->grid->read('rmis_program_rating', array('value','name', 'is_active'), $request); 
+		$this->template->set('program_rating', $program_rating);
+		
+		$monitoring_and_evaluation_type = $this->grid->read('rmis_monitoring_and_evaluation_type', array('value','name', 'is_active'), $request); 
+		$this->template->set('monitoring_and_evaluation_type', $monitoring_and_evaluation_type);
+		
         $breadcrumb = '<ul class="breadcrumb">
 						<li><a href="#"><i class="icofont-home"></i> RMIS</a> <span class="divider">&raquo;</span></li>
 						<li><a href="#">Program info.</a><span class="divider">&raquo;</span></li><li class="active">Program Monitoring & Evaluation Information</li>

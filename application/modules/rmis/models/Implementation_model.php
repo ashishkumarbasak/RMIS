@@ -30,9 +30,11 @@ class Implementation_model extends MY_Model {
 	}
     public function get_details($id=NULL){
 		if($id!=NULL){
-			$this->db->select('*');
+			
+			$this->db->select('*, rmis_implementation_sites.id as implementation_pk');
 			$this->db->from('rmis_implementation_sites');
-			$this->db->where('id',$id);
+			$this->db->join('hrm_employees','rmis_implementation_sites.contact_person=hrm_employees.employee_id','left');
+			$this->db->where('rmis_implementation_sites.id',$id);
 			
 			$query = $this->db->get();
 			if($query->num_rows() > 0){

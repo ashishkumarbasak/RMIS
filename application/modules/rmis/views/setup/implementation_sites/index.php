@@ -34,3 +34,36 @@
         window.location = edit_url;
     }
 </script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$(function() {
+		$( "#contact_person_name" ).focus(function() {
+		  	$("#employee_id").val(""); 
+			$("#contact_person").val("");
+		});
+		$( "#contact_person_name" ).autocomplete({
+       		source: function(request, response) {
+            	$.ajax({ url: "<?php echo site_url('rmis/employees'); ?>",
+            		data: { term: $("#contact_person_name").val()},
+            		dataType: "json",
+            		type: "POST",
+            		success: function(data){
+            			response( $.map( data, function( employee ) {
+			              return {
+			                label: employee.employee_name,
+			                value: employee.employee_name,
+			                id: employee.employee_id
+			              }
+			            }));
+            		}
+      			});
+			},
+          	minLength: 2,
+          	select: function( event, ui ) {
+				$("#employee_id").val(ui.item.id); 
+				$("#contact_person").val(ui.item.id); 
+			}
+    	});
+	});
+});
+</script>

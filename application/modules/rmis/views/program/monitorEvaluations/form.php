@@ -8,12 +8,14 @@
 	if(isset($activityLists)){
 		$activityLists = unserialize($activityLists);
 	}
+	
+	//print_r($qualitative_status);
 ?>
 
 <form name="research_info" id="research_info" method="post" action="">
 	<div class="main_form">
    		<div class="form_element">
-	    	<div class="label width_170px">Title of Research Programme <span class="mandatory">*</span></div>
+	    	<div class="label width_170px">Title of Research Program <span class="mandatory">*</span></div>
 	       	<div class="textarea_field"><textarea name="research_program_title" id="research_program_title" disabled="disabled" class="textarea_small disabled width_68_percent"><?php if($program_detail) echo $program_detail->research_program_title;?></textarea></div>
 	        <div class="clear"></div>
 	  	</div>
@@ -111,12 +113,11 @@
             <div class="form_element">
            		<div class="label width_170px">Program Rating </div>
                	<div class="field">
-               		<select name="program_area" id="program_area" class="selectionbox">
-	            		<option value="">Select Program Area</option>
-						<?php 
-						
-						foreach($program_areas['data'] as $key=>$program_area) { ?>
-	            			<option value="<?php echo $program_area['program_area_id']; ?>" <?php if(isset($program_detail) && $program_detail->program_area==$program_area['program_area_id']) { ?> selected="selected" <?php } ?> ><?php echo $program_area['program_area_name']; ?></option>
+               		<select name="program_rating" id="program_rating" class="selectionbox">
+	            		<option value="">Select Program Rating</option>
+						<?php 						
+						foreach($program_rating['data'] as $key=>$program_rating_item) { ?>
+	            			<option value="<?php echo $program_rating_item['value']; ?>" <?php if(isset($program_detail) && $program_detail->program_rating==$program_rating_item['value']) { ?> selected="selected" <?php } ?> ><?php echo $program_rating_item['name']; ?></option>
 	            		<?php } ?>
 	        		</select>
                	</div>
@@ -126,7 +127,7 @@
            	<div class="form_element">
            		<div class="label width_170px">Total Points </div>
                	<div class="field">
-               		<input type="text" name="program_plannedStartDate" id="program_plannedStartDate" value="<?php if($program_detail) echo $program_detail->program_plannedEndDate; ?>" class="textbox disabled" disabled="disabled" />
+               		<input type="text" name="program_plannedStartDate" id="program_plannedStartDate" value="<?php if($program_detail) echo $program_detail->program_plannedEndDate; ?>" class="textbox disabled" readonly="readonly"/>
               	</div>
               	<div class="clear"></div>
           	</div>  
@@ -134,7 +135,7 @@
           	<div class="form_element">
            		<div class="label width_170px">Average Points </div>
               	<div class="field">
-                	<input type="text" name="program_plannedEndDate" id="program_plannedEndDate" value="<?php if($program_detail) echo $program_detail->program_plannedBudget;?>" class="textbox disabled" disabled="disabled" />
+                	<input type="text" name="program_plannedEndDate" id="program_plannedEndDate" value="<?php if($program_detail) echo $program_detail->program_plannedBudget;?>" class="textbox disabled" readonly="readonly" />
                 </div>
                 <div class="clear"></div>
           	</div>
@@ -144,12 +145,11 @@
        		<div class="form_element">
            		<div class="label">M & E Type</div>
                	<div class="field">
-              		<select name="program_area" id="program_area" class="selectionbox">
-	            		<option value="">Select Program Area</option>
-						<?php 
-						
-						foreach($program_areas['data'] as $key=>$program_area) { ?>
-	            			<option value="<?php echo $program_area['program_area_id']; ?>" <?php if(isset($program_detail) && $program_detail->program_area==$program_area['program_area_id']) { ?> selected="selected" <?php } ?> ><?php echo $program_area['program_area_name']; ?></option>
+              		<select name="m_and_e_type" id="program_area" class="selectionbox">
+	            		<option value="">Select M&E Type</option>
+						<?php 						
+						foreach($monitoring_and_evaluation_type['data'] as $key=>$monitoring_and_evaluation_type_item) { ?>
+	            			<option value="<?php echo $monitoring_and_evaluation_type_item['value']; ?>" <?php if(isset($program_detail) && $program_detail->m_and_e_type==$monitoring_and_evaluation_type_item['value']) { ?> selected="selected" <?php } ?> ><?php echo $monitoring_and_evaluation_type_item['name']; ?></option>
 	            		<?php } ?>
 	        		</select>
              	</div>
@@ -159,12 +159,11 @@
          	<div class="form_element">
            		<div class="label">Qualitative Status</div>
               	<div class="field">
-                   	<select name="program_area" id="program_area" class="selectionbox">
-	            		<option value="">Select Program Area</option>
-						<?php 
-						
-						foreach($program_areas['data'] as $key=>$program_area) { ?>
-	            			<option value="<?php echo $program_area['program_area_id']; ?>" <?php if(isset($program_detail) && $program_detail->program_area==$program_area['program_area_id']) { ?> selected="selected" <?php } ?> ><?php echo $program_area['program_area_name']; ?></option>
+                   	<select name="qualitative_status" id="qualitative_status" class="selectionbox">
+	            		<option value="">Select Qualitative Status</option>
+						<?php 						
+						foreach($qualitative_status['data'] as $key=>$qualitative_status_item) { ?>
+	            			<option value="<?php echo $qualitative_status_item['value']; ?>" <?php if(isset($program_detail) && $program_detail->qualitative_status==$qualitative_status_item['value']) { ?> selected="selected" <?php } ?> ><?php echo $qualitative_status_item['name']; ?></option>
 	            		<?php } ?>
 	        		</select>
                	</div>
@@ -174,7 +173,7 @@
           	<div class="form_element">
            		<div class="label">Grade Point</div>
               	<div class="field">
-                   	<input type="text" class="textbox disabled" disabled="disabled" name="program_initiationDate" id="program_initiationDate" data-date-format="yyyy-mm-dd" value="<?php if($program_detail) echo $program_detail->program_initiationDate;?>" />
+                   	<input type="text" class="textbox disabled" disabled="disabled" name="program_grade_point" id="program_grade_point" value="<?php if($program_detail) echo $program_detail->program_initiationDate;?>" />
                	</div>
                	<div class="clear"></div>
            	</div>
@@ -182,7 +181,7 @@
            	<div class="form_element">
            		<div class="label">Letter Grade</div>
               	<div class="field">
-              		<input type="text" class="textbox disabled" disabled="disabled" name="program_completionDate" id="program_completionDate" data-date-format="yyyy-mm-dd" value="<?php if($program_detail) echo $program_detail->program_completionDate;?>" />
+              		<input type="text" class="textbox disabled" disabled="disabled" name="program_letter_grade" id="program_letter_grade" value="<?php if($program_detail) echo $program_detail->program_completionDate;?>" />
                	</div>
                	<div class="clear"></div>
            	</div>                        

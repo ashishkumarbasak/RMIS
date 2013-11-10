@@ -22,7 +22,11 @@
         
         <div class="form_element">
             <div class="label">Contact Person </div>
-            <div class="field"><input class="textbox" type="text" name="station_contact_person" id="station_contact_person" value="<?php if($station_detail) echo $station_detail->station_contact_person; ?>"/></div>
+            <div class="field">
+            	<input class="textbox" type="text" name="station_contact_person_name" id="station_contact_person_name" value="<?php if($station_detail) echo $station_detail->employee_name; ?>"/>
+                <input type="hidden" name="station_contact_person" id="station_contact_person" value="<?php if($station_detail) echo $station_detail->employee_id; ?>">
+            	<input type="hidden" name="employee_id" id="employee_id" value="<?php if($station_detail) echo $station_detail->employee_id; ?>">
+            </div>
             <div class="clear"></div>
         </div>
         
@@ -55,8 +59,8 @@
          <div class="form_element">
             <div class="button_panel">
             	
-            	<?php if(isset($station_detail) && $station_detail->station_id!=NULL) { ?>
-                	<input type="hidden" name="id" id="id" value="<?php echo $station_detail->id; ?>">
+            	<?php if(isset($station_detail) && $station_detail->regional_stations_pk!=NULL) { ?>
+                	<input type="hidden" name="id" id="id" value="<?php echo $station_detail->regional_stations_pk; ?>">
                     <input type="button" name="new_station" id="new_station" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('rmis/setup/regionalStations');?>'">
         			<input type="submit" name="delete_station" id="delete_station" value="Delete" class="k-button button">
         			<input type="submit" name="save_update" id="save_update" value="Update" class="k-button button">

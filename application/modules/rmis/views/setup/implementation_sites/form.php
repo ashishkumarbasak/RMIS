@@ -22,12 +22,9 @@
         <div class="form_element">
             <div class="label">Contact Person</div>
             <div class="field">
-            <select name="contact_person" id="contact_person" class="selectionbox">
-            	<option value="">Select Scientist</option>
-                <?php foreach($employees as $key=>$value) { ?>
-               	<option value="<?php echo $value->employee_id; ?>" <?php if(isset($implementation_detail) && $implementation_detail->contact_person==$value->employee_id) { ?> selected <?php } ?> ><?php echo $value->employee_name; ?></option>
-                <?php } ?>
-            </select>
+                <input class="textbox" type="text" name="contact_person_name" id="contact_person_name" value="<?php if($implementation_detail) echo $implementation_detail->employee_name; ?>"/>
+                <input type="hidden" name="contact_person" id="contact_person" value="<?php if($implementation_detail) echo $implementation_detail->employee_id; ?>">
+            	<input type="hidden" name="employee_id" id="employee_id" value="<?php if($implementation_detail) echo $implementation_detail->employee_id; ?>">
             </div>
             <div class="clear"></div>
         </div>
@@ -53,8 +50,8 @@
        
         <div class="form_element">
             <div class="button_panel" style="margin-right:80px;">
-            	<?php if(isset($implementation_detail) && $implementation_detail->implementation_site_id!=NULL) { ?>
-                	<input type="hidden" name="id" id="id" value="<?php echo $implementation_detail->id; ?>">
+            	<?php if(isset($implementation_detail) && $implementation_detail->implementation_pk!=NULL) { ?>
+                	<input type="hidden" name="id" id="id" value="<?php echo $implementation_detail->implementation_pk; ?>">
                     <input type="button" name="new_implementation" id="new_implementation" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('rmis/setup/implementationSites');?>'">
                 	<input type="submit" name="delete_implementation" id="delete_implementation" value="Delete" class="k-button button">
         			<input type="submit" name="save_update" id="save_update" value="Update" class="k-button button">

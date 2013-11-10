@@ -22,7 +22,7 @@ class program_me_committee_model extends MY_Model {
 	
 	public function get_details($id=NULL){
 		if($id!=NULL){
-			$this->db->select('*, rmis_program_me_committees.id as committee_id ');
+			$this->db->select('*, rmis_program_me_committees.id as committee_id');
 			$this->db->from('rmis_program_me_committees');
 			$this->db->join('hrm_employees','rmis_program_me_committees.committee_chairman=hrm_employees.employee_id','left');
 			$this->db->where('rmis_program_me_committees.id',$id);
