@@ -36,7 +36,7 @@ class OtherInformations extends MX_Controller{
 				$this->dataUpdate($request);
 			}
 			
-			$program_detail = $this->program->get_details($program_id);
+			$program_detail = $this->program->get_other_details($program_id);
 			$this->template->set('program_detail', serialize($program_detail));
 			
 			$this->template->set('program_id',$program_id);

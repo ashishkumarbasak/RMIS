@@ -1,3 +1,5 @@
+<script src="<?php echo site_url('/assets/extensive/js/jquery.validate.min.js'); ?>"></script>
+<script src="<?php echo site_url('/assets/js/custom/rmis.js'); ?>"></script>
 <?php $uri_segment_level = 3;?>
 <ul class="tabs-nav">
     <li<?php if($this->uri->segment($uri_segment_level)=='informations') echo " class=\"active\"";?>>

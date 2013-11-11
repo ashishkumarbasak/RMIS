@@ -101,13 +101,26 @@
 	    			<div id="frow-<?php echo $key; ?>">
 	    			<div class="row">
 				    	<div class="grid-1-6 left">
-				        	<input class="textbox no-margin width-89" type="text" name="fund_sources[]" id="fund_sources" value="<?php echo $fundSource->fund_source; ?>"/>
+				        	<!--<input class="textbox no-margin width-89" type="text" name="fund_sources[]" id="fund_sources" value="<?php echo $fundSource->fund_source; ?>"/>-->
+                            <select name="fund_sources[]" id="fund_sources" class="selectionbox width-89">
+                                <option value="">Select</option>
+                                <?php foreach($funding_source['data'] as $key=>$fundingSource) { ?>
+                                    <option value="<?php echo $fundingSource['value']; ?>" <?php if(isset($program_detail) && $fundSource->fund_sources==$fundingSource['value']) { ?> selected="selected" <?php } ?>><?php echo $fundingSource['name']; ?></option>
+                                <?php } ?>
+                            </select>
+                            
 				    	</div>
 				    	<div class="grid-1-6 left">
 				        	<input class="textbox no-margin width-89" type="text" name="amounts[]" id="amounts" value="<?php echo $fundSource->amount; ?>"/>
 				    	</div>
 				    	<div class="grid-1-6 left">
-				        	<input class="textbox no-margin width-89" type="text" name="currencies[]" id="currencies" value="<?php echo $fundSource->currency; ?>"/>	
+				        	<!--<input class="textbox no-margin width-89" type="text" name="currencies[]" id="currencies" value="<?php //echo $fundSource->currency; ?>"/>-->
+                            <select name="currencies[]" id="currencies" class="selectionbox  width-89">
+                                <option value="">Select</option>
+                                <?php foreach($currencies['data'] as $key=>$currency) { ?>
+                                    <option value="<?php echo $currency['value']; ?>" <?php if (in_array($fundSources->currency, $currency))  { ?> selected="selected" <?php } ?>><?php echo $currency['name']; ?></option>
+                                <?php } ?>
+                            </select>	
 				    	</div>
 				    	<div class="grid-1-6 left">
 				        	<input class="textbox no-margin width-89" type="text" name="exchange_rates[]" id="exchange_rates" value="<?php echo $fundSource->exchange_rate; ?>"/>	
@@ -129,13 +142,23 @@
 	    	<div id='duplicate2'>
 	    	<div class="row">
 		    	<div class="grid-1-6 left">
-		        	<input class="textbox no-margin width-89" type="text" name="fund_sources[]" id="fund_sources" value=""/>
+                    <select name="fund_sources[]" id="fund_sources" class="selectionbox width-89">
+                        <option value="">Select</option>
+                        <?php foreach($funding_source['data'] as $key=>$fundingSource) { ?>
+                            <option value="<?php echo $fundingSource['value']; ?>" <?php if(isset($program_detail) && $program_detail->fund_sources==$fundingSource['value']) { ?> selected="selected" <?php } ?>><?php echo $fundingSource['name']; ?></option>
+                        <?php } ?>
+                    </select>
 		    	</div>
 		    	<div class="grid-1-6 left">
 		        	<input class="textbox no-margin width-89" type="text" name="amounts[]" id="amounts" value=""/>
 		    	</div>
 		    	<div class="grid-1-6 left">
-		        	<input class="textbox no-margin width-89" type="text" name="currencies[]" id="currencies" value=""/>	
+                    <select name="currencies[]" id="currencies" class="selectionbox  width-89">
+                        <option value="">Select</option>
+                        <?php foreach($currencies['data'] as $key=>$currency) { ?>
+                            <option value="<?php echo $currency['value']; ?>" <?php if(isset($program_detail) && $program_detail->currencies==$currency['value']) { ?> selected="selected" <?php } ?>><?php echo $currency['name']; ?></option>
+                        <?php } ?>
+                    </select>
 		    	</div>
 		    	<div class="grid-1-6 left">
 		        	<input class="textbox no-margin width-89" type="text" name="exchange_rates[]" id="exchange_rates" value=""/>	

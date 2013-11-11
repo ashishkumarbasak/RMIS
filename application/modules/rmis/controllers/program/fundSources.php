@@ -54,6 +54,12 @@ class FundSources extends MX_Controller{
 		$program_areas = $this->grid->read('rmis_program_areas', array('id','program_area_id', 'program_area_name'), $request); 
 		$this->template->set('program_areas',$program_areas); //$this->program->get_program_area()
 		
+		$funding_source = $this->grid->read('rmis_funding_source', array('id','value', 'name'), $request); 
+		$this->template->set('funding_source',$funding_source);
+		
+		$currency = $this->grid->read('rmis_currency', array('id','value', 'name'), $request); 
+		$this->template->set('currencies',$currency);
+		
         $this->template->set('content_header_icon', 'class="icofont-file"');
         $this->template->set('content_header_title', 'Program Fund Source & Cost Breakdown Info');
 		

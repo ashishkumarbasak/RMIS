@@ -73,11 +73,23 @@ class Informations extends MX_Controller{
 		
 		$aezs = $this->grid->read('rmis_aezs', array('value','name', 'is_active'), $request);
 		$this->template->set('aezs',$aezs);	//$this->program->get_aez()
-		
-		$institues = $this->grid->read('rmis_institutes', array('institute_id','institute_sort_code', 'institute_name'), $request);
+				
+		$institues = $this->grid->read('hrm_organizations', array('id', 'short_name', 'organization_name'), $request);
 		$this->template->set('institues',$institues);
 		
-		$departments = $this->grid->read('rmis_departments', array('department_id','department_name', 'institute_id'), $request);
+		//$request = (object) null;
+        //$request->sort = array((object) array('field' => 'head_name', 'dir' => 'ASC'));
+        //$request->filter = (object) array('field' => 'organogram_type', 'operator' => 'eq', 'value' => 'Department');
+
+        //$salaryHeadRs = $this->kds->read('pmm_salary_head', array('id as value', 'CONCAT(head_name," (",short_name,")" ) as text', 'head_name', 'is_active'), $request);
+        //$pre = array('value' => '', 'text' => '-Select-');
+        //array_unshift($salaryHeadRs['data'], $pre); 
+		
+		//$request = (object) null;
+        //$request->filter = (object) array('field' => 'organogram_type', 'operator' => 'eq', 'value' => 'Department');
+		//$departments = $this->grid->read('hrm_organograms', array('id','organization_id', 'organogram_name'), $request);
+		
+		$departments = $this->program->get_department();
 		$this->template->set('departments',$departments);
 		
         $breadcrumb = '<ul class="breadcrumb">
@@ -93,10 +105,30 @@ class Informations extends MX_Controller{
 	
     public function dataCreate($request){
         $request = json_decode($request);
-		$request->program_instituteNames = implode(",", $request->program_instituteNames);
-		$request->program_commodities = implode(",", $request->program_commodities);
-		$request->program_aezs = implode(",", $request->program_aezs);
-		$request->program_expectedOutputs = implode("---##########---", $request->program_expectedOutputs);
+		
+		if($request->program_institute_names!="") {
+			$request->program_institute_names = implode(",", $request->program_institute_names);
+		}else {
+			$request->program_institute_names = "";
+		}
+		
+		if($request->program_commodities!="") {
+			$request->program_commodities = implode(",", $request->program_commodities);
+		}else {
+			$request->program_commodities = "";
+		}
+		
+		if($request->program_aezs!="") {
+			$request->program_aezs = implode(",", $request->program_aezs);
+		}else {
+			$request->program_aezs = "";
+		}
+		
+		if($request->program_expected_outputs!="") {
+			$request->program_expected_outputs = implode("---##########---", $request->program_expected_outputs);
+		}else {
+			$request->program_expected_outputs = "";
+		}
 		
         $this->form_validation->set_rules($this->program->validation);
         $this->program->isValidate((array) $request);
@@ -106,11 +138,11 @@ class Informations extends MX_Controller{
             //exit;
         }
        
-        $columns = array('research_program_title', 'program_area', 'program_division', 'program_researchType', 'program_researchPriority', 'program_researchStatus', 
-        					'program_coordinator', 'program_coordinatorDesignation', 'program_plannedStartDate', 'program_plannedEndDate', 'program_plannedBudget',
-							'program_approvedBudget', 'is_collaborate', 'program_instituteNames', 'program_departmentName', 'program_regionalStationName',
-							'program_implementationLocation', 'program_keywords', 'program_commodities', 'program_aezs', 'program_initiationDate', 'program_completionDate',
-							'program_goal', 'program_objective', 'program_expectedOutputs');
+        $columns = array('research_program_title', 'program_area', 'program_division', 'program_research_type', 'program_research_priority', 'program_research_status', 
+        					'program_coordinator', 'program_coordinator_designation', 'program_planned_start_date', 'program_planned_end_date', 'program_planned_budget',
+							'program_approved_budget', 'is_collaborate', 'program_institute_names', 'program_department_name', 'program_regional_station_name',
+							'program_implementation_location', 'program_keywords', 'program_commodities', 'program_aezs', 'program_initiation_date', 'program_completion_date',
+							'program_goal', 'program_objective', 'program_expected_outputs');
 		
         $columns[] = 'organization_id';
 		$request->organization_id = 1;
@@ -118,19 +150,43 @@ class Informations extends MX_Controller{
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
-        
+
         $data = $this->grid->create('rmis_program_informations', $columns, $request, 'program_id');
-		redirect('rmis/program/otherInformations/'.$request->program_id, 'refresh'); 
+		redirect('rmis/program/informations/'.$data['data'][0]->program_id, 'refresh'); 
         $data['success'] ="Data created successfuly.";
         //echo json_encode($data , JSON_NUMERIC_CHECK); 
     }
 	 	
 	public function dataUpdate($request){
         $request = json_decode($request);
-		$request->program_instituteNames = implode(",", $request->program_instituteNames);
+		/*$request->program_instituteNames = implode(",", $request->program_institute_names);
 		$request->program_commodities = implode(",", $request->program_commodities);
 		$request->program_aezs = implode(",", $request->program_aezs);
-		$request->program_expectedOutputs = implode("---##########---", $request->program_expectedOutputs);
+		$request->program_expectedOutputs = implode("---##########---", $request->program_expected_outputs);*/
+		
+		if($request->program_institute_names!="") {
+			$request->program_institute_names = implode(",", $request->program_institute_names);
+		}else {
+			$request->program_institute_names = "";
+		}
+		
+		if($request->program_commodities!="") {
+			$request->program_commodities = implode(",", $request->program_commodities);
+		}else {
+			$request->program_commodities = "";
+		}
+		
+		if($request->program_aezs!="") {
+			$request->program_aezs = implode(",", $request->program_aezs);
+		}else {
+			$request->program_aezs = "";
+		}
+		
+		if($request->program_expected_outputs!="") {
+			$request->program_expected_outputs = implode("---##########---", $request->program_expected_outputs);
+		}else {
+			$request->program_expected_outputs = "";
+		}
 		
         $this->form_validation->set_rules($this->program->validation);
         $this->program->isValidate((array) $request);
@@ -140,11 +196,11 @@ class Informations extends MX_Controller{
             //exit;
         }
        
-        $columns = array('research_program_title', 'program_area', 'program_division', 'program_researchType', 'program_researchPriority', 'program_researchStatus', 
-        					'program_coordinator', 'program_coordinatorDesignation', 'program_plannedStartDate', 'program_plannedEndDate', 'program_plannedBudget',
-							'program_approvedBudget', 'is_collaborate', 'program_instituteNames', 'program_departmentName', 'program_regionalStationName',
-							'program_implementationLocation', 'program_keywords', 'program_commodities', 'program_aezs', 'program_initiationDate', 'program_completionDate',
-							'program_goal', 'program_objective', 'program_expectedOutputs', 'program_id');
+        $columns = array('research_program_title', 'program_area', 'program_division', 'program_research_type', 'program_research_priority', 'program_research_status', 
+        					'program_coordinator', 'program_coordinator_designation', 'program_planned_start_date', 'program_planned_end_date', 'program_planned_budget',
+							'program_approved_budget', 'is_collaborate', 'program_institute_names', 'program_department_name', 'program_regional_station_name',
+							'program_implementation_location', 'program_keywords', 'program_commodities', 'program_aezs', 'program_initiation_date', 'program_completion_date',
+							'program_goal', 'program_objective', 'program_expected_outputs', 'program_id');
 							
         $columns[] = 'organization_id';
 		$request->organization_id = 1;

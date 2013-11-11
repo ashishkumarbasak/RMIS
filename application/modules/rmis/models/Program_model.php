@@ -12,22 +12,22 @@ class Program_model extends MY_Model {
             'field' => 'program_division',           
             'rules' => 'required|trim|xss_clean'),
 		array(
-            'field' => 'program_researchType',           
+            'field' => 'program_research_type',           
             'rules' => 'required|trim|xss_clean'),
 		array(
-            'field' => 'program_researchPriority',           
+            'field' => 'program_research_priority',           
             'rules' => 'required|trim|xss_clean'),
 		array(
-            'field' => 'program_researchStatus',           
+            'field' => 'program_research_status',           
             'rules' => 'required|trim|xss_clean'),
 		array(
             'field' => 'program_coordinator',           
             'rules' => 'required|trim|xss_clean'),
 		array(
-            'field' => 'program_plannedStartDate',           
+            'field' => 'program_planned_start_date',           
             'rules' => 'required|trim|xss_clean'),
 		array(
-            'field' => 'program_plannedEndDate',           
+            'field' => 'program_planned_end_date',           
             'rules' => 'required|trim|xss_clean'),
 		array(
             'field' => 'program_goal',           
@@ -36,7 +36,7 @@ class Program_model extends MY_Model {
             'field' => 'program_objective',           
             'rules' => 'required|trim|xss_clean'),
 		array(
-            'field' => 'program_expectedOutputs',           
+            'field' => 'program_expected_outputs',           
             'rules' => 'required|trim|xss_clean')
     );
 		   
@@ -51,6 +51,26 @@ class Program_model extends MY_Model {
     }
 	
 	public function get_details($id=NULL){
+		if($id!=NULL){
+			$this->db->select('* , hrm_employees.employee_name as program_coordinator');
+			$this->db->from('rmis_program_informations');
+			$this->db->join('hrm_employees','rmis_program_informations.program_coordinator=hrm_employees.employee_id','left');
+			
+			$this->db->where('rmis_program_informations.program_id',$id);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result[0];
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;	
+		}
+	}
+	
+	public function get_other_details($id=NULL){
 		if($id!=NULL){
 			$this->db->select('* , hrm_employees.employee_name as program_coordinator, rmis_program_other_informations.id as other_information_id');
 			$this->db->from('rmis_program_informations');
@@ -68,6 +88,20 @@ class Program_model extends MY_Model {
 			}
 		}else{
 			return NULL;	
+		}
+	}
+	
+	function get_department(){
+		$this->db->select('id, organization_id, organogram_name');
+		$this->db->from('hrm_organograms');
+		$this->db->where('hrm_organograms.organogram_type','Department');
+		
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			$result = $query->result();
+			return $result;
+		}else{
+			return NULL;
 		}
 	}
 	

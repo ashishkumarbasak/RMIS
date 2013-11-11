@@ -5,6 +5,7 @@
 	if(isset($program_detail)){
 		$program_detail = unserialize($program_detail);
 	}
+	//print_r($departments);
 ?>
 
 <form name="program_info" id="program_info" method="post" action="">
@@ -48,10 +49,10 @@
     	<div class="form_element">
         	<div class="label width_170px">Research Type <span class="mandatory">*</span> </div>
         	<div class="field">
-        		<select name="program_researchType" id="program_researchType" class="selectionbox">
+        		<select name="program_research_type" id="program_research_type" class="selectionbox">
             		<option value="">Select Research Type</option>
  					<?php foreach($research_types['data'] as $key=>$researchType) { ?>
-            			<option value="<?php echo $researchType['value']; ?>" <?php if(isset($program_detail) && $program_detail->program_researchType==$researchType['value']) { ?> selected="selected" <?php } ?>><?php echo $researchType['name']; ?></option>
+            			<option value="<?php echo $researchType['value']; ?>" <?php if(isset($program_detail) && $program_detail->program_research_type==$researchType['value']) { ?> selected="selected" <?php } ?>><?php echo $researchType['name']; ?></option>
             		<?php } ?>
         		</select>
         	</div>
@@ -61,10 +62,10 @@
     	<div class="form_element">
         	<div class="label width_170px">Research Priority <span class="mandatory">*</span></div>
         	<div class="field">
-        		<select name="program_researchPriority" id="program_researchPriority" class="selectionbox">
+        		<select name="program_research_priority" id="program_research_priority" class="selectionbox">
             		<option value="">Select Research Priority</option>
 					<?php foreach($research_priorities['data'] as $key=>$research_priority) { ?>
-            			<option value="<?php echo $research_priority['value']; ?>" <?php if(isset($program_detail) && $program_detail->program_researchPriority==$research_priority['value']) { ?> selected="selected" <?php } ?>><?php echo $research_priority['name']; ?></option>
+            			<option value="<?php echo $research_priority['value']; ?>" <?php if(isset($program_detail) && $program_detail->program_research_priority==$research_priority['value']) { ?> selected="selected" <?php } ?>><?php echo $research_priority['name']; ?></option>
             		<?php } ?>
          		</select>
         	</div>
@@ -74,10 +75,10 @@
      	<div class="form_element">
         	<div class="label width_170px">Research Status <span class="mandatory">*</span></div>
         	<div class="field">
-        		<select name="program_researchStatus" id="program_researchStatus" class="selectionbox">
+        		<select name="program_research_status" id="program_research_status" class="selectionbox">
             		<option value="">Select Research Status</option>
 					<?php foreach($research_statuses['data'] as $key=>$research_status) { ?>
-           	 			<option value="<?php echo $research_status['value']; ?>" <?php if(isset($program_detail) && $program_detail->program_researchStatus==$research_status['value']) { ?> selected="selected" <?php } ?>><?php echo $research_status['name']; ?></option>
+           	 			<option value="<?php echo $research_status['value']; ?>" <?php if(isset($program_detail) && $program_detail->program_research_status==$research_status['value']) { ?> selected="selected" <?php } ?>><?php echo $research_status['name']; ?></option>
             		<?php } ?>
             	</select>
         	</div>
@@ -95,7 +96,7 @@
      	<div class="form_element">
         	<div class="label width_170px">Designation </div>
         	<div class="field">
-        		<input type="text" name="program_coordinatorDesignation" id="program_coordinatorDesignation" value="<?php if($program_detail) echo $program_detail->program_coordinatorDesignation; ?>" class="textbox">
+        		<input type="text" name="program_coordinator_designation" id="program_coordinator_designation" value="<?php if($program_detail) echo $program_detail->program_coordinator_designation; ?>" class="textbox">
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -103,7 +104,7 @@
     	<div class="form_element">
         	<div class="label width_170px">Planned Start Date <span class="mandatory">*</span> </div>
         	<div class="field">
-        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="program_plannedStartDate" id="program_plannedStartDate" value="<?php if($program_detail) echo $program_detail->program_plannedStartDate; ?>" />
+        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="program_planned_start_date" id="program_planned_start_date" value="<?php if($program_detail) echo $program_detail->program_planned_start_date; ?>" />
         		<span class="input-group-addon">
             		<i class="icon-calendar"></i>
         		</span>
@@ -114,7 +115,7 @@
     	<div class="form_element">
         	<div class="label width_170px">Planned End Date <span class="mandatory">*</span></div>
         	<div class="field">
-        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="program_plannedEndDate" id="program_plannedEndDate" value="<?php if($program_detail) echo $program_detail->program_plannedEndDate; ?>" />
+        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="program_planned_end_date" id="program_planned_end_date" value="<?php if($program_detail) echo $program_detail->program_planned_end_date; ?>" />
         		<span class="input-group-addon">
             		<i class="icon-calendar"></i>
         		</span>
@@ -125,7 +126,7 @@
       	<div class="form_element">
         	<div class="label width_170px">Planned Budget(in Taka) </div>
         	<div class="field">
-       	 		<input type="text" name="program_plannedBudget" id="program_plannedBudget" value="<?php if($program_detail) echo $program_detail->program_plannedBudget;?>" class="textbox">
+       	 		<input type="text" name="program_planned_budget" id="program_planned_budget" value="<?php if($program_detail) echo $program_detail->program_planned_budget;?>" class="textbox">
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -133,7 +134,7 @@
     	<div class="form_element">
         	<div class="label width_170px">Approved Budget(in Taka) </div>
         	<div class="field">
-        		<input type="text" name="program_approvedBudget" id="program_approvedBudget" value="<?php if($program_detail) echo $program_detail->program_approvedBudget;?>" class="textbox">
+        		<input type="text" name="program_approved_budget" id="program_approved_budget" value="<?php if($program_detail) echo $program_detail->program_approved_budget;?>" class="textbox">
         	</div>
         	<div class="clear"></div>
     	</div>        
@@ -148,13 +149,13 @@
         	<?php
         		$program_instituteNames = array(); 
         		if(isset($program_detail))
-				$program_instituteNames = explode(",", $program_detail->program_instituteNames);
+				$program_instituteNames = explode(",", $program_detail->program_institute_names);
 			?>
         	<div class="label">Institute Name </div>
         	<div class="field">
-        		<select name="program_instituteNames[]" id="program_instituteNames" class="selectionbox" multiple="multiple">
+        		<select name="program_institute_names[]" id="program_institute_names" class="selectionbox" multiple="multiple">
             		<?php foreach($institues['data'] as $key=>$institue) { ?>
-            			<option value="<?php echo $institue['institute_id']; ?>" <?php if(in_array($institue['institute_id'],$program_instituteNames)) { ?> selected="selected" <?php } ?>><?php echo $institue['institute_name']; ?></option>
+            			<option value="<?php echo $institue['id']; ?>" <?php if(in_array($institue['id'],$program_instituteNames)) { ?> selected="selected" <?php } ?>><?php echo $institue['short_name']; ?></option>
             		<?php } ?>
             	</select>
         	</div>
@@ -164,10 +165,10 @@
     	<div class="form_element">
         	<div class="label">Department Name </div>
         	<div class="field">
-        		<select name="program_departmentName" id="program_departmentName" class="selectionbox">
+        		<select name="program_department_name" id="program_department_name" class="selectionbox">
             		<option value="">Select Department</option>
-            		<?php foreach($departments['data'] as $key=>$department) { ?>
-            			<option value="<?php echo $department['department_id']; ?>" <?php if(isset($program_detail) && $program_detail->program_departmentName==$department['department_id']) { ?> selected="selected" <?php } ?>><?php echo $department['department_name']; ?></option>
+            		<?php foreach($departments as $key=>$department) { ?>
+            			<option value="<?php echo $department->id; ?>" <?php if(isset($program_detail) && $program_detail->program_department_name==$department->id) { ?> selected="selected" <?php } ?>><?php echo $department->organogram_name ?></option>
             		<?php } ?>
             	</select>
         	</div>
@@ -177,10 +178,10 @@
     	<div class="form_element">
         	<div class="label">Regional Station Name </div>
         	<div class="field">
-        		<select name="program_regionalStationName" id="program_regionalStationName" class="selectionbox">
+        		<select name="program_regional_station_name" id="program_regional_station_name" class="selectionbox">
             		<option value="">Select Regional Station</option>
 					<?php foreach($regional_stations['data'] as $key=>$regional_station) { ?>
-            			<option value="<?php echo $regional_station['station_id']; ?>"<?php if(isset($program_detail) && $program_detail->program_regionalStationName==$regional_station['station_id']) { ?> selected="selected" <?php } ?>><?php echo $regional_station['station_name']; ?></option>
+            			<option value="<?php echo $regional_station['station_id']; ?>"<?php if(isset($program_detail) && $program_detail->program_regional_station_name==$regional_station['station_id']) { ?> selected="selected" <?php } ?>><?php echo $regional_station['station_name']; ?></option>
             		<?php } ?>
         		</select>
         	</div>
@@ -190,10 +191,10 @@
     	<div class="form_element">
         	<div class="label">Implementation Location/<br>Site/Area </div>
         	<div class="field">
-        		<select name="program_implementationLocation" id="program_implementationLocation" class="selectionbox">
+        		<select name="program_implementation_location" id="program_implementation_location" class="selectionbox">
             		<option value="">Select Implementation Site</option>
 					<?php foreach($implementation_locations['data'] as $key=>$implementation_location) { ?>
-            			<option value="<?php echo $implementation_location['implementation_site_id']; ?>" <?php if(isset($program_detail) && $program_detail->program_implementationLocation==$implementation_location['implementation_site_id']) { ?> selected="selected" <?php } ?>><?php echo $implementation_location['implementation_site_name']; ?></option>
+            			<option value="<?php echo $implementation_location['implementation_site_id']; ?>" <?php if(isset($program_detail) && $program_detail->program_implementation_location==$implementation_location['implementation_site_id']) { ?> selected="selected" <?php } ?>><?php echo $implementation_location['implementation_site_name']; ?></option>
             		<?php } ?>
         		</select>
         	</div>
@@ -245,7 +246,7 @@
     	<div class="form_element">
         	<div class="label">Initial Date </div>
         	<div class="field">
-        		<input type="text" class="textbox disabled" readonly="readonly" name="program_initiationDate" id="program_initiationDate" data-date-format="yyyy-mm-dd" value="<?php if($program_detail) echo $program_detail->program_initiationDate;?>" />
+        		<input type="text" class="textbox disabled" readonly="readonly" name="program_initiation_date" id="program_initiation_date" data-date-format="yyyy-mm-dd" value="<?php if($program_detail){ if($program_detail->program_initiation_date=='0000-00-00'){echo '';} else {echo $program_detail->program_initiation_date;}}?>" />
         		<span class="input-group-addon">
            	 		<i class="icon-calendar"></i>
         		</span>
@@ -256,7 +257,7 @@
     	<div class="form_element">
         	<div class="label">Completion Date </div>
         	<div class="field">
-        		<input type="text" class="textbox disabled" readonly="readonly" name="program_completionDate" id="program_completionDate" data-date-format="yyyy-mm-dd" value="<?php if($program_detail) echo $program_detail->program_completionDate;?>" />
+        		<input type="text" class="textbox disabled" readonly="readonly" name="program_completion_date" id="program_completion_date" data-date-format="yyyy-mm-dd" value="<?php if($program_detail){ if($program_detail->program_completion_date=='0000-00-00'){echo '';} else {echo $program_detail->program_completion_date;}}?>" />
         		<span class="input-group-addon">
             		<i class="icon-calendar"></i>
         		</span>
@@ -284,7 +285,7 @@
 		<?php
         	$program_expectedOutputs = array(); 
         	if(isset($program_detail))
-			$program_expectedOutputs = explode("---##########---", $program_detail->program_expectedOutputs);
+			$program_expectedOutputs = explode("---##########---", $program_detail->program_expected_outputs);
 		?>
 		
 		<div class="label width_170px">Expected output <span class="mandatory">*</span></div>
@@ -292,19 +293,21 @@
         	<?php 
 				if(!empty($program_expectedOutputs)) { 
 	    			foreach($program_expectedOutputs as $key=>$program_expectedOutput){
+						if(strlen($program_expectedOutput)>0){
 	    	?>
 	    		 
 		        	<div>
-		            	<textarea name="program_expectedOutputs[]" id="program_expectedOutputs[]" class="textarea width-91"><?php echo $program_expectedOutput; ?></textarea>
+		            	<textarea name="program_expected_outputs[]" id="program_expected_outputs[]" class="textarea width-91"><?php echo $program_expectedOutput; ?></textarea>
 		            	<span style="font-size:16px;"><a id="minus2" href="">[-]</a></span>
 		        	</div>
 		        	
 	    	<?php 
+						}
 					} 
 	    		}
 	    	?> 
         	<div id='duplicate2'>
-            	<textarea name="program_expectedOutputs[]" id="program_expectedOutputs[]" class="textarea width-91"></textarea>
+            	<textarea name="program_expected_outputs[]" id="program_expected_outputs[]" class="textarea width-91"></textarea>
             	<span style="font-size:16px;"><a id="minus2" href="">[-]</a> <a id="plus2" href="">[+]</a></span>
         	</div>
         </div>
@@ -329,11 +332,11 @@
 </div>
 </form>
 <script language="javascript">
-	$('#program_plannedStartDate').datepicker('setStartDate');
-	$('#program_plannedEndDate').datepicker('setEndDate');
+	$('#program_planned_start_date').datepicker('setStartDate');
+	$('#program_planned_end_date').datepicker('setEndDate');
 	
-	$('#program_initiationDate').datepicker('setStartDate');
-	$('#program_completionDate').datepicker('setEndDate');
+	$('#program_initiation_date').datepicker('setStartDate');
+	$('#program_completion_date').datepicker('setEndDate');
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
