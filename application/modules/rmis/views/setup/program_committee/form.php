@@ -16,7 +16,7 @@
         <div class="form_element">
             <div class="label">Chairman of the Committee <span class="mandatory">*</span></div>
             <div class="field">
-            	<input class="textbox no-margin" type="text" name="committee_chairman_name" id="committe_chairman_name" value="<?php if($committee_detail) echo $committee_detail->employee_name; ?>" style="margin-left: 10px;"/>
+            	<input class="textbox no-margin" type="text" name="committee_chairman_name" id="committee_chairman_name" value="<?php if($committee_detail) echo $committee_detail->employee_name; ?>" style="margin-left: 10px;"/>
                 <input type="hidden" name="committee_chairman" id="committee_chairman" value="<?php if($committee_detail) echo $committee_detail->employee_id; ?>">
             	<input type="hidden" name="employee_id" id="employee_id" value="<?php if($committee_detail) echo $committee_detail->employee_id; ?>">
             </div>

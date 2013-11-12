@@ -64,6 +64,32 @@ $(document).ready(function() {
 				$("#committee_chairman").val(ui.item.id); 
 			}
     	});
+    	
+    	$("input[type='text']").on("click", function() {
+	        $(this).autocomplete({
+       		source: function(request, response) {
+            	$.ajax({ url: "<?php echo site_url('rmis/employees'); ?>",
+            		data: { term: $(this).val()},
+            		dataType: "json",
+            		type: "POST",
+            		success: function(data){
+            			response( $.map( data, function( employee ) {
+			              return {
+			                label: employee.employee_name,
+			                value: employee.employee_name,
+			                id: employee.employee_id
+			              }
+			            }));
+            		}
+      			});
+			},
+          	minLength: 2,
+          	select: function( event, ui ) {
+				$("#employee_id").val(ui.item.id); 
+				$("#committee_chairman").val(ui.item.id); 
+			}
+    	});
+	    });
 	});
 });
 </script>

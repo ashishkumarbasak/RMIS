@@ -256,7 +256,7 @@ class RegionalStations extends MX_Controller{
     public function dataRead(){
         header('Content-Type: application/json');
         $request = json_decode(file_get_contents('php://input'));
-        $data= $this->grid->read('rmis_regional_stations', array('id','station_id', 'station_name', 'station_contact_person','station_phone','station_email'), $request);       
+        $data= $this->grid->read_with_join_table('rmis_regional_stations', array('rmis_regional_stations.id','station_id', 'station_name', 'hrm_employees.employee_name as station_contact_person','station_phone','station_email'), $request, 'hrm_employees', 'rmis_regional_stations.station_contact_person = hrm_employees.employee_id');       
         echo json_encode($data, JSON_NUMERIC_CHECK);
     }
     public function dataDestroy($request=NULL){   
