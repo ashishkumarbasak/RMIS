@@ -8,7 +8,7 @@
 	}
 	if(isset($grade_point_informations)){
 		$grade_point_informations = unserialize($grade_point_informations);
-	} 
+	}
 ?>
 <form name="frm_grading" id="frm_grading" method="post" action="">
 <div class="main_form">
@@ -56,6 +56,7 @@
     	</div>
     	
     	<?php if(isset($grade_point_informations) && $grade_point_informations!=NULL) { 
+		 		$g = 0; 
     			foreach($grade_point_informations as $key=>$grade_information){
     	?>
     			<div id="row-<?php echo $key; ?>">
@@ -73,7 +74,13 @@
 			        	<input class="textbox no-margin width-89" type="text" name="grade_points[]" id="grade_points" value="<?php echo $grade_information->grade_point; ?>"/>	
 			    	</div>
 			    	<div class="grid-1-6 left">
-			        	<input class="textbox no-margin width-89" type="text" name="qualitative_statuses[]" id="qualitative_statuses" value="<?php echo $grade_information->qualitative_status; ?>"/>	
+                        <select name="qualitative_statuses[]" id="qualitative_statuses" class="selectionbox width-89">
+                            <option value="">Select</option>
+                            <?php 						
+                            foreach($qualitative_status['data'] as $key=>$qualitative_status_item) { ?>
+                                <option value="<?php echo $qualitative_status_item['value']; ?>" <?php if(isset($grade_point_informations)){if($grade_point_informations[$g]->qualitative_status==$qualitative_status_item['value']){ echo "selected=\"selected\" ";}} ?> ><?php echo $qualitative_status_item['name']; ?></option>
+                            <?php } ?>
+                        </select>
 			    	</div>
 			    	<div class="grid-1-6 left">
 			        	<input class="textbox no-margin width-89" type="text" name="descriptions[]" id="descriptions" value="<?php echo $grade_information->description; ?>"/>	
@@ -82,7 +89,8 @@
 			    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_grade_point_information(<?php echo $grade_information->id;?> , <?php echo $key; ?> );">[-]</a></div>
 			    </div>
     	<?php				
-    			}
+    			$g++;
+				}
     	 	  } 
     	 ?>	
     	
@@ -101,7 +109,14 @@
 	        	<input class="textbox no-margin width-89" type="text" name="grade_points[]" id="grade_points" value=""/>	
 	    	</div>
 	    	<div class="grid-1-6 left">
-	        	<input class="textbox no-margin width-89" type="text" name="qualitative_statuses[]" id="qualitative_statuses" value=""/>	
+	        	<!--<input class="textbox no-margin width-89" type="text" name="qualitative_statuses[]" id="qualitative_statuses" value=""/>-->	
+                <select name="qualitative_statuses[]" id="qualitative_statuses" class="selectionbox width-89">
+                    <option value="" selected="selected">Select</option>
+                    <?php 						
+                    foreach($qualitative_status['data'] as $key=>$qualitative_status_item) { ?>
+                        <option value="<?php echo $qualitative_status_item['value']; ?>"><?php echo $qualitative_status_item['name']; ?></option>
+                    <?php } ?>
+                </select>
 	    	</div>
 	    	<div class="grid-1-6 left">
 	        	<input class="textbox no-margin width-89" type="text" name="descriptions[]" id="descriptions" value=""/>	

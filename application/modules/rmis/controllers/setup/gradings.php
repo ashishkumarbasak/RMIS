@@ -40,6 +40,9 @@ class Gradings extends MX_Controller{
 		$grade_point_informations = $this->grading->get_grade_point_informations($grading_detail->id);
 		$this->template->set('grade_point_informations', serialize($grade_point_informations));
 		
+		$qualitative_status = $this->grid->read('rmis_qualitative_status', array('value','name', 'is_active'), $request); 
+		$this->template->set('qualitative_status', $qualitative_status);
+		
 		
         $this->template->set('content_header_icon', 'class="icofont-file"');
         $this->template->set('content_header_title', 'Grading Information');

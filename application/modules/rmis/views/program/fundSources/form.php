@@ -13,7 +13,7 @@
 	}
 	if(isset($costBreakdowns)){
 		$costBreakdowns = unserialize($costBreakdowns);
-	}
+	}	
 ?>
 
 <form name="other_info" id="other_info" method="post" action="">
@@ -95,17 +95,17 @@
 	    		</div>
 	    		<div class="clear"></div>
 	    	</div>
-	    	<?php if(isset($fundSources) && $fundSources!=NULL) { 
+	    	<?php if(isset($fundSources) && $fundSources!=NULL) {
+					$fs = 0;  
 	    			foreach($fundSources as $key=>$fundSource){
 	    	?>
 	    			<div id="frow-<?php echo $key; ?>">
 	    			<div class="row">
 				    	<div class="grid-1-6 left">
-				        	<!--<input class="textbox no-margin width-89" type="text" name="fund_sources[]" id="fund_sources" value="<?php echo $fundSource->fund_source; ?>"/>-->
                             <select name="fund_sources[]" id="fund_sources" class="selectionbox width-89">
                                 <option value="">Select</option>
                                 <?php foreach($funding_source['data'] as $key=>$fundingSource) { ?>
-                                    <option value="<?php echo $fundingSource['value']; ?>" <?php if(isset($program_detail) && $fundSource->fund_sources==$fundingSource['value']) { ?> selected="selected" <?php } ?>><?php echo $fundingSource['name']; ?></option>
+                                    <option value="<?php echo $fundingSource['value']; ?>" <?php if(isset($fundSources)){if($fundSources[$fs]->fund_source==$fundingSource['value']){ echo "selected=\"selected\" ";}} ?>><?php echo $fundingSource['name']; ?></option>
                                 <?php } ?>
                             </select>
                             
@@ -114,11 +114,10 @@
 				        	<input class="textbox no-margin width-89" type="text" name="amounts[]" id="amounts" value="<?php echo $fundSource->amount; ?>"/>
 				    	</div>
 				    	<div class="grid-1-6 left">
-				        	<!--<input class="textbox no-margin width-89" type="text" name="currencies[]" id="currencies" value="<?php //echo $fundSource->currency; ?>"/>-->
                             <select name="currencies[]" id="currencies" class="selectionbox  width-89">
                                 <option value="">Select</option>
                                 <?php foreach($currencies['data'] as $key=>$currency) { ?>
-                                    <option value="<?php echo $currency['value']; ?>" <?php if (in_array($fundSources->currency, $currency))  { ?> selected="selected" <?php } ?>><?php echo $currency['name']; ?></option>
+                                    <option value="<?php echo $currency['value']; ?>" <?php if(isset($fundSources)){if($fundSources[$fs]->currency==$currency['value']){ echo "selected=\"selected\" ";}} ?>><?php echo $currency['name']; ?></option>
                                 <?php } ?>
                             </select>	
 				    	</div>
@@ -136,7 +135,8 @@
 				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_found_source(<?php echo $fundSource->id;?> , <?php echo $program_id; ?>, <?php echo $key; ?> );">[-]</a></div>
 				    </div>
 	    	<?php				
-	    			}
+	    			$fs++;
+					}					
 	    	 	  } 
 	    	?>
 	    	<div id='duplicate2'>
@@ -145,7 +145,7 @@
                     <select name="fund_sources[]" id="fund_sources" class="selectionbox width-89">
                         <option value="">Select</option>
                         <?php foreach($funding_source['data'] as $key=>$fundingSource) { ?>
-                            <option value="<?php echo $fundingSource['value']; ?>" <?php if(isset($program_detail) && $program_detail->fund_sources==$fundingSource['value']) { ?> selected="selected" <?php } ?>><?php echo $fundingSource['name']; ?></option>
+                            <option value="<?php echo $fundingSource['value']; ?>"><?php echo $fundingSource['name']; ?></option>
                         <?php } ?>
                     </select>
 		    	</div>
@@ -156,7 +156,7 @@
                     <select name="currencies[]" id="currencies" class="selectionbox  width-89">
                         <option value="">Select</option>
                         <?php foreach($currencies['data'] as $key=>$currency) { ?>
-                            <option value="<?php echo $currency['value']; ?>" <?php if(isset($program_detail) && $program_detail->currencies==$currency['value']) { ?> selected="selected" <?php } ?>><?php echo $currency['name']; ?></option>
+                            <option value="<?php echo $currency['value']; ?>"><?php echo $currency['name']; ?></option>
                         <?php } ?>
                     </select>
 		    	</div>
@@ -183,7 +183,7 @@
         	<div class="form_element">
            		<div class="label width_170px">Estimate Date </div>
                 <div class="field">
-               		<input type="text" name="estimate_date" id="estimate_date" value="<?php if(isset($costEstimations)) echo $costEstimations->estimate_date; ?>" data-date-format="yyyy-mm-dd"  class="textbox no-margin disabled" readonly="readonly">
+               		<input type="text" name="estimate_date" id="estimate_date" value="<?php if($program_detail){ if($program_detail->estimate_date=='0000-00-00'){echo '';} else {echo $program_detail->estimate_date;}}?>" data-date-format="yyyy-mm-dd"  class="textbox no-margin disabled" readonly="readonly">
                	</div>
            		<div class="clear"></div>
         	</div>
