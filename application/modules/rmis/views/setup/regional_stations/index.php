@@ -27,14 +27,13 @@
 <script src="<?php echo site_url('/assets/extensive/js/jquery.validate.min.js'); ?>"></script>
 <script src="<?php echo site_url('/assets/js/custom/rmis_setup.js'); ?>"></script>
 <script type="text/javascript">
-    function ClickEdit(e) {
-        e.preventDefault();
-        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        var edit_url = "/rmis/setup/regionalStations/edit/"+dataItem.id;
-        window.location = edit_url;
-    }
-</script>
-<script type="text/javascript">
+function ClickEdit(e) {
+	e.preventDefault();
+	var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+	var edit_url = "/rmis/setup/regionalStations/edit/"+dataItem.id;
+	window.location = edit_url;
+}
+
 $(document).ready(function() {
 	$(function() {
 		$( "#station_contact_person_name" ).focus(function() {

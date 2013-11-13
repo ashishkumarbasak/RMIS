@@ -10,7 +10,7 @@
 				},
 				division_head_name: {
 					required: true,
-					checkEmployeeName: true
+					checkHeadOfDivisionName: true
 				},
 				division_email: {
 					email:true
@@ -20,7 +20,7 @@
 				division_name: "Please enter division name.",
 				division_head_name: {
 					required: "Please select scientist",
-					checkEmployeeName: "Please select head of division."
+					checkHeadOfDivisionName: "Please check head of division name."
 				},				
 				division_email: {
 					required: "Email address can't be left blank.",
@@ -40,6 +40,9 @@
 				station_email: {
 					email:true
 				},
+				station_contact_person_name: {
+					checkStationContactPerson: true
+				},
 			},
 			
 			messages: {
@@ -47,7 +50,10 @@
 				station_email: {
 					required: "Email address can't be left blank.",
 					email: "Please enter a valid email."
-				}				
+				},
+				station_contact_person_name: {
+					checkStationContactPerson: "Please check statin contact person name."
+				}
 			},
 			
 		});
@@ -63,6 +69,9 @@
 				email_address: {
 					email:true
 				},
+				contact_person_name: {
+					checkImplAreaContactPerson:true
+				}
 			},
 			
 			messages: {
@@ -70,7 +79,10 @@
 				email_address: {
 					required: "Email address can't be left blank.",
 					email: "Please enter a valid email."
-				}				
+				},
+				contact_person_name: {
+					checkImplAreaContactPerson:"Please check contact person name."
+				}
 			},
 			
 		});
@@ -97,19 +109,23 @@
 			errorClass: 'error',
 			focusInvalid: false,
 			rules: {
-				committee_chairman: {
-					required: true
+				committee_chairman_name: {
+					required: true,
+					checkCommitteeChairmanName: true
 				},
 				committee_formation_date: {
 					required: true
-				},
+				}
 			},
 	
 			messages: {
-				committee_chairman: {
+				committee_chairman_name: {
 					required: "Please enter chairman of the committee",
+					checkCommitteeChairmanName: "Please check committee chairman name"
 				},
-				committee_formation_date: "Please enter committe formation date",
+				committee_formation_date: {
+					required: "Please enter committe formation date"
+				}
 			},			
 		});
 		
@@ -134,4 +150,54 @@
 			},			
 		});
 		
+	});
+	
+	
+	$(document).ready(function(){
+	    $.validator.addMethod(
+	    		"checkHeadOfDivisionName", 
+	    		function(value, element) {
+	    			if($("#employee_id").val()=="")
+	    				return false;
+	    			else
+	    				return true;
+	    		},
+	    		"Please check employee name"
+	    	);
+	    
+	    $.validator.addMethod(
+	    		"checkStationContactPerson", 
+		        function(value, element) {
+		            if($("#station_contact_person_name").val()!="" && $("#employee_id").val()=="")
+		            	return false;
+		            else
+		            	return true;
+		        },
+		        "Please check contact person name"
+		    );
+	    
+	    $.validator.addMethod(
+	    		"checkImplAreaContactPerson", 
+		        function(value, element) {
+		            if($("#contact_person_name").val()!="" && $("#employee_id").val()=="")
+		            	return false;
+		            else
+		            	return true;
+		        },
+		        "Please check contact person name"
+		    );
+	    
+	    $.validator.addMethod(
+	    		"checkCommitteeChairmanName", 
+	    		function(value, element) {
+	    			if($("#employee_id").val()=="")
+	    				return false;
+	    			else
+	    				return true;
+	    		},
+	    		"Please check employee name"
+	    	);
+	    
+	    
+	    
 	});

@@ -57,13 +57,13 @@
         </div>
         
          <div class="form_element">
-            <div class="button_panel">
+            <div class="button_panel" style="margin-right: 25px;">
             	
             	<?php if(isset($station_detail) && $station_detail->regional_stations_pk!=NULL) { ?>
                 	<input type="hidden" name="id" id="id" value="<?php echo $station_detail->regional_stations_pk; ?>">
-                    <input type="button" name="new_station" id="new_station" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('rmis/setup/regionalStations');?>'">
-        			<input type="submit" name="delete_station" id="delete_station" value="Delete" class="k-button button">
-        			<input type="submit" name="save_update" id="save_update" value="Update" class="k-button button">
+                    <input type="button" name="new_station" id="new_station" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('rmis/setup/regionalStations');?>'" />
+        			<input type="submit" name="delete_station" id="delete_station" value="Delete" class="k-button button" onclick="return confirm('Are you sure you want to delete this record?');" />
+        			<input type="submit" name="save_update" id="save_update" value="Update" class="k-button button" />
                 <?php } else { ?>
                 	<input type="submit" name="save_station" id="save" value="Save" class="k-button button">
                 <?php } ?>

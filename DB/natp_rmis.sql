@@ -1,20 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.1
+-- version 3.5.7
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 11, 2013 at 05:28 PM
--- Server version: 5.5.24-log
--- PHP Version: 5.3.13
+-- Generation Time: Nov 12, 2013 at 08:07 PM
+-- Server version: 5.5.29
+-- PHP Version: 5.4.10
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `natp_rmis`
@@ -26,7 +20,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `hrm_employees`
 --
 
-CREATE TABLE IF NOT EXISTS `hrm_employees` (
+CREATE TABLE `hrm_employees` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `employee_id` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
@@ -109,7 +103,7 @@ INSERT INTO `hrm_employees` (`id`, `organization_id`, `employee_id`, `personal_f
 -- Table structure for table `hrm_organizations`
 --
 
-CREATE TABLE IF NOT EXISTS `hrm_organizations` (
+CREATE TABLE `hrm_organizations` (
   `id` int(11) NOT NULL,
   `organization_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `short_name` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
@@ -150,7 +144,7 @@ INSERT INTO `hrm_organizations` (`id`, `organization_name`, `short_name`, `addre
 -- Table structure for table `hrm_organograms`
 --
 
-CREATE TABLE IF NOT EXISTS `hrm_organograms` (
+CREATE TABLE `hrm_organograms` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `organogram_name` varchar(200) DEFAULT NULL,
@@ -201,7 +195,7 @@ INSERT INTO `hrm_organograms` (`id`, `organization_id`, `organogram_name`, `repo
 -- Table structure for table `rmis_aezs`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_aezs` (
+CREATE TABLE `rmis_aezs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `value` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -231,7 +225,7 @@ INSERT INTO `rmis_aezs` (`id`, `organization_id`, `value`, `name`, `weight`, `is
 -- Table structure for table `rmis_commodities`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_commodities` (
+CREATE TABLE `rmis_commodities` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `value` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -261,7 +255,7 @@ INSERT INTO `rmis_commodities` (`id`, `organization_id`, `value`, `name`, `weigh
 -- Table structure for table `rmis_currency`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_currency` (
+CREATE TABLE `rmis_currency` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `value` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -292,12 +286,12 @@ INSERT INTO `rmis_currency` (`id`, `organization_id`, `value`, `name`, `weight`,
 -- Table structure for table `rmis_divisions`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_divisions` (
+CREATE TABLE `rmis_divisions` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `division_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `division_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `division_head` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `division_head` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `division_phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `division_email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `division_order` int(11) NOT NULL,
@@ -315,7 +309,7 @@ CREATE TABLE IF NOT EXISTS `rmis_divisions` (
 --
 
 INSERT INTO `rmis_divisions` (`id`, `organization_id`, `division_id`, `division_name`, `division_head`, `division_phone`, `division_email`, `division_order`, `division_about`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 1, 'BARIDIV1', 'Dhaka', '101', '01558755441', 'ashish021@gmail.com', 1, 'Test Division', '2013-09-30 11:53:34', 1, '2013-11-10 00:58:52', 1),
+(1, 1, 'BARIDIV1', 'Dhaka', '202', '01558755441', 'ashish021@gmail.com', 1, 'Test Division', '2013-09-30 11:53:34', 1, '2013-11-12 12:03:48', 1),
 (3, 1, 'BARIDIV0002', 'Rajshahi', '202', '01714532345', 'test23@yahoo.com', 1, 'test division1', '2013-10-01 09:39:49', 1, '2013-11-10 00:51:21', 1),
 (5, 1, 'BARIDIV0004', 'Sylhet', '202', '01714532345', 'alimul@yahoo.com', 2, 'test organization', '2013-11-03 12:14:11', 1, '2013-11-10 00:51:52', 1),
 (8, 1, 'BARIDIV0006', 'dhaka', 'jhjhj', '017145323452', 'alimul28@yahoo.com', 1, 'TEST', '2013-11-09 22:54:55', 1, '2013-11-10 00:57:20', 1);
@@ -326,7 +320,7 @@ INSERT INTO `rmis_divisions` (`id`, `organization_id`, `division_id`, `division_
 -- Table structure for table `rmis_funding_source`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_funding_source` (
+CREATE TABLE `rmis_funding_source` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `value` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -357,7 +351,7 @@ INSERT INTO `rmis_funding_source` (`id`, `organization_id`, `value`, `name`, `we
 -- Table structure for table `rmis_grade_point_informations`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_grade_point_informations` (
+CREATE TABLE `rmis_grade_point_informations` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `lower_range` float NOT NULL,
   `upper_range` float NOT NULL,
@@ -367,17 +361,17 @@ CREATE TABLE IF NOT EXISTS `rmis_grade_point_informations` (
   `description` text NOT NULL,
   `grading_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
 
 --
 -- Dumping data for table `rmis_grade_point_informations`
 --
 
 INSERT INTO `rmis_grade_point_informations` (`id`, `lower_range`, `upper_range`, `letter_grade`, `grade_point`, `qualitative_status`, `description`, `grading_id`) VALUES
-(19, 90, 100, 'A+', 5, 'Highly Qualitative', 'Highly Qualititative Research Work', 1),
-(20, 80, 90, 'A', 4.75, 'Qualitative', 'Qualitative Research Work', 1),
-(21, 70, 80, 'A-', 4.5, 'Good', 'Good Work', 1),
-(22, 60, 70, 'B+', 4.25, 'Average', 'Average research work', 1);
+(27, 90, 100, 'A+', 5, 'Highly Qualitative', 'Highly Qualititative Research Work', 1),
+(28, 80, 90, 'A', 4.75, 'Qualitative', 'Qualitative Research Work', 1),
+(29, 70, 80, 'A-', 4.5, 'Good', 'Good Work', 1),
+(30, 60, 70, 'B+', 4.25, 'Average', 'Average research work', 1);
 
 -- --------------------------------------------------------
 
@@ -385,7 +379,7 @@ INSERT INTO `rmis_grade_point_informations` (`id`, `lower_range`, `upper_range`,
 -- Table structure for table `rmis_gradings`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_gradings` (
+CREATE TABLE `rmis_gradings` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `grading_title` varchar(255) NOT NULL,
@@ -402,7 +396,7 @@ CREATE TABLE IF NOT EXISTS `rmis_gradings` (
 --
 
 INSERT INTO `rmis_gradings` (`id`, `organization_id`, `grading_title`, `effect_date`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 1, 'Test Grade', '2013-10-19', '2013-10-19 14:01:09', 1, '2013-11-04 08:02:05', 1);
+(1, 1, 'Test Grade', '2013-10-19', '2013-10-19 14:01:09', 1, '2013-11-12 12:40:50', 1);
 
 -- --------------------------------------------------------
 
@@ -410,12 +404,12 @@ INSERT INTO `rmis_gradings` (`id`, `organization_id`, `grading_title`, `effect_d
 -- Table structure for table `rmis_implementation_sites`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_implementation_sites` (
+CREATE TABLE `rmis_implementation_sites` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `implementation_site_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `implementation_site_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `contact_person` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `contact_person` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `phone_number` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email_address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `implementation_order` int(11) NOT NULL,
@@ -425,7 +419,7 @@ CREATE TABLE IF NOT EXISTS `rmis_implementation_sites` (
   `updated_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`,`organization_id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `rmis_implementation_sites`
@@ -434,7 +428,8 @@ CREATE TABLE IF NOT EXISTS `rmis_implementation_sites` (
 INSERT INTO `rmis_implementation_sites` (`id`, `organization_id`, `implementation_site_id`, `implementation_site_name`, `contact_person`, `phone_number`, `email_address`, `implementation_order`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 (3, 1, 'BARIIMS0003', 'Khulna', '202', '01732542342', 'alim@yahoo.com', 1, '2013-11-03 08:36:29', 1, '2013-11-04 13:58:51', 1),
 (5, 1, 'BARIIMS0004', 'Tangail', '202', '0132542342', 'callkamrul@yahoo.com', 1, '2013-11-10 00:44:31', 1, '2013-11-10 09:27:13', 1),
-(7, 1, 'BARIIMS0007', 'Rongpur', '101', '01716463156', 'alimulrazi28@yahoo.com', 3, '2013-11-10 02:14:45', 1, '2013-11-10 09:27:52', 1);
+(7, 1, 'BARIIMS0007', 'Rongpur', '101', '01716463156', 'alimulrazi28@yahoo.com', 3, '2013-11-10 02:14:45', 1, '2013-11-10 09:27:52', 1),
+(8, 1, 'BARIIMS0008', 'Dhaka', '202', '01779021581', 'ashish021@gmail.com', 10, '2013-11-12 12:36:31', 1, '2013-11-12 17:36:31', NULL);
 
 -- --------------------------------------------------------
 
@@ -442,7 +437,7 @@ INSERT INTO `rmis_implementation_sites` (`id`, `organization_id`, `implementatio
 -- Table structure for table `rmis_monitoring_and_evaluation_type`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_monitoring_and_evaluation_type` (
+CREATE TABLE `rmis_monitoring_and_evaluation_type` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `value` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -474,7 +469,7 @@ INSERT INTO `rmis_monitoring_and_evaluation_type` (`id`, `organization_id`, `val
 -- Table structure for table `rmis_program_activities`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_program_activities` (
+CREATE TABLE `rmis_program_activities` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `s_o` varchar(255) NOT NULL,
@@ -506,7 +501,7 @@ INSERT INTO `rmis_program_activities` (`id`, `organization_id`, `s_o`, `work_ele
 -- Table structure for table `rmis_program_areas`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_program_areas` (
+CREATE TABLE `rmis_program_areas` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `program_area_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -535,7 +530,7 @@ INSERT INTO `rmis_program_areas` (`id`, `organization_id`, `program_area_id`, `p
 -- Table structure for table `rmis_program_cost_breakdowns`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_program_cost_breakdowns` (
+CREATE TABLE `rmis_program_cost_breakdowns` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `s_o` varchar(255) NOT NULL,
   `ac_head_code` bigint(20) NOT NULL,
@@ -561,7 +556,7 @@ INSERT INTO `rmis_program_cost_breakdowns` (`id`, `s_o`, `ac_head_code`, `ac_hea
 -- Table structure for table `rmis_program_cost_estimations`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_program_cost_estimations` (
+CREATE TABLE `rmis_program_cost_estimations` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `estimate_date` date NOT NULL,
@@ -588,7 +583,7 @@ INSERT INTO `rmis_program_cost_estimations` (`id`, `organization_id`, `estimate_
 -- Table structure for table `rmis_program_funding_sources`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_program_funding_sources` (
+CREATE TABLE `rmis_program_funding_sources` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `fund_source` bigint(20) NOT NULL,
@@ -623,7 +618,7 @@ INSERT INTO `rmis_program_funding_sources` (`id`, `organization_id`, `fund_sourc
 -- Table structure for table `rmis_program_implementation_committees`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_program_implementation_committees` (
+CREATE TABLE `rmis_program_implementation_committees` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `committee_formation_date` date NOT NULL,
@@ -648,7 +643,7 @@ INSERT INTO `rmis_program_implementation_committees` (`id`, `organization_id`, `
 -- Table structure for table `rmis_program_implementation_committee_members`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_program_implementation_committee_members` (
+CREATE TABLE `rmis_program_implementation_committee_members` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `committee_member_type` varchar(255) DEFAULT NULL,
   `member_name` varchar(255) DEFAULT NULL,
@@ -673,7 +668,7 @@ INSERT INTO `rmis_program_implementation_committee_members` (`id`, `committee_me
 -- Table structure for table `rmis_program_informations`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_program_informations` (
+CREATE TABLE `rmis_program_informations` (
   `program_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `research_program_title` text COLLATE utf8_unicode_ci NOT NULL,
@@ -726,24 +721,17 @@ INSERT INTO `rmis_program_informations` (`program_id`, `organization_id`, `resea
 -- Table structure for table `rmis_program_me_committees`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_program_me_committees` (
+CREATE TABLE `rmis_program_me_committees` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
-  `committee_chairman` bigint(20) NOT NULL,
+  `committee_chairman` varchar(20) NOT NULL,
   `committee_formation_date` date NOT NULL,
   `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` bigint(20) DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`,`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
-
---
--- Dumping data for table `rmis_program_me_committees`
---
-
-INSERT INTO `rmis_program_me_committees` (`id`, `organization_id`, `committee_chairman`, `committee_formation_date`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(4, 1, 202, '2013-11-12', '2013-11-10 01:59:05', 1, '2013-11-10 07:59:05', NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -751,20 +739,13 @@ INSERT INTO `rmis_program_me_committees` (`id`, `organization_id`, `committee_ch
 -- Table structure for table `rmis_program_me_committee_members`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_program_me_committee_members` (
+CREATE TABLE `rmis_program_me_committee_members` (
   `committee_id` bigint(20) unsigned NOT NULL,
+  `organization_id` int(11) NOT NULL,
   `member_id` bigint(20) NOT NULL,
-  `designation` varchar(255) NOT NULL,
-  `role_in_committee` text NOT NULL
+  `role_in_committee` text NOT NULL,
+  PRIMARY KEY (`committee_id`,`organization_id`,`member_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `rmis_program_me_committee_members`
---
-
-INSERT INTO `rmis_program_me_committee_members` (`committee_id`, `member_id`, `designation`, `role_in_committee`) VALUES
-(4, 202, 'Vice President', 'Team Leader'),
-(4, 101, 'President', 'member');
 
 -- --------------------------------------------------------
 
@@ -772,7 +753,7 @@ INSERT INTO `rmis_program_me_committee_members` (`committee_id`, `member_id`, `d
 -- Table structure for table `rmis_program_other_informations`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_program_other_informations` (
+CREATE TABLE `rmis_program_other_informations` (
   `id` int(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `program_rationale` longtext,
@@ -807,7 +788,7 @@ INSERT INTO `rmis_program_other_informations` (`id`, `organization_id`, `program
 -- Table structure for table `rmis_program_rating`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_program_rating` (
+CREATE TABLE `rmis_program_rating` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `value` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -838,7 +819,7 @@ INSERT INTO `rmis_program_rating` (`id`, `organization_id`, `value`, `name`, `we
 -- Table structure for table `rmis_program_research_teams`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_program_research_teams` (
+CREATE TABLE `rmis_program_research_teams` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `team_formation_date` date NOT NULL,
@@ -864,7 +845,7 @@ INSERT INTO `rmis_program_research_teams` (`id`, `organization_id`, `team_format
 -- Table structure for table `rmis_program_research_team_members`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_program_research_team_members` (
+CREATE TABLE `rmis_program_research_team_members` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `member_type` varchar(255) DEFAULT NULL,
   `institute_name` varchar(255) DEFAULT NULL,
@@ -892,7 +873,7 @@ INSERT INTO `rmis_program_research_team_members` (`id`, `member_type`, `institut
 -- Table structure for table `rmis_program_steering_committees`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_program_steering_committees` (
+CREATE TABLE `rmis_program_steering_committees` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `committee_formation_date` date NOT NULL,
@@ -917,7 +898,7 @@ INSERT INTO `rmis_program_steering_committees` (`id`, `organization_id`, `commit
 -- Table structure for table `rmis_program_steering_committee_members`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_program_steering_committee_members` (
+CREATE TABLE `rmis_program_steering_committee_members` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `committee_member_type` varchar(255) DEFAULT NULL,
   `member_name` varchar(255) DEFAULT NULL,
@@ -943,7 +924,7 @@ INSERT INTO `rmis_program_steering_committee_members` (`id`, `committee_member_t
 -- Table structure for table `rmis_project_activities`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_project_activities` (
+CREATE TABLE `rmis_project_activities` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `s_o` varchar(255) NOT NULL,
@@ -967,7 +948,7 @@ CREATE TABLE IF NOT EXISTS `rmis_project_activities` (
 -- Table structure for table `rmis_project_cost_breakdowns`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_project_cost_breakdowns` (
+CREATE TABLE `rmis_project_cost_breakdowns` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `s_o` varchar(255) NOT NULL,
   `ac_head_code` bigint(20) NOT NULL,
@@ -983,7 +964,7 @@ CREATE TABLE IF NOT EXISTS `rmis_project_cost_breakdowns` (
 -- Table structure for table `rmis_project_cost_estimations`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_project_cost_estimations` (
+CREATE TABLE `rmis_project_cost_estimations` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `estimate_date` date NOT NULL,
@@ -1002,7 +983,7 @@ CREATE TABLE IF NOT EXISTS `rmis_project_cost_estimations` (
 -- Table structure for table `rmis_project_funding_sources`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_project_funding_sources` (
+CREATE TABLE `rmis_project_funding_sources` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `fund_source` bigint(20) NOT NULL,
@@ -1025,7 +1006,7 @@ CREATE TABLE IF NOT EXISTS `rmis_project_funding_sources` (
 -- Table structure for table `rmis_project_implementation_committees`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_project_implementation_committees` (
+CREATE TABLE `rmis_project_implementation_committees` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `committee_formation_date` date NOT NULL,
@@ -1043,7 +1024,7 @@ CREATE TABLE IF NOT EXISTS `rmis_project_implementation_committees` (
 -- Table structure for table `rmis_project_implementation_committee_members`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_project_implementation_committee_members` (
+CREATE TABLE `rmis_project_implementation_committee_members` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `committee_member_type` varchar(255) DEFAULT NULL,
   `member_name` varchar(255) DEFAULT NULL,
@@ -1060,7 +1041,7 @@ CREATE TABLE IF NOT EXISTS `rmis_project_implementation_committee_members` (
 -- Table structure for table `rmis_project_informations`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_project_informations` (
+CREATE TABLE `rmis_project_informations` (
   `project_id` int(11) NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `research_project_title` text COLLATE utf8_unicode_ci NOT NULL,
@@ -1110,7 +1091,7 @@ INSERT INTO `rmis_project_informations` (`project_id`, `organization_id`, `resea
 -- Table structure for table `rmis_project_other_informations`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_project_other_informations` (
+CREATE TABLE `rmis_project_other_informations` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `project_rationale` longtext,
@@ -1144,7 +1125,7 @@ INSERT INTO `rmis_project_other_informations` (`id`, `organization_id`, `project
 -- Table structure for table `rmis_project_research_teams`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_project_research_teams` (
+CREATE TABLE `rmis_project_research_teams` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `team_formation_date` date NOT NULL,
@@ -1162,7 +1143,7 @@ CREATE TABLE IF NOT EXISTS `rmis_project_research_teams` (
 -- Table structure for table `rmis_project_research_team_members`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_project_research_team_members` (
+CREATE TABLE `rmis_project_research_team_members` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `member_type` varchar(255) DEFAULT NULL,
   `institute_name` varchar(255) DEFAULT NULL,
@@ -1180,7 +1161,7 @@ CREATE TABLE IF NOT EXISTS `rmis_project_research_team_members` (
 -- Table structure for table `rmis_project_steering_committees`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_project_steering_committees` (
+CREATE TABLE `rmis_project_steering_committees` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `committee_formation_date` date NOT NULL,
@@ -1198,7 +1179,7 @@ CREATE TABLE IF NOT EXISTS `rmis_project_steering_committees` (
 -- Table structure for table `rmis_project_steering_committee_members`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_project_steering_committee_members` (
+CREATE TABLE `rmis_project_steering_committee_members` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `committee_member_type` varchar(255) DEFAULT NULL,
   `member_name` varchar(255) DEFAULT NULL,
@@ -1215,7 +1196,7 @@ CREATE TABLE IF NOT EXISTS `rmis_project_steering_committee_members` (
 -- Table structure for table `rmis_qualitative_status`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_qualitative_status` (
+CREATE TABLE `rmis_qualitative_status` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `value` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -1246,12 +1227,12 @@ INSERT INTO `rmis_qualitative_status` (`id`, `organization_id`, `value`, `name`,
 -- Table structure for table `rmis_regional_stations`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_regional_stations` (
+CREATE TABLE `rmis_regional_stations` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `station_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `station_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `station_contact_person` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `station_contact_person` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `station_phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `station_email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `station_order` int(11) NOT NULL,
@@ -1261,18 +1242,18 @@ CREATE TABLE IF NOT EXISTS `rmis_regional_stations` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`,`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `rmis_regional_stations`
 --
 
 INSERT INTO `rmis_regional_stations` (`id`, `organization_id`, `station_id`, `station_name`, `station_contact_person`, `station_phone`, `station_email`, `station_order`, `station_address`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 1, 'BARIRS0001', 'Uganda', '202', '01716463155', 'alimulrazix@gmail.com', 2, 'test location', '2013-10-01 23:22:22', 1, '2013-11-10 07:25:44', 1),
 (3, 1, 'BARIRS0003', 'Dhaka', '101', '01716463155', 'alimulrazi@gmail.com', 1, 'test', '2013-11-10 00:16:41', 1, '2013-11-10 06:16:41', NULL),
 (4, 1, 'BARIRS0004', 'Tangail', '101', '01716463155', 'alimulrazi28@gmail.com', 0, 'test location', '2013-11-10 01:02:32', 1, '2013-11-10 07:02:32', NULL),
 (7, 1, 'BARIRS0005', 'Khulna', '102', '01716463156', 'alimulrazi@yahoo.com', 2, 'test location', '2013-11-10 03:11:30', 1, '2013-11-10 09:12:12', 1),
-(8, 1, 'BARIRS0008', 'Bogura', '101', '01716463156', 'alimulrazi@yahoo.com', 1, 'test....', '2013-11-10 03:19:15', 1, '2013-11-10 09:21:25', 1);
+(8, 1, 'BARIRS0008', 'Bogura', '101', '01716463156', 'alimulrazi@yahoo.com', 1, 'test....', '2013-11-10 03:19:15', 1, '2013-11-10 09:21:25', 1),
+(12, 1, 'BARIRS0012', 'Jamalpur', '103', '01779021581', 'ashish021@gmail.com', 0, 'asldhasjkld', '2013-11-12 12:21:13', 1, '2013-11-12 17:26:03', 1);
 
 -- --------------------------------------------------------
 
@@ -1280,7 +1261,7 @@ INSERT INTO `rmis_regional_stations` (`id`, `organization_id`, `station_id`, `st
 -- Table structure for table `rmis_research_priorities`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_research_priorities` (
+CREATE TABLE `rmis_research_priorities` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `value` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -1310,7 +1291,7 @@ INSERT INTO `rmis_research_priorities` (`id`, `organization_id`, `value`, `name`
 -- Table structure for table `rmis_research_statuses`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_research_statuses` (
+CREATE TABLE `rmis_research_statuses` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `value` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -1342,7 +1323,7 @@ INSERT INTO `rmis_research_statuses` (`id`, `organization_id`, `value`, `name`, 
 -- Table structure for table `rmis_research_types`
 --
 
-CREATE TABLE IF NOT EXISTS `rmis_research_types` (
+CREATE TABLE `rmis_research_types` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
   `value` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -1366,7 +1347,3 @@ INSERT INTO `rmis_research_types` (`id`, `organization_id`, `value`, `name`, `we
 (1, 1, '1', 'Basic', 1, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-11-10 03:10:35', NULL),
 (2, 1, '2', 'Strategic', 2, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-09-25 05:48:19', NULL),
 (3, 2, '3', 'Impact Study', 3, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-11-10 03:10:30', NULL);
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -32,17 +32,4 @@ function onError(e) {
 	});
 }
 
-$(document).ready(function(){
-    $.validator.addMethod(
-        "checkEmployeeName", 
-        function(value, element) {
-            if($("#employee_id").val()=="")
-            	return false;
-            else
-            	return true;
-        },
-        "Employee name not exists"
-    );
-});
-
 

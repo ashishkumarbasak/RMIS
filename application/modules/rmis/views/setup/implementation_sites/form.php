@@ -49,11 +49,11 @@
        </div> 
        
         <div class="form_element">
-            <div class="button_panel" style="margin-right:80px;">
+            <div class="button_panel" style="margin-right:75px;">
             	<?php if(isset($implementation_detail) && $implementation_detail->implementation_pk!=NULL) { ?>
                 	<input type="hidden" name="id" id="id" value="<?php echo $implementation_detail->implementation_pk; ?>">
                     <input type="button" name="new_implementation" id="new_implementation" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('rmis/setup/implementationSites');?>'">
-                	<input type="submit" name="delete_implementation" id="delete_implementation" value="Delete" class="k-button button">
+                	<input type="submit" name="delete_implementation" id="delete_implementation" value="Delete" class="k-button button" onclick="return confirm('Are you sure you want to delete this record?');"/>
         			<input type="submit" name="save_update" id="save_update" value="Update" class="k-button button">
                 <?php } else { ?>
                 	<input type="submit" name="save_implementation" id="save" value="Save" class="k-button button">
