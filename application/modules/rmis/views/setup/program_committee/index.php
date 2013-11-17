@@ -65,8 +65,7 @@ $(document).ready(function() {
 			}
     	});
     	
-    	$("input[type='text']").on("click", function() {
-	        $(this).autocomplete({
+    	$("#member-name" ).autocomplete({
        		source: function(request, response) {
             	$.ajax({ url: "<?php echo site_url('rmis/employees'); ?>",
             		data: { term: $(this).val()},
@@ -89,7 +88,6 @@ $(document).ready(function() {
 				$("#committee_chairman").val(ui.item.id); 
 			}
     	});
-	    });
 	});
 });
 </script>

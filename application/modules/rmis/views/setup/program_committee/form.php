@@ -37,58 +37,91 @@
             <div class="label">Committe Member</div>
             <div class="clear"></div>
         </div>
-    	<div class="row">
-    		<div class="grid-1-3 left">
-        		<div class="heading">Member Name</div>
-    		</div>
-    		<div class="grid-1-3 left">
-        		<div class="heading">Designation</div>
-    		</div>
-    		<div class="grid-1-3 left">
-        		<div class="heading">Role in Committee</div>
-    		</div>
-    		<div class="clear"></div>
-    	</div>
-    	
-    	<?php if(isset($committee_members) && $committee_members!=NULL) { 
-    			foreach($committee_members as $key=>$member){
-    	?>
-    			<div id="row-<?php echo $key; ?>">
-    			<div class="row">
-			    	<div class="grid-1-3 left">
-			        	<input class="textbox no-margin width-89" type="text" name="committe_member_names[]" id="committe_member_names" value="<?php echo $member->employee_name; ?>"/>
-			    	</div>
-			    	<div class="grid-1-3 left">
-			        	<input class="textbox no-margin width-89" type="text" name="committe_member_designations[]" id="committe_member_designations" value="<?php echo $member->designation; ?>"/>
-			    	</div>
-			    	<div class="grid-1-3 left">
-			        	<input class="textbox no-margin width-89" type="text" name="committe_member_roles[]" id="committe_member_roles" value="<?php echo $member->role_in_committee; ?>"/>	
-			    	</div>
-			    </div>
-			    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_committee_member(<?php echo $member->committee_id;?> , <?php echo $member->member_id; ?>, <?php echo $key; ?> );">[-]</a></div>
-			    </div>
-    	<?php				
-    			}
-    	 	  } 
-    	 ?>	
-    	<div id='duplicate2'>
-    	<div class="row">
-	    	<div class="grid-1-3 left">
-	        	<input class="textbox no-margin width-89" type="text" name="committe_member_names[]" id="committe_member_names" value=""/>
-	    	</div>
-	    	<div class="grid-1-3 left">
-	        	<input class="textbox no-margin width-89" type="text" name="committe_member_designations[]" id="committe_member_designations" value=""/>
-	    	</div>
-	    	<div class="grid-1-3 left">
-	        	<input class="textbox no-margin width-89" type="text" name="committe_member_roles[]" id="committe_member_roles" value=""/>	
-	    	</div>
-	    </div>
-	    <div class="row add-more"><a id="minus2" href="">[-]</a> <a id="plus2" href="">[+]</a></div>
-    	</div>
     </div>
-    
     <div class="clear"></div>
-    <div class="gap"></div>
+    
+    <div id="committee-members" style="width: 88%;">
+    	<table class="dataTable" style="">
+        	<thead>
+            	<tr>
+                	<th align="left">Member Name</th>
+                	<th align="left">Designation</th>
+                	<th align="left">Role in Committee</th>
+                	<th align="left">Delete</th>
+            	</tr>
+        	</thead>
+        	<tbody data-template="row-template" data-bind="source: members"></tbody>
+        	<tr>
+            	<td>
+                	<input type="text" class="textbox no-margin" id="member-name" placeholder="Enter member name" data-bind="value: memberName" />
+            	</td>
+            	<td>
+                	<input type="text" class="textbox no-margin" placeholder="Enter member designation" data-bind="value: memberDesignation" />
+            	</td>
+            	<td>
+                	<input type="text" class="textbox no-margin" placeholder="Enter role in committee" data-bind="value: memberRoleinCommittee" />     
+            	</td>
+            	<td>
+                	<button type="button" data-bind="click: addMember">+</button>
+            	</td>
+        	</tr>
+    	</table>
+	</div>
+<script id="row-template" type="text/x-kendo-template">
+    <tr>
+        <td data-bind="text: name"></td>
+        <td data-bind="text: designation"></td>
+        <td data-bind="text: roleinCommittee"></td>
+        <td><button type="button"  data-bind="click: deleteMember">-</button></td>
+    </tr>
+</script>
+                    
+<script>        
+    $(document).ready(function() {
+    	$("#member-name").kendoAutoComplete({
+        	dataTextField: "employee_name",
+            filter: "startswith",
+            minLength: 2,
+            ignoreCase: false,
+            dataSource: {
+                         	type: "jsonp",
+                            serverFiltering: true,
+                            serverPaging: true,
+                            pageSize: 20,
+                            transport: {
+                                read: "<?php echo site_url('rmis/employees'); ?>"
+                            }
+                        }
+        });
+        var viewModel = kendo.observable({
+            memberName: "",
+            memberDesignation: "",
+            memberRoleinCommittee: "",
+            addMember: function() {
+                this.get("members").push({
+                    name: this.get("memberName"),
+                    designation: this.get("memberDesignation"),
+                    roleinCommittee: this.get("memberRoleinCommittee")
+                });
+            },
+            deleteMember: function(e) {
+                // the current data item (product) is passed as the "data" field of the event argument
+                var member = e.data;
+                var members = this.get("members");
+                var index = members.indexOf(member);
+                // remove the product by using the splice method
+                members.splice(index, 1);
+            },
+            members: []
+        });
+
+        kendo.bind($("#committee-members"), viewModel);
+    });
+    </script>
+    
+    
+    
+    
     
     <div class="form_element">
     	<div class="button_panel" style="margin-right:125px;">
@@ -127,3 +160,4 @@ $(document).ready(function() {
 		}
 	}
 </script>
+

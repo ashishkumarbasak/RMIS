@@ -7,7 +7,8 @@ class Rmis extends MX_Controller
     {
         parent::__construct();
         //$this->load->model('hrmis_model');
-        $this->load->model('Employee_model', 'employee');
+		$this->load->model('Kendodatasource_model', 'grid');
+		$this->load->model('Employee_model', 'employee');
     }
     
     public function index()
@@ -25,14 +26,23 @@ class Rmis extends MX_Controller
                 ->set_partial('page-content', 'layouts/page-content',$_data)
                 ->set_layout('extensive/main_layout')
                 ->build('dashboard');
+		
     }
-	
+	/*
 	public function employees(){
-		$term = $this->input->post('term',TRUE);
+		$term = $this->input->request('term',TRUE);
 		if (strlen($term) > 1) {
 			$rows = $this->employee->search_employee(array('keyword' => $term));
 	        echo json_encode($rows);	
 		}
 	}
+	*/
+	
+	public function employees(){
+		    header('Content-Type: application/json');		
+		    $request = json_decode(file_get_contents('php://input'));
+		   	$data = $this->grid->read('hrm_employees', array('employee_id','employee_name'), $request);   
+        	echo json_encode($data["data"]);
+	}	
 }
 ?>
