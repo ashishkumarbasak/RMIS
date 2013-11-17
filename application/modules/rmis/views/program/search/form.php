@@ -41,10 +41,10 @@
     	<div class="form_element">
         	<div class="label width_170px">Research Type <span class="mandatory">*</span> </div>
         	<div class="field">
-        		<select name="program_researchType" id="program_researchType" class="selectionbox">
+        		<select name="program_research_type" id="program_research_type" class="selectionbox">
             		<option value="">Select Research Type</option>
  					<?php foreach($research_types['data'] as $key=>$researchType) { ?>
-            			<option value="<?php echo $researchType['id']; ?>" <?php if(isset($program_detail) && $program_detail->research_type==$researchType['id']) { ?> selected="selected" <?php } ?>><?php echo $researchType['research_type']; ?></option>
+            			<option value="<?php echo $researchType['value']; ?>" <?php if(isset($program_detail) && $program_detail->program_research_type==$researchType['value']) { ?> selected="selected" <?php } ?>><?php echo $researchType['name']; ?></option>
             		<?php } ?>
         		</select>
         	</div>
@@ -54,10 +54,10 @@
     	<div class="form_element">
         	<div class="label width_170px">Research Priority <span class="mandatory">*</span></div>
         	<div class="field">
-        		<select name="program_researchPriority" id="program_researchPriority" class="selectionbox">
+        		<select name="program_research_priority" id="program_research_priority" class="selectionbox">
             		<option value="">Select Research Priority</option>
 					<?php foreach($research_priorities['data'] as $key=>$research_priority) { ?>
-            			<option value="<?php echo $research_priority['id']; ?>" <?php if(isset($program_detail) && $program_detail->research_priority==$research_priority['id']) { ?> selected="selected" <?php } ?>><?php echo $research_priority['research_priority']; ?></option>
+            			<option value="<?php echo $research_priority['value']; ?>" <?php if(isset($program_detail) && $program_detail->program_research_priority==$research_priority['value']) { ?> selected="selected" <?php } ?>><?php echo $research_priority['name']; ?></option>
             		<?php } ?>
          		</select>
         	</div>
@@ -67,10 +67,10 @@
      	<div class="form_element">
         	<div class="label width_170px">Research Status <span class="mandatory">*</span></div>
         	<div class="field">
-        		<select name="program_researchStatus" id="program_researchStatus" class="selectionbox">
+        		<select name="program_research_status" id="program_research_status" class="selectionbox">
             		<option value="">Select Research Status</option>
 					<?php foreach($research_statuses['data'] as $key=>$research_status) { ?>
-           	 			<option value="<?php echo $research_status['id']; ?>" <?php if(isset($program_detail) && $program_detail->research_status==$research_status['id']) { ?> selected="selected" <?php } ?>><?php echo $research_status['research_status']; ?></option>
+           	 			<option value="<?php echo $research_status['value']; ?>" <?php if(isset($program_detail) && $program_detail->program_research_status==$research_status['value']) { ?> selected="selected" <?php } ?>><?php echo $research_status['name']; ?></option>
             		<?php } ?>
             	</select>
         	</div>
@@ -86,11 +86,16 @@
     	</div>
     	
     	<div class="form_element">
+        	<?php
+        		$program_aezs = array(); 
+        		if(isset($program_detail))
+				$program_aezs = explode(",", $program_detail->program_aezs);
+			?>
         	<div class="label width_170px">AEZs </div>
         	<div class="field">
         		<select name="program_aezs[]" id="program_aezs" class="selectionbox" multiple="multiple">
             		<?php foreach($aezs['data'] as $key=>$aez) { ?>
-            			<option value="<?php echo $aez['aez_id']; ?>" <?php if(isset($program_detail) && $program_detail->implementation_location==$aez['aez_id']) { ?> selected="selected" <?php } ?>><?php echo $aez['aez_name']; ?></option>
+            			<option value="<?php echo $aez['value']; ?>" <?php if(in_array($aez['value'], $program_aezs)) { ?> selected="selected" <?php } ?>><?php echo $aez['name']; ?></option>
             		<?php } ?>
             	</select>
         	</div>
@@ -166,11 +171,16 @@
      	
     	
     	<div class="form_element">
+        	<?php
+        		$program_commodities = array(); 
+        		if(isset($program_detail))
+				$program_commodities = explode(",", $program_detail->program_commodities);
+			?>
         	<div class="label">Commodity </div>
         	<div class="field">
         		<select name="program_commodities[]" id="program_commodities" class="selectionbox" multiple="multiple">
             		<?php foreach($comodities['data'] as $key=>$comodity) { ?>
-            			<option value="<?php echo $comodity['commodity_id']; ?>" <?php if(isset($program_detail) && $program_detail->implementation_location==$comodity['commodity_id']) { ?> selected="selected" <?php } ?>><?php echo $comodity['commodity_name']; ?></option>
+            			<option value="<?php echo $comodity['value']; ?>" <?php if(in_array($comodity['value'],$program_commodities)) { ?> selected="selected" <?php } ?>><?php echo $comodity['name']; ?></option>
             		<?php } ?>
             	</select>
         	</div>
@@ -186,11 +196,16 @@
     	</div>
     	
     	<div class="form_element" id="institute_name_div">
+        	<?php
+        		$program_instituteNames = array(); 
+        		if(isset($program_detail))
+				$program_instituteNames = explode(",", $program_detail->program_institute_names);
+			?>
         	<div class="label">Institute Name </div>
         	<div class="field">
-        		<select name="program_instituteNames[]" id="program_instituteNames" class="selectionbox" multiple="multiple">
+        		<select name="program_institute_names[]" id="program_institute_names" class="selectionbox" multiple="multiple">
             		<?php foreach($institues['data'] as $key=>$institue) { ?>
-            			<option value="<?php echo $institue['institute_id']; ?>" <?php if(isset($program_detail) && $program_detail->implementation_location==$institue['institute_id']) { ?> selected="selected" <?php } ?>><?php echo $institue['institute_name']; ?></option>
+            			<option value="<?php echo $institue['id']; ?>" <?php if(in_array($institue['id'],$program_instituteNames)) { ?> selected="selected" <?php } ?>><?php echo $institue['short_name']; ?></option>
             		<?php } ?>
             	</select>
         	</div>
@@ -201,7 +216,7 @@
     
     <div class="left_form">
     	<div class="form_element">
-	    	<div class="label width_170px">Title of Research Programme</div>
+	    	<div class="label width_170px">Title of Research Program</div>
 	       	<div class="textarea_field"><textarea name="research_program_title" id="research_program_title" class="textarea_small width-92"><?php if($program_detail) echo $program_detail->title_of_research_program;?></textarea></div>
 	        <div class="clear"></div>
 	  	</div>
