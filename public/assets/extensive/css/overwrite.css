@@ -359,3 +359,26 @@ ul.ui-autocomplete li.ui-menu-item:last-child{
 	padding:5px;
 	cursor:pointer;
 }
+
+
+
+.dataTable table {
+   width: 100%;
+   border: 1px solid #bababa;
+   margin: 5px;
+   text-align: left; }
+.dataTable th {
+   font-weight: bold;
+   background-color: #EDEDED;
+   border-bottom: 1px solid #bababa; 
+   padding: 4px 5px;
+   }
+.dataTable td,th {
+	border-bottom: 1px solid #bababa; 
+  	padding: 4px 5px;
+   }
+.dataTable .odd {
+   background-color: #EDEDED; }
+.dataTable .odd td {
+   border-bottom: 1px solid #bababa; }
+.dataTable .k-autocomplete{ border-radius:0px !important; width:100% !important; } 

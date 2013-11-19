@@ -1,4 +1,3 @@
-<script src="<?php echo site_url('/assets/js/jquery-dynamic-form.js'); ?>"></script>
 <script src="<?php echo site_url('/assets/js/bootstrap-datepicker.js'); ?>"></script>
 <link rel="stylesheet" href="<?php echo site_url('assets/extensive/css/datepicker.css'); ?>" />
 
@@ -41,89 +40,45 @@
     <div class="clear"></div>
     
     <div id="committee-members" style="width: 88%;">
-    	<table class="dataTable" style="">
+    	<div class="dataTable">
+    	<table>
         	<thead>
             	<tr>
                 	<th align="left">Member Name</th>
                 	<th align="left">Designation</th>
                 	<th align="left">Role in Committee</th>
-                	<th align="left">Delete</th>
+                	<th align="left">&nbsp;</th>
             	</tr>
         	</thead>
         	<tbody data-template="row-template" data-bind="source: members"></tbody>
         	<tr>
             	<td>
-                	<input type="text" class="textbox no-margin" id="member-name" placeholder="Enter member name" data-bind="value: memberName" />
+                	<input type="text" class="textbox no-margin width_100_percent" id="member-name" placeholder="Enter member name" data-bind="value: memberName" />
+            		<input type="hidden" name="member-id" id="member-id" value="">
             	</td>
             	<td>
-                	<input type="text" class="textbox no-margin" placeholder="Enter member designation" data-bind="value: memberDesignation" />
+                	<input type="text" class="textbox no-margin width_100_percent" id="member-designation" placeholder="Enter member designation" data-bind="value: memberDesignation" />
             	</td>
             	<td>
-                	<input type="text" class="textbox no-margin" placeholder="Enter role in committee" data-bind="value: memberRoleinCommittee" />     
+                	<input type="text" class="textbox no-margin width_100_percent" id="member-role" placeholder="Enter role in committee" data-bind="value: memberRoleinCommittee" />     
             	</td>
             	<td>
                 	<button type="button" data-bind="click: addMember">+</button>
             	</td>
         	</tr>
     	</table>
+    	</div>
 	</div>
-<script id="row-template" type="text/x-kendo-template">
-    <tr>
-        <td data-bind="text: name"></td>
-        <td data-bind="text: designation"></td>
-        <td data-bind="text: roleinCommittee"></td>
-        <td><button type="button"  data-bind="click: deleteMember">-</button></td>
-    </tr>
-</script>
+	<script id="row-template" type="text/x-kendo-template">
+	    <tr>
+	        <td data-bind="text: name"></td>
+	        <td data-bind="text: designation"></td>
+	        <td data-bind="text: roleinCommittee"></td>
+	        <td><button type="button"  data-bind="click: deleteMember">-</button></td>
+	    </tr>
+	</script>
                     
-<script>        
-    $(document).ready(function() {
-    	$("#member-name").kendoAutoComplete({
-        	dataTextField: "employee_name",
-            filter: "startswith",
-            minLength: 2,
-            ignoreCase: false,
-            dataSource: {
-                         	type: "jsonp",
-                            serverFiltering: true,
-                            serverPaging: true,
-                            pageSize: 20,
-                            transport: {
-                                read: "<?php echo site_url('rmis/employees'); ?>"
-                            }
-                        }
-        });
-        var viewModel = kendo.observable({
-            memberName: "",
-            memberDesignation: "",
-            memberRoleinCommittee: "",
-            addMember: function() {
-                this.get("members").push({
-                    name: this.get("memberName"),
-                    designation: this.get("memberDesignation"),
-                    roleinCommittee: this.get("memberRoleinCommittee")
-                });
-            },
-            deleteMember: function(e) {
-                // the current data item (product) is passed as the "data" field of the event argument
-                var member = e.data;
-                var members = this.get("members");
-                var index = members.indexOf(member);
-                // remove the product by using the splice method
-                members.splice(index, 1);
-            },
-            members: []
-        });
-
-        kendo.bind($("#committee-members"), viewModel);
-    });
-    </script>
-    
-    
-    
-    
-    
-    <div class="form_element">
+	<div class="form_element">
     	<div class="button_panel" style="margin-right:125px;">
         	<?php if(isset($committee_detail) && $committee_detail->id!=NULL) { ?>
                 <input type="hidden" name="id" id="id" value="<?php echo $committee_detail->committee_id; ?>">
@@ -139,25 +94,78 @@
 </div>
 </form>
 <script type="text/javascript">
-$(document).ready(function() {
-	$("#duplicate2").dynamicForm("#plus2", "#minus2", {limit:10});		
-	return false;
-});
-</script>
-<script type="text/javascript">
 	$('#committee_formation_date').datepicker('setStartDate');
 </script>
-<script type="text/javascript">
-	function delete_committee_member(committee_id, member_id, row_id){
-		var r=confirm("Are you sure you want to delete this member?");
-		if (r==true){
-		  	var jqxhr = $.post( "<?php echo site_url("rmis/setup/programCommittees/deleteMember"); ?>", { committee_id: committee_id, member_id: member_id }, function() {
-			  $("#row-" + parseInt(row_id)).remove();
-			})
-			.fail(function() {
-				alert( "error" );
-			})
-		}
-	}
-</script>
+
+<script>        
+    $(document).ready(function() {
+    	var valid;
+    	$("#member-name").kendoAutoComplete({
+        	dataTextField: "employee_name",
+        	dataIdField: "employee_name",
+            filter: "startswith",
+            minLength: 2,
+            ignoreCase: false,
+            dataSource: {
+                         	type: "jsonp",
+                            serverFiltering: true,
+                            serverPaging: false,
+                            pageSize: 20,
+                            transport: {
+                                read: "<?php echo site_url('rmis/employees2'); ?>"
+                            }
+                       },
+           	open: function(e) {
+		    	valid = false;
+		  	},
+		  	select: function(e){
+		    	valid = true;
+			    var dataItem = this.dataItem(e.item.index());                
+        		//$("#autocomplete_id").val(dataItem.id);
+			    alert(dataItem.employee_id);
+		  	},
+		  	close: function(e){
+		    	// if no valid selection - clear input
+		    	if (!valid) this.value('');
+		  	}
+        });
+        var viewModel = kendo.observable({
+            memberName: "",
+            memberDesignation: "",
+            memberRoleinCommittee: "",
+            addMember: function() {
+                if(validate_member()){
+                	this.get("members").push({
+	                    name: this.get("memberName"),
+	                    designation: this.get("memberDesignation"),
+	                    roleinCommittee: this.get("memberRoleinCommittee")
+	                });	
+                }
+            },
+            deleteMember: function(e) {
+                // the current data item (product) is passed as the "data" field of the event argument
+                var member = e.data;
+                var members = this.get("members");
+                var index = members.indexOf(member);
+                // remove the product by using the splice method
+                members.splice(index, 1);
+            },
+            members: []
+        });
+
+        kendo.bind($("#committee-members"), viewModel);
+    });
+    function validate_member(){
+    	if($('#member-id').val()==''){
+    		return false;
+    	}
+    	if($('#member-designation').val()==''){
+    		return false;
+    	}
+    	if($('#member-role').val()==''){
+    		return false;
+    	}
+    	return false;
+    }
+    </script>
 

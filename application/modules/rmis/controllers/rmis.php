@@ -28,21 +28,23 @@ class Rmis extends MX_Controller
                 ->build('dashboard');
 		
     }
-	/*
+	
 	public function employees(){
-		$term = $this->input->request('term',TRUE);
+		$term = $this->input->post('term');
 		if (strlen($term) > 1) {
 			$rows = $this->employee->search_employee(array('keyword' => $term));
 	        echo json_encode($rows);	
 		}
 	}
-	*/
 	
-	public function employees(){
-		    header('Content-Type: application/json');		
-		    $request = json_decode(file_get_contents('php://input'));
-		   	$data = $this->grid->read('hrm_employees', array('employee_id','employee_name'), $request);   
-        	echo json_encode($data["data"]);
+	
+	public function employees2(){
+		header('Content-Type: application/json');		
+		$term = $this->input->get('filter[filters][0][value]');
+		if (strlen($term) > 1) {
+			$rows = $this->employee->search_employee(array('keyword' => $term));
+		    echo json_encode($rows);	
+		}
 	}	
 }
 ?>
