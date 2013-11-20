@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 12, 2013 at 08:07 PM
+-- Generation Time: Nov 20, 2013 at 07:42 PM
 -- Server version: 5.5.29
 -- PHP Version: 5.4.10
 
@@ -13,6 +13,41 @@ SET time_zone = "+00:00";
 --
 -- Database: `natp_rmis`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hrm_designations`
+--
+
+CREATE TABLE `hrm_designations` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
+  `designation_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `designation_prefix` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `class_id` bigint(20) DEFAULT NULL,
+  `pay_scale_detail_id` int(11) DEFAULT NULL,
+  `retirement_age` double(12,2) DEFAULT NULL,
+  `job_description` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `approved_manpower` double(12,2) DEFAULT NULL,
+  `sorting_order` int(10) unsigned DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` bigint(20) unsigned DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`,`organization_id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `hrm_designations`
+--
+
+INSERT INTO `hrm_designations` (`id`, `organization_id`, `designation_name`, `designation_prefix`, `class_id`, `pay_scale_detail_id`, `retirement_age`, `job_description`, `approved_manpower`, `sorting_order`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 1, 'Scientific Officer', 'SO', 1, 2, 65.00, 'abcd', 5.00, 1, NULL, NULL, '2013-10-27 05:19:18', 5),
+(2, 2, 'HR Manager', 'HM', 2, 2, 60.00, 'qwer', 2.00, 2, NULL, NULL, '2013-10-23 10:14:07', NULL),
+(3, 3, 'ABCD', 'AB', 3, 3, 57.00, 'zxcv', 2.00, 1, NULL, NULL, '2013-10-23 10:14:53', NULL),
+(4, 4, 'EFGH', 'EF', 4, 1, 60.00, 'poiu', 2.00, 1, NULL, NULL, '2013-10-23 10:15:52', NULL);
 
 -- --------------------------------------------------------
 
@@ -302,7 +337,7 @@ CREATE TABLE `rmis_divisions` (
   `updated_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`,`organization_id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `rmis_divisions`
@@ -312,7 +347,9 @@ INSERT INTO `rmis_divisions` (`id`, `organization_id`, `division_id`, `division_
 (1, 1, 'BARIDIV1', 'Dhaka', '202', '01558755441', 'ashish021@gmail.com', 1, 'Test Division', '2013-09-30 11:53:34', 1, '2013-11-12 12:03:48', 1),
 (3, 1, 'BARIDIV0002', 'Rajshahi', '202', '01714532345', 'test23@yahoo.com', 1, 'test division1', '2013-10-01 09:39:49', 1, '2013-11-10 00:51:21', 1),
 (5, 1, 'BARIDIV0004', 'Sylhet', '202', '01714532345', 'alimul@yahoo.com', 2, 'test organization', '2013-11-03 12:14:11', 1, '2013-11-10 00:51:52', 1),
-(8, 1, 'BARIDIV0006', 'dhaka', 'jhjhj', '017145323452', 'alimul28@yahoo.com', 1, 'TEST', '2013-11-09 22:54:55', 1, '2013-11-10 00:57:20', 1);
+(8, 1, 'BARIDIV0006', 'dhaka', 'jhjhj', '017145323452', 'alimul28@yahoo.com', 1, 'TEST', '2013-11-09 22:54:55', 1, '2013-11-10 00:57:20', 1),
+(9, 1, 'BARIDIV0009', 'Barishal', '202', '0177828883', 'dena@yahoo.com', 1, 'Test description', '2013-11-20 13:24:10', 1, '2013-11-20 13:26:42', 1),
+(10, 1, 'BARIDIV0010', 'Rangpur', '202', '0177828883', 'dena@yahoo.com', 1, 'test', '2013-11-20 13:27:10', 1, '2013-11-20 18:27:10', NULL);
 
 -- --------------------------------------------------------
 
@@ -361,17 +398,17 @@ CREATE TABLE `rmis_grade_point_informations` (
   `description` text NOT NULL,
   `grading_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=43 ;
 
 --
 -- Dumping data for table `rmis_grade_point_informations`
 --
 
 INSERT INTO `rmis_grade_point_informations` (`id`, `lower_range`, `upper_range`, `letter_grade`, `grade_point`, `qualitative_status`, `description`, `grading_id`) VALUES
-(27, 90, 100, 'A+', 5, 'Highly Qualitative', 'Highly Qualititative Research Work', 1),
-(28, 80, 90, 'A', 4.75, 'Qualitative', 'Qualitative Research Work', 1),
-(29, 70, 80, 'A-', 4.5, 'Good', 'Good Work', 1),
-(30, 60, 70, 'B+', 4.25, 'Average', 'Average research work', 1);
+(39, 90, 80, 'A+', 5, '', 'Highly Qualititative Research Work', 1),
+(40, 80, 90, 'A', 4.75, '', 'Qualitative Research Work', 1),
+(41, 70, 80, 'A-', 4.5, '', 'Good Work', 1),
+(42, 60, 70, 'B+', 4.25, '', 'Average research work', 1);
 
 -- --------------------------------------------------------
 
@@ -396,7 +433,7 @@ CREATE TABLE `rmis_gradings` (
 --
 
 INSERT INTO `rmis_gradings` (`id`, `organization_id`, `grading_title`, `effect_date`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 1, 'Test Grade', '2013-10-19', '2013-10-19 14:01:09', 1, '2013-11-12 12:40:50', 1);
+(1, 1, 'Test Grade', '2013-10-19', '2013-10-19 14:01:09', 1, '2013-11-20 13:42:07', 1);
 
 -- --------------------------------------------------------
 
@@ -419,7 +456,7 @@ CREATE TABLE `rmis_implementation_sites` (
   `updated_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`,`organization_id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `rmis_implementation_sites`
@@ -701,7 +738,7 @@ CREATE TABLE `rmis_program_informations` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`program_id`,`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=21 ;
 
 --
 -- Dumping data for table `rmis_program_informations`
@@ -713,7 +750,8 @@ INSERT INTO `rmis_program_informations` (`program_id`, `organization_id`, `resea
 (16, 1, 'asdfas', 'BARIPA0001', 'BARIDIV1', 1, 1, 1, 202, 'member', NULL, '', 0, '', '', '', '', '', '2013-11-12', '2013-11-14', '0000-00-00', '0000-00-00', '', '', 'asdfasd', 'asdfas', 'asdfasd', '2013-11-10 23:39:37', 1, '2013-11-11 05:39:37', 0),
 (17, 1, 'asdfas', 'BARIPA0003', 'BARIDIV0002', 1, 1, 1, 202, 'member', NULL, '', 1, '', '', '', '', '', '2013-11-12', '2013-11-14', '0000-00-00', '0000-00-00', '', '', 'asdfasd', 'asdfas', 'ddddddddddddd---##########---', '2013-11-10 23:39:59', 1, '2013-11-11 09:55:37', 1),
 (18, 1, 'title', 'BARIPA0003', 'BARIDIV0002', 2, 2, 3, 0, 'member', NULL, '1,2,3', 1, 'BARIRS0001', 'BARIIMS0003', 'dhaka, tangail', '1,2', '1,2', '2013-11-12', '2013-11-08', '2013-11-05', '2013-11-08', '1000', '1000', 'goal', 'objective', 'output---##########---', '2013-11-11 09:58:52', 1, '2013-11-11 10:05:40', 1),
-(19, 1, 'test title', 'BARIPA0001', 'BARIDIV1', 1, 1, 1, 0, 'member', NULL, '', 0, '', '', '', '', '', '2013-11-12', '2013-11-13', '0000-00-00', '0000-00-00', '', '', 'sdfas', 'asdfasd', 'asdfas---##########---', '2013-11-11 10:07:52', 1, '2013-11-11 10:08:03', 1);
+(19, 1, 'test title', 'BARIPA0001', 'BARIDIV1', 1, 1, 1, 0, 'member', NULL, '', 0, '', '', '', '', '', '2013-11-12', '2013-11-13', '0000-00-00', '0000-00-00', '', '', 'sdfas', 'asdfasd', 'asdfas---##########---', '2013-11-11 10:07:52', 1, '2013-11-11 10:08:03', 1),
+(20, 1, '', '', '', 0, 0, 0, 0, '', NULL, '', 0, '', '', '', '', '', '0000-00-00', '0000-00-00', '0000-00-00', '0000-00-00', '', '', '', '', '', '2013-11-13 13:28:45', 1, '2013-11-13 18:28:45', 0);
 
 -- --------------------------------------------------------
 
@@ -724,14 +762,22 @@ INSERT INTO `rmis_program_informations` (`program_id`, `organization_id`, `resea
 CREATE TABLE `rmis_program_me_committees` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `organization_id` int(11) NOT NULL,
-  `committee_chairman` varchar(20) NOT NULL,
+  `committee_chairman` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `committee_formation_date` date NOT NULL,
   `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` bigint(20) DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`,`organization_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `rmis_program_me_committees`
+--
+
+INSERT INTO `rmis_program_me_committees` (`id`, `organization_id`, `committee_chairman`, `committee_formation_date`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 1, '202', '2013-11-20', '2013-11-20 11:48:24', 1, '2013-11-20 17:37:55', 1),
+(2, 1, '103', '2013-11-22', '2013-11-20 12:49:16', 1, '2013-11-20 17:49:49', 1);
 
 -- --------------------------------------------------------
 
@@ -746,6 +792,15 @@ CREATE TABLE `rmis_program_me_committee_members` (
   `role_in_committee` text NOT NULL,
   PRIMARY KEY (`committee_id`,`organization_id`,`member_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `rmis_program_me_committee_members`
+--
+
+INSERT INTO `rmis_program_me_committee_members` (`committee_id`, `organization_id`, `member_id`, `role_in_committee`) VALUES
+(1, 1, 103, 'Test role 2'),
+(1, 1, 202, 'Test role 1'),
+(2, 1, 202, 'Test role');
 
 -- --------------------------------------------------------
 

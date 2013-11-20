@@ -25,6 +25,7 @@
                 <input class="textbox" type="text" name="contact_person_name" id="contact_person_name" value="<?php if($implementation_detail) echo $implementation_detail->employee_name; ?>"/>
                 <input type="hidden" name="contact_person" id="contact_person" value="<?php if($implementation_detail) echo $implementation_detail->employee_id; ?>">
             	<input type="hidden" name="employee_id" id="employee_id" value="<?php if($implementation_detail) echo $implementation_detail->employee_id; ?>">
+            	<div for="contact_person_name" class="error display-none"></div>
             </div>
             <div class="clear"></div>
         </div>

@@ -196,17 +196,17 @@ class programCommittees extends MX_Controller{
         
 		$data = $this->grid->create('rmis_program_me_committees', $columns, $request, 'id'); 
         
-		$columns = array('committee_id', 'member_id','designation','role_in_committee');
+		$columns = array('committee_id', 'member_id','role_in_committee');
+		$columns[] = 'organization_id';
+		$request->organization_id = 1;
 		$request->committee_id = $request->id;
-		$i=0;
-		if(!empty($request->committe_member_names)>0){
-			foreach($request->committe_member_names as $committee_member_key=>$committee_member_name){
-				if($committee_member_name!=NULL){
-					$request->member_id = $committee_member_name;
-					$request->designation = $request->committe_member_designations[$i];
-					$request->role_in_committee = $request->committe_member_roles[$i];	
+		$committe_members = json_decode($this->input->post('committee_members'));
+		if(!empty($committe_members)){
+			foreach($committe_members as $committee_member_key=>$committee_member){
+				if($committee_member!=NULL){
+					$request->member_id = $committee_member->id;
+					$request->role_in_committee = $committee_member->roleinCommittee;
 					$this->grid->create('rmis_program_me_committee_members', $columns, $request, 'id');
-					$i++;	
 				}
 			}
 		}
@@ -218,7 +218,8 @@ class programCommittees extends MX_Controller{
     public function dataRead(){
         header('Content-Type: application/json');
         $request = json_decode(file_get_contents('php://input'));
-        $data= $this->grid->read_with_join_table('rmis_program_me_committees', array('rmis_program_me_committees.id','rmis_program_me_committees.id as committee_id','hrm_employees.employee_name as committee_chairman','committee_formation_date'), $request, 'hrm_employees', 'rmis_program_me_committees.committee_chairman = hrm_employees.employee_id');       
+        $data = $this->grid->read('rmis_program_me_committees', array('rmis_program_me_committees.id','rmis_program_me_committees.id as committee_id','committee_formation_date'), $request);       
+        $data= $this->grid->read_with_join_table('rmis_program_me_committees', array('rmis_program_me_committees.id','rmis_program_me_committees.id as committee_id', 'hrm_employees.employee_name as committee_chairman','committee_formation_date'), $request, 'hrm_employees', 'rmis_program_me_committees.committee_chairman = hrm_employees.employee_id'); 
         echo json_encode($data, JSON_NUMERIC_CHECK);
     }
     public function dataDestroy($request=NULL){  
@@ -256,19 +257,18 @@ class programCommittees extends MX_Controller{
         
 		$data = $this->grid->update('rmis_program_me_committees', $columns, $request, 'id'); 
         
-		$columns = array('committee_id', 'member_id','designation','role_in_committee');
+		$columns = array('committee_id', 'member_id','role_in_committee');
+		$columns[] = 'organization_id';
+		$request->organization_id = 1;
 		$request->committee_id = $request->id;
-		$i=0;
-		if(!empty($request->committe_member_names)>0){
+		$committe_members = json_decode($this->input->post('committee_members'));
+		if(!empty($committe_members)){
 			$this->ProgramCommitte->clean_committeeMembers($request->committee_id);
-
-			foreach($request->committe_member_names as $committee_member_key=>$committee_member_name){
-				if($committee_member_name!=NULL){
-					$request->member_id = $committee_member_name;
-					$request->designation = $request->committe_member_designations[$i];
-					$request->role_in_committee = $request->committe_member_roles[$i];	
+			foreach($committe_members as $committee_member_key=>$committee_member){
+				if($committee_member!=NULL){
+					$request->member_id = $committee_member->id;
+					$request->role_in_committee = $committee_member->roleinCommittee;
 					$this->grid->create('rmis_program_me_committee_members', $columns, $request, 'id');
-					$i++;	
 				}
 			}
 		}

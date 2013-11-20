@@ -41,9 +41,10 @@ class program_me_committee_model extends MY_Model {
 	
 	public function get_members($id=NULL){
 		if($id!=NULL){
-			$this->db->select('*');
+			$this->db->select('employee_id as id, employee_name as name, designation_name as designation, role_in_committee as roleinCommittee');
 			$this->db->from('rmis_program_me_committee_members');
 			$this->db->join('hrm_employees','rmis_program_me_committee_members.member_id=hrm_employees.employee_id','left');
+			$this->db->join('hrm_designations','hrm_employees.designation_id=hrm_designations.id','left');
 			$this->db->where('rmis_program_me_committee_members.committee_id',$id);
 			
 			$query = $this->db->get();

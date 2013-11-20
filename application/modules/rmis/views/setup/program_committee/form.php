@@ -13,11 +13,12 @@
 <div class="main_form">
 	<div class="left_form">
         <div class="form_element">
-            <div class="label">Chairman of the Committee <span class="mandatory">*</span></div>
+            <div class="label">Chairman of the Committee <span class="mandatory">*&nbsp;</span> </div>
             <div class="field">
             	<input class="textbox no-margin" type="text" name="committee_chairman_name" id="committee_chairman_name" value="<?php if($committee_detail) echo $committee_detail->employee_name; ?>" style="margin-left: 10px;"/>
                 <input type="hidden" name="committee_chairman" id="committee_chairman" value="<?php if($committee_detail) echo $committee_detail->employee_id; ?>">
             	<input type="hidden" name="employee_id" id="employee_id" value="<?php if($committee_detail) echo $committee_detail->employee_id; ?>">
+            	<div id="committee-chairman-name-error" for="committee_chairman_name" class="error display-none"></div>
             </div>
             <div class="clear small-gap"></div>
         </div>
@@ -54,13 +55,16 @@
         	<tr>
             	<td>
                 	<input type="text" class="textbox no-margin width_100_percent" id="member-name" placeholder="Enter member name" data-bind="value: memberName" />
-            		<input type="hidden" name="member-id" id="member-id" value="">
+            		<input type="hidden" name="employee-id" id="employee-id" value="" data-bind="value: employeeId">
+            		<div id="member-name-error" for="member_name" class="error display-none">Please choose any employee</div>
             	</td>
             	<td>
-                	<input type="text" class="textbox no-margin width_100_percent" id="member-designation" placeholder="Enter member designation" data-bind="value: memberDesignation" />
+                	<input type="text" class="textbox no-margin width_100_percent" readonly="readonly" id="member-designation" placeholder="Enter member designation" data-bind="value: memberDesignation" />
+            		<div id="member-designation-error" for="member_name" class="error display-none">Please choose any employee</div>
             	</td>
             	<td>
                 	<input type="text" class="textbox no-margin width_100_percent" id="member-role" placeholder="Enter role in committee" data-bind="value: memberRoleinCommittee" />     
+            		<div id="member-role-error" for="member_name" class="error display-none">Please choose any employee</div>
             	</td>
             	<td>
                 	<button type="button" data-bind="click: addMember">+</button>
@@ -74,12 +78,13 @@
 	        <td data-bind="text: name"></td>
 	        <td data-bind="text: designation"></td>
 	        <td data-bind="text: roleinCommittee"></td>
-	        <td><button type="button"  data-bind="click: deleteMember">-</button></td>
+	        <td><button type="button" style="font-size:20px;" data-bind="click: deleteMember">-</button></td>
 	    </tr>
 	</script>
-                    
+	
+    <input type="hidden" name="committee_members" id="committee_members" value="<?php if(isset($committee_members) && $committee_members!=NULL) echo json_encode($committee_members); ?>">                
 	<div class="form_element">
-    	<div class="button_panel" style="margin-right:125px;">
+    	<div class="button_panel" style="margin-right:115px;">
         	<?php if(isset($committee_detail) && $committee_detail->id!=NULL) { ?>
                 <input type="hidden" name="id" id="id" value="<?php echo $committee_detail->committee_id; ?>">
                 <input type="button" name="new_committee" id="new_committee" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('rmis/setup/programCommittees');?>'">
@@ -93,79 +98,4 @@
     </div>
 </div>
 </form>
-<script type="text/javascript">
-	$('#committee_formation_date').datepicker('setStartDate');
-</script>
-
-<script>        
-    $(document).ready(function() {
-    	var valid;
-    	$("#member-name").kendoAutoComplete({
-        	dataTextField: "employee_name",
-        	dataIdField: "employee_name",
-            filter: "startswith",
-            minLength: 2,
-            ignoreCase: false,
-            dataSource: {
-                         	type: "jsonp",
-                            serverFiltering: true,
-                            serverPaging: false,
-                            pageSize: 20,
-                            transport: {
-                                read: "<?php echo site_url('rmis/employees2'); ?>"
-                            }
-                       },
-           	open: function(e) {
-		    	valid = false;
-		  	},
-		  	select: function(e){
-		    	valid = true;
-			    var dataItem = this.dataItem(e.item.index());                
-        		//$("#autocomplete_id").val(dataItem.id);
-			    alert(dataItem.employee_id);
-		  	},
-		  	close: function(e){
-		    	// if no valid selection - clear input
-		    	if (!valid) this.value('');
-		  	}
-        });
-        var viewModel = kendo.observable({
-            memberName: "",
-            memberDesignation: "",
-            memberRoleinCommittee: "",
-            addMember: function() {
-                if(validate_member()){
-                	this.get("members").push({
-	                    name: this.get("memberName"),
-	                    designation: this.get("memberDesignation"),
-	                    roleinCommittee: this.get("memberRoleinCommittee")
-	                });	
-                }
-            },
-            deleteMember: function(e) {
-                // the current data item (product) is passed as the "data" field of the event argument
-                var member = e.data;
-                var members = this.get("members");
-                var index = members.indexOf(member);
-                // remove the product by using the splice method
-                members.splice(index, 1);
-            },
-            members: []
-        });
-
-        kendo.bind($("#committee-members"), viewModel);
-    });
-    function validate_member(){
-    	if($('#member-id').val()==''){
-    		return false;
-    	}
-    	if($('#member-designation').val()==''){
-    		return false;
-    	}
-    	if($('#member-role').val()==''){
-    		return false;
-    	}
-    	return false;
-    }
-    </script>
 

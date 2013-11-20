@@ -19,8 +19,7 @@
 			messages: {
 				division_name: "Please enter division name.",
 				division_head_name: {
-					required: "Please select scientist",
-					checkHeadOfDivisionName: "Please check head of division name."
+					required: "Please select scientist"
 				},				
 				division_email: {
 					required: "Email address can't be left blank.",
@@ -52,7 +51,6 @@
 					email: "Please enter a valid email."
 				},
 				station_contact_person_name: {
-					checkStationContactPerson: "Please check statin contact person name."
 				}
 			},
 			
@@ -81,7 +79,6 @@
 					email: "Please enter a valid email."
 				},
 				contact_person_name: {
-					checkImplAreaContactPerson:"Please check contact person name."
 				}
 			},
 			
@@ -120,8 +117,7 @@
 	
 			messages: {
 				committee_chairman_name: {
-					required: "Please enter chairman of the committee",
-					checkCommitteeChairmanName: "Please check committee chairman name"
+					required: "Please enter chairman of the committee"
 				},
 				committee_formation_date: {
 					required: "Please enter committe formation date"
@@ -162,7 +158,7 @@
 	    			else
 	    				return true;
 	    		},
-	    		"Please check employee name"
+	    		"Please choose head of division"
 	    	);
 	    
 	    $.validator.addMethod(
@@ -173,7 +169,7 @@
 		            else
 		            	return true;
 		        },
-		        "Please check contact person name"
+		        "Please choose contact person"
 		    );
 	    
 	    $.validator.addMethod(
@@ -184,18 +180,22 @@
 		            else
 		            	return true;
 		        },
-		        "Please check contact person name"
+		        "Please choose contact person"
 		    );
 	    
 	    $.validator.addMethod(
 	    		"checkCommitteeChairmanName", 
 	    		function(value, element) {
-	    			if($("#employee_id").val()=="")
+	    			if($("#employee_id").val()==""){
+	    				//$('#committee-chairman-name-error').show();
 	    				return false;
-	    			else
+	    			}
+	    			else{
+	    				//$('#committee-chairman-name-error').hide();
 	    				return true;
+	    			}
 	    		},
-	    		"Please check employee name"
+	    		"Please choose any employee"
 	    	);
 	    
 	    

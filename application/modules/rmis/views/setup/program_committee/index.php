@@ -36,58 +36,123 @@
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
-	$(function() {
-		$( "#committee_chairman_name" ).focus(function() {
-		  	$("#employee_id").val(""); 
-			$("#committee_chairman").val("");
-		});
-		$( "#committee_chairman_name" ).autocomplete({
-       		source: function(request, response) {
-            	$.ajax({ url: "<?php echo site_url('rmis/employees'); ?>",
-            		data: { term: $("#committee_chairman_name").val()},
-            		dataType: "json",
-            		type: "POST",
-            		success: function(data){
-            			response( $.map( data, function( employee ) {
-			              return {
-			                label: employee.employee_name,
-			                value: employee.employee_name,
-			                id: employee.employee_id
-			              }
-			            }));
-            		}
-      			});
-			},
-          	minLength: 2,
-          	select: function( event, ui ) {
-				$("#employee_id").val(ui.item.id); 
-				$("#committee_chairman").val(ui.item.id); 
-			}
-    	});
-    	
-    	$("#member-name" ).autocomplete({
-       		source: function(request, response) {
-            	$.ajax({ url: "<?php echo site_url('rmis/employees'); ?>",
-            		data: { term: $(this).val()},
-            		dataType: "json",
-            		type: "POST",
-            		success: function(data){
-            			response( $.map( data, function( employee ) {
-			              return {
-			                label: employee.employee_name,
-			                value: employee.employee_name,
-			                id: employee.employee_id
-			              }
-			            }));
-            		}
-      			});
-			},
-          	minLength: 2,
-          	select: function( event, ui ) {
-				$("#employee_id").val(ui.item.id); 
-				$("#committee_chairman").val(ui.item.id); 
-			}
-    	});
-	});
+	var committee_chairman_select;
+	$("#committee_chairman_name").kendoAutoComplete({
+        	dataTextField: "employee_name",
+            filter: "startswith",
+            minLength: 2,
+            ignoreCase: false,
+            dataSource: {
+                         	type: "jsonp",
+                            serverFiltering: true,
+                            serverPaging: false,
+                            pageSize: 20,
+                            transport: {
+                                read: "<?php echo site_url('rmis/employees2'); ?>"
+                            }
+                       },
+           	open: function(e) {
+		    	committee_chairman_select = false;
+		  	},
+		  	select: function(e){
+		    	committee_chairman_select = true;
+			    var dataItem = this.dataItem(e.item.index());                
+        		$("#employee_id").val(dataItem.employee_id);
+        		$("#committee_chairman").val(dataItem.employee_id);
+		  	},
+		  	close: function(e){
+		    	// if no valid selection - clear input
+		    	if (!committee_chairman_select) this.value('');
+		  	}
+    });
 });
+</script>
+<script type="text/javascript">
+	$('#committee_formation_date').datepicker('setStartDate');        
+    $(document).ready(function() {
+    	var valid;
+    	$("#member-name").kendoAutoComplete({
+        	dataTextField: "employee_name",
+            filter: "startswith",
+            minLength: 2,
+            ignoreCase: false,
+            dataSource: {
+                         	type: "jsonp",
+                            serverFiltering: true,
+                            serverPaging: false,
+                            pageSize: 20,
+                            transport: {
+                                read: "<?php echo site_url('rmis/employees2'); ?>"
+                            }
+                       },
+           	open: function(e) {
+		    	valid = false;
+		  	},
+		  	select: function(e){
+		    	valid = true;
+			    var dataItem = this.dataItem(e.item.index());                
+        		$("#member-designation").val(dataItem.designation_name);
+        		$("#employee-id").val(dataItem.employee_id);
+		  	},
+		  	close: function(e){
+		    	// if no valid selection - clear input
+		    	if (!valid) this.value('');
+		  	}
+        });
+        var viewModel = kendo.observable({
+            employeeId: "",
+            memberName: "",
+            memberDesignation: "",
+            memberRoleinCommittee: "",
+            addMember: function() {
+                if(validate_member()){
+                	this.get("members").push({
+	                    id: $('#employee-id').val(),
+	                    name: $('#member-name').val(),
+	                    designation: $('#member-designation').val(),
+	                    roleinCommittee: $('#member-role').val()
+	                });
+	                $('#employee-id').val("");
+	                $('#member-name').val("");
+	                $('#member-designation').val("");
+	                $('#member-role').val("");
+	                var members = this.get("members");
+	                $("#committee_members").val(JSON.stringify(members));
+                }
+            },
+            deleteMember: function(e) {
+                // the current data item (product) is passed as the "data" field of the event argument
+                var member = e.data;
+                var members = this.get("members");
+                var index = members.indexOf(member);
+                // remove the product by using the splice method
+                members.splice(index, 1);
+                $("#committee_members").val(JSON.stringify(members));
+            },
+            members: <?php if(isset($committee_members) && $committee_members!=NULL) echo json_encode($committee_members); else echo "[]"; ?>
+        });
+        kendo.bind($("#committee-members"), viewModel);
+    });
+    function validate_member(){
+    	var return_val=true;
+    	if($('#employee-id').val()==''){
+    		$('#member-name-error').show();
+    		return_val = false;
+    	}else{
+    		$('#member-name-error').hide();
+    	}
+    	if($('#member-designation').val()==''){
+    		$('#member-designation-error').show();
+    		return_val = false;
+    	}else{
+    		$('#member-designation-error').hide();
+    	}
+    	if($('#member-role').val()==''){
+    		$('#member-role-error').show();
+    		return_val = false;
+    	}else{
+    		$('#member-role-error').hide();
+    	}
+    	return return_val;
+    }
 </script>

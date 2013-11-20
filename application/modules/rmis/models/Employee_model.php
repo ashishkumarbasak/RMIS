@@ -15,8 +15,9 @@ class Employee_model extends MY_Model {
 	}
 	
 	public function search_employee($options = array()){               
-    	$this->db->select("employee_name, employee_id");
+    	$this->db->select("employee_name, employee_id, designation_name");
 		$this->db->from("hrm_employees");
+		$this->db->join('hrm_designations','hrm_employees.designation_id=hrm_designations.id','left');
         $this->db->like('employee_name', $options['keyword'], 'after');
         $query = $this->db->get();
         return $query->result();

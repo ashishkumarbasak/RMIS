@@ -382,3 +382,4 @@ ul.ui-autocomplete li.ui-menu-item:last-child{
 .dataTable .odd td {
    border-bottom: 1px solid #bababa; }
 .dataTable .k-autocomplete{ border-radius:0px !important; width:100% !important; } 
+.field .k-autocomplete{ border-radius:0px !important; width:240px !important;} 

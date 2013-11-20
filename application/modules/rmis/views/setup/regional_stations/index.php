@@ -33,36 +33,39 @@ function ClickEdit(e) {
 	var edit_url = "/rmis/setup/regionalStations/edit/"+dataItem.id;
 	window.location = edit_url;
 }
-
 $(document).ready(function() {
-	$(function() {
-		$( "#station_contact_person_name" ).focus(function() {
-		  	$("#employee_id").val(""); 
-			$("#station_contact_person").val("");
-		});
-		$( "#station_contact_person_name" ).autocomplete({
-       		source: function(request, response) {
-            	$.ajax({ url: "<?php echo site_url('rmis/employees'); ?>",
-            		data: { term: $("#station_contact_person_name").val()},
-            		dataType: "json",
-            		type: "POST",
-            		success: function(data){
-            			response( $.map( data, function( employee ) {
-			              return {
-			                label: employee.employee_name,
-			                value: employee.employee_name,
-			                id: employee.employee_id
-			              }
-			            }));
-            		}
-      			});
-			},
-          	minLength: 2,
-          	select: function( event, ui ) {
-				$("#employee_id").val(ui.item.id); 
-				$("#station_contact_person").val(ui.item.id); 
-			}
-    	});
-	});
+	var station_contact_person_select;
+	$("#station_contact_person_name").kendoAutoComplete({
+        	dataTextField: "employee_name",
+            filter: "startswith",
+            minLength: 2,
+            ignoreCase: false,
+            dataSource: {
+                         	type: "jsonp",
+                            serverFiltering: true,
+                            serverPaging: false,
+                            pageSize: 20,
+                            transport: {
+                                read: "<?php echo site_url('rmis/employees2'); ?>"
+                            }
+                       },
+           	open: function(e) {
+		    	station_contact_person_select = false;
+		  	},
+		  	select: function(e){
+		    	station_contact_person_select = true;
+			    var dataItem = this.dataItem(e.item.index());                
+        		$("#employee_id").val(dataItem.employee_id);
+        		$("#station_contact_person").val(dataItem.employee_id);
+        		
+		  	},
+		  	close: function(e){
+		    	// if no valid selection - clear input
+		    	if (!station_contact_person_select) this.value('');
+		  	}
+    });
 });
 </script>
+<style type="text/css">
+	.field .k-autocomplete{ border-radius:0px !important; width:215px !important;} 
+</style>

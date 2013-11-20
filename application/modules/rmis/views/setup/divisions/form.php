@@ -25,6 +25,7 @@
             	<input class="textbox no-margin" type="text" name="division_head_name" id="division_head_name" value="<?php if($division_detail) echo $division_detail->employee_name; ?>"/>
             	<input type="hidden" name="division_head" id="division_head" value="<?php if($division_detail) echo $division_detail->employee_id; ?>">
             	<input type="hidden" name="employee_id" id="employee_id" value="<?php if($division_detail) echo $division_detail->employee_id; ?>">
+            	<div for="division_head_name" class="error display-none"></div>
             </div>
             <div class="clear small-gap"></div>
         </div>

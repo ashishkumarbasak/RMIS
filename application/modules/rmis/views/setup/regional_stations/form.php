@@ -26,13 +26,14 @@
             	<input class="textbox" type="text" name="station_contact_person_name" id="station_contact_person_name" value="<?php if($station_detail) echo $station_detail->employee_name; ?>"/>
                 <input type="hidden" name="station_contact_person" id="station_contact_person" value="<?php if($station_detail) echo $station_detail->employee_id; ?>">
             	<input type="hidden" name="employee_id" id="employee_id" value="<?php if($station_detail) echo $station_detail->employee_id; ?>">
+            	<div for="station_contact_person_name" class="error display-none"></div>
             </div>
             <div class="clear"></div>
         </div>
         
-        <div class="form_element">
+        <div class="form_element" style="margin-top:9px;">
             <div class="label">Phone No</div>
-            <div class="field"><input class="textbox" type="text" name="station_phone" id="station_phone" value="<?php if($station_detail) echo $station_detail->station_phone; ?>"/></div>
+            <div class="field"><input class="textbox" type="text" name="station_phone" id="station_phone" value="<?php if($station_detail) echo $station_detail->station_phone; ?>" /></div>
             <div class="clear"></div>
         </div>
         
