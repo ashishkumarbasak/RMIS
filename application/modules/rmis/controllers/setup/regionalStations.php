@@ -210,6 +210,7 @@ class RegionalStations extends MX_Controller{
 			if($this->input->post('delete_station')){
 				$request = json_encode($this->input->post());
 				$this->dataDestroy($request);
+				redirect('rmis/setup/regionalStations','refresh');
 			}
 				
 			$station_detail = $this->station->get_details($station_id);

@@ -211,6 +211,7 @@ class ImplementationSites extends MX_Controller{
 			if($this->input->post('delete_implementation')){
 				$request = json_encode($this->input->post());
 				$this->dataDestroy($request);
+				redirect("rmis/setup/implementationSites", "refresh");
 			}
 				
 			$implementation_detail = $this->implementation->get_details($implementation_site_id);

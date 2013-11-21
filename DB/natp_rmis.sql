@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 20, 2013 at 07:42 PM
+-- Generation Time: Nov 21, 2013 at 06:34 PM
 -- Server version: 5.5.29
 -- PHP Version: 5.4.10
 
@@ -126,7 +126,7 @@ CREATE TABLE `hrm_employees` (
 INSERT INTO `hrm_employees` (`id`, `organization_id`, `employee_id`, `personal_file_no`, `type_id`, `category_id`, `class_id`, `root_organogram_id`, `organogram_id`, `designation_id`, `national_id`, `passport_no`, `tin_no`, `employee_name_bn`, `employee_name`, `father_name`, `father_name_bn`, `mother_name`, `district_id`, `date_of_birth`, `sex`, `blood_group_id`, `marital_status_id`, `religion_id`, `is_freed_fighter`, `is_child_grand_child_freedom_fighter`, `service_quota_id`, `joining_date`, `confirmation_go_date`, `date_pf_membership`, `lpr_prl_date`, `retirement_date`, `is_death_status`, `date_of_death`, `posting_area_id`, `location`, `cadre`, `dadre_date`, `batch`, `option_for_work_field`, `per_village_House No_road`, `per_post_code`, `per_district_id`, `per_thana_id`, `per_telephone_no`, `per_mobile_no`, `pre_village_House No_road`, `pre_post_code`, `pre_district_id`, `pre_thana_id`, `pre_telephone_no`, `pre_mobile_no`, `email`, `is_active`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 (1, 1, '101', 'p1', 1, 1, 1, 6, 8, 1, '2121', '12321', NULL, 'Amiya BD', 'Amiya K. Saha', 'Rk Saha', NULL, NULL, 1, '1981-12-15', 'Male', 1, 2, 1, 0, 0, NULL, '2000-12-12', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'amiya@www.com', 1, '0000-00-00 00:00:00', NULL, '2013-08-29 11:46:40', NULL),
 (2, 1, '102', 'f100', 1, 2, 2, 5, 2, 2, '1212', NULL, NULL, 'Razi', 'Alimul Razi', 'Rafiqul Islam', NULL, NULL, 1, '1982-07-31', 'Male', NULL, 4, 2, 1, 1, NULL, '2006-10-10', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'qqq@tvl.com', 1, '0000-00-00 00:00:00', NULL, '2013-11-11 06:46:12', NULL),
-(4, 1, '103', 'pf-0123', 1, 1, 1, NULL, 0, 2, NULL, NULL, NULL, 'sdfsad', 'Ashish Kumar', '', NULL, NULL, NULL, '0000-00-00', 'Male', NULL, 0, 0, 0, 0, NULL, '2013-09-12', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2013-09-12 05:21:58', 1, '2013-11-11 06:46:41', NULL),
+(4, 1, '103', 'pf-0123', 1, 1, 1, NULL, 0, 2, NULL, NULL, NULL, 'sdfsad', 'Ashish Kumar Basak', '', NULL, NULL, NULL, '0000-00-00', 'Male', NULL, 0, 0, 0, 0, NULL, '2013-09-12', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2013-09-12 05:21:58', 1, '2013-11-21 17:02:20', NULL),
 (6, 1, '104', 'sdfasd', 2, 2, 1, NULL, 10, 4, NULL, NULL, NULL, 'sdfsa', 'Raiyan Samin', '', NULL, NULL, NULL, '0000-00-00', 'Male', NULL, 0, 0, 0, 0, NULL, '2013-09-12', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2013-09-12 05:40:06', 1, '2013-11-11 06:46:47', NULL),
 (7, 1, '105', 'tesd', 3, 2, 2, NULL, 2, 2, NULL, NULL, NULL, 'sdfsd', 'Salim Mahmud', '', NULL, NULL, NULL, '0000-00-00', 'Male', NULL, 0, 0, 0, 0, NULL, '2013-09-17', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2013-09-15 09:20:13', 7, '2013-11-11 06:46:54', NULL),
 (8, 1, '106', 'dasdf', 1, 2, 2, NULL, 1, 2, NULL, NULL, NULL, 'sdfsad', 'Abu Sayed', '', NULL, NULL, NULL, '0000-00-00', 'Male', NULL, 0, 0, 0, 0, NULL, '2013-09-15', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2013-09-15 09:37:03', 7, '2013-11-11 06:47:03', NULL),
@@ -337,19 +337,14 @@ CREATE TABLE `rmis_divisions` (
   `updated_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`,`organization_id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `rmis_divisions`
 --
 
 INSERT INTO `rmis_divisions` (`id`, `organization_id`, `division_id`, `division_name`, `division_head`, `division_phone`, `division_email`, `division_order`, `division_about`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 1, 'BARIDIV1', 'Dhaka', '202', '01558755441', 'ashish021@gmail.com', 1, 'Test Division', '2013-09-30 11:53:34', 1, '2013-11-12 12:03:48', 1),
-(3, 1, 'BARIDIV0002', 'Rajshahi', '202', '01714532345', 'test23@yahoo.com', 1, 'test division1', '2013-10-01 09:39:49', 1, '2013-11-10 00:51:21', 1),
-(5, 1, 'BARIDIV0004', 'Sylhet', '202', '01714532345', 'alimul@yahoo.com', 2, 'test organization', '2013-11-03 12:14:11', 1, '2013-11-10 00:51:52', 1),
-(8, 1, 'BARIDIV0006', 'dhaka', 'jhjhj', '017145323452', 'alimul28@yahoo.com', 1, 'TEST', '2013-11-09 22:54:55', 1, '2013-11-10 00:57:20', 1),
-(9, 1, 'BARIDIV0009', 'Barishal', '202', '0177828883', 'dena@yahoo.com', 1, 'Test description', '2013-11-20 13:24:10', 1, '2013-11-20 13:26:42', 1),
-(10, 1, 'BARIDIV0010', 'Rangpur', '202', '0177828883', 'dena@yahoo.com', 1, 'test', '2013-11-20 13:27:10', 1, '2013-11-20 18:27:10', NULL);
+(1, 1, 'BARIDIV0001', 'Jute', '103', '+880177828883', 'ashish021@gmail.com', 1, 'Research on Jute genome', '2013-11-21 12:07:36', 1, '2013-11-21 17:07:36', NULL);
 
 -- --------------------------------------------------------
 
@@ -394,21 +389,20 @@ CREATE TABLE `rmis_grade_point_informations` (
   `upper_range` float NOT NULL,
   `letter_grade` varchar(10) NOT NULL,
   `grade_point` float NOT NULL,
-  `qualitative_status` varchar(255) NOT NULL,
+  `qualitative_status` bigint(11) NOT NULL,
   `description` text NOT NULL,
   `grading_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=43 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `rmis_grade_point_informations`
 --
 
 INSERT INTO `rmis_grade_point_informations` (`id`, `lower_range`, `upper_range`, `letter_grade`, `grade_point`, `qualitative_status`, `description`, `grading_id`) VALUES
-(39, 90, 80, 'A+', 5, '', 'Highly Qualititative Research Work', 1),
-(40, 80, 90, 'A', 4.75, '', 'Qualitative Research Work', 1),
-(41, 70, 80, 'A-', 4.5, '', 'Good Work', 1),
-(42, 60, 70, 'B+', 4.25, '', 'Average research work', 1);
+(1, 100, 90, 'A+', 5, 1, 'Very Good Research', 1),
+(2, 80, 90, 'A-', 4.75, 2, 'Good Research', 1),
+(3, 70, 80, 'A', 4.5, 2, 'Average Research', 1);
 
 -- --------------------------------------------------------
 
@@ -433,7 +427,7 @@ CREATE TABLE `rmis_gradings` (
 --
 
 INSERT INTO `rmis_gradings` (`id`, `organization_id`, `grading_title`, `effect_date`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 1, 'Test Grade', '2013-10-19', '2013-10-19 14:01:09', 1, '2013-11-20 13:42:07', 1);
+(1, 1, 'Research Evaluation Grading', '2013-11-21', '2013-11-21 12:23:24', 1, '2013-11-21 17:23:24', NULL);
 
 -- --------------------------------------------------------
 
@@ -456,17 +450,14 @@ CREATE TABLE `rmis_implementation_sites` (
   `updated_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`,`organization_id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `rmis_implementation_sites`
 --
 
 INSERT INTO `rmis_implementation_sites` (`id`, `organization_id`, `implementation_site_id`, `implementation_site_name`, `contact_person`, `phone_number`, `email_address`, `implementation_order`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(3, 1, 'BARIIMS0003', 'Khulna', '202', '01732542342', 'alim@yahoo.com', 1, '2013-11-03 08:36:29', 1, '2013-11-04 13:58:51', 1),
-(5, 1, 'BARIIMS0004', 'Tangail', '202', '0132542342', 'callkamrul@yahoo.com', 1, '2013-11-10 00:44:31', 1, '2013-11-10 09:27:13', 1),
-(7, 1, 'BARIIMS0007', 'Rongpur', '101', '01716463156', 'alimulrazi28@yahoo.com', 3, '2013-11-10 02:14:45', 1, '2013-11-10 09:27:52', 1),
-(8, 1, 'BARIIMS0008', 'Dhaka', '202', '01779021581', 'ashish021@gmail.com', 10, '2013-11-12 12:36:31', 1, '2013-11-12 17:36:31', NULL);
+(1, 1, 'BARIIMS0001', 'Genome Technology', '103', '+8801779021581', 'ashish021@gmail.com', 1, '2013-11-21 12:12:53', 1, '2013-11-21 17:12:53', NULL);
 
 -- --------------------------------------------------------
 
@@ -522,15 +513,7 @@ CREATE TABLE `rmis_program_activities` (
   `updated_by` bigint(20) DEFAULT NULL,
   `program_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`,`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
-
---
--- Dumping data for table `rmis_program_activities`
---
-
-INSERT INTO `rmis_program_activities` (`id`, `organization_id`, `s_o`, `work_element`, `planned_startDate`, `planned_endDate`, `actual_startDate`, `actual_endDate`, `assign_resource`, `created_at`, `created_by`, `updated_at`, `updated_by`, `program_id`) VALUES
-(9, 0, '1', 'Test work element 1', '2013-10-10', '2014-10-10', '2013-11-10', '2014-11-10', 202, '2013-11-01 11:58:37', 1, '2013-11-01 11:58:37', 1, 1),
-(10, 0, '2', 'Test work element 2', '2013-10-10', '2014-10-10', '2013-11-10', '2014-11-10', 101, '2013-11-01 11:58:37', 1, '2013-11-01 11:58:37', 1, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -549,17 +532,14 @@ CREATE TABLE `rmis_program_areas` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`,`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `rmis_program_areas`
 --
 
 INSERT INTO `rmis_program_areas` (`id`, `organization_id`, `program_area_id`, `program_area_name`, `program_area_order`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(2, 0, 'BARIPA0001', 'Dhaka', 1, '2013-09-30 12:50:48', 1, '2013-09-30 12:50:48', NULL),
-(3, 0, 'BARIPA0003', 'Khulna', 1, '2013-10-01 09:40:27', 1, '2013-10-01 09:40:27', NULL),
-(6, 1, 'BARIPA0006', 'Onion', 1, '2013-11-03 09:04:40', 1, '2013-11-04 13:59:31', 1),
-(7, 1, 'BARIPA0007', 'Potato', 1, '2013-11-09 22:57:13', 1, '2013-11-10 04:57:13', NULL);
+(1, 1, 'BARIPA0001', 'Research Technology', 1, '2013-11-21 12:19:14', 1, '2013-11-21 17:19:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -575,17 +555,7 @@ CREATE TABLE `rmis_program_cost_breakdowns` (
   `amount` float NOT NULL,
   `program_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
-
---
--- Dumping data for table `rmis_program_cost_breakdowns`
---
-
-INSERT INTO `rmis_program_cost_breakdowns` (`id`, `s_o`, `ac_head_code`, `ac_head_title`, `amount`, `program_id`) VALUES
-(8, '1', 120, 0, 800000, 1),
-(9, '2', 125, 0, 80000000, 1),
-(10, '3', 130, 0, 10000000, 1),
-(11, '4', 135, 0, 5000, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -604,15 +574,7 @@ CREATE TABLE `rmis_program_cost_estimations` (
   `updated_by` bigint(20) DEFAULT NULL,
   `program_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`,`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `rmis_program_cost_estimations`
---
-
-INSERT INTO `rmis_program_cost_estimations` (`id`, `organization_id`, `estimate_date`, `financial_year`, `created_at`, `created_by`, `updated_at`, `updated_by`, `program_id`) VALUES
-(1, 0, '2013-10-26', '2014-2015', '2013-10-26 10:38:40', 1, '2013-10-28 12:02:03', 1, 1),
-(2, 1, '0000-00-00', '', '2013-11-11 02:03:53', 1, '2013-11-11 08:03:53', NULL, 15);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -635,19 +597,7 @@ CREATE TABLE `rmis_program_funding_sources` (
   `updated_by` bigint(20) DEFAULT NULL,
   `program_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`,`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
-
---
--- Dumping data for table `rmis_program_funding_sources`
---
-
-INSERT INTO `rmis_program_funding_sources` (`id`, `organization_id`, `fund_source`, `amount`, `currency`, `exchange_rate`, `date_of_exchange_rate`, `amount_in_taka`, `created_at`, `created_by`, `updated_at`, `updated_by`, `program_id`) VALUES
-(8, 0, 12, 10000000, 'USD', 80, '2013-10-03', 800000000, NULL, NULL, '2013-10-28 12:02:03', 1, 1),
-(9, 0, 13, 10000, 'EUR', 100, '2013-10-03', 1000000, NULL, NULL, '2013-10-28 12:02:03', 1, 1),
-(10, 0, 14, 2000, 'GB', 120, '2013-10-04', 240000, NULL, NULL, '2013-10-28 12:02:03', 1, 1),
-(11, 0, 15, 5000, 'DK', 7, '2013-10-05', 35000, NULL, NULL, '2013-10-28 12:02:03', 1, 1),
-(12, 1, 1, 2000, '2', 78, '2013-11-10', 156000, '2013-11-11 02:03:52', 1, '2013-11-11 08:03:52', NULL, 15),
-(13, 1, 2, 1000, '3', 125, '2013-11-10', 125000, '2013-11-11 02:03:52', 1, '2013-11-11 08:03:53', NULL, 15);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -665,14 +615,7 @@ CREATE TABLE `rmis_program_implementation_committees` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`,`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `rmis_program_implementation_committees`
---
-
-INSERT INTO `rmis_program_implementation_committees` (`id`, `organization_id`, `committee_formation_date`, `program_id`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 0, '2013-10-27', 1, '2013-10-26 11:40:06', 1, '2013-10-28 12:22:46', 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -689,15 +632,7 @@ CREATE TABLE `rmis_program_implementation_committee_members` (
   `email` varchar(255) DEFAULT NULL,
   `program_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
-
---
--- Dumping data for table `rmis_program_implementation_committee_members`
---
-
-INSERT INTO `rmis_program_implementation_committee_members` (`id`, `committee_member_type`, `member_name`, `designation`, `contact_no`, `email`, `program_id`) VALUES
-(5, '1', '1', 'President', '01779021581', 'ashish021@gmail.com', 1),
-(6, '2', '2', 'Vice President', '01779021581', 'debasis@gmail.com', 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -738,20 +673,7 @@ CREATE TABLE `rmis_program_informations` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`program_id`,`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=21 ;
-
---
--- Dumping data for table `rmis_program_informations`
---
-
-INSERT INTO `rmis_program_informations` (`program_id`, `organization_id`, `research_program_title`, `program_area`, `program_division`, `program_research_type`, `program_research_priority`, `program_research_status`, `program_coordinator`, `program_coordinator_designation`, `is_collaborate`, `program_institute_names`, `program_department_name`, `program_regional_station_name`, `program_implementation_location`, `program_keywords`, `program_commodities`, `program_aezs`, `program_planned_start_date`, `program_planned_end_date`, `program_initiation_date`, `program_completion_date`, `program_planned_budget`, `program_approved_budget`, `program_goal`, `program_objective`, `program_expected_outputs`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 1, 'This is test program titel edit', 'BARIPA0005', 'BARIDIV0002', 2, 4, 3, 0, 'Vice President', '1', '1,4', 4, 'BARIRS0001', 'BARIIMS0001', 'Dhaka, Chittagong', '1,5', '1,3,4', '2013-10-26', '2013-11-29', '2013-10-26', '2013-12-31', '10000000', '10000000', 'Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal Test program goal ', 'Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose Test program purpose ', 'Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output Test program expected output ---##########---Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 Test program expected output 2 ---##########---Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 Test program expected output 3 ---##########---', '0000-00-00 00:00:00', 2013, '0000-00-00 00:00:00', 2013),
-(15, 1, 'asdfas', 'BARIPA0001', 'BARIDIV1', 1, 1, 1, 202, 'member', NULL, '', 0, '', '', '', '', '', '2013-11-12', '2013-11-14', '0000-00-00', '0000-00-00', '', '', 'asdfasd', 'asdfas', 'asdfasd', '2013-11-10 23:38:07', 1, '2013-11-11 05:38:07', 0),
-(16, 1, 'asdfas', 'BARIPA0001', 'BARIDIV1', 1, 1, 1, 202, 'member', NULL, '', 0, '', '', '', '', '', '2013-11-12', '2013-11-14', '0000-00-00', '0000-00-00', '', '', 'asdfasd', 'asdfas', 'asdfasd', '2013-11-10 23:39:37', 1, '2013-11-11 05:39:37', 0),
-(17, 1, 'asdfas', 'BARIPA0003', 'BARIDIV0002', 1, 1, 1, 202, 'member', NULL, '', 1, '', '', '', '', '', '2013-11-12', '2013-11-14', '0000-00-00', '0000-00-00', '', '', 'asdfasd', 'asdfas', 'ddddddddddddd---##########---', '2013-11-10 23:39:59', 1, '2013-11-11 09:55:37', 1),
-(18, 1, 'title', 'BARIPA0003', 'BARIDIV0002', 2, 2, 3, 0, 'member', NULL, '1,2,3', 1, 'BARIRS0001', 'BARIIMS0003', 'dhaka, tangail', '1,2', '1,2', '2013-11-12', '2013-11-08', '2013-11-05', '2013-11-08', '1000', '1000', 'goal', 'objective', 'output---##########---', '2013-11-11 09:58:52', 1, '2013-11-11 10:05:40', 1),
-(19, 1, 'test title', 'BARIPA0001', 'BARIDIV1', 1, 1, 1, 0, 'member', NULL, '', 0, '', '', '', '', '', '2013-11-12', '2013-11-13', '0000-00-00', '0000-00-00', '', '', 'sdfas', 'asdfasd', 'asdfas---##########---', '2013-11-11 10:07:52', 1, '2013-11-11 10:08:03', 1),
-(20, 1, '', '', '', 0, 0, 0, 0, '', NULL, '', 0, '', '', '', '', '', '0000-00-00', '0000-00-00', '0000-00-00', '0000-00-00', '', '', '', '', '', '2013-11-13 13:28:45', 1, '2013-11-13 18:28:45', 0);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -769,15 +691,14 @@ CREATE TABLE `rmis_program_me_committees` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`,`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `rmis_program_me_committees`
 --
 
 INSERT INTO `rmis_program_me_committees` (`id`, `organization_id`, `committee_chairman`, `committee_formation_date`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 1, '202', '2013-11-20', '2013-11-20 11:48:24', 1, '2013-11-20 17:37:55', 1),
-(2, 1, '103', '2013-11-22', '2013-11-20 12:49:16', 1, '2013-11-20 17:49:49', 1);
+(1, 1, '202', '2013-11-21', '2013-11-21 12:20:19', 1, '2013-11-21 17:20:19', NULL);
 
 -- --------------------------------------------------------
 
@@ -798,9 +719,8 @@ CREATE TABLE `rmis_program_me_committee_members` (
 --
 
 INSERT INTO `rmis_program_me_committee_members` (`committee_id`, `organization_id`, `member_id`, `role_in_committee`) VALUES
-(1, 1, 103, 'Test role 2'),
-(1, 1, 202, 'Test role 1'),
-(2, 1, 202, 'Test role');
+(1, 1, 103, 'Lead Research'),
+(1, 1, 202, 'Monitor & Evaluation');
 
 -- --------------------------------------------------------
 
@@ -827,15 +747,7 @@ CREATE TABLE `rmis_program_other_informations` (
   `updated_by` bigint(20) DEFAULT NULL,
   `program_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`,`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `rmis_program_other_informations`
---
-
-INSERT INTO `rmis_program_other_informations` (`id`, `organization_id`, `program_rationale`, `program_methodology`, `program_background`, `program_socio_economical_impact`, `program_environmental_impact`, `program_targeted_beneficiary`, `program_reference`, `program_external_affiliation`, `program_organization_policy`, `program_risks`, `created_at`, `created_by`, `updated_at`, `updated_by`, `program_id`) VALUES
-(1, 0, 'Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Test program Rationale Edit', 'Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology Test program methodology ', 'Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background Test program background  Fucking Edit', 'Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  Test program Socio Economical Impact  ', 'Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  Test program Environmental Impact  ', 'Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   Test program Targeted Beneficiary   ', 'Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    Test program Reference    ', 'Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation Test program External Affiliation ', 'Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy Test program Organization Policy ', 'Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks Test program Programme Risks ', '2013-10-26 10:33:59', 1, '2013-10-26 14:24:27', 1, 1),
-(2, 1, 'sdfgds', 'sdfgsdf', 'dfgsdf', 'sdfg', 'sdfg', 'sdfg', 'sdfg', 'sdfg', 'sdfg', 'dfg', '2013-11-11 01:49:49', 1, '2013-11-11 07:49:49', NULL, 15);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -857,16 +769,7 @@ CREATE TABLE `rmis_program_rating` (
   `updated_by` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`,`organization_id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `rmis_program_rating`
---
-
-INSERT INTO `rmis_program_rating` (`id`, `organization_id`, `value`, `name`, `weight`, `is_default`, `is_active`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 1, '1', 'Progress Satisfactory', 1, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-11-10 03:18:47', NULL),
-(2, 1, '2', 'Progress\nPartially Satisfactory', 2, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-11-10 03:19:02', NULL),
-(3, 2, '3', 'Progress\nProgress Unsatisfactory', 3, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-11-10 03:19:24', NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -884,15 +787,7 @@ CREATE TABLE `rmis_program_research_teams` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`,`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `rmis_program_research_teams`
---
-
-INSERT INTO `rmis_program_research_teams` (`id`, `organization_id`, `team_formation_date`, `program_id`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 0, '2013-10-27', 1, '2013-10-26 10:44:44', 1, '2013-11-02 01:42:11', 1),
-(2, 0, '2013-10-26', 0, NULL, NULL, '2013-10-28 12:10:42', 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -910,17 +805,7 @@ CREATE TABLE `rmis_program_research_team_members` (
   `email` varchar(255) DEFAULT NULL,
   `program_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
-
---
--- Dumping data for table `rmis_program_research_team_members`
---
-
-INSERT INTO `rmis_program_research_team_members` (`id`, `member_type`, `institute_name`, `member_name`, `designation`, `contact_no`, `email`, `program_id`) VALUES
-(23, '1', '1', '202', 'President', '01779021581', 'ashish021@gmail.com', 1),
-(24, '2', '2', '101', 'Vice President', '01711084616', 'debasis@gmail.com', 1),
-(25, '3', '3', '101', 'Vice President', '01711084616', 'debasis@gmail.com', 1),
-(26, '4', '4', '102', 'Vice President', '01711084616', 'debasis@gmail.com', 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -938,14 +823,7 @@ CREATE TABLE `rmis_program_steering_committees` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`,`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `rmis_program_steering_committees`
---
-
-INSERT INTO `rmis_program_steering_committees` (`id`, `organization_id`, `committee_formation_date`, `program_id`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 0, '2013-10-27', 1, '2013-10-26 10:49:01', 1, '2013-10-28 12:17:56', 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -962,16 +840,7 @@ CREATE TABLE `rmis_program_steering_committee_members` (
   `email` varchar(255) DEFAULT NULL,
   `program_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
-
---
--- Dumping data for table `rmis_program_steering_committee_members`
---
-
-INSERT INTO `rmis_program_steering_committee_members` (`id`, `committee_member_type`, `member_name`, `designation`, `contact_no`, `email`, `program_id`) VALUES
-(6, '1', '1', 'President', '01779021581', 'ashish021@gmail.com', 1),
-(7, '2', '2', 'Vice President', '01779021581', 'debasis@gmail.com', 1),
-(8, '3', '3', 'programer', '01779021581', 'dhiman@gmail.com', 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1297,18 +1166,14 @@ CREATE TABLE `rmis_regional_stations` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`,`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `rmis_regional_stations`
 --
 
 INSERT INTO `rmis_regional_stations` (`id`, `organization_id`, `station_id`, `station_name`, `station_contact_person`, `station_phone`, `station_email`, `station_order`, `station_address`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(3, 1, 'BARIRS0003', 'Dhaka', '101', '01716463155', 'alimulrazi@gmail.com', 1, 'test', '2013-11-10 00:16:41', 1, '2013-11-10 06:16:41', NULL),
-(4, 1, 'BARIRS0004', 'Tangail', '101', '01716463155', 'alimulrazi28@gmail.com', 0, 'test location', '2013-11-10 01:02:32', 1, '2013-11-10 07:02:32', NULL),
-(7, 1, 'BARIRS0005', 'Khulna', '102', '01716463156', 'alimulrazi@yahoo.com', 2, 'test location', '2013-11-10 03:11:30', 1, '2013-11-10 09:12:12', 1),
-(8, 1, 'BARIRS0008', 'Bogura', '101', '01716463156', 'alimulrazi@yahoo.com', 1, 'test....', '2013-11-10 03:19:15', 1, '2013-11-10 09:21:25', 1),
-(12, 1, 'BARIRS0012', 'Jamalpur', '103', '01779021581', 'ashish021@gmail.com', 0, 'asldhasjkld', '2013-11-12 12:21:13', 1, '2013-11-12 17:26:03', 1);
+(1, 1, 'BARIRS0001', 'Dhaka', '103', '+8801779021581', 'ashish021@gmail.com', 1, 'Research will be conduct on dhaka regional station. ', '2013-11-21 12:10:31', 1, '2013-11-21 17:10:31', NULL);
 
 -- --------------------------------------------------------
 

@@ -207,6 +207,7 @@ class Divisions extends MX_Controller{
 			if($this->input->post('delete_division')){
 				$request = json_encode($this->input->post());
 				$this->dataDestroy($request);
+				redirect('rmis/setup/divisions','refresh');
 			}
 				
 			$division_detail = $this->division->get_details($division_id);

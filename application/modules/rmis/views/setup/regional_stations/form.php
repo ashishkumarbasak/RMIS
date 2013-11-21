@@ -77,3 +77,40 @@
     <div class="clear"></div>
 </div>
 </form>
+<script type="text/javascript">
+$(document).ready(function() {
+	var station_contact_person_select;
+	$("#station_contact_person_name").kendoAutoComplete({
+        	dataTextField: "employee_name",
+            filter: "startswith",
+            minLength: 2,
+            ignoreCase: false,
+            dataSource: {
+                         	type: "jsonp",
+                            serverFiltering: true,
+                            serverPaging: false,
+                            pageSize: 20,
+                            transport: {
+                                read: "<?php echo site_url('rmis/employees2'); ?>"
+                            }
+                       },
+           	open: function(e) {
+		    	station_contact_person_select = false;
+		  	},
+		  	select: function(e){
+		    	station_contact_person_select = true;
+			    var dataItem = this.dataItem(e.item.index());                
+        		$("#employee_id").val(dataItem.employee_id);
+        		$("#station_contact_person").val(dataItem.employee_id);
+        		
+		  	},
+		  	close: function(e){
+		    	// if no valid selection - clear input
+		    	if (!station_contact_person_select) this.value('');
+		  	}
+    });
+});
+</script>
+<style type="text/css">
+	.field .k-autocomplete{ border-radius:0px !important; width:215px !important;} 
+</style>

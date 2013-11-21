@@ -31,39 +31,4 @@ function ClickEdit(e) {
    	var edit_url = "/rmis/setup/divisions/edit/"+dataItem.id;
    	window.location = edit_url;
 }
-$(document).ready(function() {
-	var division_head_select;
-	$("#division_head_name").kendoAutoComplete({
-        	dataTextField: "employee_name",
-            filter: "startswith",
-            minLength: 2,
-            ignoreCase: false,
-            dataSource: {
-                         	type: "jsonp",
-                            serverFiltering: true,
-                            serverPaging: false,
-                            pageSize: 20,
-                            transport: {
-                                read: "<?php echo site_url('rmis/employees2'); ?>"
-                            }
-                       },
-           	open: function(e) {
-		    	division_head_select = false;
-		  	},
-		  	select: function(e){
-		    	division_head_select = true;
-			    var dataItem = this.dataItem(e.item.index());                
-        		$("#employee_id").val(dataItem.employee_id);
-        		$("#division_head").val(dataItem.employee_id);
-        		
-		  	},
-		  	close: function(e){
-		    	// if no valid selection - clear input
-		    	if (!committee_chairman_select) this.value('');
-		  	}
-    });
-});
 </script>
-<style type="text/css">
-	.field .k-autocomplete{ border-radius:0px !important; width:215px !important;} 
-</style>

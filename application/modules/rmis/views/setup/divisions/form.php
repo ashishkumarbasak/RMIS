@@ -61,7 +61,7 @@
                 <?php if(isset($division_detail) && $division_detail->division_pk!=NULL) { ?>
                 	<input type="hidden" name="id" id="id" value="<?php echo $division_detail->division_pk; ?>">
                 	<input type="button" name="new_division" id="new_division" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('rmis/setup/divisions');?>'">
-                    <input type="submit" name="delete_division" id="delete_division" value="Delete" class="k-button button">
+                    <input type="submit" name="delete_division" id="delete_division" value="Delete" class="k-button button" onclick="return confirm('Are you sure you want to delete this record?');">
         			<input type="submit" name="save_update" id="save_update" value="Update" class="k-button button">
                 <?php } else { ?>
                 	<input type="submit" name="save_division" id="save_division" value="Save" class="k-button button">
@@ -74,3 +74,40 @@
     <div class="clear"></div>
 </div>
 </form>
+<script type="text/javascript">
+$(document).ready(function() {
+	var division_head_select;
+	$("#division_head_name").kendoAutoComplete({
+        	dataTextField: "employee_name",
+            filter: "startswith",
+            minLength: 2,
+            ignoreCase: false,
+            dataSource: {
+                         	type: "jsonp",
+                            serverFiltering: true,
+                            serverPaging: false,
+                            pageSize: 20,
+                            transport: {
+                                read: "<?php echo site_url('rmis/employees2'); ?>"
+                            }
+                       },
+           	open: function(e) {
+		    	division_head_select = false;
+		  	},
+		  	select: function(e){
+		    	division_head_select = true;
+			    var dataItem = this.dataItem(e.item.index());                
+        		$("#employee_id").val(dataItem.employee_id);
+        		$("#division_head").val(dataItem.employee_id);
+        		
+		  	},
+		  	close: function(e){
+		    	// if no valid selection - clear input
+		    	if (!division_head_select) this.value('');
+		  	}
+    });
+});
+</script>
+<style type="text/css">
+	.field .k-autocomplete{ border-radius:0px !important; width:215px !important;} 
+</style>

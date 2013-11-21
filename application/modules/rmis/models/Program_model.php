@@ -376,17 +376,22 @@ class Program_model extends MY_Model {
 	}
 
 	function delete($id=NULL){
-		//Truncate `rmis_program_informations`;
-		//Truncate `rmis_program_other_informations`;
-		//Truncate `rmis_program_funding_sources`;
-		//Truncate `rmis_program_cost_estimations`; 
-		//Truncate `rmis_program_cost_breakdowns`;
-		//Truncate `rmis_program_research_teams`;
-		//Truncate `rmis_program_research_team_members`;
-		//Truncate `rmis_program_steering_committees`;
-		//Truncate `rmis_program_steering_committee_members`;
-		//Truncate `rmis_program_implementation_committees`;
-		//Truncate `rmis_program_implementation_committee_members`;
+		//truncate rmis_program_activities;# MySQL returned an empty result set (i.e. zero rows).
+		//truncate rmis_program_areas;# MySQL returned an empty result set (i.e. zero rows).
+		//truncate rmis_program_cost_breakdowns;# MySQL returned an empty result set (i.e. zero rows).
+		//truncate rmis_program_cost_estimations;# MySQL returned an empty result set (i.e. zero rows).
+		//truncate rmis_program_funding_sources;# MySQL returned an empty result set (i.e. zero rows).
+		//truncate rmis_program_implementation_committees;# MySQL returned an empty result set (i.e. zero rows).
+		//truncate rmis_program_implementation_committee_members;# MySQL returned an empty result set (i.e. zero rows).
+		//truncate rmis_program_informations;# MySQL returned an empty result set (i.e. zero rows).
+		//truncate rmis_program_me_committees;# MySQL returned an empty result set (i.e. zero rows).
+		//truncate rmis_program_me_committee_members;# MySQL returned an empty result set (i.e. zero rows).
+		//truncate rmis_program_other_informations;# MySQL returned an empty result set (i.e. zero rows).
+		//truncate rmis_program_rating;# MySQL returned an empty result set (i.e. zero rows).
+		//truncate rmis_program_research_teams;# MySQL returned an empty result set (i.e. zero rows).
+		//truncate rmis_program_research_team_members;# MySQL returned an empty result set (i.e. zero rows).
+		//truncate rmis_program_steering_committees;# MySQL returned an empty result set (i.e. zero rows).
+		//truncate rmis_program_steering_committee_members;# MySQL returned an empty result set (i.e. zero rows).
 	}
 	
 	

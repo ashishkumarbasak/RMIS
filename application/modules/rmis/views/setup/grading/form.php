@@ -74,7 +74,7 @@
 			        	<input class="textbox no-margin width-89" type="text" name="grade_points[]" id="grade_points" value="<?php echo $grade_information->grade_point; ?>"/>	
 			    	</div>
 			    	<div class="grid-1-6 left">
-                        <select name="qualitative_statuses[]" id="qualitative_statuses" class="selectionbox width-89">
+                        <select name="qualitative_statuses[]" id="qualitative_statuses" class="selectionbox width-89 no-margin">
                             <option value="">Select</option>
                             <?php 						
                             foreach($qualitative_status['data'] as $key=>$qualitative_status_item) { ?>
@@ -110,7 +110,7 @@
 	    	</div>
 	    	<div class="grid-1-6 left">
 	        	<!--<input class="textbox no-margin width-89" type="text" name="qualitative_statuses[]" id="qualitative_statuses" value=""/>-->	
-                <select name="qualitative_statuses[]" id="qualitative_statuses" class="selectionbox width-89">
+                <select name="qualitative_statuses[]" id="qualitative_statuses" class="selectionbox width-89 no-margin">
                     <option value="" selected="selected">Select</option>
                     <?php 						
                     foreach($qualitative_status['data'] as $key=>$qualitative_status_item) { ?>

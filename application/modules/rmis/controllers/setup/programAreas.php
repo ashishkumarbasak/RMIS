@@ -189,6 +189,7 @@ class ProgramAreas extends MX_Controller{
 			if($this->input->post('delete_programarea')){
 				$request = json_encode($this->input->post());
 				$this->dataDestroy($request);
+				redirect('rmis/setup/programAreas','refresh');
 			}
 				
 			$program_area_detail = $this->programarea->get_details($program_area_id);

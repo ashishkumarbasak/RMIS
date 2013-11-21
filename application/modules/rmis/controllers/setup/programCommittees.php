@@ -152,6 +152,7 @@ class programCommittees extends MX_Controller{
 			if($this->input->post('delete_committee')){
 				$request = json_encode($this->input->post());
 				$this->dataDestroy($request);
+				redirect('rmis/setup/programCommittees','refresh');
 			}
 			
 			$committee_detail = $this->ProgramCommitte->get_details($committee_id);
