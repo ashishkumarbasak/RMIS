@@ -214,6 +214,9 @@ $(document).ready(function() {
 	return false;
 });
 </script>
+<script language="javascript">
+	$('.textbox').datepicker('setStartDate');
+</script>
 <script type="text/javascript">
 	function delete_activity(activity_id, program_id, row_id){
 		var r=confirm("Are you sure you want to delete this activity?");
