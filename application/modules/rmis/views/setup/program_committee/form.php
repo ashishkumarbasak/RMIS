@@ -151,10 +151,24 @@ $(document).ready(function() {
                                 			membersObj.push(options.models[0]);
                                 			$('#committee_members').val(kendo.stringify(membersObj));
                                 		}else if(options.models && operation == "destroy"){
-                                			membersObj.pop(options.models[0]);
-                                			$('#committee_members').val(kendo.stringify(membersObj));
+                                			var NewObj = JSON.parse("[]");
+                                			for (var i = 0, len = membersObj.length; i < len; ++i) {
+                                				var memObj = membersObj[i];
+                                				if(memObj.ID!=options.models[0].ID){
+                                					NewObj.push(memObj);
+                                				}
+                                			}
+                                			$('#committee_members').val(kendo.stringify(NewObj));
                                 		}else if(options.models && operation == "update"){
-                                			alert("have problem in update!!! trying to fix");
+                                			var NewObj = JSON.parse("[]");
+                                			for (var i = 0, len = membersObj.length; i < len; ++i) {
+                                				var memObj = membersObj[i];
+                                				if(memObj.ID!=options.models[0].ID){
+                                					NewObj.push(memObj);
+                                				}
+                                			}
+                                			NewObj.push(options.models[0]);
+                                			$('#committee_members').val(kendo.stringify(NewObj));
                                 		}
                                 	}
                                     if (operation !== "read" && options.models) {
@@ -172,6 +186,7 @@ $(document).ready(function() {
                                         MemberName: { validation: { required: true } },
                                         MemberDesignation: { validation: { required: true } },
                                         MemberRole: { validation: { required: true } },
+                                        ID: { editable: false, nullable: true }
                                     }
                                 }
                             }
