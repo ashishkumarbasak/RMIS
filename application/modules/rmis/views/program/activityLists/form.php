@@ -1,6 +1,3 @@
-<script src="<?php echo site_url('/assets/js/jquery-dynamic-form.js'); ?>"></script>
-<script src="<?php echo site_url('/assets/js/bootstrap-datepicker.js'); ?>"></script>
-<link rel="stylesheet" href="<?php echo site_url('assets/extensive/css/datepicker.css'); ?>" />
 <?php 
 	if(isset($program_detail)){
 		$program_detail = unserialize($program_detail);
@@ -100,94 +97,11 @@
 	            <div class="label">Task/Work Element/ Activity Information </div>
 	            <div class="clear"></div>
 	        </div>
-	    	<div class="row">
-	    		<div class="grid-1-20 left">
-	        		<div class="heading">S/O</div>
-	    		</div>
-	    		<div class="grid-1-6 left">
-	        		<div class="heading">Work Element/ Activity</div>
-	    		</div>
-	    		<div class="grid-1-6 left" style="width: 15%;">
-	        		<div class="heading">Planned Start Date</div>
-	    		</div>
-	    		<div class="grid-1-6 left" style="width: 15%;">
-	        		<div class="heading">Planned End Date</div>
-	    		</div>
-	    		<div class="grid-1-6 left" style="width: 15%;">
-	        		<div class="heading">Actual Start Date</div>
-	    		</div>
-	    		<div class="grid-1-6 left" style="width: 15%;">
-	        		<div class="heading">Actual End Date</div>
-	    		</div>
-	    		<div class="grid-1-6 left">
-	        		<div class="heading">Assign Resources</div>
-	    		</div>
-	    		<div class="clear"></div>
-	    	</div>
-	    	
-	    	<?php if(isset($activityLists) && $activityLists!=NULL) { 
-	    			foreach($activityLists as $key=>$activity){
-	    	?>
-	    			<div id="row-<?php echo $key; ?>">
-		    			<div class="row">
-					    	<div class="grid-1-20 left">
-				        		<input class="textbox no-margin" style="width: 55%;" type="text" name="s_os[]" id="s_os" value="<?php echo $activity->s_o; ?>"/>
-				    		</div>
-					    	<div class="grid-1-6 left">
-					        	<input class="textbox no-margin" style="width: 89%;" type="text" name="work_elements[]" id="work_elements" value="<?php echo $activity->work_element; ?>"/>
-					    	</div>
-					    	<div class="grid-1-6 left" style="width: 15%;">
-					        	<input class="textbox no-margin" style="width: 88%;" type="text" name="planned_startDates[]" id="planned_startDates" value="<?php echo $activity->planned_startDate; ?>"/>
-					    	</div>
-					    	<div class="grid-1-6 left" style="width: 15%;">
-					        	<input class="textbox no-margin" style="width: 88%;" type="text" name="planned_endDates[]" id="planned_endDates" value="<?php echo $activity->planned_endDate; ?>"/>	
-					    	</div>
-					    	<div class="grid-1-6 left" style="width: 15%;">
-					        	<input class="textbox no-margin" style="width: 88%;" type="text" name="actual_startDates[]" id="actual_startDates" value="<?php echo $activity->actual_startDate; ?>"/>	
-					    	</div>
-					    	<div class="grid-1-6 left" style="width: 15%;">
-					        	<input class="textbox no-margin" style="width: 88%;" type="text" name="actual_endDates[]" id="actual_endDates" value="<?php echo $activity->actual_endDate; ?>"/>	
-					    	</div>
-					    	<div class="grid-1-6 left">
-					        	<input class="textbox no-margin" style="width: 90%;" type="text" name="assign_resources[]" id="assign_resources" value="<?php echo $activity->assign_resource; ?>"/>	
-					    	</div>
-					    </div>
-				    	<div class="row add-more"><a href="javascript:void(0);" onclick="delete_activity(<?php echo $activity->id;?> , <?php echo $program_id; ?>, <?php echo $key; ?> );">[-]</a></div>
-				    </div>
-	    	<?php				
-	    			}
-	    	 	  } 
-	    	?>
-	    	
-	    	<div id='duplicate2'>
-	    		<div class="row">
-		    		<div class="grid-1-20 left">
-		        		<input class="textbox no-margin" style="width: 55%;" type="text" name="s_os[]" id="s_os" value=""/>
-		    		</div>
-			    	<div class="grid-1-6 left">
-			        	<input class="textbox no-margin" style="width: 89%;" type="text" name="work_elements[]" id="work_elements" value=""/>
-			    	</div>
-			    	<div class="grid-1-6 left" style="width: 15%;">
-			        	<input class="textbox no-margin" style="width: 88%;" type="text" name="planned_startDates[]" id="planned_startDates" value=""/>
-			    	</div>
-			    	<div class="grid-1-6 left" style="width: 15%;">
-			        	<input class="textbox no-margin" style="width: 88%;" type="text" name="planned_endDates[]" id="planned_endDates" value=""/>	
-			    	</div>
-			    	<div class="grid-1-6 left" style="width: 15%;">
-			        	<input class="textbox no-margin" style="width: 88%;" type="text" name="actual_startDates[]" id="actual_startDates" value=""/>	
-			    	</div>
-			    	<div class="grid-1-6 left" style="width: 15%;">
-			        	<input class="textbox no-margin" style="width: 88%;" type="text" name="actual_endDates[]" id="actual_endDates" value=""/>	
-			    	</div>
-			    	<div class="grid-1-6 left">
-			        	<input class="textbox no-margin" style="width: 90%;" type="text" name="assign_resources[]" id="assign_resources" value=""/>	
-			    	</div>
-		    	</div>
-		    	<div class="add-more row">
-		    		<a id="minus2" href="javascript:void(0);">[-]</a> 
-		    		<a id="plus2" href="javascript:void(0);">[+]</a>
-		    	</div>
-		    </div>
+            
+            <div id="activity_list_information" style="width: 100%;">
+    			<div id="activity_list_information_table"></div>
+			</div>	
+			<input type="hidden" name="activity_lists" id="activity_lists" value='<?php if(isset($activityLists) && $activityLists!=NULL) echo json_encode($activityLists); else echo "[]"; ?>' />
 	    </div>
 	</div>
 	
@@ -209,15 +123,6 @@
 	
 </form>
 <script type="text/javascript">
-$(document).ready(function() {
-	$("#duplicate2").dynamicForm("#plus2", "#minus2", {limit:10});		
-	return false;
-});
-</script>
-<script language="javascript">
-	$('.textbox').datepicker('setStartDate');
-</script>
-<script type="text/javascript">
 	function delete_activity(activity_id, program_id, row_id){
 		var r=confirm("Are you sure you want to delete this activity?");
 		if (r==true){
@@ -229,4 +134,141 @@ $(document).ready(function() {
 			})
 		}
 	}
+</script>
+<script type="text/javascript">                
+$(document).ready(function () {
+	var crudServiceBaseUrl = "<?php echo base_url();?>",
+		dataSource = new kendo.data.DataSource({
+			transport: {
+				read:  {
+					url: crudServiceBaseUrl + "rmis/program/activityLists/get_activityLists/<?php if(isset($program_detail) && $program_detail->program_id!=NULL) echo $program_detail->program_id; else echo 0; ?>"
+				},
+				update: {
+					url: crudServiceBaseUrl + "rmis/program/activityLists/updateMembers",
+					dataType: 'json',
+					type: 'POST',
+				},
+				destroy: {
+					url: crudServiceBaseUrl + "rmis/program/activityLists/destroyMembers",
+					dataType: 'json',
+					type: 'POST',
+				},
+				create: {
+					url: crudServiceBaseUrl + "rmis/program/activityLists/addMembers",
+					dataType: 'json',
+					type: 'POST'
+				},
+				parameterMap: function(options, operation) {
+					if($('#activity_lists').val()!=''){
+						var activitiesObj = JSON.parse($('#activity_lists').val());
+						if(options.models && operation == "create"){
+							activitiesObj.push(options.models[0]);
+							$('#activity_lists').val(kendo.stringify(activitiesObj));
+						}else if(options.models && operation == "destroy"){
+							var NewObj = JSON.parse("[]");
+							for (var i = 0, len = activitiesObj.length; i < len; ++i) {
+								var actObj = activitiesObj[i];
+								if(actObj.ActivityID!=options.models[0].ActivityID){
+									NewObj.push(actObj);
+								}
+							}
+							$('#activity_lists').val(kendo.stringify(NewObj));
+						}else if(options.models && operation == "update"){
+							var NewObj = JSON.parse("[]");
+							for (var i = 0, len = activitiesObj.length; i < len; ++i) {
+								var actObj = activitiesObj[i];
+								if(actObj.ActivityID!=options.models[0].ActivityID){
+									NewObj.push(actObj);
+								}
+							}
+							NewObj.push(options.models[0]);
+							$('#activity_lists').val(kendo.stringify(NewObj));
+						}
+					}
+					if (operation !== "read" && options.models) {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			batch: true,
+			pageSize: 20,
+			schema: {
+				model: {
+					id: "AssignResource",
+					fields: {						
+						SortOrder: { validation: { required: true } },
+						WorkElement: { validation: { required: true } },
+						PlannedStartDate: { validation: { required: true } },
+						PlannedEndDate: { validation: { required: true } },
+						ActualStartDate: { validation: { required: true } },
+						ActualEndDate: { validation: { required: true } },
+						AssignResource: { validation: { required: true } },
+						AssignResourceID: { editable: false, nullable: true },
+						ActivityID: { editable: false, nullable: true },
+						ProgramID: { editable: false, nullable: true }
+					}
+				}
+			}
+		});
+
+		$("#activity_list_information_table").kendoGrid({
+				dataSource: dataSource,
+				pageable: false,
+				height: 200,
+				toolbar: [{text:"Add Activity Information", name: "create"}],
+				columns: [
+					{ field: "SortOrder", title:"S/O", width: "50px"},
+					{ field: "WorkElement", title:"Work Element"},
+					{ field: "PlannedStartDate", title:"Planned Start Date", format:"{0:yyyy-MM-dd}", editor: dateTimeEditor},
+					{ field: "PlannedEndDate", title:"Planned End Date", format:"{0:yyyy-MM-dd}", editor: dateTimeEditor },
+					{ field: "ActualStartDate", title:"Actual Start Date", format:"{0:yyyy-MM-dd}", editor: dateTimeEditor },
+					{ field: "ActualEndDate", title:"Actual Start Date", format:"{0:yyyy-MM-dd}", editor: dateTimeEditor },
+					{ field: "AssignResource", title:"Assign Resource", editor: employee_auto_complete },
+					{ command: ["edit", "destroy"], title: "&nbsp;", width: "190px" }],
+				editable: "inline"
+		});
+});
+                
+function dateTimeEditor(container, options) {
+	$('<input data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field + '" data-format="' + options.format + '"/>')
+	.appendTo(container)
+	.kendoDatePicker({});
+}
+
+function numeric_textbox(container, options) { 
+	$('<input  maxlength="5"  name="' + options.field + '"/>')
+	 .appendTo(container)
+	 .kendoNumericTextBox({
+	   min:1,
+	   max: 32767,
+	   format:"#",
+	   decimals:0
+	 })
+}
+
+function employee_auto_complete(container, options) 
+{
+	$('<input required class="textbox" name="' + options.field + '"/>')
+		.appendTo(container)
+		.kendoAutoComplete({
+			dataTextField: "employee_name",
+			filter: "startswith",
+			minLength: 2,
+			ignoreCase: false,
+			dataSource: {
+				type: "jsonp",
+				serverFiltering: true,
+				serverPaging: false,
+				pageSize: 20,
+				transport: {
+					read: "<?php echo site_url('rmis/employees2'); ?>"
+				}
+			},
+			select: function(e){
+				var dataItem = this.dataItem(e.item.index()); 
+				options.model.AssignResource = dataItem.employee_name;
+				options.model.AssignResourceID = dataItem.employee_id;
+			}
+		});
+}
 </script>

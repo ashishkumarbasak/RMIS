@@ -1,4 +1,3 @@
-<script src="<?php echo site_url('/assets/js/jquery-dynamic-form.js'); ?>"></script>
 <script src="<?php echo site_url('/assets/js/bootstrap-datepicker.js'); ?>"></script>
 <link rel="stylesheet" href="<?php echo site_url('assets/extensive/css/datepicker.css'); ?>" />
 <?php 
@@ -74,107 +73,10 @@
 	            <div class="label">Funding Source Information</div>
 	            <div class="clear"></div>
 	        </div>
-	    	<div class="row">
-	    		<div class="grid-1-6 left">
-	        		<div class="heading">Funding Source</div>
-	    		</div>
-	    		<div class="grid-1-6 left">
-	        		<div class="heading">Amount</div>
-	    		</div>
-	    		<div class="grid-1-6 left">
-	        		<div class="heading">Currency</div>
-	    		</div>
-	    		<div class="grid-1-6 left">
-	        		<div class="heading">Exchange Rate</div>
-	    		</div>
-	    		<div class="grid-1-6 left">
-	        		<div class="heading">Date of Exchange Rate</div>
-	    		</div>
-	    		<div class="grid-1-6 left">
-	        		<div class="heading">Amount in Taka</div>
-	    		</div>
-	    		<div class="clear"></div>
-	    	</div>
-	    	<?php if(isset($fundSources) && $fundSources!=NULL) {
-					$fs = 0;  
-	    			foreach($fundSources as $key=>$fundSource){
-	    	?>
-	    			<div id="frow-<?php echo $key; ?>">
-	    			<div class="row">
-				    	<div class="grid-1-6 left">
-                            <select name="fund_sources[]" id="fund_sources" class="selectionbox width-89">
-                                <option value="">Select</option>
-                                <?php foreach($funding_source['data'] as $key=>$fundingSource) { ?>
-                                    <option value="<?php echo $fundingSource['value']; ?>" <?php if(isset($fundSources)){if($fundSources[$fs]->fund_source==$fundingSource['value']){ echo "selected=\"selected\" ";}} ?>><?php echo $fundingSource['name']; ?></option>
-                                <?php } ?>
-                            </select>
-                            
-				    	</div>
-				    	<div class="grid-1-6 left">
-				        	<input class="textbox no-margin width-89" type="text" name="amounts[]" id="amounts" value="<?php echo $fundSource->amount; ?>"/>
-				    	</div>
-				    	<div class="grid-1-6 left">
-                            <select name="currencies[]" id="currencies" class="selectionbox  width-89">
-                                <option value="">Select</option>
-                                <?php foreach($currencies['data'] as $key=>$currency) { ?>
-                                    <option value="<?php echo $currency['value']; ?>" <?php if(isset($fundSources)){if($fundSources[$fs]->currency==$currency['value']){ echo "selected=\"selected\" ";}} ?>><?php echo $currency['name']; ?></option>
-                                <?php } ?>
-                            </select>	
-				    	</div>
-				    	<div class="grid-1-6 left">
-				        	<input class="textbox no-margin width-89" type="text" name="exchange_rates[]" id="exchange_rates" value="<?php echo $fundSource->exchange_rate; ?>"/>	
-				    	</div>
-				    	<div class="grid-1-6 left">
-				        	<input class="textbox no-margin width-89" type="text" name="date_of_exchange_rates[]" id="date_of_exchange_rates" value="<?php echo $fundSource->date_of_exchange_rate; ?>"/>	
-				    	</div>
-				    	<div class="grid-1-6 left">
-				        	<input class="textbox no-margin width-89" type="text" name="amounts_in_taka[]" id="amounts_in_taka" value="<?php echo $fundSource->amount_in_taka; ?>"/>	
-				    	</div>
-				    	<input type="hidden" name="fundSourceID[]" id="fundSourceID" value="<?php echo $fundSource->id; ?> ">
-				    </div>
-				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_found_source(<?php echo $fundSource->id;?> , <?php echo $program_id; ?>, <?php echo $key; ?> );">[-]</a></div>
-				    </div>
-	    	<?php				
-	    			$fs++;
-					}					
-	    	 	  } 
-	    	?>
-	    	<div id='duplicate2'>
-	    	<div class="row">
-		    	<div class="grid-1-6 left">
-                    <select name="fund_sources[]" id="fund_sources" class="selectionbox width-89">
-                        <option value="">Select</option>
-                        <?php foreach($funding_source['data'] as $key=>$fundingSource) { ?>
-                            <option value="<?php echo $fundingSource['value']; ?>"><?php echo $fundingSource['name']; ?></option>
-                        <?php } ?>
-                    </select>
-		    	</div>
-		    	<div class="grid-1-6 left">
-		        	<input class="textbox no-margin width-89" type="text" name="amounts[]" id="amounts" value=""/>
-		    	</div>
-		    	<div class="grid-1-6 left">
-                    <select name="currencies[]" id="currencies" class="selectionbox  width-89">
-                        <option value="">Select</option>
-                        <?php foreach($currencies['data'] as $key=>$currency) { ?>
-                            <option value="<?php echo $currency['value']; ?>"><?php echo $currency['name']; ?></option>
-                        <?php } ?>
-                    </select>
-		    	</div>
-		    	<div class="grid-1-6 left">
-		        	<input class="textbox no-margin width-89" type="text" name="exchange_rates[]" id="exchange_rates" value=""/>	
-		    	</div>
-		    	<div class="grid-1-6 left">
-		        	<input class="textbox no-margin width-89" type="text" name="date_of_exchange_rates[]" id="date_of_exchange_rates" value=""/>	
-		    	</div>
-		    	<div class="grid-1-6 left">
-		        	<input class="textbox no-margin width-89" type="text" name="amounts_in_taka[]" id="amounts_in_taka" value=""/>	
-		    	</div>
-		    </div>
-		    <div class="row add-more">
-		    	<a id="minus2" href="javascript:void(0);">[-]</a> 
-		    	<a id="plus2" href="javascript:void(0);">[+]</a>
-		    </div>
-		   	</div> 	
+	        <div class="row" style="width: 99%; border: 0px;">
+	        	<div id="funding_source_informaitons"></div>
+	        	<input type="hidden" name="fund_sources" id="fund_sources" value='<?php if(isset($fundSources) && $fundSources!=NULL) echo json_encode($fundSources); else echo "[]"; ?>' />
+	        </div>	
 	    </div>
 	</div>
 	
@@ -283,43 +185,149 @@
     </div>
 		
 </form>
-
-<script type="text/javascript">
-$(document).ready(function() {
-	$("#duplicate2").dynamicForm("#plus2", "#minus2", {limit:10});		
-	return false;
-});
-$(document).ready(function() {
-	$("#duplicate3").dynamicForm("#plus3", "#minus3", {limit:10});		
-	return false;
-});
-</script>
 <script language="javascript">
 	$('#estimate_date').datepicker('setStartDate');
 </script>
-<script type="text/javascript">
-	function delete_found_source(fundSource_id, program_id, row_id){
-		var r=confirm("Are you sure you want to delete this fund source?");
-		if (r==true){
-		  	var jqxhr = $.post( "<?php echo site_url("rmis/program/fundSources/deleteFundSource"); ?>", { fundSource_id: fundSource_id, program_id: program_id }, function() {
-			  $("#frow-" + parseInt(row_id)).remove();
-			})
-			.fail(function() {
-				alert( "error" );
-			})
-		}
-	}
+
+<script type="text/javascript">                
+                $(document).ready(function () {
+                    var crudServiceBaseUrl = "<?php echo base_url();?>",
+                        dataSource = new kendo.data.DataSource({
+                            transport: {
+                                read:  {
+                                    url: crudServiceBaseUrl + "rmis/program/fundSources/getFundSources/<?php if(isset($program_detail) && $program_detail->program_id!=NULL) echo $program_detail->program_id; else echo 0; ?>"
+                                },
+                                update: {
+                                    url: crudServiceBaseUrl + "rmis/program/fundSources/updateFundSource",
+                                    dataType: 'json',
+           							type: 'POST',
+                                },
+                                destroy: {
+                                    url: crudServiceBaseUrl + "rmis/program/fundSources/destroyFundSource",
+                                    dataType: 'json',
+           							type: 'POST',
+                                },
+                                create: {
+                                    url: crudServiceBaseUrl + "rmis/program/fundSources/addFundSource",
+                                    dataType: 'json',
+           							type: 'POST'
+                                },
+                                parameterMap: function(options, operation) {
+                                	if($('#fund_sources').val()!=''){
+                                		var fundSourceObj = JSON.parse($('#fund_sources').val());
+                                		if(options.models && operation == "create"){
+                                			fundSourceObj.push(options.models[0]);
+                                			$('#fund_sources').val(kendo.stringify(fundSourceObj));
+                                		}else if(options.models && operation == "destroy"){
+                                			var NewObj = JSON.parse("[]");
+                                			for (var i = 0, len = fundSourceObj.length; i < len; ++i) {
+                                				var fsObj = fundSourceObj[i];
+                                				if(fsObj.refID!=options.models[0].refID){
+                                					NewObj.push(fsObj);
+                                				}
+                                			}
+                                			$('#fund_sources').val(kendo.stringify(NewObj));
+                                		}else if(options.models && operation == "update"){
+                                			alert('here');
+                                			var NewObj = JSON.parse("[]");
+                                			for (var i = 0, len = fundSourceObj.length; i < len; ++i) {
+                                				var fsObj = fundSourceObj[i];
+                                				if(fsObj.refID!=options.models[0].refID){
+                                					NewObj.push(fsObj);
+                                				}
+                                			}
+                                			NewObj.push(options.models[0]);
+                                			alert(kendo.stringify(NewObj));
+                                			$('#fund_sources').val(kendo.stringify(NewObj));
+                                		}
+                                	}
+                                	if (operation !== "read" && options.models) {
+                                        return {models: kendo.stringify(options.models)};
+                                    }
+                                }
+                            },
+                            batch: true,
+                            pageSize: 20,
+                            schema: {
+                                model: {
+                                    id: "id",
+                                    fields: {
+                                        id: { editable: false, nullable: true },
+                                        fund_source: { validation: { required: true } },
+                                        fund_source_id:  { editable: false, nullable: true },
+                                        amount: { type: "number", validation: { required: true, min: 1} },
+                                        currency: { validation: { required: true } },
+                                        currency_id:  { editable: false, nullable: true },
+                                        exchange_rate: { type: "number", validation: { required: true, min: 1} },
+                                        date_of_exchange_rate: { validation: { required: true } },
+                                        amount_in_taka: { type: "number", validation: { required: true, min: 1} },
+                                        refID: { editable: false, nullable: true }
+                                    }
+                                }
+                            }
+                        });
+
+                    $("#funding_source_informaitons").kendoGrid({
+                        dataSource: dataSource,
+                        pageable: false,
+                        height: 200,
+                        toolbar: [{text:"Add Fund Source", name: "create"}],
+                        columns: [
+                            { field: "fund_source", title:"Funding Source", editor: fundSourcesDropDownEditor },
+                            { field: "amount", title:"Amount", format: "{0:0.00}" },
+                            { field: "currency", title:"Currency", editor: currencyDropDownEditor },
+                            { field: "exchange_rate", title:"Exchange Rate", format: "{0:0.00}" },
+                            { field: "date_of_exchange_rate", title:"Date of Exchange Rate", editor: exchangeDatepicker },
+                            { field: "amount_in_taka", title:"Amount in Taka",format: "{0:0.00}" },
+                            { command: ["edit", "destroy"], title: "&nbsp;", width: "190px" }],
+                        editable: "inline"
+                    });
+                });
+                
+                function exchangeDatepicker(container, options){
+                	var input = $('<input name="' + options.field + '" id="'+ options.field +'" required="required" data-date-format="yyyy-mm-dd" readonly="readonly" class="textbox" style="height:25px; width:95%;" />');
+                	input.appendTo(container);
+                	$('#date_of_exchange_rate').datepicker('setStartDate');
+                }
+                
+                function fundSourcesDropDownEditor(container, options) {
+                    var ServiceBaseUrl = "<?php echo base_url();?>";
+                    $('<input required data-text-field="fund_source" data-value-field="fund_source_id" data-bind="value:fund_source_id"/>')
+                        .appendTo(container)
+                        .kendoDropDownList({
+                            optionLabel: "Select Source",
+                            dataSource: {
+                                transport: {
+                                    read: ServiceBaseUrl + "rmis/program/fundSources/getListofFundSources"
+                                }
+                            },
+                            select: function(e){
+						    	var dataItem = this.dataItem(e.item.index());
+						    	options.model.fund_source = dataItem.fund_source;
+							    options.model.fund_source_id = dataItem.fund_source_id;
+						  	}
+                        });
+                }
+                
+                function currencyDropDownEditor(container, options) {
+                    var ServiceBaseUrl = "<?php echo base_url();?>";
+                    $('<input required data-text-field="currency" data-value-field="currency_id" data-bind="value:currency_id"/>')
+                        .appendTo(container)
+                        .kendoDropDownList({
+                        	optionLabel: "Select Currency",
+                            dataSource: {
+                                transport: {
+                                    read: ServiceBaseUrl + "rmis/program/fundSources/getListofCurrencies"
+                                }
+                            },
+                            select: function(e){
+						    	var dataItem = this.dataItem(e.item.index());
+						    	 options.model.currency = dataItem.currency; 
+							    options.model.currency_id = dataItem.currency_id;
+						  	}
+                        });
+                }
 </script>
-<script type="text/javascript">
-	function delete_costbreakdown_item(cbitem_id, program_id, row_id){
-		var r=confirm("Are you sure you want to delete this item?");
-		if (r==true){
-		  	var jqxhr = $.post( "<?php echo site_url("rmis/program/fundSources/deleteCostBreakDown"); ?>", { cbitem_id: cbitem_id, program_id: program_id }, function() {
-			  $("#cbrow-" + parseInt(row_id)).remove();
-			})
-			.fail(function() {
-				alert( "error" );
-			})
-		}
-	}
-</script>
+<style type="text/css">
+span.k-numeric-wrap{ border-radius:0px !important; border: solid #bababa 1px; font-size: 13px !important;} 
+</style>

@@ -65,41 +65,64 @@ class ActivityLists extends MX_Controller{
 	public function dataCreate($request){
         $request = json_decode($request);
 		
-		$columns = array('s_o', 'work_element','planned_startDate','planned_endDate', 'actual_startDate', 'actual_endDate', 'assign_resource', 'program_id');
+		$columns = array('sort_order', 'work_element','planned_start_date','planned_end_date', 'actual_start_date', 'actual_end_date', 'assign_resource', 'program_id');
 		$columns[] = 'organization_id';
 		$request->organization_id = 1;
 		$columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
-		$i=0;
-		if(!empty($request->work_elements)>0){
-			foreach($request->work_elements as $work_element_key=>$work_element){
-				if($work_element!=NULL){
-					$request->work_element = $work_element;
-					$request->s_o = $request->s_os[$i];
-					$request->planned_startDate = $request->planned_startDates[$i];
-					$request->planned_endDate = $request->planned_endDates[$i];
-					$request->actual_startDate = $request->actual_startDates[$i];
-					$request->actual_endDate = $request->actual_endDates[$i];
-					$request->assign_resource = $request->assign_resources[$i];
+
+		$activity_lists = json_decode($this->input->post('activity_lists'));
+		if(!empty($activity_lists)){
+			foreach($activity_lists as $activity_lists_key=>$activity_lists_item){
+				if($activity_lists_item!=NULL){
+					$request->sort_order = $activity_lists_item->SortOrder;
+					$request->work_element = $activity_lists_item->WorkElement;
+					$request->planned_start_date = $activity_lists_item->PlannedStartDate;
+					$request->planned_end_date = $activity_lists_item->PlannedEndDate;
+					$request->actual_start_date = $activity_lists_item->ActualStartDate;
+					$request->actual_end_date = $activity_lists_item->ActualEndDate;
+					$request->assign_resource = $activity_lists_item->AssignResourceID;
 					$this->grid->create('rmis_program_activities', $columns, $request, 'id');
-					$i++;	
 				}
 			}
-		}
-		
-		$data['success'] ="Data created successfuly.";
-        //echo json_encode($data , JSON_NUMERIC_CHECK); 
+		}		
+		$data['success'] ="Data created successfuly."; 
     }
+
+	function get_activityLists($program_id=NULL){
+		header('Content-Type: application/json');
+        $request = json_decode(file_get_contents('php://input'));
+        $activityLists = $this->program->get_activityLists($program_id);
+		if($activityLists!=NULL)
+        	echo json_encode($activityLists, JSON_NUMERIC_CHECK);
+		else
+			echo "[]";
+	}
+
+	function addMembers(){
+		header('Content-Type: application/json');
+        $members = $this->input->post('models');
+		echo $members;
+	}
+	
+	function destroyMembers(){
+		header('Content-Type: application/json');
+        $members = $this->input->post('models');
+		echo $members;
+	}
+	
+	function updateMembers(){
+		header('Content-Type: application/json');
+        $members = $this->input->post('models');
+		echo $members;
+	}
 	
 	public function dataUpdate($request){
-        //header('Content-Type: application/json');
-        //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
-		//print_r((array) $request);
 		
-		$columns = array('s_o', 'work_element','planned_startDate','planned_endDate', 'actual_startDate', 'actual_endDate', 'assign_resource', 'program_id');
+		$columns = array('sort_order', 'work_element','planned_start_date','planned_end_date', 'actual_start_date', 'actual_end_date', 'assign_resource', 'program_id');
 		$columns[] = 'organization_id';
 		$request->organization_id = 1;
 		$columns[] = 'created_at';
@@ -110,26 +133,24 @@ class ActivityLists extends MX_Controller{
         $request->updated_at = date('Y-m-d H:i:s');            
         $columns[] = 'updated_by';
         $request->updated_by = 1;
-		$i=0;
-		if(!empty($request->work_elements)>0){
-			$this->program->clean_programActivityLists($request->program_id);
-			foreach($request->work_elements as $work_element_key=>$work_element){
-				if($work_element!=NULL){
-					$request->work_element = $work_element;
-					$request->s_o = $request->s_os[$i];
-					$request->planned_startDate = $request->planned_startDates[$i];
-					$request->planned_endDate = $request->planned_endDates[$i];
-					$request->actual_startDate = $request->actual_startDates[$i];
-					$request->actual_endDate = $request->actual_endDates[$i];
-					$request->assign_resource = $request->assign_resources[$i];
+		
+		$activity_lists = json_decode($this->input->post('activity_lists'));
+		$this->program->clean_programActivityLists($request->program_id);
+		if(!empty($activity_lists)){
+			foreach($activity_lists as $activity_lists_key=>$activity_lists_item){
+				if($activity_lists_item!=NULL){
+					$request->sort_order = $activity_lists_item->SortOrder;
+					$request->work_element = $activity_lists_item->WorkElement;
+					$request->planned_start_date = $activity_lists_item->PlannedStartDate;
+					$request->planned_end_date = $activity_lists_item->PlannedEndDate;
+					$request->actual_start_date = $activity_lists_item->ActualStartDate;
+					$request->actual_end_date = $activity_lists_item->ActualEndDate;
+					$request->assign_resource = $activity_lists_item->AssignResourceID;
 					$this->grid->create('rmis_program_activities', $columns, $request, 'id');
-					$i++;	
 				}
 			}
 		}
-		
 		$data['success'] ="Data created successfuly.";
-        //echo json_encode($data , JSON_NUMERIC_CHECK); 
     }
 
 	public function deleteActivity(){

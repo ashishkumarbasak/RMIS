@@ -28,9 +28,12 @@ class FundSources extends MX_Controller{
         $this->template->append_metadata('<link href="/assets/kendoui/css/web/kendo.common.min.css"  rel="stylesheet"/>');
         $this->template->append_metadata('<link href="/assets/kendoui/css/web/kendo.default.min.css"  rel="stylesheet"/>');
         $this->template->append_metadata('<script src="/assets/kendoui/js/kendo.all.min.js"></script>');
+		$this->template->append_metadata('<script src="/assets/jqueryui/1.8/jquery-ui.min.js"></script>');
         $this->template->append_metadata('<script src="/assets/js/custom/rmis.js"></script>');
-        
-        if($program_id!=NULL){
+		$this->template->append_metadata('<script src="/assets/extensive/js/jquery.validate.min.js"></script>');
+		$this->template->append_metadata('<script src="/assets/js/custom/rmis_setup.js"></script>');
+                
+       	if($program_id!=NULL){
 			if($this->input->post('update_fundSources')){
 				$request = json_encode($this->input->post());
 				$this->dataUpdate($request);
@@ -87,18 +90,17 @@ class FundSources extends MX_Controller{
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
-		$i=0;
-		if(!empty($request->fund_sources)>0){
-			foreach($request->fund_sources as $fund_source_key=>$fund_source){
+		$fund_sources = json_decode($this->input->post('fund_sources'));
+		if(!empty($fund_sources)){
+			foreach($fund_sources as $fund_source_key=>$fund_source){
 				if($fund_source!=NULL){
-					$request->fund_source = $fund_source;
-					$request->amount = $request->amounts[$i];
-					$request->currency = $request->currencies[$i];
-					$request->exchange_rate = $request->exchange_rates[$i];
-					$request->date_of_exchange_rate = $request->date_of_exchange_rates[$i];
-					$request->amount_in_taka = $request->amounts_in_taka[$i];
-					$this->grid->create('rmis_program_funding_sources', $columns, $request, 'id');
-					$i++;	
+					$request->fund_source = $fund_source->fund_source_id;
+					$request->amount = $fund_source->amount;
+					$request->currency = $fund_source->currency_id;
+					$request->exchange_rate = $fund_source->exchange_rate;
+					$request->date_of_exchange_rate = $fund_source->date_of_exchange_rate;
+					$request->amount_in_taka = $fund_source->amount_in_taka;
+					$this->grid->create('rmis_program_funding_sources', $columns, $request, 'id');	
 				}
 			}
 		}
@@ -130,6 +132,54 @@ class FundSources extends MX_Controller{
         $data['success'] ="Data created successfuly.";
         //echo json_encode($data , JSON_NUMERIC_CHECK); 
     }
+
+	function getFundSources($program_id=NULL){
+		header('Content-Type: application/json');
+        $request = json_decode(file_get_contents('php://input'));
+        $fundSources = $this->program->get_fundSources($program_id);
+		if($fundSources!=NULL)
+        	echo json_encode($fundSources, JSON_NUMERIC_CHECK);
+		else
+			echo "[]";
+	}
+
+	function addFundSource(){
+		header('Content-Type: application/json');
+        $members = $this->input->post('models');
+		echo $members;
+	}
+	
+	function destroyFundSource(){
+		header('Content-Type: application/json');
+        $members = $this->input->post('models');
+		echo $members;
+	}
+	
+	function updateFundSource(){
+		header('Content-Type: application/json');
+        $members = $this->input->post('models');
+		echo $members;
+	}
+	
+	function getListofFundSources(){
+		header('Content-Type: application/json');
+        $request = json_decode(file_get_contents('php://input'));
+       	$funding_sources = $this->grid->read('rmis_funding_source', array('id','value as fund_source_id', 'name as fund_source'), $request); 
+		if($funding_sources!=NULL)
+        	echo json_encode($funding_sources["data"], JSON_NUMERIC_CHECK);
+		else
+			echo "[]";
+	}
+	
+	function getListofCurrencies(){
+		header('Content-Type: application/json');
+        $request = json_decode(file_get_contents('php://input'));
+       	$currency = $this->grid->read('rmis_currency', array('id','value as currency_id', 'name as currency'), $request); 
+		if($currency!=NULL)
+        	echo json_encode($currency["data"], JSON_NUMERIC_CHECK);
+		else
+			echo "[]";
+	}
     
     public function dataRead(){
         header('Content-Type: application/json');
@@ -157,19 +207,18 @@ class FundSources extends MX_Controller{
         $request->updated_at = date('Y-m-d H:i:s');            
         $columns[] = 'updated_by';
         $request->updated_by = 1;
-		$i=0;
-		if(!empty($request->fund_sources)>0){
-			$this->program->clean_programFundSources($request->program_id);
-			foreach($request->fund_sources as $fund_source_key=>$fund_source){
+		$fund_sources = json_decode($this->input->post('fund_sources'));
+		$this->program->clean_programFundSources($request->program_id);
+		if(!empty($fund_sources)){
+			foreach($fund_sources as $fund_source_key=>$fund_source){
 				if($fund_source!=NULL){
-					$request->fund_source = $fund_source;
-					$request->amount = $request->amounts[$i];
-					$request->currency = $request->currencies[$i];
-					$request->exchange_rate = $request->exchange_rates[$i];
-					$request->date_of_exchange_rate = $request->date_of_exchange_rates[$i];
-					$request->amount_in_taka = $request->amounts_in_taka[$i];
-					$this->grid->create('rmis_program_funding_sources', $columns, $request, 'id');
-					$i++;	
+					$request->fund_source = $fund_source->fund_source_id;
+					$request->amount = $fund_source->amount;
+					$request->currency = $fund_source->currency_id;
+					$request->exchange_rate = $fund_source->exchange_rate;
+					$request->date_of_exchange_rate = $fund_source->date_of_exchange_rate;
+					$request->amount_in_taka = $fund_source->amount_in_taka;
+					$this->grid->create('rmis_program_funding_sources', $columns, $request, 'id');	
 				}
 			}
 		}

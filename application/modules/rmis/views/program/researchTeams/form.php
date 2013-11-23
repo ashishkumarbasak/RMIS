@@ -47,7 +47,7 @@
           	<div class="form_element">
            		<div class="label width_170px">Planned End Date </div>
               	<div class="field">
-                	<input type="text" name="program_plannedEndDate" id="program_plannedEndDate" value="<?php if($program_detail) echo $program_detail->program_plannedBudget;?>" class="textbox disabled" disabled="disabled" />
+                	<input type="text" name="program_plannedEndDate" id="program_plannedEndDate" value="<?php if($program_detail) echo $program_detail->program_plannedEndDate;?>" class="textbox disabled" disabled="disabled" />
                 </div>
                 <div class="clear"></div>
           	</div>

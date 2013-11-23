@@ -88,7 +88,9 @@
     	<div class="form_element">
         	<div class="label width_170px">Principal Investigator<br />(Or Pm/Coordintor) <span class="mandatory">*</span></div>
         	<div class="field">
-        		<input type="text" name="program_coordinator" id="program_coordinator" value="<?php if($program_detail) echo $program_detail->program_coordinator;?>" class="textbox">
+        		<input type="text" name="program_coordinator_name" id="program_coordinator_name" value="<?php if($program_detail) echo $program_detail->program_coordinator;?>" class="textbox" />
+                <input type="hidden" name="program_coordinator" id="program_coordinator" value="<?php if($program_detail) echo $program_detail->employee_id; ?>">
+            	<input type="hidden" name="employee_id" id="employee_id" value="<?php if($program_detail) echo $program_detail->employee_id; ?>">
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -96,7 +98,7 @@
      	<div class="form_element">
         	<div class="label width_170px">Designation </div>
         	<div class="field">
-        		<input type="text" name="program_coordinator_designation" id="program_coordinator_designation" value="<?php if($program_detail) echo $program_detail->program_coordinator_designation; ?>" class="textbox">
+        		<input type="text" name="program_coordinator_designation" id="program_coordinator_designation" value="<?php if($program_detail) echo $program_detail->program_coordinator_designation; ?>" class="textbox" readonly="readonly">
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -349,3 +351,41 @@ $(document).ready(function() {
 	});
 });
 </script> 
+
+<script type="text/javascript">
+$(document).ready(function() {
+	var program_coordinator_select;
+	$("#program_coordinator_name").kendoAutoComplete({
+        	dataTextField: "employee_name",
+            filter: "startswith",
+            minLength: 2,
+            ignoreCase: false,
+            dataSource: {
+                         	type: "jsonp",
+                            serverFiltering: true,
+                            serverPaging: false,
+                            pageSize: 20,
+                            transport: {
+                                read: "<?php echo site_url('rmis/employees2'); ?>"
+                            }
+                       },
+           	open: function(e) {
+		    	program_coordinator_select = false;
+		  	},
+		  	select: function(e){
+		    	program_coordinator_select = true;
+			    var dataItem = this.dataItem(e.item.index());                
+        		$("#employee_id").val(dataItem.employee_id);
+        		$("#program_coordinator").val(dataItem.employee_id);
+				$("#program_coordinator_designation").val(dataItem.designation_name);
+		  	},
+		  	close: function(e){
+		    	// if no valid selection - clear input
+		    	if (!program_coordinator_select) this.value('');
+		  	}
+    });
+});
+</script>
+<style type="text/css">
+	.field span.k-autocomplete{ border-radius:0px !important; width: 214px !important; border: solid #bababa 1px; font-size: 13px !important;} 
+</style>

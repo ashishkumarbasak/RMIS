@@ -52,7 +52,10 @@ class Program_model extends MY_Model {
 	
 	public function get_details($id=NULL){
 		if($id!=NULL){
-			$this->db->select('* , hrm_employees.employee_name as program_coordinator');
+			$this->db->select('* , hrm_employees.employee_name as program_coordinator, program_planned_budget as program_plannedBudget, 
+								program_approved_budget as program_approvedBudget, program_planned_start_date as program_plannedStartDate, 
+								program_planned_end_date as program_plannedEndDate, program_initiation_date as program_initiationDate, 
+								program_completion_date as program_completionDate');
 			$this->db->from('rmis_program_informations');
 			$this->db->join('hrm_employees','rmis_program_informations.program_coordinator=hrm_employees.employee_id','left');
 			
@@ -107,8 +110,11 @@ class Program_model extends MY_Model {
 	
 	function get_fundSources($id=NULL){
 		if($id!=NULL){
-			$this->db->select('*');
+			$this->db->select('*, rmis_program_funding_sources.id as id, rmis_program_funding_sources.id as refID, rmis_funding_source.name as fund_source, 
+								rmis_funding_source.id as fund_source_id, rmis_currency.id as currency_id, rmis_currency.name as currency');
 			$this->db->from('rmis_program_funding_sources');
+			$this->db->join('rmis_funding_source','rmis_program_funding_sources.fund_source=rmis_funding_source.id','left');
+			$this->db->join('rmis_currency','rmis_program_funding_sources.currency=rmis_currency.id','left');
 			$this->db->where('rmis_program_funding_sources.program_id',$id);
 			
 			$query = $this->db->get();
@@ -351,8 +357,11 @@ class Program_model extends MY_Model {
 	
 	function get_activityLists($id=NULL){
 		if($id!=NULL){
-			$this->db->select('*');
+			$this->db->select('rmis_program_activities.id as ActivityID, rmis_program_activities.program_id as ProgramID, sort_order as SortOrder, 
+								work_element as WorkElement, planned_start_date as PlannedStartDate, planned_end_date as PlannedEndDate, 
+								actual_start_date as ActualStartDate, actual_end_date as ActualEndDate, hrm_employees.employee_name as AssignResource, hrm_employees.employee_id as AssignResourceID');
 			$this->db->from('rmis_program_activities');
+			$this->db->join('hrm_employees','rmis_program_activities.assign_resource=hrm_employees.employee_id','left');
 			$this->db->where('rmis_program_activities.program_id',$id);
 			
 			$query = $this->db->get();

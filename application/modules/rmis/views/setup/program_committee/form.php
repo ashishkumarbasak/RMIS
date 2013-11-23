@@ -42,9 +42,7 @@
     
     <div id="committee-members" style="width: 88%;">
     	<div id="committee_members_table"></div>
-    	
-    	
-	</div>
+    </div>
 	
 	<input type="hidden" name="committee_members" id="committee_members" value='<?php if(isset($committee_members) && $committee_members!=NULL) echo json_encode($committee_members); else echo "[]"; ?>' />                
 	<div class="form_element">
@@ -194,8 +192,8 @@ $(document).ready(function() {
 
                     $("#committee_members_table").kendoGrid({
                         dataSource: dataSource,
-                        pageable: true,
-                        height: 300,
+                        pageable: false,
+                        height: 200,
                         toolbar: [{text:"Add Member", name: "create"}],
                         columns: [
                             { field: "MemberName", title:"Member Name", editor: productnameAutocompleteEditor },
@@ -239,7 +237,7 @@ $(document).ready(function() {
 						  	}
 				        });
                 }
-            </script>
+</script>
 
 <style type="text/css">
 	span.k-autocomplete{ border-radius:0px !important; width: 200px !important; border: solid #bababa 1px; font-size: 13px !important;} 
