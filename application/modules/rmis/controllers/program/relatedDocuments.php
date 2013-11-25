@@ -14,24 +14,57 @@ class RelatedDocuments extends MX_Controller{
     public function index($program_id=NULL){
         $this->template->title('Research Management(RM)', ' Programs', ' Program Related Documents');
         
-		if($this->input->post('save_division')){
-			$request = json_encode($this->input->post());
-			$this->dataCreate($request);
-		}
+		if($program_id!=NULL){
+			
+			if($this->input->post('save_division')){
+				$request = json_encode($this->input->post());
+				$this->dataCreate($request);
+			}
+			
+			$program_detail = $this->program->get_details($program_id);
+			$this->template->set('program_detail', serialize($program_detail));
+			
+			$program_areas = $this->grid->read('rmis_program_areas', array('id','program_area_id', 'program_area_name'), $request); 
+			$this->template->set('program_areas',$program_areas);
 		
+			$this->template->set('program_id',$program_id);
+		}
         $_data['dashboard_menu_active'] = '';
         $_data['setup_menu_active'] = 'class="active"';
         $_data['setup_funds_menu_active'] ='class="active"';
         $_data['setup_training_program_type_menu_active'] ='';
         $_data['setup_institutes_menu_active'] ='';
+		
+		$this->template->append_metadata('<link href="/assets/kendoui/css/web/kendo.common.min.css"  rel="stylesheet"/>');
+        $this->template->append_metadata('<link href="/assets/kendoui/css/web/kendo.default.min.css"  rel="stylesheet"/>');
+        $this->template->append_metadata('<script src="/assets/kendoui/js/kendo.all.min.js"></script>');
+        $this->template->append_metadata('<script src="/assets/js/custom/rmis.js"></script>');
+		require_once APPPATH.'third_party/kendoui/Autoload.php';
         
+        $transport = new \Kendo\Data\DataSourceTransport();
+
+        $create = new \Kendo\Data\DataSourceTransportCreate();
+        
+		$upload = new \Kendo\UI\Upload('files[]');
+		$upload->async(array(
+				'saveUrl' => site_url('rmis/program/relatedDocuments/documentUpload'),
+				'removeUrl' => site_url('rmis/program/relatedDocuments/documentDestroy'),
+				'autoUpload' => true,
+				'removeField' => 'fileNames[]'
+			   ));
+		
+		$file_upload = $upload->render();
+		$this->template->set('file_upload', $file_upload);
+		
         if($program_id!=NULL){
 			$program_detail = $this->program->get_details($program_id);
 			$this->template->set('program_detail', serialize($program_detail));
 			
+			$document_type = $this->grid->read('rmis_document_type', array('value', 'name', 'is_active'), $request); 
+			$this->template->set('document_type',$document_type);
+			
 			$this->template->set('program_id',$program_id);
-		}
-		
+		}		
 		
         $this->template->set('content_header_icon', 'class="icofont-file"');
         $this->template->set('content_header_title', 'Program Information');
@@ -108,6 +141,25 @@ class RelatedDocuments extends MX_Controller{
         $data['success'] ="Data updated successfuly.";
         //echo json_encode($data , JSON_NUMERIC_CHECK);  
     }
-                
+	
+	public function documentUpload(){   
+        // Save the uploaded files
+		$files = $_FILES['files'];
+		for ($index = 0; $index < count($files['name']); $index++) {
+            $file = $files['tmp_name'][$index];
+            if (is_uploaded_file($file)) {
+                move_uploaded_file($file, './uploads/' . $files['name'][$index]);
+            }
+        }
+    }
+	
+	public function documentDestroy(){   
+        // Delete uploaded files
+        $fileNames = $_POST['fileNames'];
+        for ($index = 0; $index < count($fileNames); $index++) {
+            unlink('./uploads/' . $fileNames[$index]);
+        }
+        
+    }
 } 
 ?>

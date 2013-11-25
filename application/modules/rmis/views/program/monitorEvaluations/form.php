@@ -8,8 +8,6 @@
 	if(isset($activityLists)){
 		$activityLists = unserialize($activityLists);
 	}
-	
-	//print_r($qualitative_status);
 ?>
 
 <form name="research_info" id="research_info" method="post" action="">
@@ -105,7 +103,7 @@
         	<div class="form_element">
 	        	<div class="label width_170px">Date of M & E</div>
 	        	<div class="field">
-	        		<input type="text" name="program_approvedBudget" id="program_approvedBudget" value="<?php if($program_detail) echo $program_detail->program_approvedBudget;?>" class="textbox">
+                    <input type="text" name="monitoring_evaluation_date" id="monitoring_evaluation_date" value="<?php if($program_detail) echo $program_detail->monitoring_evaluation_date;?>" data-date-format="yyyy-mm-dd" class="textbox disabled" readonly="readonly">
 	        	</div>
 	        	<div class="clear"></div>
 	    	</div>
@@ -127,7 +125,7 @@
            	<div class="form_element">
            		<div class="label width_170px">Total Points </div>
                	<div class="field">
-               		<input type="text" name="program_plannedStartDate" id="program_plannedStartDate" value="<?php if($program_detail) echo $program_detail->program_plannedEndDate; ?>" class="textbox disabled" readonly="readonly"/>
+               		<input type="text" name="total_point" id="total_point" value="<?php if($program_detail) echo $program_detail->total_point; ?>" class="textbox disabled" readonly="readonly"/>
               	</div>
               	<div class="clear"></div>
           	</div>  
@@ -135,7 +133,7 @@
           	<div class="form_element">
            		<div class="label width_170px">Average Points </div>
               	<div class="field">
-                	<input type="text" name="program_plannedEndDate" id="program_plannedEndDate" value="<?php if($program_detail) echo $program_detail->program_plannedBudget;?>" class="textbox disabled" readonly="readonly" />
+                	<input type="text" name="average_grade_point" id="average_grade_point" value="<?php if($program_detail) echo $program_detail->average_grade_point;?>" class="textbox disabled" readonly="readonly" />
                 </div>
                 <div class="clear"></div>
           	</div>
@@ -145,7 +143,7 @@
        		<div class="form_element">
            		<div class="label">M & E Type</div>
                	<div class="field">
-              		<select name="m_and_e_type" id="program_area" class="selectionbox">
+              		<select name="m_and_e_type" id="m_and_e_type" class="selectionbox">
 	            		<option value="">Select M&E Type</option>
 						<?php 						
 						foreach($monitoring_and_evaluation_type['data'] as $key=>$monitoring_and_evaluation_type_item) { ?>
@@ -173,7 +171,7 @@
           	<div class="form_element">
            		<div class="label">Grade Point</div>
               	<div class="field">
-                   	<input type="text" class="textbox disabled" disabled="disabled" name="program_grade_point" id="program_grade_point" value="<?php if($program_detail) echo $program_detail->program_initiationDate;?>" />
+                   	<input type="text" class="textbox disabled" disabled="disabled" name="program_grade_point" id="program_grade_point" value="<?php if($program_detail) echo $program_detail->program_grade_point;?>" />
                	</div>
                	<div class="clear"></div>
            	</div>
@@ -181,7 +179,7 @@
            	<div class="form_element">
            		<div class="label">Letter Grade</div>
               	<div class="field">
-              		<input type="text" class="textbox disabled" disabled="disabled" name="program_letter_grade" id="program_letter_grade" value="<?php if($program_detail) echo $program_detail->program_completionDate;?>" />
+              		<input type="text" class="textbox disabled" disabled="disabled" name="program_letter_grade" id="program_letter_grade" value="<?php if($program_detail) echo $program_detail->program_letter_grade;?>" />
                	</div>
                	<div class="clear"></div>
            	</div>                        
@@ -361,3 +359,6 @@
         <div class="clear"></div>
     </div>
 </form>
+<script language="javascript">
+	$('#monitoring_evaluation_date').datepicker('setStartDate');
+</script>

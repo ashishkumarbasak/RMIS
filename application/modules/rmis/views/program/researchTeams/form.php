@@ -1,4 +1,3 @@
-<script src="<?php echo site_url('/assets/js/jquery-dynamic-form.js'); ?>"></script>
 <script src="<?php echo site_url('/assets/js/bootstrap-datepicker.js'); ?>"></script>
 <link rel="stylesheet" href="<?php echo site_url('assets/extensive/css/datepicker.css'); ?>" />
 <?php 
@@ -15,7 +14,7 @@
 <form name="research_info" id="research_info" method="post" action="">
 	<div class="main_form">
    		<div class="form_element">
-	    	<div class="label width_170px">Title of Research Programme <span class="mandatory">*</span></div>
+	    	<div class="label width_170px">Title of Research Program <span class="mandatory">*</span></div>
 	       	<div class="textarea_field"><textarea name="research_program_title" id="research_program_title" disabled="disabled" class="textarea_small disabled width_68_percent"><?php if($program_detail) echo $program_detail->research_program_title;?></textarea></div>
 	        <div class="clear"></div>
 	  	</div>
@@ -100,87 +99,13 @@
 	            <div class="label">Team Information</div>
 	            <div class="clear"></div>
 	        </div>
-	    	<div class="row">
-	    		<div class="grid-1-6 left">
-	        		<div class="heading">Member Type</div>
-	    		</div>
-	    		<div class="grid-1-6 left">
-	        		<div class="heading">Institute Name</div>
-	    		</div>
-	    		<div class="grid-1-6 left">
-	        		<div class="heading">Member Name</div>
-	    		</div>
-	    		<div class="grid-1-6 left">
-	        		<div class="heading">Designation</div>
-	    		</div>
-	    		<div class="grid-1-6 left">
-	        		<div class="heading">Contact No</div>
-	    		</div>
-	    		<div class="grid-1-6 left">
-	        		<div class="heading">Email</div>
-	    		</div>
-	    		<div class="clear"></div>
-	    	</div>
 	    	
-	    	<?php if(isset($teamMembers) && $teamMembers!=NULL) { 
-	    			foreach($teamMembers as $key=>$member){
-	    	?>
-	    			<div id="row-<?php echo $key; ?>">
-	    			<div class="row">
-				    	<div class="grid-1-6 left">
-				        	<input class="textbox no-margin width-89" type="text" name="member_types[]" id="member_types" value="<?php echo $member->member_type; ?>"/>
-				    	</div>
-				    	<div class="grid-1-6 left">
-				        	<input class="textbox no-margin width-89" type="text" name="institute_names[]" id="institute_names" value="<?php echo $member->institute_name; ?>"/>
-				    	</div>
-				    	<div class="grid-1-6 left">
-				        	<input class="textbox no-margin width-89" type="text" name="member_names[]" id="member_names" value="<?php echo $member->member_name; ?>"/>	
-				    	</div>
-				    	<div class="grid-1-6 left">
-				        	<input class="textbox no-margin width-89" type="text" name="designations[]" id="designations" value="<?php echo $member->designation; ?>"/>	
-				    	</div>
-				    	<div class="grid-1-6 left">
-				        	<input class="textbox no-margin width-89" type="text" name="contact_nos[]" id="contact_nos" value="<?php echo $member->contact_no; ?>"/>	
-				    	</div>
-				    	<div class="grid-1-6 left">
-				        	<input class="textbox no-margin width-89" type="text" name="emails[]" id="emails" value="<?php echo $member->email; ?>"/>	
-				    	</div>
-				    </div>
-				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_research_team_member(<?php echo $member->id;?> , <?php echo $member->program_id; ?>, <?php echo $key; ?> );">[-]</a></div>
-				    </div>
-	    	<?php				
-	    			}
-	    	 	  } 
-	    	?>
-	    	
-	    	<div id='duplicate2'>
-		    	<div class="row">
-			    	<div class="grid-1-6 left">
-			        	<input class="textbox no-margin width-89" type="text" name="member_types[]" id="member_types" value=""/>
-			    	</div>
-			    	<div class="grid-1-6 left">
-			        	<input class="textbox no-margin width-89" type="text" name="institute_names[]" id="institute_names" value=""/>
-			    	</div>
-			    	<div class="grid-1-6 left">
-			        	<input class="textbox no-margin width-89" type="text" name="member_names[]" id="member_names" value=""/>	
-			    	</div>
-			    	<div class="grid-1-6 left">
-			        	<input class="textbox no-margin width-89" type="text" name="designations[]" id="designations" value=""/>	
-			    	</div>
-			    	<div class="grid-1-6 left">
-			        	<input class="textbox no-margin width-89" type="text" name="contact_nos[]" id="contact_nos" value=""/>	
-			    	</div>
-			    	<div class="grid-1-6 left">
-			        	<input class="textbox no-margin width-89" type="text" name="emails[]" id="emails" value=""/>	
-			    	</div>
-			    </div>
-			    <div class="row add-more">
-			    	<a id="minus2" href="javascript:void(0);">[-]</a>
-			    	<a id="plus2" href="javascript:void(0);">[+]</a>
-			    </div>
-			    <div class="clear"></div>
-			</div>
-	    </div>
+            <div id="research_team_information" style="width: 100%;">
+                <div id="research_team_information_table"></div>
+            </div>	
+            <input type="hidden" name="research_team_member" id="research_team_member" value='<?php if(isset($teamMembers) && $teamMembers!=NULL) echo json_encode($teamMembers); else echo "[]"; ?>' />
+	    
+        </div>
 	</div>
 	
 	
@@ -200,14 +125,9 @@
 	
 </form>
 <script language="javascript">
-	$('#team_formation_date').datepicker('setStartDate');
+	$('#team_formation_date').datepicker();
 </script>
-<script type="text/javascript">
-$(document).ready(function() {
-	$("#duplicate2").dynamicForm("#plus2", "#minus2", {limit:10});		
-	return false;
-});
-</script>
+
 <script type="text/javascript">
 	function delete_research_team_member(team_member_id, program_id, row_id){
 		var r=confirm("Are you sure you want to delete this team member?");
@@ -220,4 +140,140 @@ $(document).ready(function() {
 			})
 		}
 	}
+</script>
+<script type="text/javascript">                
+$(document).ready(function () {
+	var crudServiceBaseUrl = "<?php echo base_url();?>",
+		dataSource = new kendo.data.DataSource({
+			transport: {
+				read:  {
+					url: crudServiceBaseUrl + "rmis/program/researchTeams/getResearchTeamInformation/<?php if(isset($program_detail) && $program_detail->program_id!=NULL) echo $program_detail->program_id; else echo 0; ?>"
+				},
+				update: {
+					url: crudServiceBaseUrl + "rmis/program/researchTeams/updateMembers",
+					dataType: 'json',
+					type: 'POST',
+				},
+				destroy: {
+					url: crudServiceBaseUrl + "rmis/program/researchTeams/destroyMembers",
+					dataType: 'json',
+					type: 'POST',
+				},
+				create: {
+					url: crudServiceBaseUrl + "rmis/program/researchTeams/addMembers",
+					dataType: 'json',
+					type: 'POST'
+				},
+				parameterMap: function(options, operation) {
+					if($('#research_team_member').val()!=''){
+						var activitiesObj = JSON.parse($('#research_team_member').val());
+						if(options.models && operation == "create"){
+							activitiesObj.push(options.models[0]);
+							$('#research_team_member').val(kendo.stringify(activitiesObj));
+						}else if(options.models && operation == "destroy"){
+							var NewObj = JSON.parse("[]");
+							for (var i = 0, len = activitiesObj.length; i < len; ++i) {
+								var actObj = activitiesObj[i];
+								if(actObj.ActivityID!=options.models[0].ActivityID){
+									NewObj.push(actObj);
+								}
+							}
+							$('#research_team_member').val(kendo.stringify(NewObj));
+						}else if(options.models && operation == "update"){
+							var NewObj = JSON.parse("[]");
+							for (var i = 0, len = activitiesObj.length; i < len; ++i) {
+								var actObj = activitiesObj[i];
+								if(actObj.ActivityID!=options.models[0].ActivityID){
+									NewObj.push(actObj);
+								}
+							}
+							NewObj.push(options.models[0]);
+							$('#research_team_member').val(kendo.stringify(NewObj));
+						}
+					}
+					if (operation !== "read" && options.models) {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			batch: true,
+			pageSize: 20,
+			schema: {
+				model: {
+					id: "MemberID",
+					fields: {
+						MemberType: { validation: { required: true } },
+						InstituteID: { validation: { required: true } },
+						MemberID: { validation: { required: true } },
+						MemberName: { validation: { required: true } },
+						Designation: { validation: { required: true } },
+						ContactNo: { validation: { required: true } },
+						Email: { validation: { required: true } },
+						ProgramID: { editable: false, nullable: true }
+					}
+				}
+			}
+		});
+
+		$("#research_team_information_table").kendoGrid({
+				dataSource: dataSource,
+				pageable: false,
+				height: 200,
+				toolbar: [{text:"Add Team Member", name: "create"}],
+				columns: [
+					{ field: "MemberType", title:"Member Type", editor: memberTypeDropDownEditor},
+					{ field: "InstituteName", title:"Institute Name"},
+					{ field: "MemberName", title:"Member Name", editor: employee_auto_complete },
+					{ field: "Designation", title:"Designation"},
+					{ field: "ContactNo", title:"Contact No"},
+					{ field: "Email", title:"Email"},
+					{ command: ["edit", "destroy"], title: "&nbsp;", width: "190px"}],
+				editable: "inline"
+		});
+});
+
+function employee_auto_complete(container, options) 
+{
+	$('<input required class="textbox" name="' + options.field + '"/>')
+		.appendTo(container)
+		.kendoAutoComplete({
+			dataTextField: "employee_name",
+			filter: "startswith",
+			minLength: 2,
+			ignoreCase: false,
+			dataSource: {
+				type: "jsonp",
+				serverFiltering: true,
+				serverPaging: false,
+				pageSize: 20,
+				transport: {
+					read: "<?php echo site_url('rmis/employees2'); ?>"
+				}
+			},
+			select: function(e){
+				var dataItem = this.dataItem(e.item.index()); 
+				options.model.AssignResource = dataItem.employee_name;
+				options.model.AssignResourceID = dataItem.employee_id;
+			}
+		});
+}
+
+function memberTypeDropDownEditor(container, options) {
+	var ServiceBaseUrl = "<?php echo base_url();?>";
+	$('<input required data-text-field="member_type" data-value-field="member_type_id" data-bind="value:member_type_id"/>')
+		.appendTo(container)
+		.kendoDropDownList({
+			optionLabel: "Select Type",
+			dataSource: {
+				transport: {
+					read: ServiceBaseUrl + "rmis/program/researchTeams/getListofMemberTypes"
+				}
+			},
+			select: function(e){
+				var dataItem = this.dataItem(e.item.index());
+				options.model.member_type = dataItem.member_type;
+				options.model.member_type_id = dataItem.member_type_id;
+			}
+ });
+}
 </script>

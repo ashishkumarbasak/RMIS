@@ -45,6 +45,9 @@ class SteeringCommittees extends MX_Controller{
 			$teamMembers = $this->program->get_steeringCommitteeTeamMembers($program_id);
 			$this->template->set('teamMembers', serialize($teamMembers));
 			
+			$committee_member_type = $this->grid->read('rmis_committee_member_types', array('value', 'name', 'is_active'), $request); 
+			$this->template->set('committee_member_type',$committee_member_type);
+			
 			$this->template->set('program_id',$program_id);
 		}
 		
