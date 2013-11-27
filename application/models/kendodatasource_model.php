@@ -378,15 +378,15 @@ class Kendodatasource_model extends CI_Model
             $columns = implode(', ', $columns);
             $values = implode(', ', $values);
 
-             $sql = "INSERT INTO $table ($columns) VALUES ($values)";
-           
+            $sql = "INSERT INTO $table ($columns) VALUES ($values)";
+           	
 
             $statement = $this->pdo->conn_id->prepare($sql);
 
             $statement->execute($input_parameters);
 
             $status = $statement->errorInfo();
-
+			//print_r($status);
             if ($status[1] > 0) {
                 $errors[] = $status[2];
             }

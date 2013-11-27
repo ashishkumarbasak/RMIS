@@ -3,7 +3,7 @@
 		$program_detail = unserialize($program_detail);
 	}	
 ?>
-<form name="research_info" id="research_info" method="post" action="">
+<form name="research_info" id="research_info" method="post" action="" enctype="multipart/form-data">
 	<div class="main_form">
    		<div class="form_element">
 	    	<div class="label width_170px">Title of Research Programme <span class="mandatory">*</span></div>
@@ -126,7 +126,10 @@
           	<div class="form_element">
            		<div class="label width_170px">File/Document</div>
               	<div class="field">
-                    <?php echo $file_upload;?>                    
+                	<input name="files" id="files" type="file" />
+                	<?php if(isset($file_upload_error) && $file_upload_error=="yes") {  ?>
+                		<div for="files" class="error">Please select file to upload.</div>
+                	<?php } ?> 
                 </div>
                 <div class="clear"></div>
           	</div>
@@ -135,8 +138,8 @@
 		<div class="right_form">    
        		<div class="form_element">
            		<div class="label">Remarks</div>
-               	<div class="field">
-                	<textarea name="remarks" id="remarks" class="textarea width-100"></textarea>
+               	<div class="field" style="width: 300px;"> 
+                	<textarea name="remarks" id="remarks" class="textarea width-100" style="width: 100%;"></textarea>
              	</div>
                	<div class="clear"></div>
          	</div>
@@ -148,14 +151,20 @@
     	<div class="button_panel" style="margin-right:15px;">
     		<?php if(isset($program_detail) && ($activityLists!=NULL)) { ?>
 		    		<input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
-		    		<input type="button" name="delete_researchTeam" id="delete_researchTeam" value="Delete" class="k-button button">
-		            <input type="submit" name="update_researchTeam" id="update_researchTeam" value="Update" class="k-button button">
+		    		<input type="button" name="delete_documentInformation" id="delete_documentInformation" value="Delete" class="k-button button">
+		            <input type="submit" name="update_documentInformation" id="update_documentInformation" value="Update" class="k-button button">
 		    <?php } else { ?>
                 <input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
-            	<input type="submit" name="save_researchTeam" id="save_researchTeam" value="Save" class="k-button button">
+            	<input type="submit" name="save_documentInformation" id="save_documentInformation" value="Save" class="k-button button">
         	<?php } ?>
         </div>
         <div class="clear"></div>
     </div>  
     
 </form>
+
+<script>
+	$(document).ready(function() {
+    	$("#files").kendoUpload();
+    });
+</script>
