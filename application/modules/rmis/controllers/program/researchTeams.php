@@ -103,6 +103,44 @@ class ResearchTeams extends MX_Controller{
         $data['success'] ="Data created successfuly.";
         //echo json_encode($data , JSON_NUMERIC_CHECK); 
     }
+	
+	function getResearchTeamInformation($program_id=NULL){
+		header('Content-Type: application/json');
+        $request = json_decode(file_get_contents('php://input'));
+        $activityLists = $this->program->get_research_team_information($program_id);
+		if($activityLists!=NULL)
+        	echo json_encode($activityLists, JSON_NUMERIC_CHECK);
+		else
+			echo "[]";
+	}
+
+	function addMembers(){
+		header('Content-Type: application/json');
+        $members = $this->input->post('models');
+		echo $members;
+	}
+	
+	function destroyMembers(){
+		header('Content-Type: application/json');
+        $members = $this->input->post('models');
+		echo $members;
+	}
+	
+	function updateMembers(){
+		header('Content-Type: application/json');
+        $members = $this->input->post('models');
+		echo $members;
+	}
+	
+	function getListofMemberTypes(){
+		header('Content-Type: application/json');
+        $request = json_decode(file_get_contents('php://input'));
+       	$member_types = $this->grid->read('rmis_member_types', array('id','value as member_type_id', 'name as member_type'), $request); 
+		if($member_types!=NULL)
+        	echo json_encode($member_types["data"], JSON_NUMERIC_CHECK);
+		else
+			echo "[]";
+	}
     
     public function dataRead(){
         header('Content-Type: application/json');

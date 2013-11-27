@@ -26,9 +26,8 @@
 	        	<div class="field">
 	        		<select name="program_area" id="program_area" class="selectionbox disabled" disabled="disabled">
 	            		<option value="">Select Program Area</option>
-						<?php 
-						
-						foreach($program_areas['data'] as $key=>$program_area) { ?>
+						<?php 						
+						   foreach($program_areas['data'] as $key=>$program_area) { ?>
 	            			<option value="<?php echo $program_area['program_area_id']; ?>" <?php if(isset($program_detail) && $program_detail->program_area==$program_area['program_area_id']) { ?> selected="selected" <?php } ?> ><?php echo $program_area['program_area_name']; ?></option>
 	            		<?php } ?>
 	        		</select>
@@ -84,7 +83,7 @@
 	<div class="main_form">
 		<div class="left_form">
         	<div class="form_element">
-           		<div class="label width_170px">Committee Formation Date </div>
+           		<div class="label width_170px">Committee Formation Date <span class="mandatory">*</span></div>
                 <div class="field">
                		<input type="text" name="committee_formation_date" id="committee_formation_date" value="<?php if($steeringCommittee) echo $steeringCommittee->committee_formation_date;?>" data-date-format="yyyy-mm-dd" class="textbox disabled" readonly="readonly">
                		<span class="input-group-addon">
@@ -119,7 +118,8 @@
 	    		<div class="clear"></div>
 	    	</div>
 	    	
-	    	<?php if(isset($teamMembers) && $teamMembers!=NULL) { 
+	    	<?php if(isset($teamMembers) && $teamMembers!=NULL) {
+					$g = 0;  
 	    			foreach($teamMembers as $key=>$member){
 	    	?>
 	    			<div id="row-<?php echo $key; ?>">
@@ -131,7 +131,13 @@
 				        	<input class="textbox no-margin width-91" type="text" name="designations[]" id="designations" value="<?php echo $member->designation; ?>"/>
 				    	</div>
 				    	<div class="grid-1-5 left">
-				        	<input class="textbox no-margin width-91" type="text" name="committee_member_types[]" id="committee_member_types" value="<?php echo $member->committee_member_type; ?>"/>	
+                            <select name="committee_member_types[]" id="committee_member_types" class="selectionbox width-89 no-margin">
+                                <option value="">Select</option>
+                                <?php 						
+                                foreach($committee_member_type['data'] as $key=>$committee_member_type_item) { ?>
+                                    <option value="<?php echo $committee_member_type_item['value']; ?>" <?php if(isset($teamMembers)){if($teamMembers[$g]->committee_member_type==$committee_member_type_item['value']){ echo "selected=\"selected\" ";}} ?> ><?php echo $committee_member_type_item['name']; ?></option>
+                                <?php } ?>
+                            </select>
 				    	</div>
 				    	<div class="grid-1-5 left">
 				        	<input class="textbox no-margin width-91" type="text" name="contact_nos[]" id="contact_nos" value="<?php echo $member->contact_no; ?>"/>	
@@ -142,7 +148,8 @@
 				    </div>
 				    <div class="row add-more"><a href="javascript:void(0);" onclick="delete_steeringCommittee_team_member(<?php echo $member->id;?> , <?php echo $member->program_id; ?>, <?php echo $key; ?> );">[-]</a></div>
 				    </div>
-	    	<?php				
+	    	<?php	
+					$g++;			
 	    			}
 	    	 	  } 
 	    	?>
@@ -156,7 +163,13 @@
 		        	<input class="textbox no-margin width-91" type="text" name="designations[]" id="designations" value=""/>
 		    	</div>
 		    	<div class="grid-1-5 left">
-		        	<input class="textbox no-margin width-91" type="text" name="committee_member_types[]" id="committee_member_types" value=""/>	
+                    <select name="committee_member_types[]" id="committee_member_types" class="selectionbox width-89 no-margin">
+                        <option value="">Select</option>
+                        <?php 						
+                        foreach($committee_member_type['data'] as $key=>$committee_member_type_item) { ?>
+                            <option value="<?php echo $committee_member_type_item['value']; ?>" <?php if(isset($teamMembers)){if($teamMembers[$g]->committee_member_type==$committee_member_type_item['value']){ echo "selected=\"selected\" ";}} ?> ><?php echo $committee_member_type_item['name']; ?></option>
+                        <?php } ?>
+                    </select>
 		    	</div>
 		    	<div class="grid-1-5 left">
 		        	<input class="textbox no-margin width-91" type="text" name="contact_nos[]" id="contact_nos" value=""/>	

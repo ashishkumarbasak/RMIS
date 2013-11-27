@@ -1,9 +1,9 @@
 <?php 
-	if(isset($division_detail)){
-		$division_detail = unserialize($division_detail);
-	} 
+	if(isset($program_detail)){
+		$program_detail = unserialize($program_detail);
+	}	
 ?>
-<form name="research_info" id="research_info" method="post" action="">
+<form name="research_info" id="research_info" method="post" action="" enctype="multipart/form-data">
 	<div class="main_form">
    		<div class="form_element">
 	    	<div class="label width_170px">Title of Research Programme <span class="mandatory">*</span></div>
@@ -17,9 +17,8 @@
 	        	<div class="field">
 	        		<select name="program_area" id="program_area" class="selectionbox disabled" disabled="disabled">
 	            		<option value="">Select Program Area</option>
-						<?php 
-						
-						foreach($program_areas['data'] as $key=>$program_area) { ?>
+						<?php 						
+						   foreach($program_areas['data'] as $key=>$program_area) { ?>
 	            			<option value="<?php echo $program_area['program_area_id']; ?>" <?php if(isset($program_detail) && $program_detail->program_area==$program_area['program_area_id']) { ?> selected="selected" <?php } ?> ><?php echo $program_area['program_area_name']; ?></option>
 	            		<?php } ?>
 	        		</select>
@@ -86,4 +85,86 @@
            	</div>                        
 		</div>                                                 
 	</div>
+    
+    
+	<div class="main_form">
+		<div class="form_element">
+	    	<div class="label">Program Related Document</div>
+	        <div class="clear"></div>
+	    </div>
+   		<div class="left_form">
+        	<div class="form_element">
+	        	<div class="label width_170px">Document Title</div>
+	        	<div class="field">
+                    <input type="text" name="document_title" id="document_title" value="<?php if($program_detail) echo $program_detail->document_title;?>">
+	        	</div>
+	        	<div class="clear"></div>
+	    	</div>
+            
+            <div class="form_element">
+           		<div class="label width_170px">File/Document Type</div>
+               	<div class="field">
+               		<select name="document_type" id="document_type" class="selectionbox">
+	            		<option value="">Select M&E Type</option>
+						<?php 						
+						foreach($document_type['data'] as $key=>$document_type_item) { ?>
+	            			<option value="<?php echo $document_type_item['value']; ?>" <?php if(isset($program_detail) && $program_detail->document_type==$document_type_item['value']) { ?> selected="selected" <?php } ?> ><?php echo $document_type_item['name']; ?></option>
+	            		<?php } ?>
+	        		</select>
+               	</div>
+              	<div class="clear"></div>
+         	</div>
+                            
+           	<div class="form_element">
+           		<div class="label width_170px">Sorting Order</div>
+               	<div class="field">
+               		<input type="text" name="sorting_order" id="sorting_order" value="<?php if($program_detail) echo $program_detail->sorting_order; ?>" class="textbox" />
+              	</div>
+              	<div class="clear"></div>
+          	</div>  
+                            
+          	<div class="form_element">
+           		<div class="label width_170px">File/Document</div>
+              	<div class="field">
+                	<input name="files" id="files" type="file" />
+                	<?php if(isset($file_upload_error) && $file_upload_error=="yes") {  ?>
+                		<div for="files" class="error">Please select file to upload.</div>
+                	<?php } ?> 
+                </div>
+                <div class="clear"></div>
+          	</div>
+		</div>
+                        
+		<div class="right_form">    
+       		<div class="form_element">
+           		<div class="label">Remarks</div>
+               	<div class="field" style="width: 300px;"> 
+                	<textarea name="remarks" id="remarks" class="textarea width-100" style="width: 100%;"></textarea>
+             	</div>
+               	<div class="clear"></div>
+         	</div>
+		</div>                                                 
+	</div>    
+  
+  
+   <div class="form_element">
+    	<div class="button_panel" style="margin-right:15px;">
+    		<?php if(isset($program_detail) && ($activityLists!=NULL)) { ?>
+		    		<input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
+		    		<input type="button" name="delete_documentInformation" id="delete_documentInformation" value="Delete" class="k-button button">
+		            <input type="submit" name="update_documentInformation" id="update_documentInformation" value="Update" class="k-button button">
+		    <?php } else { ?>
+                <input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
+            	<input type="submit" name="save_documentInformation" id="save_documentInformation" value="Save" class="k-button button">
+        	<?php } ?>
+        </div>
+        <div class="clear"></div>
+    </div>  
+    
 </form>
+
+<script>
+	$(document).ready(function() {
+    	$("#files").kendoUpload();
+    });
+</script>
