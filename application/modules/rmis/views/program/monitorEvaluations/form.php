@@ -194,9 +194,9 @@
 	    <div class="left_form">
 	    	<div class="form_element">
 				<?php
-		        	$program_expectedOutputs = array(); 
+					$program_expectedOutputs = array(); 
 		        	if(isset($program_detail))
-					$program_expectedOutputs = explode("---##########---", $program_detail->program_expectedOutputs);
+					$program_expectedOutputs = explode("---##########---", $program_detail->program_expected_outputs);
 				?>
 				
 				<div class="label width_170px">Expected output <span class="mandatory">*</span></div>
@@ -204,13 +204,14 @@
 		        	<?php 
 						if(!empty($program_expectedOutputs)) { 
 			    			foreach($program_expectedOutputs as $key=>$program_expectedOutput){
+			    				if($program_expectedOutput!=NULL){
 			    	?>
 			    		 
 				        	<div>
 				            	<textarea name="program_expectedOutputs[]" id="program_expectedOutputs[]" class="textarea width-100 disabled" disabled="disabled"><?php echo $program_expectedOutput; ?></textarea>
 				        	</div>
 				        	
-			    	<?php 
+			    	<?php 		}
 							} 
 			    		}
 			    	?>
@@ -226,11 +227,13 @@
 		        	<?php 
 						if(!empty($program_expectedOutputs)) { 
 			    			foreach($program_expectedOutputs as $key=>$program_expectedOutput){
+			    				if($program_expectedOutput!=NULL){
 			    	?>			    		 
 				        	<div>
 				            	<textarea name="program_expectedOutputs[]" id="program_expectedOutputs[]" class="textarea width-100"></textarea>
 				        	</div>  	
 			    	<?php 
+			    				}
 							} 
 			    		}
 			    	?>
@@ -277,28 +280,38 @@
 	    			<div id="row-<?php echo $key; ?>">
 		    			<div class="row">
 					    	<div class="grid-1-20 left">
-				        		<input class="textbox no-margin" style="width: 55%;" type="text" name="s_os[]" id="s_os" value="<?php echo $activity->s_o; ?>"/>
+				        		<input class="textbox no-margin" style="width: 60%;" type="text" name="s_os[]" id="s_os" value="<?php echo $activity->SortOrder; ?>" readonly="readonly" />
 				    		</div>
 					    	<div class="grid-1-6 left" style="width: 25%;">
-					        	<input class="textbox no-margin disabled" disabled="disabled" style="width: 93%;" type="text" name="work_elements[]" id="work_elements" value="<?php echo $activity->work_element; ?>"/>
+					        	<input class="textbox no-margin disabled" disabled="disabled" style="width: 93%;" type="text" name="work_elements[]" id="work_elements" value="<?php echo $activity->WorkElement; ?>"/>
 					    	</div>
 					    	<div class="grid-1-6 left" style="width: 13%;">
-					        	<input class="textbox no-margin" style="width: 86%;" type="text" name="planned_startDates[]" id="planned_startDates" value="<?php echo $activity->planned_startDate; ?>"/>
+					        	<input class="textbox no-margin" style="width: 86%;" type="text" name="actual_startDates[]" id="actual-startDates-<?php echo $key; ?>" data-date-format="yyyy-mm-dd" value=""/>
 					    	</div>
 					    	<div class="grid-1-6 left" style="width: 13%;">
-					        	<input class="textbox no-margin" style="width: 86%;" type="text" name="planned_endDates[]" id="planned_endDates" value="<?php echo $activity->planned_endDate; ?>"/>	
+					        	<input class="textbox no-margin" style="width: 86%;" type="text" name="actual_endDates[]" id="actual-endDates-<?php echo $key; ?>" data-date-format="yyyy-mm-dd" value=""/>	
 					    	</div>
 					    	<div class="grid-1-6 left" style="width: 25%;">
-					        	<input class="textbox no-margin" style="width: 93%;" type="text" name="actual_startDates[]" id="actual_startDates" value="<?php echo $activity->actual_startDate; ?>"/>	
+					        	<input class="textbox no-margin" style="width: 93%;" type="text" name="activityComments[]" id="activityComments" value=""/>	
 					    	</div>
 					    	<div class="grid-1-6 left" style="width: 10%;">
-					        	<input class="textbox no-margin" style="width: 83%;" type="text" name="actual_endDates[]" id="actual_endDates" value="<?php echo $activity->actual_endDate; ?>"/>	
+					        	<select name="activityStatuses" id="activityStatuses" class="selectionbox" style="width: 98%;">
+	            					<option value="">Status</option>
+						        	<?php 						
+									foreach($activity_statuses['data'] as $key=>$activity_status) { ?>
+				            			<option value="<?php echo $activity_status['value']; ?>" <?php if(isset($program_detail) && $program_detail->qualitative_status==$activity_status['value']) { ?> selected="selected" <?php } ?> ><?php echo $activity_status['name']; ?></option>
+				            		<?php } ?>
+			            		</select>	
 					    	</div>
 					    	<div class="grid-1-6 left" style="width: 10%;">
-					        	<input class="textbox no-margin" style="width: 85%;" type="text" name="assign_resources[]" id="assign_resources" value="<?php echo $activity->assign_resource; ?>"/>	
+					        	<input class="textbox no-margin" style="width: 85%;" type="text" name="activityPoints[]" id="activityPoints" value=""/>	
 					    	</div>
 					    </div>
 				    </div>
+				    <script type="text/javascript">
+				    	$('#actual-startDates-<?php echo $key; ?>').datepicker('setStartDate');
+				    	$('#actual-endDates-<?php echo $key; ?>').datepicker('setStartDate');
+				    </script>
 	    	<?php				
 	    			}
 	    	 	  } 

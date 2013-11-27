@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 27, 2013 at 09:01 AM
+-- Generation Time: Nov 27, 2013 at 07:21 PM
 -- Server version: 5.5.29
 -- PHP Version: 5.4.10
 
@@ -223,6 +223,37 @@ INSERT INTO `hrm_organograms` (`id`, `organization_id`, `organogram_name`, `repo
 (69, 20, '1212', 68, 'Unit', 0, NULL, '2013-08-22 18:13:18', 200, '2013-08-22 12:13:18', NULL),
 (70, 20, 'jggj', 0, 'Division', 1, NULL, '2013-08-26 17:16:50', 200, '2013-08-26 11:13:24', NULL),
 (71, 20, 'jg', 1, 'Wing', 0, NULL, '2013-08-26 17:17:09', 200, '2013-08-26 11:13:42', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rmis_activity_statuses`
+--
+
+CREATE TABLE `rmis_activity_statuses` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
+  `value` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `weight` int(11) DEFAULT NULL,
+  `is_default` enum('yes','no') COLLATE utf8_unicode_ci DEFAULT 'no',
+  `is_active` tinyint(4) DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_by` bigint(20) unsigned DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_by` bigint(20) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`,`organization_id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `rmis_activity_statuses`
+--
+
+INSERT INTO `rmis_activity_statuses` (`id`, `organization_id`, `value`, `name`, `weight`, `is_default`, `is_active`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 1, '1', 'Done', 1, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-11-27 17:58:11', NULL),
+(2, 1, '2', 'Half Done', 2, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-11-27 17:58:22', NULL),
+(3, 2, '3', 'Not Done', 3, 'no', 1, '0000-00-00 00:00:00', NULL, '2013-11-27 17:58:28', NULL);
 
 -- --------------------------------------------------------
 

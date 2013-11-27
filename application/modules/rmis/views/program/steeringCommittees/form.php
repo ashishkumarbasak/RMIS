@@ -85,7 +85,7 @@
         	<div class="form_element">
            		<div class="label width_170px">Committee Formation Date <span class="mandatory">*</span></div>
                 <div class="field">
-               		<input type="text" name="committee_formation_date" id="committee_formation_date" value="<?php if($steeringCommittee) echo $steeringCommittee->committee_formation_date;?>" data-date-format="yyyy-mm-dd" class="textbox disabled" readonly="readonly">
+               		<input type="text" name="committee_formation_date" id="committee_formation_date" value="<?php if($steeringCommittee) { if($steeringCommittee->committee_formation_date=='0000-00-00'){echo '';} else {echo $steeringCommittee->committee_formation_date;}}?>" data-date-format="yyyy-mm-dd" class="textbox disabled" readonly="readonly">
                		<span class="input-group-addon">
 	            		<i class="icon-calendar"></i>
 	        		</span>

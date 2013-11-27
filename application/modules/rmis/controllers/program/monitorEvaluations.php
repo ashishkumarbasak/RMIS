@@ -49,6 +49,9 @@ class MonitorEvaluations extends MX_Controller{
 		$qualitative_status = $this->grid->read('rmis_qualitative_status', array('value','name', 'is_active'), $request); 
 		$this->template->set('qualitative_status', $qualitative_status);
 		
+		$activity_statuses = $this->grid->read('rmis_activity_statuses', array('value','name', 'is_active'), $request); 
+		$this->template->set('activity_statuses', $activity_statuses);
+		
 		$program_rating = $this->grid->read('rmis_program_rating', array('value','name', 'is_active'), $request); 
 		$this->template->set('program_rating', $program_rating);
 		
