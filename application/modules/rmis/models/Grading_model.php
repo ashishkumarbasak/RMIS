@@ -63,6 +63,24 @@ class Grading_model extends MY_Model {
 			$this->db->where('grading_id',$grading_id);
 			$this->db->delete('rmis_grade_point_informations');
 		}
+	}
+	
+	function getGradeIngofromPoints($averagePoints=NULL){
+		if($averagePoints!=NULL){
+			$this->db->select('*');
+			$this->db->from('rmis_grade_point_informations');
+			$this->db->where('lower_range <= ', $averagePoints , FALSE);
+			$this->db->where('upper_range >= ', $averagePoints , FALSE);
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result[0];
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;
+		}
 	}	
 }
 ?>

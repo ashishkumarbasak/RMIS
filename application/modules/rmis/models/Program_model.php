@@ -359,7 +359,8 @@ class Program_model extends MY_Model {
 		if($id!=NULL){
 			$this->db->select('rmis_program_activities.id as ActivityID, rmis_program_activities.program_id as ProgramID, sort_order as SortOrder, 
 								work_element as WorkElement, planned_start_date as PlannedStartDate, planned_end_date as PlannedEndDate, 
-								actual_start_date as ActualStartDate, actual_end_date as ActualEndDate, hrm_employees.employee_name as AssignResource, hrm_employees.employee_id as AssignResourceID');
+								actual_start_date as ActualStartDate, actual_end_date as ActualEndDate, hrm_employees.employee_name as AssignResource, hrm_employees.employee_id as AssignResourceID,
+								comments, activity_status, activity_point');
 			$this->db->from('rmis_program_activities');
 			$this->db->join('hrm_employees','rmis_program_activities.assign_resource=hrm_employees.employee_id','left');
 			$this->db->where('rmis_program_activities.program_id',$id);
@@ -381,6 +382,23 @@ class Program_model extends MY_Model {
 			$this->db->where('id',$activity_id);
 			$this->db->where('program_id',$program_id);
 			$this->db->delete('rmis_program_activities');
+		}
+	}
+
+	function get_program_me_informations($program_id=NULL){
+		if($program_id!=NULL){
+			$this->db->select('*');
+			$this->db->from('rmis_program_me_informations');
+			$this->db->where('program_id',$program_id);
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result[0];
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;
 		}
 	}
 

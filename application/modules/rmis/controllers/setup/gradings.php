@@ -161,5 +161,11 @@ class Gradings extends MX_Controller{
 		$grade_point_id = $this->input->post('grade_point_id');
 		$this->grading->deleteGradePointInformation($grade_point_id);
 	}
+
+	public function getGradefromPoints(){
+		$averagePoints = $this->input->post('averagePoints');
+		$gradings = $this->grading->getGradeIngofromPoints($averagePoints);
+		echo json_encode($gradings, JSON_NUMERIC_CHECK);
+	}
 } 
 ?>

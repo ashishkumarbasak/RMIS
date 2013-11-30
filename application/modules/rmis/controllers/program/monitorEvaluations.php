@@ -6,6 +6,7 @@ class MonitorEvaluations extends MX_Controller{
         parent::__construct();
         $this->load->model('Kendodatasource_model', 'grid');
         $this->load->model('Program_model', 'program');
+		$this->load->model('program_me_committee_model', 'ProgramCommitte');
 
         $this->template->set_partial('header', 'layouts/header')
 						->set_layout('extensive/main_layout');
@@ -14,9 +15,19 @@ class MonitorEvaluations extends MX_Controller{
     public function index($program_id=NULL){
         $this->template->title('Research Management(RM)', ' Programs', ' Program Monitoring & Evaluation Information');
         
-		if($this->input->post('save_division')){
+		if($this->input->post('save_programMEInformation')){
 			$request = json_encode($this->input->post());
 			$this->dataCreate($request);
+		}
+		
+		if($this->input->post('update_programMEInformation')){
+			$request = json_encode($this->input->post());
+			$this->dataUpdate($request);
+		}
+		
+		if($this->input->post('delete_programMEInformation')){
+			$request = json_encode($this->input->post());
+			$this->dataDestroy($request);
 		}
 		
         $_data['dashboard_menu_active'] = '';
@@ -34,8 +45,18 @@ class MonitorEvaluations extends MX_Controller{
 			$program_detail = $this->program->get_details($program_id);
 			$this->template->set('program_detail', serialize($program_detail));
 			
+			$program_me_informations = $this->program->get_program_me_informations($program_id);
+			$this->template->set('program_me_informations', serialize($program_me_informations));
+			
 			$activityLists = $this->program->get_activityLists($program_id);
 			$this->template->set('activityLists', serialize($activityLists));
+			
+			$last_MandE_committee_details = $this->ProgramCommitte->get_last_formated_committee_details();
+			$this->template->set('last_MandE_committee_details',serialize($last_MandE_committee_details));
+			if($last_MandE_committee_details!=NULL){
+				$last_MandE_committee_members = $this->ProgramCommitte->get_members($last_MandE_committee_details->committee_id);
+				$this->template->set('last_MandE_committee_members',serialize($last_MandE_committee_members));	
+			}
 			
 			$this->template->set('program_id',$program_id);
 		}
@@ -70,63 +91,199 @@ class MonitorEvaluations extends MX_Controller{
     }
 	
 	public function dataCreate($request){
-        //header('Content-Type: application/json');
-        //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
-		//print_r($request);
 		
-        $this->form_validation->set_rules($this->division->validation);
-        $this->division->isValidate((array) $request);
-        if ($this->form_validation->run() === false) {
-            header("HTTP/1.1 500 Internal Server Error");
-            echo "Wrong data ! try again" ;
-            exit;
-        }
-       
-        $columns = array('division_id', 'division_name', 'division_head', 'division_phone', 'division_email', 'division_order', 'division_about');
-        $columns[] = 'created_at';
+		if($request->program_actual_outputs!="") {
+			$request->program_actual_outputs = implode("---##########---", $request->program_actual_outputs);
+		}else {
+			$request->program_actual_outputs = "";
+		}
+		
+       	$columns = array('program_me_date', 'program_me_type', 'program_rating', 'program_qualitative_status', 'program_total_point', 'program_average_grade_point', 'program_grade_point', 'program_letter_grade', 'program_id');
+        $columns[] = 'organization_id';
+		$request->organization_id = 1;		
+		$columns[] = 'created_at';
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = 1;
-        
-        $data= $this->grid->create('rmis_divisions', $columns, $request, 'id'); 
+       
+        $data= $this->grid->create('rmis_program_me_informations', $columns, $request, 'id');
+		
+		$columns = array('program_id', 'program_actual_outputs', 'program_major_findings', 'program_progress_details', 'program_achievement_information');
+       	$columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'updated_at';        
+        $request->updated_at = date('Y-m-d H:i:s');            
+        $columns[] = 'updated_by';
+        $request->updated_by = 1;
+        $data = $this->grid->update('rmis_program_informations', $columns, $request, 'program_id'); 
+		
+		$columns = array('id', 'comments', 'activity_status', 'activity_point');
+        $columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'updated_at';        
+        $request->updated_at = date('Y-m-d H:i:s');            
+        $columns[] = 'updated_by';
+        $request->updated_by = 1;
+		
+		$ActivityIDs = $request->ActivityID;
+		if(!empty($ActivityIDs)){
+			foreach($ActivityIDs as $activity_lists_key=>$activity_item_id){
+				if($activity_item_id!=NULL){
+					$request->id = $activity_item_id;
+					$request->comments = $request->activityComments[$activity_lists_key];
+					$request->activity_status = $request->activityStatuses[$activity_lists_key];
+					$request->activity_point = $request->activityPoints[$activity_lists_key];
+					$this->grid->update('rmis_program_activities', $columns, $request, 'id');
+				}
+			}
+		}
+		
+		$columns = array('committee_member_id', 'is_present');
+		$is_presents = $request->is_present;
+       	$committee_member_ids = $request->committee_member_ids;
+		if(!empty($committee_member_ids)){
+			foreach($committee_member_ids as $committee_member_id_key => $committee_member_id){
+				if(in_array($committee_member_id, $is_presents)){
+					$request->committee_member_id = $committee_member_id;
+					$request->is_present = "1";
+					$this->grid->update('rmis_program_me_committee_members', $columns, $request, 'committee_member_id');
+				}else{
+					$request->committee_member_id = $committee_member_id;
+					$request->is_present = "0";
+					$this->grid->update('rmis_program_me_committee_members', $columns, $request, 'committee_member_id');
+				}
+			}
+		}
+		
         $data['success'] ="Data created successfuly.";
         //echo json_encode($data , JSON_NUMERIC_CHECK); 
     }
     
-    public function dataRead(){
-        header('Content-Type: application/json');
-        $request = json_decode(file_get_contents('php://input'));
-        $data= $this->grid->read_with_join_table('rmis_divisions', array('rmis_divisions.id','division_id', 'division_name', 'hrm_employees.employee_name as division_head','division_phone','division_email'), $request, 'hrm_employees', 'rmis_divisions.division_head = hrm_employees.employee_id');       
-        echo json_encode($data, JSON_NUMERIC_CHECK);
-    }
-    public function dataDestroy(){   
-        header('Content-Type: application/json');
-        $request = json_decode(file_get_contents('php://input'));
-        $data = $this->grid->destroy('rmis_divisions', $request->models, 'id'); 
-        echo json_encode($data , JSON_NUMERIC_CHECK); 
+    public function dataDestroy($request=NULL){
+		if($request!=NULL){
+			$request = json_decode($request);
+			$data = $this->grid->destroy('rmis_program_me_informations', $request, 'id');
+			 
+			$columns = array('program_id', 'program_actual_outputs', 'program_major_findings', 'program_progress_details', 'program_achievement_information');
+	       	$columns[] = 'organization_id';
+			$request->organization_id = 1;
+			$columns[] = 'updated_at';        
+	        $request->updated_at = date('Y-m-d H:i:s');            
+	        $columns[] = 'updated_by';
+	        $request->updated_by = 1;
+			
+			$request->program_actual_outputs = NULL;
+			$request->program_major_findings = NULL;
+			$request->program_progress_details = NULL;
+			$request->program_achievement_information = NULL;
+	        $data = $this->grid->update('rmis_program_informations', $columns, $request, 'program_id'); 
+			
+			$columns = array('id', 'comments', 'activity_status', 'activity_point');
+	        $columns[] = 'organization_id';
+			$request->organization_id = 1;
+			$columns[] = 'updated_at';        
+	        $request->updated_at = date('Y-m-d H:i:s');            
+	        $columns[] = 'updated_by';
+	        $request->updated_by = 1;
+			
+			$ActivityIDs = $request->ActivityID;
+			if(!empty($ActivityIDs)){
+				foreach($ActivityIDs as $activity_lists_key=>$activity_item_id){
+					if($activity_item_id!=NULL){
+						$request->id = $activity_item_id;
+						$request->comments = NULL;
+						$request->activity_status = NULL;
+						$request->activity_point = NULL;
+						$this->grid->update('rmis_program_activities', $columns, $request, 'id');
+					}
+				}
+			}
+			
+			$columns = array('committee_member_id', 'is_present');
+			$is_presents = $request->is_present;
+	       	$committee_member_ids = $request->committee_member_ids;
+			if(!empty($committee_member_ids)){
+				foreach($committee_member_ids as $committee_member_id_key => $committee_member_id){
+					$request->committee_member_id = $committee_member_id;
+					$request->is_present = "1";
+					$this->grid->update('rmis_program_me_committee_members', $columns, $request, 'committee_member_id');
+				}
+			}
+			 
+		}else{   
+        	header('Content-Type: application/json');
+        	$request = json_decode(file_get_contents('php://input'));
+			$data = $this->grid->destroy('rmis_program_me_informations', $request->models, 'id'); 
+        	echo json_encode($data , JSON_NUMERIC_CHECK);
+		}        
     }
     	
 	public function dataUpdate($request){
-        //header('Content-Type: application/json');
-        //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
-       // print_r($request);
-        $this->form_validation->set_rules($this->division->validation);
-        $this->division->isValidate((array) $request);
-        if ($this->form_validation->run() === false) {
-            header("HTTP/1.1 500 Internal Server Error");
-            echo "Wrong data ! try again" ;
-            exit;
-        }
-        
-        $columns = array('id', 'division_name', 'division_head', 'division_phone', 'division_email', 'division_order', 'division_about');
-        $columns[] = 'modified_at';        
-        $request->modified_at = date('Y-m-d H:i:s');            
-        $columns[] = 'modified_by';
-        $request->modified_by = 1;
-        
-        $data = $this->grid->update('rmis_divisions', $columns, $request, 'id'); 
+		
+		if($request->program_actual_outputs!="") {
+			$request->program_actual_outputs = implode("---##########---", $request->program_actual_outputs);
+		}else {
+			$request->program_actual_outputs = "";
+		}
+		
+       	$columns = array('program_me_date', 'program_me_type', 'program_rating', 'program_qualitative_status', 'program_total_point', 'program_average_grade_point', 'program_grade_point', 'program_letter_grade', 'id');
+        $columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'updated_at';        
+        $request->updated_at = date('Y-m-d H:i:s');            
+        $columns[] = 'updated_by';
+        $request->updated_by = 1;
+       
+        $data= $this->grid->update('rmis_program_me_informations', $columns, $request, 'id');
+		
+		$columns = array('program_id', 'program_actual_outputs', 'program_major_findings', 'program_progress_details', 'program_achievement_information');
+       	$columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'updated_at';        
+        $request->updated_at = date('Y-m-d H:i:s');            
+        $columns[] = 'updated_by';
+        $request->updated_by = 1;
+        $data = $this->grid->update('rmis_program_informations', $columns, $request, 'program_id'); 
+		
+		$columns = array('id', 'comments', 'activity_status', 'activity_point');
+        $columns[] = 'organization_id';
+		$request->organization_id = 1;
+		$columns[] = 'updated_at';        
+        $request->updated_at = date('Y-m-d H:i:s');            
+        $columns[] = 'updated_by';
+        $request->updated_by = 1;
+		
+		$ActivityIDs = $request->ActivityID;
+		if(!empty($ActivityIDs)){
+			foreach($ActivityIDs as $activity_lists_key=>$activity_item_id){
+				if($activity_item_id!=NULL){
+					$request->id = $activity_item_id;
+					$request->comments = $request->activityComments[$activity_lists_key];
+					$request->activity_status = $request->activityStatuses[$activity_lists_key];
+					$request->activity_point = $request->activityPoints[$activity_lists_key];
+					$this->grid->update('rmis_program_activities', $columns, $request, 'id');
+				}
+			}
+		}
+		
+		$columns = array('committee_member_id', 'is_present');
+		$is_presents = $request->is_present;
+       	$committee_member_ids = $request->committee_member_ids;
+		if(!empty($committee_member_ids)){
+			foreach($committee_member_ids as $committee_member_id_key => $committee_member_id){
+				if(in_array($committee_member_id, $is_presents)){
+					$request->committee_member_id = $committee_member_id;
+					$request->is_present = "1";
+					$this->grid->update('rmis_program_me_committee_members', $columns, $request, 'committee_member_id');
+				}else{
+					$request->committee_member_id = $committee_member_id;
+					$request->is_present = "0";
+					$this->grid->update('rmis_program_me_committee_members', $columns, $request, 'committee_member_id');
+				}
+			}
+		}
         $data['success'] ="Data updated successfuly.";
         //echo json_encode($data , JSON_NUMERIC_CHECK);  
     }
