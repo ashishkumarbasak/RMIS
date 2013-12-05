@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 01, 2013 at 06:42 AM
+-- Generation Time: Dec 05, 2013 at 08:45 PM
 -- Server version: 5.5.29
 -- PHP Version: 5.4.10
 
@@ -40,7 +40,7 @@ CREATE TABLE `amis_chart_of_account` (
   `updated_by` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`,`organization_id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -60,7 +60,7 @@ CREATE TABLE `financial_year` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -178,7 +178,7 @@ INSERT INTO `hrm_employees` (`id`, `organization_id`, `employee_id`, `personal_f
 (6, 1, '104', 'sdfasd', 2, 2, 1, NULL, 10, 4, NULL, NULL, NULL, 'sdfsa', 'Raiyan Samin', '', NULL, NULL, NULL, '0000-00-00', 'Male', NULL, 0, 0, 0, 0, NULL, '2013-09-12', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2013-09-12 05:40:06', 1, '2013-11-11 06:46:47', NULL),
 (7, 1, '105', 'tesd', 3, 2, 2, NULL, 2, 2, NULL, NULL, NULL, 'sdfsd', 'Salim Mahmud', '', NULL, NULL, NULL, '0000-00-00', 'Male', NULL, 0, 0, 0, 0, NULL, '2013-09-17', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2013-09-15 09:20:13', 7, '2013-11-11 06:46:54', NULL),
 (8, 1, '106', 'dasdf', 1, 2, 2, NULL, 1, 2, NULL, NULL, NULL, 'sdfsad', 'Abu Sayed', '', NULL, NULL, NULL, '0000-00-00', 'Male', NULL, 0, 0, 0, 0, NULL, '2013-09-15', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2013-09-15 09:37:03', 7, '2013-11-11 06:47:03', NULL),
-(9, 1, '202', 'jgjh', 2, 2, 2, NULL, 1, 4, NULL, NULL, NULL, 'jjhgjj', 'Kamrul Hossain', '', NULL, NULL, NULL, '0000-00-00', 'Male', NULL, 0, 0, 0, 0, NULL, '2013-10-02', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2013-09-15 10:05:30', 5, '2013-11-11 06:44:41', NULL);
+(9, 1, '202', 'jgjh', 2, 2, 2, NULL, 1, 4, NULL, NULL, NULL, 'jjhgjj', 'Kamrul Hossain', '', NULL, NULL, NULL, '0000-00-00', 'Male', NULL, 0, 0, 0, 0, NULL, '2013-10-02', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'kamrul@gmail.com', 1, '2013-09-15 10:05:30', 5, '2013-12-05 14:04:42', NULL);
 
 -- --------------------------------------------------------
 
@@ -954,7 +954,7 @@ CREATE TABLE `rmis_program_me_informations` (
   `updated_by` bigint(20) DEFAULT NULL,
   `program_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`,`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1065,7 +1065,14 @@ CREATE TABLE `rmis_program_research_teams` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`,`organization_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `rmis_program_research_teams`
+--
+
+INSERT INTO `rmis_program_research_teams` (`id`, `organization_id`, `team_formation_date`, `program_id`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 1, '2013-12-07', 1, '2013-12-05 13:03:01', 1, '2013-12-05 13:40:26', 1);
 
 -- --------------------------------------------------------
 
@@ -1075,15 +1082,25 @@ CREATE TABLE `rmis_program_research_teams` (
 
 CREATE TABLE `rmis_program_research_team_members` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `member_type` varchar(255) DEFAULT NULL,
+  `member_type` bigint(20) DEFAULT NULL,
+  `institute_id` int(11) DEFAULT NULL,
   `institute_name` varchar(255) DEFAULT NULL,
+  `employee_id` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `member_name` varchar(255) DEFAULT NULL,
   `designation` varchar(255) DEFAULT NULL,
   `contact_no` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `program_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `rmis_program_research_team_members`
+--
+
+INSERT INTO `rmis_program_research_team_members` (`id`, `member_type`, `institute_id`, `institute_name`, `employee_id`, `member_name`, `designation`, `contact_no`, `email`, `program_id`) VALUES
+(7, 1, 8, 'Bangladesh Agricultural Research Council', '5', 'Kamrul Hossain', 'EFGH', '01779021581', 'kamrul@gmail.com', 1),
+(8, 2, 8, 'Bangladesh Agricultural Research Council', '6', 'Ashish Kumar Basak', 'HR Manager', '01711084616', 'ashish021@gmail.com', 1);
 
 -- --------------------------------------------------------
 

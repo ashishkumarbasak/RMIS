@@ -401,6 +401,47 @@ class Program_model extends MY_Model {
 			return NULL;
 		}
 	}
+	
+	function getLoggedinUserDetails($userID=NULL){
+		if($userID!=NULL){
+			$this->db->select('*');
+			$this->db->from('hrm_employees');
+			$this->db->join('hrm_organizations','hrm_employees.organization_id = hrm_organizations.id', 'left');
+			$this->db->where('hrm_employees.id',$userID);
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result[0];
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;
+		}
+	}
+	
+	public function get_research_team_information($id=NULL){
+		if($id!=NULL){
+			$this->db->select('rmis_program_research_team_members.id as MemberID, rmis_member_types.name as MemberType, rmis_member_types.id as MemberTypeID, institute_id as InstituteID, institute_name as InstituteName, 
+								rmis_program_research_team_members.employee_id as EmployeeID, member_name as MemberName, designation as Designation, 
+								contact_no as ContactNo, rmis_program_research_team_members.email as Email, program_id as ProgramID');
+			$this->db->from('rmis_program_research_team_members');
+			$this->db->join('hrm_employees','rmis_program_research_team_members.employee_id=hrm_employees.employee_id','left');
+			$this->db->join('hrm_designations','hrm_employees.designation_id=hrm_designations.id','left');
+			$this->db->join('rmis_member_types','rmis_program_research_team_members.member_type=rmis_member_types.id','left');
+			$this->db->where('rmis_program_research_team_members.program_id',$id);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result = $query->result();
+				return $result;
+			}else{
+				return NULL;
+			}
+		}else{
+			return NULL;	
+		}
+	}
 
 	function delete($id=NULL){
 		//truncate rmis_program_activities;# MySQL returned an empty result set (i.e. zero rows).

@@ -10,6 +10,9 @@
 	if(isset($teamMembers)){
 		$teamMembers = unserialize($teamMembers);
 	}
+	if(isset($loggedinUserDetails)){
+		$loggedinUserDetails = unserialize($loggedinUserDetails);
+	}
 ?>
 <form name="research_info" id="research_info" method="post" action="">
 	<div class="main_form">
@@ -108,7 +111,8 @@
         </div>
 	</div>
 	
-	
+	<input type="hidden" name="loggedin_user_instituteID" id="loggedin_user_instituteID" value="<?php if(isset($loggedinUserDetails)) echo $loggedinUserDetails->organogram_id; ?>">
+	<input type="hidden" name="loggedin_user_instituteName" id="loggedin_user_instituteName" value="<?php if(isset($loggedinUserDetails)) echo $loggedinUserDetails->organization_name; ?>">
 	<div class="form_element">
     	<div class="button_panel" style="margin-right:15px;">
     		<?php if(isset($program_detail) && ($researchTeam!=NULL || $teamMembers!=NULL)) { ?>
@@ -126,20 +130,6 @@
 </form>
 <script language="javascript">
 	$('#team_formation_date').datepicker();
-</script>
-
-<script type="text/javascript">
-	function delete_research_team_member(team_member_id, program_id, row_id){
-		var r=confirm("Are you sure you want to delete this team member?");
-		if (r==true){
-		  	var jqxhr = $.post( "<?php echo site_url("rmis/program/researchTeams/deleteTeamMember"); ?>", { team_member_id: team_member_id, program_id: program_id }, function() {
-			  $("#row-" + parseInt(row_id)).remove();
-			})
-			.fail(function() {
-				alert( "error" );
-			})
-		}
-	}
 </script>
 <script type="text/javascript">                
 $(document).ready(function () {
@@ -166,25 +156,25 @@ $(document).ready(function () {
 				},
 				parameterMap: function(options, operation) {
 					if($('#research_team_member').val()!=''){
-						var activitiesObj = JSON.parse($('#research_team_member').val());
+						var teamMembersObj = JSON.parse($('#research_team_member').val());
 						if(options.models && operation == "create"){
-							activitiesObj.push(options.models[0]);
-							$('#research_team_member').val(kendo.stringify(activitiesObj));
+							teamMembersObj.push(options.models[0]);
+							$('#research_team_member').val(kendo.stringify(teamMembersObj));
 						}else if(options.models && operation == "destroy"){
 							var NewObj = JSON.parse("[]");
-							for (var i = 0, len = activitiesObj.length; i < len; ++i) {
-								var actObj = activitiesObj[i];
-								if(actObj.ActivityID!=options.models[0].ActivityID){
-									NewObj.push(actObj);
+							for (var i = 0, len = teamMembersObj.length; i < len; ++i) {
+								var teamMemObj = teamMembersObj[i];
+								if(teamMemObj.MemberID!=options.models[0].MemberID){
+									NewObj.push(teamMemObj);
 								}
 							}
 							$('#research_team_member').val(kendo.stringify(NewObj));
 						}else if(options.models && operation == "update"){
 							var NewObj = JSON.parse("[]");
-							for (var i = 0, len = activitiesObj.length; i < len; ++i) {
-								var actObj = activitiesObj[i];
-								if(actObj.ActivityID!=options.models[0].ActivityID){
-									NewObj.push(actObj);
+							for (var i = 0, len = teamMembersObj.length; i < len; ++i) {
+								var teamMemObj = teamMembersObj[i];
+								if(teamMemObj.MemberID!=options.models[0].MemberID){
+									NewObj.push(teamMemObj);
 								}
 							}
 							NewObj.push(options.models[0]);
@@ -203,13 +193,16 @@ $(document).ready(function () {
 					id: "MemberID",
 					fields: {
 						MemberType: { validation: { required: true } },
-						InstituteID: { validation: { required: true } },
-						MemberID: { validation: { required: true } },
+						MemberTypeID:  { editable: false, nullable: true },
+						InstituteID: { validation: { required: false } },
+						InstituteName: { validation: { required: true } },
+						EmployeeID: { validation: { required: false } },
 						MemberName: { validation: { required: true } },
 						Designation: { validation: { required: true } },
 						ContactNo: { validation: { required: true } },
 						Email: { validation: { required: true } },
-						ProgramID: { editable: false, nullable: true }
+						ProgramID: { editable: false, nullable: true },
+						MemberID: { validation: { required: false } },
 					}
 				}
 			}
@@ -221,20 +214,40 @@ $(document).ready(function () {
 				height: 200,
 				toolbar: [{text:"Add Team Member", name: "create"}],
 				columns: [
-					{ field: "MemberType", title:"Member Type", editor: memberTypeDropDownEditor},
-					{ field: "InstituteName", title:"Institute Name"},
+					{ field: "MemberType", title:"Member Type", editor: memberTypeDropDownEditor,  width: "190px"},
+					{ field: "InstituteName", title:"Institute Name", editor: institute_name_editor},
 					{ field: "MemberName", title:"Member Name", editor: employee_auto_complete },
-					{ field: "Designation", title:"Designation"},
-					{ field: "ContactNo", title:"Contact No"},
-					{ field: "Email", title:"Email"},
+					{ field: "Designation", title:"Designation", editor: employee_designation_editor},
+					{ field: "ContactNo", title:"Contact No", editor: employee_contact_editor},
+					{ field: "Email", title:"Email", editor: employee_email_editor},
 					{ command: ["edit", "destroy"], title: "&nbsp;", width: "190px"}],
 				editable: "inline"
 		});
 });
 
+function institute_name_editor(container, options){
+	var instituteName = $('<input name="' + options.field + '" id="'+ options.field +'" style="height:23px; width:96%;" />');
+    instituteName.appendTo(container);
+}
+
+function employee_designation_editor(container, options){
+	var employeeDesignation = $('<input name="' + options.field + '" id="'+ options.field +'" style="height:23px; width:96%;" />');
+    employeeDesignation.appendTo(container);
+}
+
+function employee_contact_editor(container, options){
+	var employeeContact = $('<input name="' + options.field + '" id="'+ options.field +'" style="height:23px; width:96%;" />');
+    employeeContact.appendTo(container);
+}
+
+function employee_email_editor(container, options){
+	var employeeEmail = $('<input name="' + options.field + '" id="'+ options.field +'" style="height:23px; width:96%;" />');
+    employeeEmail.appendTo(container);
+}
+
 function employee_auto_complete(container, options) 
 {
-	$('<input required class="textbox" name="' + options.field + '"/>')
+	$('<input required class="textbox" name="' + options.field + '" id="' + options.field + '-textarea1" />')
 		.appendTo(container)
 		.kendoAutoComplete({
 			dataTextField: "employee_name",
@@ -252,15 +265,25 @@ function employee_auto_complete(container, options)
 			},
 			select: function(e){
 				var dataItem = this.dataItem(e.item.index()); 
-				options.model.AssignResource = dataItem.employee_name;
-				options.model.AssignResourceID = dataItem.employee_id;
+				options.model.EmployeeID = dataItem.employee_id;
+				options.model.MemberName = dataItem.employee_name;
+				options.model.Designation = dataItem.designation_name;
+				options.model.ContactNo =  dataItem.per_mobile_no;
+				options.model.Email = dataItem.email;
+				$("#Designation").val(dataItem.designation_name);
+				$("#ContactNo").val(dataItem.per_mobile_no);
+				$("#Email").val(dataItem.email);
+				$('#MemberName-textarea2').val(dataItem.employee_name);
+				
 			}
-		});
+	});
+	$('<input required class="textbox" name="' + options.field + '" id="' + options.field + '-textarea2" style="height:23px; width:96%; display:none;" />')
+		.appendTo(container);
 }
 
 function memberTypeDropDownEditor(container, options) {
 	var ServiceBaseUrl = "<?php echo base_url();?>";
-	$('<input required data-text-field="member_type" data-value-field="member_type_id" data-bind="value:member_type_id"/>')
+	$('<input required data-text-field="MemberType" data-value-field="MemberTypeID" data-bind="value:MemberTypeID"/>')
 		.appendTo(container)
 		.kendoDropDownList({
 			optionLabel: "Select Type",
@@ -271,9 +294,28 @@ function memberTypeDropDownEditor(container, options) {
 			},
 			select: function(e){
 				var dataItem = this.dataItem(e.item.index());
-				options.model.member_type = dataItem.member_type;
-				options.model.member_type_id = dataItem.member_type_id;
+				options.model.MemberType = dataItem.MemberType;
+				options.model.MemberTypeID = dataItem.MemberTypeID;
+				if(dataItem.MemberTypeID=="1" || dataItem.MemberTypeID=="2"){
+					$("#InstituteName").val($("#loggedin_user_instituteName").val());
+					$("#InstituteName").attr('readonly', 'readonly');
+					options.model.InstituteID = $("#loggedin_user_instituteID").val()
+					options.model.InstituteName = $("#loggedin_user_instituteName").val();
+					$('#MemberName-textarea1').show();
+					$("span.k-autocomplete").show();
+					$('#MemberName-textarea2').hide();
+				}else{
+					$("#InstituteName").removeAttr('readonly');
+					$("#InstituteName").val('');
+					$('#MemberName-textarea1').hide();
+					$("span.k-autocomplete").hide();
+					$('#MemberName-textarea2').show();
+					options.model.EmployeeID = null;
+				}
 			}
  });
 }
 </script>
+<style type="text/css">
+	span.k-autocomplete{ border-radius:0px !important; width: 107px !important; border: solid #bababa 1px; font-size: 13px !important;} 
+</style>

@@ -2,6 +2,7 @@
 
 class ResearchTeams extends MX_Controller{
     private $_data;
+	private $loggedin_userID;
     public function __construct(){
         parent::__construct();
         $this->load->model('Kendodatasource_model', 'grid');
@@ -9,12 +10,17 @@ class ResearchTeams extends MX_Controller{
 
         $this->template->set_partial('header', 'layouts/header')
 						->set_layout('extensive/main_layout');
+						
+		$this->loggedinUserID = 1;
+		$loggedinUserDetails = $this->program->getLoggedinUserDetails($this->loggedinUserID);
+		$this->template->set('loggedinUserDetails', serialize($loggedinUserDetails));
     }
     
     public function index($program_id=NULL){
         $this->template->title('Research Management(RM)', ' Programs', ' Research Program Team Information');
         
 		if($this->input->post('save_researchTeam')){
+			//print_r($_POST);
 			$request = json_encode($this->input->post());
 			$this->dataCreate($request);
 		}
@@ -42,7 +48,7 @@ class ResearchTeams extends MX_Controller{
 			$researchTeam = $this->program->get_researchTeam($program_id);
 			$this->template->set('researchTeam', serialize($researchTeam));
 			
-			$teamMembers = $this->program->get_researchTeamMembers($program_id);
+			$teamMembers = $this->program->get_research_team_information($program_id);
 			$this->template->set('teamMembers', serialize($teamMembers));
 			
 			
@@ -67,10 +73,7 @@ class ResearchTeams extends MX_Controller{
     }
 	
 	public function dataCreate($request){
-        //header('Content-Type: application/json');
-        //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
-		//print_r((array) $request);
 		
        	$columns = array('team_formation_date', 'program_id');
 		$columns[] = 'organization_id';
@@ -82,20 +85,21 @@ class ResearchTeams extends MX_Controller{
         
 		$data = $this->grid->create('rmis_program_research_teams', $columns, $request, 'id'); 
         
-		$columns = array('member_type', 'institute_name','member_name','designation', 'contact_no', 'email', 'program_id');
-		$request->program_id = $request->id;
-		$i=0;
-		if(!empty($request->member_types)>0){
-			foreach($request->member_types as $team_member_key=>$team_member_type){
-				if($team_member_type!=NULL){
-					$request->member_type = $team_member_type;
-					$request->institute_name = $request->institute_names[$i];
-					$request->member_name = $request->member_names[$i];
-					$request->designation = $request->designations[$i];
-					$request->contact_no = $request->contact_nos[$i];
-					$request->email = $request->emails[$i];
+		$columns = array('member_type', 'institute_id', 'institute_name', 'employee_id', 'member_name','designation', 'contact_no', 'email', 'program_id');
+		$request->program_id = $request->program_id;
+		$team_members = json_decode($this->input->post('research_team_member'));
+		if(!empty($team_members)){
+			foreach($team_members as $team_member_key=>$team_member){
+				if($team_member!=NULL){
+					$request->member_type = $team_member->MemberTypeID;
+					$request->institute_id = $team_member->InstituteID;
+					$request->institute_name = $team_member->InstituteName;
+					$request->employee_id = $team_member->MemberID;
+					$request->member_name = $team_member->MemberName;
+					$request->designation = $team_member->Designation;
+					$request->contact_no = $team_member->ContactNo;
+					$request->email = $team_member->Email;
 					$this->grid->create('rmis_program_research_team_members', $columns, $request, 'id');
-					$i++;	
 				}
 			}
 		}
@@ -135,7 +139,7 @@ class ResearchTeams extends MX_Controller{
 	function getListofMemberTypes(){
 		header('Content-Type: application/json');
         $request = json_decode(file_get_contents('php://input'));
-       	$member_types = $this->grid->read('rmis_member_types', array('id','value as member_type_id', 'name as member_type'), $request); 
+       	$member_types = $this->grid->read('rmis_member_types', array('id','value as MemberTypeID', 'name as MemberType'), $request); 
 		if($member_types!=NULL)
         	echo json_encode($member_types["data"], JSON_NUMERIC_CHECK);
 		else
@@ -156,10 +160,7 @@ class ResearchTeams extends MX_Controller{
     }
     	
 	public function dataUpdate($request){
-        //header('Content-Type: application/json');
-        //$request = json_decode(file_get_contents('php://input'));
         $request = json_decode($request);
-		//print_r((array) $request);
 		
        	$columns = array('team_formation_date', 'program_id');
         $columns[] = 'organization_id';
@@ -171,20 +172,24 @@ class ResearchTeams extends MX_Controller{
         
 		$data = $this->grid->update('rmis_program_research_teams', $columns, $request, 'program_id'); 
         
-		$columns = array('member_type', 'institute_name','member_name','designation', 'contact_no', 'email', 'program_id');
-		$i=0;
-		if(!empty($request->member_types)>0){
-			$this->program->clean_programResearchTeamMembers($request->program_id);
-			foreach($request->member_types as $team_member_key=>$team_member_type){
-				if($team_member_type!=NULL){
-					$request->member_type = $team_member_type;
-					$request->institute_name = $request->institute_names[$i];
-					$request->member_name = $request->member_names[$i];
-					$request->designation = $request->designations[$i];
-					$request->contact_no = $request->contact_nos[$i];
-					$request->email = $request->emails[$i];
+		$columns = array('member_type', 'institute_id', 'institute_name', 'employee_id', 'member_name','designation', 'contact_no', 'email', 'program_id');
+		$request->program_id = $request->program_id;
+		$team_members = json_decode($this->input->post('research_team_member'));
+		$this->program->clean_programResearchTeamMembers($request->program_id);
+		//print_r($team_members);
+		//exit(0);
+		if(!empty($team_members)){
+			foreach($team_members as $team_member_key=>$team_member){
+				if($team_member!=NULL){
+					$request->member_type = $team_member->MemberTypeID;
+					$request->institute_id = $team_member->InstituteID;
+					$request->institute_name = $team_member->InstituteName;
+					$request->employee_id = $team_member->MemberID;
+					$request->member_name = $team_member->MemberName;
+					$request->designation = $team_member->Designation;
+					$request->contact_no = $team_member->ContactNo;
+					$request->email = $team_member->Email;
 					$this->grid->create('rmis_program_research_team_members', $columns, $request, 'id');
-					$i++;	
 				}
 			}
 		}
