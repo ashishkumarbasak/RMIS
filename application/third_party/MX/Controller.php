@@ -1,7 +1,9 @@
-<?php (defined('BASEPATH')) OR exit('No direct script access allowed');
+<?php
 
-/** load the CI class for Modular Extensions **/
-require dirname(__FILE__).'/Base.php';
+(defined('BASEPATH')) OR exit('No direct script access allowed');
+
+/** load the CI class for Modular Extensions * */
+require dirname(__FILE__) . '/Base.php';
 
 /**
  * Modular Extensions - HMVC
@@ -35,26 +37,40 @@ require dirname(__FILE__).'/Base.php';
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- **/
-class MX_Controller 
+ * */
+class MX_Controller
 {
-	public $autoload = array();
-	
-	public function __construct() 
-	{
-		$class = str_replace(CI::$APP->config->item('controller_suffix'), '', get_class($this));
-		log_message('debug', $class." MX_Controller Initialized");
-		Modules::$registry[strtolower($class)] = $this;	
-		
-		/* copy a loader instance and initialize */
-		$this->load = clone load_class('Loader');
-		$this->load->initialize($this);	
-		
-		/* autoload module items */
-		$this->load->_autoloader($this->autoload);
-	}
-	
-	public function __get($class) {
-		return CI::$APP->$class;
-	}
+
+    public $autoload = array();
+    public $loginUser;
+
+    public function __construct()
+    {
+        //print_r($_SESSION);
+        // check user login stat
+        if (!Sentry::check()) {
+            //echo 'User is not logged in, or is not activated';
+            redirect(site_url());
+        }
+        else {
+            $this->loginUser = Sentry::getUser();
+        }
+
+        $class = str_replace(CI::$APP->config->item('controller_suffix'), '', get_class($this));
+        log_message('debug', $class . " MX_Controller Initialized");
+        Modules::$registry[strtolower($class)] = $this;
+
+        /* copy a loader instance and initialize */
+        $this->load = clone load_class('Loader');
+        $this->load->initialize($this);
+
+        /* autoload module items */
+        $this->load->_autoloader($this->autoload);
+    }
+
+    public function __get($class)
+    {
+        return CI::$APP->$class;
+    }
+
 }

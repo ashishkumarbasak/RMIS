@@ -230,18 +230,18 @@ class MY_Model extends CI_Model
      * of data to be inserted. Returns newly created ID.
      */
     public function insert($data, $skip_validation = FALSE)
-    {
+    {        
         $valid = TRUE;
 
         if ($skip_validation === FALSE)
         {
-            $data = $this->validate($data);
+            $data = $this->validate($data);  
         }
-
+ 
         if ($data !== FALSE)
         {
             $data = $this->trigger('before_create', $data);
-
+            
             $this->_database->insert($this->_table, $data);
             $insert_id = $this->_database->insert_id();
 

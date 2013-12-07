@@ -73,39 +73,56 @@
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'Welcome';
+$route['default_controller'] = 'User/Login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-
-$route['rmis/setup/divisions/edit/(:num)'] = 'rmis/setup/divisions/index/$1';
-$route['rmis/setup/regionalStations/edit/(:num)'] = 'rmis/setup/regionalStations/index/$1';
-$route['rmis/setup/implementationSites/edit/(:num)'] = 'rmis/setup/implementationSites/index/$1';
-$route['rmis/setup/programAreas/edit/(:num)'] = 'rmis/setup/programAreas/index/$1';
-$route['rmis/setup/programCommittees/edit/(:num)'] = 'rmis/setup/programCommittees/index/$1';
-$route['rmis/setup/gradings/edit/(:num)'] = 'rmis/setup/gradings/index/$1';
-
-//program form
-$route['rmis/program/informations/(:num)'] = 'rmis/program/informations/index/$1';
-$route['rmis/program/otherInformations/(:num)'] = 'rmis/program/otherInformations/index/$1';
-$route['rmis/program/fundSources/(:num)'] = 'rmis/program/fundSources/index/$1';
-$route['rmis/program/researchTeams/(:num)'] = 'rmis/program/researchTeams/index/$1';
-$route['rmis/program/steeringCommittees/(:num)'] = 'rmis/program/steeringCommittees/index/$1';
-$route['rmis/program/implementationCommittees/(:num)'] = 'rmis/program/implementationCommittees/index/$1';
-$route['rmis/program/activityLists/(:num)'] = 'rmis/program/activityLists/index/$1';
-$route['rmis/program/monitorEvaluations/(:num)'] = 'rmis/program/monitorEvaluations/index/$1';
-$route['rmis/program/relatedDocuments/(:num)'] = 'rmis/program/relatedDocuments/index/$1';
+$route['Rmis/setup/divisions/edit/(:num)'] = 'Rmis/setup/divisions/index/$1';
+$route['Rmis/setup/regionalStations/edit/(:num)'] = 'Rmis/setup/regionalStations/index/$1';
+$route['Rmis/setup/implementationSites/edit/(:num)'] = 'Rmis/setup/implementationSites/index/$1';
+$route['Rmis/setup/programAreas/edit/(:num)'] = 'Rmis/setup/programAreas/index/$1';
+$route['Rmis/setup/programCommittees/edit/(:num)'] = 'Rmis/setup/programCommittees/index/$1';
+$route['Rmis/setup/gradings/edit/(:num)'] = 'Rmis/setup/gradings/index/$1';
 
 //program form
-$route['rmis/project/informations/(:num)'] = 'rmis/project/informations/index/$1';
-$route['rmis/project/otherInformations/(:num)'] = 'rmis/project/otherInformations/index/$1';
-$route['rmis/project/fundSources/(:num)'] = 'rmis/project/fundSources/index/$1';
-$route['rmis/project/researchTeams/(:num)'] = 'rmis/project/researchTeams/index/$1';
-$route['rmis/project/steeringCommittees/(:num)'] = 'rmis/project/steeringCommittees/index/$1';
-$route['rmis/project/implementationCommittees/(:num)'] = 'rmis/project/implementationCommittees/index/$1';
-$route['rmis/project/activityLists/(:num)'] = 'rmis/project/activityLists/index/$1';
-$route['rmis/project/monitorEvaluations/(:num)'] = 'rmis/project/monitorEvaluations/index/$1';
-$route['rmis/project/relatedDocuments/(:num)'] = 'rmis/project/relatedDocuments/index/$1';
+$route['Rmis/program/informations/(:num)'] = 'Rmis/program/informations/index/$1';
+$route['Rmis/program/otherInformations/(:num)'] = 'Rmis/program/otherInformations/index/$1';
+$route['Rmis/program/fundSources/(:num)'] = 'Rmis/program/fundSources/index/$1';
+$route['Rmis/program/researchTeams/(:num)'] = 'Rmis/program/researchTeams/index/$1';
+$route['Rmis/program/steeringCommittees/(:num)'] = 'Rmis/program/steeringCommittees/index/$1';
+$route['Rmis/program/implementationCommittees/(:num)'] = 'Rmis/program/implementationCommittees/index/$1';
+$route['Rmis/program/activityLists/(:num)'] = 'Rmis/program/activityLists/index/$1';
+$route['Rmis/program/monitorEvaluations/(:num)'] = 'Rmis/program/monitorEvaluations/index/$1';
+$route['Rmis/program/relatedDocuments/(:num)'] = 'Rmis/program/relatedDocuments/index/$1';
+
+//project form
+$route['Rmis/project/informations/(:num)'] = 'Rmis/project/informations/index/$1';
+$route['Rmis/project/otherInformations/(:num)'] = 'Rmis/project/otherInformations/index/$1';
+$route['Rmis/project/fundSources/(:num)'] = 'Rmis/project/fundSources/index/$1';
+$route['Rmis/project/researchTeams/(:num)'] = 'Rmis/project/researchTeams/index/$1';
+$route['Rmis/project/monitorCommittee/(:num)'] = 'Rmis/project/monitorCommittee/index/$1';
+$route['Rmis/project/steeringCommittees/(:num)'] = 'Rmis/project/steeringCommittees/index/$1';
+$route['Rmis/project/implementationCommittees/(:num)'] = 'Rmis/project/implementationCommittees/index/$1';
+$route['Rmis/project/activityLists/(:num)'] = 'Rmis/project/activityLists/index/$1';
+$route['Rmis/project/monitorEvaluations/(:num)'] = 'Rmis/project/monitorEvaluations/index/$1';
+$route['Rmis/project/relatedDocuments/(:num)'] = 'Rmis/project/relatedDocuments/index/$1';
+
+//experiment form
+$route['Rmis/experiment/informations/(:num)'] = 'Rmis/experiment/informations/index/$1';
+$route['Rmis/experiment/otherInformations/(:num)'] = 'Rmis/experiment/otherInformations/index/$1';
+$route['Rmis/experiment/researchTeams/(:num)'] = 'Rmis/experiment/researchTeams/index/$1';
+$route['Rmis/experiment/activityLists/(:num)'] = 'Rmis/experiment/activityLists/index/$1';
+
+//program or project form
+$route['Rmis/closingInformation/(:num)'] = 'Rmis/closingInformation/index/$1';
+
+//logical framework form
+$route['Rmis/logicalFramework/(:num)'] = 'Rmis/logicalFramework/index/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
+
+// custome route
+
+// user module
+$route['User/logout'] = "User/Login/logout";
