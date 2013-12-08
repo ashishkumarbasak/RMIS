@@ -457,6 +457,91 @@ class Program_model extends MY_Model {
 		}
 	}
 
+	public function read_program_data()
+    {
+    	$result = array();
+		$this->db->select('rmis_program_informations.program_id as program_id,  rmis_program_informations.research_program_title as program_title, rmis_program_informations.program_goal as program_goal, 
+								rmis_program_informations.program_objective as program_objective, rmis_program_areas.program_area_name as program_area, rmis_divisions.division_name as program_division, 
+								rmis_research_types.name as program_research_type, rmis_research_priorities.name as program_research_priority, rmis_research_statuses.name as program_research_status, 
+								rmis_program_informations.program_planned_budget, rmis_program_informations.program_approved_budget, hrm_employees.employee_name as principal_investigator');
+		$this->db->from('rmis_program_informations');
+		$this->db->join('rmis_program_areas','rmis_program_informations.program_area = rmis_program_areas.program_area_id', 'left');
+		$this->db->join('rmis_divisions','rmis_program_informations.program_division = rmis_divisions.division_id', 'left');
+		$this->db->join('rmis_research_types','rmis_program_informations.program_research_type = rmis_research_types.id', 'left');
+		$this->db->join('rmis_research_priorities','rmis_program_informations.program_research_priority = rmis_research_priorities.id', 'left');
+		$this->db->join('rmis_research_statuses','rmis_program_informations.program_research_status = rmis_research_statuses.id', 'left');
+		$this->db->join('hrm_employees','rmis_program_informations.program_coordinator = hrm_employees.employee_id', 'left');
+		
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			$result['total'] = $query->num_rows();
+			$result_rs = $query->result();
+			$result['data'] = $result_rs;
+		}else{
+			$result['total'] = 0;
+			$result['data'] = "[]";
+		}
+        
+        return $result;
+    }
+
+	function search_program_data($data=array()){
+		//print_r($data);
+		if(!empty($data)){
+			$result = array();
+			$this->db->select('rmis_program_informations.program_id as program_id,  rmis_program_informations.research_program_title as program_title, rmis_program_informations.program_goal as program_goal, 
+								rmis_program_informations.program_objective as program_objective, rmis_program_areas.program_area_name as program_area, rmis_divisions.division_name as program_division, 
+								rmis_research_types.name as program_research_type, rmis_research_priorities.name as program_research_priority, rmis_research_statuses.name as program_research_status, 
+								rmis_program_informations.program_planned_budget, rmis_program_informations.program_approved_budget, hrm_employees.employee_name as principal_investigator');
+			$this->db->from('rmis_program_informations');
+			$this->db->join('rmis_program_areas','rmis_program_informations.program_area = rmis_program_areas.program_area_id', 'left');
+			$this->db->join('rmis_divisions','rmis_program_informations.program_division = rmis_divisions.division_id', 'left');
+			$this->db->join('rmis_research_types','rmis_program_informations.program_research_type = rmis_research_types.id', 'left');
+			$this->db->join('rmis_research_priorities','rmis_program_informations.program_research_priority = rmis_research_priorities.id', 'left');
+			$this->db->join('rmis_research_statuses','rmis_program_informations.program_research_status = rmis_research_statuses.id', 'left');
+			$this->db->join('hrm_employees','rmis_program_informations.program_coordinator = hrm_employees.employee_id', 'left');
+			
+			if(array_key_exists('program_area', $data) && $data['program_area'] != NULL)
+				$this->db->where('rmis_program_informations.program_area', $data['program_area']);
+			
+			if(array_key_exists('program_division', $data) && $data['program_division'] != NULL)
+				$this->db->where('rmis_program_informations.program_division', $data['program_division']);
+			
+			if(array_key_exists('program_research_type', $data) && $data['program_research_type'] != NULL)
+				$this->db->where('rmis_program_informations.program_research_type', $data['program_research_type']);
+			
+			if(array_key_exists('program_research_priority', $data) && $data['program_research_priority'] != NULL)
+				$this->db->where('rmis_program_informations.program_research_priority', $data['program_research_priority']);
+			
+			if(array_key_exists('program_research_status', $data) && $data['program_research_status'] != NULL)
+				$this->db->where('rmis_program_informations.program_research_status', $data['program_research_status']);
+		
+			if(array_key_exists('program_regionalStationName', $data) && $data['program_regionalStationName'] != NULL)
+				$this->db->where('rmis_program_informations.program_regional_station_name', $data['program_regionalStationName']);
+			
+			if(array_key_exists('program_implementationLocation', $data) && $data['program_implementationLocation'] != NULL)
+				$this->db->where('rmis_program_informations.program_implementation_location', $data['program_implementationLocation']);
+		
+			if(array_key_exists('program_keywords', $data) && $data['program_keywords'] != NULL)
+				$this->db->or_like('rmis_program_informations.program_keywords', $data['program_keywords']);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result['total'] = $query->num_rows();
+				$result_rs = $query->result();
+				$result['data'] = $result_rs;
+			}else{
+				$result['total'] = 0;
+				$result['data'] = "[]";
+			}
+	        
+	        return $result;
+		}else{
+			$result = $this->read_program_data();
+			return $result;
+		}
+	}
+
 	function delete($id=NULL){
 		//truncate rmis_program_activities;# MySQL returned an empty result set (i.e. zero rows).
 		//truncate rmis_program_areas;# MySQL returned an empty result set (i.e. zero rows).

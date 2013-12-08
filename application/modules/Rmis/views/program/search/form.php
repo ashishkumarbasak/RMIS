@@ -2,8 +2,8 @@
 <script src="<?php echo site_url('assets/extensive/js/date-time/bootstrap-datepicker.min.js'); ?>"></script>
 <link rel="stylesheet" href="<?php echo site_url('assets/extensive/css/datepicker.css'); ?>" />
 <?php 
-	if(isset($program_detail)){
-		$program_detail = unserialize($program_detail);
+	if(isset($result)){
+		$result = unserialize($result);
 	}
 ?>
 
@@ -133,7 +133,8 @@
 		<div class="form_element">
         	<div class="label">Planned Date Range <span class="mandatory">*</span> </div>
         	<div class="field">
-        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="program_plannedStartDate" id="program_plannedStartDate" value="" />
+        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="program_plannedStartDate_from" id="program_plannedStartDate_from" value="" style="width:90px;" />
+        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="program_plannedStartDate_to" id="program_plannedStartDate_to" value="" style="width:90px;" />
         		<span class="input-group-addon">
             		<i class="icon-calendar"></i>
         		</span>
@@ -144,7 +145,8 @@
       	<div class="form_element">
         	<div class="label">Planned Budget Range </div>
         	<div class="field">
-       	 		<input type="text" name="program_plannedBudget" id="program_plannedBudget" value="<?php if($program_detail) echo $program_detail->planned_budget;?>" class="textbox">
+       	 		<input type="text" name="program_plannedBudget_from" id="program_plannedBudget_from" value="<?php if($program_detail) echo $program_detail->planned_budget;?>" class="textbox" style="width:90px;" />
+       	 		<input type="text" name="program_plannedBudget_to" id="program_plannedBudget_to" value="<?php if($program_detail) echo $program_detail->planned_budget;?>" class="textbox" style="width:90px;" />
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -152,7 +154,8 @@
     	<div class="form_element">
         	<div class="label">Initiation Date Range <span class="mandatory">*</span></div>
         	<div class="field">
-        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="program_plannedEndDate" id="program_plannedEndDate" value="" />
+        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="program_plannedEndDate_from" id="program_plannedEndDate_from" value=""  style="width: 90px;" />
+        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="program_plannedEndDate_to" id="program_plannedEndDate_to" value="" style="width: 90px;" />
         		<span class="input-group-addon">
             		<i class="icon-calendar"></i>
         		</span>
@@ -217,13 +220,13 @@
     <div class="left_form">
     	<div class="form_element">
 	    	<div class="label width_170px">Title of Research Program</div>
-	       	<div class="textarea_field"><textarea name="research_program_title" id="research_program_title" class="textarea_small width-92"><?php if($program_detail) echo $program_detail->title_of_research_program;?></textarea></div>
+	       	<div class="textarea_field"><textarea name="research_program_title" readonly="readonly" id="research_program_title" class=" disabled textarea_small width-92"><?php if($program_detail) echo $program_detail->title_of_research_program;?></textarea></div>
 	        <div class="clear"></div>
 	  	</div>
 	  	
 	  	<div class="form_element">
 	    	<div class="label width_170px">Research Program Team Info</div>
-	       	<div class="textarea_field"><textarea name="program_research_team_info" id="program_research_team_info" class="textarea_small width-92"><?php if($program_detail) echo $program_detail->title_of_research_program;?></textarea></div>
+	       	<div class="textarea_field"><textarea name="program_research_team_info" readonly="readonly" id="program_research_team_info" class=" disabled  width-92"><?php if($program_detail) echo $program_detail->title_of_research_program;?></textarea></div>
 	        <div class="clear"></div>
 	  	</div>
    	</div>
@@ -231,7 +234,7 @@
    	<div class="left_form">
     	<div class="form_element">
 	    	<div class="label width_170px">Executive Summary</div>
-	       	<div class="textarea_field"><textarea name="program_executive_summary" id="program_executive_summary" class="textarea width-92"><?php if($program_detail) echo $program_detail->title_of_research_program;?></textarea></div>
+	       	<div class="textarea_field"><textarea name="program_executive_summary" readonly="readonly" id="program_executive_summary" class="disabled width-92" style="height:130px;"><?php if($program_detail) echo $program_detail->title_of_research_program;?></textarea></div>
 	        <div class="clear"></div>
 	  	</div>
    	</div>
@@ -240,7 +243,7 @@
     <div class="form_element">
         <div class="button_panel" style="margin-right: 27px;">
             	<input type="button" name="reset_program_information" id="reset_program_information" onclick="window.location='/Rmis/program/informations';" value="Add New Prog" class="k-button button">
-                <input type="submit" name="save_program_information" id="save_program_information" value="Search" class="k-button button">               
+                <input type="submit" name="search_program_information" id="search_program_information" value="Search" class="k-button button">               
         </div>
         <div class="clear"></div>
     </div>
@@ -248,11 +251,10 @@
 </div>
 </form>
 <script language="javascript">
-	$('#program_plannedStartDate').datepicker('setStartDate');
-	$('#program_plannedEndDate').datepicker('setEndDate');
-	
-	$('#program_initiationDate').datepicker('setStartDate');
-	$('#program_completionDate').datepicker('setEndDate');
+	$('#program_plannedStartDate_from').datepicker('setStartDate');
+	$('#program_plannedStartDate_to').datepicker('setStartDate');
+	$('#program_plannedEndDate_from').datepicker('setEndDate');
+	$('#program_plannedEndDate_to').datepicker('setEndDate');
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -261,3 +263,60 @@ $(document).ready(function() {
 	});
 });
 </script> 
+
+			<script>
+                $(document).ready(function() {
+                    $("#result").kendoGrid({
+                        dataSource: {
+                            data: <?php echo json_encode($result['data'], JSON_NUMERIC_CHECK); ; ?>,
+                            schema: {
+                                model: {
+                                    fields: {
+                                        program_id: { type: "number", editable:false, nullable:true },
+                                        program_title: { type: "string", editable:false},
+                                        program_goal:{ type: "string", editable:false},
+                                        program_objective:{ type: "string", editable:false},
+                                        program_area: { type: "string" },
+                                        program_division: { type: "string" },
+                                        program_research_type: { type: "string" },
+                                        program_research_priority: { type: "string" },
+                                        program_research_status: { type: "string" },
+                                        program_planned_budget: { type: "string" },
+                                        program_approved_budget: { type: "string" },
+                                        principal_investigator: { type: "string" }
+                                    }
+                                }
+                            },
+                            pageSize: 20
+                        },
+                        change: onChange,
+                        selectable: "multiple",
+                        height: 430,
+                        scrollable: true,
+                        sortable: false,
+                        filterable: false,
+                        pageable: {
+                            input: true,
+                            numeric: false
+                        },
+                        columns: [
+                            {field:"program_id", title:"S\/O"},
+							{field:"program_area", title:"Program Area"},
+							{field:"program_division", title:"Division"},
+							{field:"program_research_type", title:"Research Type"},
+							{field:"program_research_priority", title:"Priority"},
+							{field:"program_research_status", title:"Status"},
+							{field:"program_planned_budget", title:"Planned Budget"},
+							{field:"program_approved_budget", title:"Actual Budget"},
+							{field:"principal_investigator", title:"PI"}
+                        ]
+                    });
+                });
+                
+                function onChange(arg) {
+                	var grid = this;
+    				var model = grid.dataItem(this.select());
+    				$('#research_program_title').val(model.program_title); 
+    				$('#program_executive_summary').val('Program Goal:\n' + model.program_goal + '\n\n\Purpose/Objective:\n' + model.program_objective);
+                }
+            </script>

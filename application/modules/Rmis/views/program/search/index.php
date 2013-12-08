@@ -17,7 +17,8 @@
         <?php echo $template['partials']['divInfoForm']; ?>
         <div style="margin:15px;">
         	<div class="row-fluid">
-           		<?php echo $grid_data; ?>
+           		<?php //echo $grid_data; ?>
+           		<div id="result"></div>
         	</div>
        	</div>
     </div> 
