@@ -13,8 +13,10 @@ class RelatedDocuments extends MX_Controller{
 						->set_layout('extensive/main_layout');
     }
     
-    public function index($project_id=NULL){
+    public function index($program_id=NULL, $project_id=NULL){
         $this->template->title('Research Management(RM)', ' Project', ' Project Related Documents');
+		$this->template->set('project_id',$project_id);
+		$this->template->set('program_id',$program_id);
         
 		if($project_id!=NULL){
 			
@@ -35,9 +37,6 @@ class RelatedDocuments extends MX_Controller{
 			$project_detail = $this->project->get_details($project_id);
 			$this->template->set('project_detail', serialize($project_detail));
 			
-			$program_detail = $this->program->get_details($project_id);
-			$this->template->set('program_detail', serialize($program_detail));
-			
 			$program_areas = $this->grid->read('rmis_program_areas', array('id','program_area_id', 'program_area_name'), $request); 
 			$this->template->set('program_areas',$program_areas);
 			
@@ -49,6 +48,12 @@ class RelatedDocuments extends MX_Controller{
 			
 			$this->template->set('project_id',$project_id);
 		}
+
+		if($program_id!=NULL || $program_id!=0){
+			$program_detail = $this->program->get_details($program_id);
+			$this->template->set('program_detail', serialize($program_detail));
+		}
+
         $_data['dashboard_menu_active'] = '';
         $_data['setup_menu_active'] = 'class="active"';
         $_data['setup_funds_menu_active'] ='class="active"';

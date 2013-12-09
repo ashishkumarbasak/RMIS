@@ -70,60 +70,7 @@
 		</div>                                                 
 	</div>
 
-    <!-- Program Info-->
-    <?php if(isset($project_detail) && $project_detail->project_type=="Program" && $project_detail->program_id!=""){ ?>
-    <div class="main_form">
-        <div class="form_element">
-            <div class="label width_170px">Title of Research Program</div>
-            <div class="textarea_field"><textarea name="research_program_title" id="research_program_title" disabled="disabled" class="textarea_small disabled width_68_percent"><?php if($program_detail!=NULL) echo $program_detail->research_program_title; ?></textarea></div>
-            <div class="clear"></div>
-        </div>
-                    
-        <div class="left_form">
-            <div class="form_element">
-                <div class="label width_170px">Program Area </div>
-                <div class="field">
-                    <select name="program_area" id="program_area" class="selectionbox disabled" disabled="disabled">
-                        <option value="">Select Program Area</option>
-                        <?php 
-                        
-                        foreach($program_areas['data'] as $key=>$program_area) { ?>
-                            <option value="<?php echo $program_area['program_area_id']; ?>" <?php if(isset($program_detail) && $program_detail->program_area==$program_area['program_area_id']) { ?> selected="selected" <?php } ?> ><?php echo $program_area['program_area_name']; ?></option>
-                        <?php } ?>
-                    </select>
-                </div>
-                <div class="clear"></div>
-            </div>
-                        
-            <div class="form_element">
-                <div class="label width_170px">Planned Budget (in Taka) </div>
-                <div class="field">
-                    <input type="text" name="program_planned_budget" id="program_planned_budget" value="<?php if($program_detail!=NULL) echo $program_detail->program_planned_budget; ?>" class="textbox disabled" disabled="disabled" />
-                </div>
-                <div class="clear"></div>
-            </div> 
-        </div>
-                    
-        <div class="right_form">    
-            <div class="form_element">
-                <div class="label">Principal Investigator <br />(or PM/Coordinator)</div>
-                <div class="field">
-                    <input type="text" name="program_coordinator" id="program_coordinator" value="<?php if($program_detail!=NULL) echo $program_detail->program_coordinator; ?>" class="textbox disabled" disabled="disabled" />
-                </div>
-                <div class="clear"></div>
-            </div>
-                        
-            <div class="form_element">
-                <div class="label">Approved Budget (in Taka)</div>
-                <div class="field">
-                    <input type="text" name="program_approved_budget" id="program_approved_budget" value="<?php if($program_detail!=NULL) echo $program_detail->program_approved_budget; ?>" class="textbox disabled" disabled="disabled" />
-                </div>
-                <div class="clear"></div>
-            </div>
-        </div>
-    </div>
-    <?php } ?>
-    
+    <?php if((isset($project_detail) && $project_detail->project_type=="Program") || (isset($program_id) && $program_id!=0 && $program_detail!=NULL )){ ?>
     <div class="main_form">
     	<div class="form_element">
         	<div class="label width_170px">Title of Research Program</div>
@@ -158,6 +105,7 @@
  			</div>
  		</div>
 	</div>
+	<?php } ?>
 	
 	<div class="main_form">
         	<div class="form_element">

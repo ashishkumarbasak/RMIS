@@ -13,7 +13,7 @@
     </li>
     <li<?php if($this->uri->segment($uri_segment_level)=='otherInformations') echo " class=\"active\"";?>>
     	<?php if(isset($project_id) && is_numeric($project_id)) { ?>
-    	<a href="<?php echo site_url('Rmis/project/otherInformations/'.$project_id);?>">
+    	<a href="<?php echo site_url('Rmis/project/otherInformations/'.$program_id.'/'.$project_id);?>">
     	<?php } else { ?>
     	<a class="disabled" href="javascript:void(0);">	
     	<?php } ?>
@@ -22,7 +22,7 @@
     </li>
     <li<?php if($this->uri->segment($uri_segment_level)=='fundSources') echo " class=\"active\"";?>>
     	<?php if(isset($project_id) && is_numeric($project_id)) { ?>
-    	<a href="<?php echo site_url('Rmis/project/fundSources/'.$project_id);?>">
+    	<a href="<?php echo site_url('Rmis/project/fundSources/'.$program_id.'/'.$project_id);?>">
     	<?php } else { ?>
     	<a class="disabled" href="javascript:void(0);">	
     	<?php } ?>
@@ -31,7 +31,7 @@
     </li>
     <li<?php if($this->uri->segment($uri_segment_level)=='researchTeams') echo " class=\"active\"";?>>
     	<?php if(isset($project_id) && is_numeric($project_id)) { ?>
-    	<a href="<?php echo site_url('Rmis/project/researchTeams/'.$project_id);?>">
+    	<a href="<?php echo site_url('Rmis/project/researchTeams/'.$program_id.'/'.$project_id);?>">
     	<?php } else { ?>
     	<a class="disabled" href="javascript:void(0);">	
     	<?php } ?>
@@ -41,7 +41,7 @@
     
     <li<?php if($this->uri->segment($uri_segment_level)=='monitorCommittee') echo " class=\"active\"";?>>
     	<?php if(isset($project_id) && is_numeric($project_id)) { ?>
-    	<a href="<?php echo site_url('Rmis/project/monitorCommittee/'.$project_id);?>">
+    	<a href="<?php echo site_url('Rmis/project/monitorCommittee/'.$program_id.'/'.$project_id);?>">
     	<?php } else { ?>
     	<a class="disabled" href="javascript:void(0);">	
     	<?php } ?>
@@ -50,7 +50,7 @@
     </li>    
     <li<?php if($this->uri->segment($uri_segment_level)=='steeringCommittees') echo " class=\"active\"";?>>
     	<?php if(isset($project_id) && is_numeric($project_id)) { ?>
-    	<a href="<?php echo site_url('Rmis/project/steeringCommittees/'.$project_id);?>">
+    	<a href="<?php echo site_url('Rmis/project/steeringCommittees/'.$program_id.'/'.$project_id);?>">
     	<?php } else { ?>
     	<a class="disabled" href="javascript:void(0);">	
     	<?php } ?>
@@ -59,7 +59,7 @@
     </li>
     <li<?php if($this->uri->segment($uri_segment_level)=='implementationCommittees') echo " class=\"active\"";?>>
     	<?php if(isset($project_id) && is_numeric($project_id)) { ?>
-    	<a href="<?php echo site_url('Rmis/project/implementationCommittees/'.$project_id);?>">
+    	<a href="<?php echo site_url('Rmis/project/implementationCommittees/'.$program_id.'/'.$project_id);?>">
     	<?php } else { ?>
     	<a class="disabled" href="javascript:void(0);">	
     	<?php } ?>
@@ -68,7 +68,7 @@
     </li>
     <li<?php if($this->uri->segment($uri_segment_level)=='activityLists') echo " class=\"active\"";?>>
     	<?php if(isset($project_id) && is_numeric($project_id)) { ?>
-    	<a href="<?php echo site_url('Rmis/project/activityLists/'.$project_id);?>">
+    	<a href="<?php echo site_url('Rmis/project/activityLists/'.$program_id.'/'.$project_id);?>">
     	<?php } else { ?>
     	<a class="disabled" href="javascript:void(0);">	
     	<?php } ?>
@@ -77,7 +77,7 @@
     </li>    
     <li<?php if($this->uri->segment($uri_segment_level)=='monitorEvaluations') echo " class=\"active\"";?>>
     	<?php if(isset($project_id) && is_numeric($project_id)) { ?>
-    	<a href="<?php echo site_url('Rmis/project/monitorEvaluations/'.$project_id);?>">
+    	<a href="<?php echo site_url('Rmis/project/monitorEvaluations/'.$program_id.'/'.$project_id);?>">
     	<?php } else { ?>
     	<a class="disabled" href="javascript:void(0);">	
     	<?php } ?>
@@ -86,7 +86,7 @@
     </li>
     <li<?php if($this->uri->segment($uri_segment_level)=='relatedDocuments') echo " class=\"active\"";?>>
    		<?php if(isset($project_id) && is_numeric($project_id)) { ?>
-    	<a href="<?php echo site_url('Rmis/project/relatedDocuments/'.$project_id);?>">
+    	<a href="<?php echo site_url('Rmis/project/relatedDocuments/'.$program_id.'/'.$project_id);?>">
     	<?php } else { ?>
     	<a class="disabled" href="javascript:void(0);">	
     	<?php } ?>

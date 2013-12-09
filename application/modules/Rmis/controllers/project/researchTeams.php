@@ -16,8 +16,10 @@ class ResearchTeams extends MX_Controller{
 		$this->template->set('loggedinUserDetails', serialize($loggedinUserDetails));
     }
     
-    public function index($project_id=NULL){
+    public function index($program_id=NULL, $project_id=NULL){
         $this->template->title('Research Management(RM)', ' Projects', ' Research Project Team Information');
+		$this->template->set('project_id',$project_id);
+		$this->template->set('program_id',$program_id);
         
 		if($this->input->post('save_researchTeam')){
 			$request = json_encode($this->input->post());
@@ -49,11 +51,13 @@ class ResearchTeams extends MX_Controller{
 			
 			$teamMembers = $this->project->get_research_team_information($project_id);
 			$this->template->set('teamMembers', serialize($teamMembers));
-			
-			$program_detail = $this->program->get_details($project_id);
-			$this->template->set('program_detail', serialize($program_detail));
 						
 			$this->template->set('project_id',$project_id);
+		}
+		
+		if($program_id!=NULL || $program_id!=0){
+			$program_detail = $this->program->get_details($program_id);
+			$this->template->set('program_detail', serialize($program_detail));
 		}
 			
 		$program_areas = $this->grid->read('rmis_program_areas', array('id','program_area_id', 'program_area_name'), $request); 

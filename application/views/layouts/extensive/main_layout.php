@@ -39,7 +39,7 @@
 		<a id="menu-toggler" href="#"> <span></span> </a> 
 		<?php echo $template['partials']['sidebar']; ?>
   	
-    	<div id="main-content" class="clearfix"> 
+    	<div id="main-content" class="clearfix" <?php if(!isset($template['partials']['sidebar'])) {  ?>style="margin: 0px;" <?php } ?> > 
 			<?php echo $template['partials']['page-content']; ?> 
 			<?php echo $template['body']; ?> 
 		</div>

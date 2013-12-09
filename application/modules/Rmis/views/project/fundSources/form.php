@@ -86,7 +86,7 @@
 	</div>
     
     <!-- Program Info-->
-    <?php if(isset($project_detail) && $project_detail->project_type=="Program" && $project_detail->program_id!=""){ ?>
+    <?php if((isset($project_detail) && $project_detail->project_type=="Program") || (isset($program_id) && $program_id!=0 && $program_detail!=NULL )){ ?>
     <div class="main_form">
         <div class="form_element">
             <div class="label width_170px">Title of Research Program</div>

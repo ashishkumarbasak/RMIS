@@ -12,9 +12,11 @@ class ImplementationCommittees extends MX_Controller{
 						->set_layout('extensive/main_layout');
     }
     
-    public function index($project_id=NULL){
+    public function index($program_id=NULL, $project_id=NULL){
         $this->template->title('Research Management(RM)', ' Programs', ' Project Implementation Committee Information');
-        
+        $this->template->set('project_id',$project_id);
+		$this->template->set('program_id',$program_id);
+		
 		if($this->input->post('save_project_implcommittee')){
 			$request = json_encode($this->input->post());
 			$this->dataCreate($request);
@@ -40,9 +42,6 @@ class ImplementationCommittees extends MX_Controller{
 			$project_detail = $this->project->get_details($project_id);
 			$this->template->set('project_detail', serialize($project_detail));
 			
-			$program_detail = $this->program->get_details($project_id);
-			$this->template->set('program_detail', serialize($program_detail));
-			
 			$program_areas = $this->grid->read('rmis_program_areas', array('id','program_area_id', 'program_area_name'), $request); 
 			$this->template->set('program_areas',$program_areas);
 			
@@ -56,6 +55,11 @@ class ImplementationCommittees extends MX_Controller{
 			$this->template->set('committee_member_type',$committee_member_type);
 			
 			$this->template->set('project_id',$project_id);
+		}
+
+		if($program_id!=NULL || $program_id!=0){
+			$program_detail = $this->program->get_details($program_id);
+			$this->template->set('program_detail', serialize($program_detail));
 		}
 
         $this->template->set('content_header_icon', 'class="icofont-file"');

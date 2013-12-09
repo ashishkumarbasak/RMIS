@@ -96,16 +96,18 @@ $route['Rmis/program/monitorEvaluations/(:num)'] = 'Rmis/program/monitorEvaluati
 $route['Rmis/program/relatedDocuments/(:num)'] = 'Rmis/program/relatedDocuments/index/$1';
 
 //project form
+$route['Rmis/project/informations'] = 'Rmis/project/informations/index/0';
 $route['Rmis/project/informations/(:num)'] = 'Rmis/project/informations/index/$1';
-$route['Rmis/project/otherInformations/(:num)'] = 'Rmis/project/otherInformations/index/$1';
-$route['Rmis/project/fundSources/(:num)'] = 'Rmis/project/fundSources/index/$1';
-$route['Rmis/project/researchTeams/(:num)'] = 'Rmis/project/researchTeams/index/$1';
-$route['Rmis/project/monitorCommittee/(:num)'] = 'Rmis/project/monitorCommittee/index/$1';
-$route['Rmis/project/steeringCommittees/(:num)'] = 'Rmis/project/steeringCommittees/index/$1';
-$route['Rmis/project/implementationCommittees/(:num)'] = 'Rmis/project/implementationCommittees/index/$1';
-$route['Rmis/project/activityLists/(:num)'] = 'Rmis/project/activityLists/index/$1';
-$route['Rmis/project/monitorEvaluations/(:num)'] = 'Rmis/project/monitorEvaluations/index/$1';
-$route['Rmis/project/relatedDocuments/(:num)'] = 'Rmis/project/relatedDocuments/index/$1';
+$route['Rmis/project/informations/(:num)/(:num)'] = 'Rmis/project/informations/index/$1/$2';
+$route['Rmis/project/otherInformations/(:num)/(:num)'] = 'Rmis/project/otherInformations/index/$1/$2';
+$route['Rmis/project/fundSources/(:num)/(:num)'] = 'Rmis/project/fundSources/index/$1/$2';
+$route['Rmis/project/researchTeams/(:num)/(:num)'] = 'Rmis/project/researchTeams/index/$1/$2';
+$route['Rmis/project/monitorCommittee/(:num)/(:num)'] = 'Rmis/project/monitorCommittee/index/$1/$2';
+$route['Rmis/project/steeringCommittees/(:num)/(:num)'] = 'Rmis/project/steeringCommittees/index/$1/$2';
+$route['Rmis/project/implementationCommittees/(:num)/(:num)'] = 'Rmis/project/implementationCommittees/index/$1/$2';
+$route['Rmis/project/activityLists/(:num)/(:num)'] = 'Rmis/project/activityLists/index/$1/$2';
+$route['Rmis/project/monitorEvaluations/(:num)/(:num)'] = 'Rmis/project/monitorEvaluations/index/$1/$2';
+$route['Rmis/project/relatedDocuments/(:num)/(:num)'] = 'Rmis/project/relatedDocuments/index/$1/$2';
 
 //experiment form
 $route['Rmis/experiment/informations/(:num)'] = 'Rmis/experiment/informations/index/$1';

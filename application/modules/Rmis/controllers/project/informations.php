@@ -14,9 +14,16 @@ class Informations extends MX_Controller{
 						->set_layout('extensive/main_layout');
     }
     
-    public function index($project_id=NULL){
+    public function index($program_id=NULL, $project_id=NULL){
         $this->template->title('Research Management(RM)', ' Programs', ' Information');
-        
+        $this->template->set('project_id',$project_id);
+		$this->template->set('program_id',$program_id);
+		$this->template->set('form_action_url', '/Rmis/project/informations/'.$program_id.'/'.$project_id);
+		
+		if($this->input->post()){
+			$this->template->set('tem_formData', serialize($this->input->post()));
+		}
+		
 		if($this->input->post('save_project_information')){
 			$request = json_encode($this->input->post());
 			$this->dataCreate($request);
@@ -40,11 +47,11 @@ class Informations extends MX_Controller{
 				
 			$project_detail = $this->project->get_details($project_id);
 			$this->template->set('project_detail', serialize($project_detail));
-			
-			$program_detail = $this->program->get_details($project_id);
+		}
+
+		if($program_id!=NULL || $program_id!=0){
+			$program_detail = $this->program->get_details($program_id);
 			$this->template->set('program_detail', serialize($program_detail));
-			
-			$this->template->set('project_id',$project_id);
 		}
 		
         $this->template->set('content_header_icon', 'class="icofont-file"');
@@ -129,11 +136,14 @@ class Informations extends MX_Controller{
             //exit;
         }
        
-        $columns = array('research_project_title', 'project_code', 'project_prefix', 'project_type', 'project_division', 'project_research_type', 'project_research_priority', 'project_research_status', 
-        					'project_coordinator', 'project_coordinator_designation', 'project_planned_start_date', 'project_planned_end_date', 'project_planned_budget',
-							'project_approved_budget', 'is_collaborate', 'project_institute_names', 'project_department_name', 'project_regional_station_name',
+        $columns = array('research_project_title', 'project_code', 'project_prefix', 'project_type', 'program_id', 'project_division', 'project_research_type', 'project_research_priority', 'project_research_status', 
+        					'project_coordinator', 'project_coordinator_designation', 'is_collaborate', 'project_planned_start_date', 'project_planned_end_date', 'project_planned_budget',
+							'project_approved_budget', 'project_institute_names', 'project_department_name', 'project_regional_station_name',
 							'project_implementation_location', 'project_keywords', 'project_commodities', 'project_aezs', 'project_initiation_date', 'project_completion_date',
 							'project_goal', 'project_objective', 'project_expected_outputs');
+		
+		if($request->project_type=="Independent")
+			$request->program_id = 0;
 		
         $columns[] = 'organization_id';
 		$request->organization_id = $this->config->item('organization_id');
@@ -141,9 +151,13 @@ class Informations extends MX_Controller{
         $request->created_at = date('Y-m-d H:i:s');            
         $columns[] = 'created_by';
         $request->created_by = $this->loginUser->id;
-
+		
+		//print_r($columns);
+		//print_r($request);
+		
         $data = $this->grid->create('rmis_project_informations', $columns, $request, 'project_id');
-		redirect('Rmis/project/informations/'.$data['data'][0]->project_id, 'refresh'); 
+		//exit(0);
+		redirect('/Rmis/project/informations/'.$request->program_id.'/'.$data['data'][0]->project_id, 'refresh'); 
         $data['success'] ="Data created successfuly."; 
     }
 	 	
@@ -181,12 +195,15 @@ class Informations extends MX_Controller{
             echo "Wrong data ! try again" ;
             //exit;
         }
-       
-        $columns = array('research_project_title', 'project_code', 'project_prefix', 'project_type', 'project_division', 'project_research_type', 'project_research_priority', 'project_research_status', 
-        					'project_coordinator', 'project_coordinator_designation', 'project_planned_start_date', 'project_planned_end_date', 'project_planned_budget',
-							'project_approved_budget', 'is_collaborate', 'project_institute_names', 'project_department_name', 'project_regional_station_name',
+							
+		$columns = array('research_project_title', 'project_code', 'project_prefix', 'project_type', 'program_id', 'project_division', 'project_research_type', 'project_research_priority', 'project_research_status', 
+        					'project_coordinator', 'project_coordinator_designation', 'is_collaborate', 'project_planned_start_date', 'project_planned_end_date', 'project_planned_budget',
+							'project_approved_budget', 'project_institute_names', 'project_department_name', 'project_regional_station_name',
 							'project_implementation_location', 'project_keywords', 'project_commodities', 'project_aezs', 'project_initiation_date', 'project_completion_date',
 							'project_goal', 'project_objective', 'project_expected_outputs', 'project_id');
+		
+		if($request->project_type=="Independent")
+			$request->program_id = 0;
 							
         $columns[] = 'organization_id';
 		$request->organization_id = $this->config->item('organization_id');

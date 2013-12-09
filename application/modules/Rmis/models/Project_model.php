@@ -506,6 +506,92 @@ class Project_model extends MY_Model {
 		}
 	}
 
+	public function read_project_data()
+    {
+    	$result = array();
+		$this->db->select('rmis_project_informations.project_id as project_id, rmis_project_informations.program_id as program_id, rmis_project_informations.project_type as project_type,  rmis_project_informations.research_project_title as project_title, rmis_project_informations.project_goal as project_goal, 
+								rmis_project_informations.project_objective as project_objective, rmis_divisions.division_name as project_division, 
+								rmis_research_types.name as project_research_type, rmis_research_priorities.name as project_research_priority, rmis_research_statuses.name as project_research_status, 
+								rmis_project_informations.project_planned_budget, rmis_project_informations.project_approved_budget, hrm_employees.employee_name as principal_investigator');
+		$this->db->from('rmis_project_informations');
+		$this->db->join('rmis_divisions','rmis_project_informations.project_division = rmis_divisions.division_id', 'left');
+		$this->db->join('rmis_research_types','rmis_project_informations.project_research_type = rmis_research_types.id', 'left');
+		$this->db->join('rmis_research_priorities','rmis_project_informations.project_research_priority = rmis_research_priorities.id', 'left');
+		$this->db->join('rmis_research_statuses','rmis_project_informations.project_research_status = rmis_research_statuses.id', 'left');
+		$this->db->join('hrm_employees','rmis_project_informations.project_coordinator = hrm_employees.employee_id', 'left');
+		
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			$result['total'] = $query->num_rows();
+			$result_rs = $query->result();
+			$result['data'] = $result_rs;
+		}else{
+			$result['total'] = 0;
+			$result['data'] = "[]";
+		}
+        
+        return $result;
+    }
+
+	function search_project_data($data=array()){
+		//print_r($data);
+		if(!empty($data)){
+			$result = array();
+			$this->db->select('rmis_project_informations.project_id as project_id, rmis_project_informations.program_id as program_id, rmis_project_informations.project_type as project_type,  rmis_project_informations.research_project_title as project_title, rmis_project_informations.project_goal as project_goal, 
+								rmis_project_informations.project_objective as project_objective, rmis_divisions.division_name as project_division, 
+								rmis_research_types.name as project_research_type, rmis_research_priorities.name as project_research_priority, rmis_research_statuses.name as project_research_status, 
+								rmis_project_informations.project_planned_budget, rmis_project_informations.project_approved_budget, hrm_employees.employee_name as principal_investigator');
+			$this->db->from('rmis_project_informations');
+			$this->db->join('rmis_divisions','rmis_project_informations.project_division = rmis_divisions.division_id', 'left');
+			$this->db->join('rmis_research_types','rmis_project_informations.project_research_type = rmis_research_types.id', 'left');
+			$this->db->join('rmis_research_priorities','rmis_project_informations.project_research_priority = rmis_research_priorities.id', 'left');
+			$this->db->join('rmis_research_statuses','rmis_project_informations.project_research_status = rmis_research_statuses.id', 'left');
+			$this->db->join('hrm_employees','rmis_project_informations.project_coordinator = hrm_employees.employee_id', 'left');
+			
+			if(array_key_exists('project_type', $data) && $data['project_type'] != NULL)
+				$this->db->where('rmis_project_informations.project_type', $data['project_type']);
+			
+			if(array_key_exists('project_code', $data) && $data['project_code'] != NULL)
+				$this->db->where('rmis_project_informations.project_code', $data['project_code']);
+			
+			if(array_key_exists('project_division', $data) && $data['project_division'] != NULL)
+				$this->db->where('rmis_project_informations.project_division', $data['project_division']);
+			
+			if(array_key_exists('project_research_type', $data) && $data['project_research_type'] != NULL)
+				$this->db->where('rmis_project_informations.project_research_type', $data['project_research_type']);
+			
+			if(array_key_exists('project_research_priority', $data) && $data['project_research_priority'] != NULL)
+				$this->db->where('rmis_project_informations.project_research_priority', $data['project_research_priority']);
+			
+			if(array_key_exists('project_research_status', $data) && $data['project_research_status'] != NULL)
+				$this->db->where('rmis_project_informations.project_research_status', $data['project_research_status']);
+			
+			if(array_key_exists('project_regionalStationName', $data) && $data['project_regionalStationName'] != NULL)
+				$this->db->where('rmis_project_informations.project_regional_station_name', $data['project_regionalStationName']);
+			
+			if(array_key_exists('project_implementationLocation', $data) && $data['project_implementationLocation'] != NULL)
+				$this->db->where('rmis_project_informations.project_implementation_location', $data['project_implementationLocation']);
+		
+			if(array_key_exists('project_keywords', $data) && $data['project_keywords'] != NULL)
+				$this->db->or_like('rmis_project_informations.project_keywords', $data['project_keywords']);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result['total'] = $query->num_rows();
+				$result_rs = $query->result();
+				$result['data'] = $result_rs;
+			}else{
+				$result['total'] = 0;
+				$result['data'] = "[]";
+			}
+	        
+	        return $result;
+		}else{
+			$result = $this->read_program_data();
+			return $result;
+		}
+	}
+
 	function delete($id=NULL){
 		//truncate rmis_project_activities;# MySQL returned an empty result set (i.e. zero rows).
 		//truncate rmis_project_areas;# MySQL returned an empty result set (i.e. zero rows).

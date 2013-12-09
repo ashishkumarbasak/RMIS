@@ -26,11 +26,3 @@
 <div style="height:10px;"></div>
 <script id="popup_editor" type="text/x-kendo-template">
 </script>
-<script>
-    function ClickEdit(e) {
-        e.preventDefault();
-        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        var edit_url = "/Rmis/setup/divisions/edit/"+dataItem.id;
-        window.location = edit_url;
-    }
-</script>

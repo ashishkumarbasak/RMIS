@@ -2,20 +2,25 @@
 <script src="<?php echo site_url('assets/extensive/js/date-time/bootstrap-datepicker.min.js'); ?>"></script>
 <link rel="stylesheet" href="<?php echo site_url('assets/extensive/css/datepicker.css'); ?>" />
 <?php 
-if(isset($project_detail)){
-	$project_detail = unserialize($project_detail);
-}
-
-if(isset($program_detail)){
-	$program_detail = unserialize($program_detail);
-}
+	if(isset($project_detail)){
+		$project_detail = unserialize($project_detail);
+	}
+	
+	if(isset($program_detail)){
+		$program_detail = unserialize($program_detail);
+	}
+	if(isset($tem_formData)){
+		$tem_formData = unserialize($tem_formData);
+	}
 ?>
-<form name="project_info" id="project_info" method="post" action="">
+<form name="project_info" id="project_info" method="post" action="<?php echo $form_action_url; ?>">
 <!-- Project Info Top-->
 <div class="main_form">
     	<div class="form_element">
     	<div class="label width_170px">Title of Research Project <span class="mandatory">*</span></div>
-       	<div class="textarea_field"><textarea name="research_project_title" id="research_project_title" class="textarea_small width_68_percent"><?php if($project_detail) echo $project_detail->research_project_title;?></textarea></div>
+       	<div class="textarea_field">
+       		<textarea name="research_project_title" id="research_project_title" class="textarea_small width_68_percent"><?php if($project_detail) echo $project_detail->research_project_title; elseif(isset($tem_formData) && array_key_exists('research_project_title', $tem_formData)) echo $tem_formData['research_project_title']; ?></textarea>
+       	</div>
         <div class="clear"></div>
   	</div>
     
@@ -23,7 +28,7 @@ if(isset($program_detail)){
 		<div class="form_element">
         	<div class="label width_170px">Project Code</div>
         	<div class="field">
-        		<input type="text" name="project_code" id="project_code" value="<?php if($project_detail) echo $project_detail->project_code;?>" class="textbox">
+        		<input type="text" name="project_code" id="project_code" value="<?php if($project_detail) echo $project_detail->project_code; elseif(isset($tem_formData) && array_key_exists('project_code', $tem_formData)) echo $tem_formData['project_code']; ?>" class="textbox">
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -31,20 +36,22 @@ if(isset($program_detail)){
     	<div class="form_element">
         	<div class="label width_170px">Project Prefix</div>
         	<div class="field">
-        		<input type="text" name="project_prefix" id="project_prefix" value="<?php if($project_detail) echo $project_detail->project_prefix;?>" class="textbox">
+        		<input type="text" name="project_prefix" id="project_prefix" value="<?php if($project_detail) echo $project_detail->project_prefix; elseif(isset($tem_formData) && array_key_exists('project_prefix', $tem_formData)) echo $tem_formData['project_prefix']; ?>" class="textbox">
         	</div>
         	<div class="clear"></div>
     	</div>
    </div>
    <div class="right_form">
-   		<input type="radio" name="project_type" id="project_type" value="Independent" <?php if(isset($project_detail) && $project_detail->project_type=="Independent"){ ?> checked="checked" <?php } ?>> Independent 
-   		<input type="radio" name="project_type" id="project_type" value="Program" <?php if(isset($project_detail) && $project_detail->project_type=="Program"){ ?> checked="checked" <?php } ?>> Program &nbsp; 
-        <input type="submit" name="search" id="search" value="Search" class="k-button button">
+   		<input type="radio" name="project_type" id="project_type" value="Independent" <?php if((isset($project_detail) && $project_detail->project_type=="Independent")){ ?> checked="checked" <?php } ?> onclick="$('#project_details').hide();" /> Independent 
+   		<input type="radio" name="project_type" id="project_type" value="Program" <?php if((isset($project_detail) && $project_detail->project_type=="Program") || (isset($tem_formData) && array_key_exists('project_type', $tem_formData) && $tem_formData['project_type']=="Program" ) ){ ?> checked="checked" <?php } ?>  onclick="$('#project_details').show();" /> Program &nbsp; 
+   		<input type="button" name="search_program" id="search_program" value="Search Program" class="k-button button" style="width: 120px !important;" 
+   			onclick="window.open('<?php echo base_url(); ?>Rmis/project/SearchProgram', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');">
    </div>
    <div class="clear"></div>
 </div> 
 <!-- Program Info-->
-<?php if(isset($project_detail) && $project_detail->project_type=="Program" && $project_detail->program_id!=""){ ?>
+<div id="project_details">
+<?php if((isset($project_detail) && $project_detail->project_type=="Program") || (isset($program_id) && $program_id!=0 && $program_detail!=NULL )){ ?>
 <div class="main_form">
     <div class="form_element">
         <div class="label width_170px">Title of Research Program</div>
@@ -96,13 +103,14 @@ if(isset($program_detail)){
     </div>
 </div>
 <?php } ?>
+</div>
 <!-- Project Info below-->
 <div class="main_form">	
 	<div class="left_form">
     	<div class="form_element">
         	<div class="label width_170px">&nbsp;</div>
         	<div class="field">
-			<input type="checkbox" name="is_collaborate" id="is_collaborate" value="1" class="checkbox" <?php if(isset($project_detail) && $project_detail->is_collaborate=="1"){ ?> checked="checked" <?php } ?> onclick="$('#institute_name_div').toggle();" />Is collaborate
+			<input type="checkbox" name="is_collaborate" id="is_collaborate" value="1" class="checkbox" <?php if((isset($project_detail) && $project_detail->is_collaborate=="1") || (isset($tem_formData) && array_key_exists('is_collaborate', $tem_formData) && $tem_formData['is_collaborate']=="1") ){ ?> checked="checked" <?php } ?> onclick="$('#institute_name_div').toggle();" />Is collaborate
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -113,7 +121,9 @@ if(isset($program_detail)){
         		<select name="project_division" id="project_division" class="selectionbox">
             		<option value="">Select Division/Unit Name</option>
 					<?php foreach($divisions['data'] as $key=>$division) { ?>
-            			<option value="<?php echo $division['division_id']; ?>" <?php if(isset($project_detail) && $project_detail->project_division==$division['division_id']) { ?> selected="selected" <?php } ?>><?php echo $division['division_name']; ?></option>
+            			<option value="<?php echo $division['division_id']; ?>" <?php if((isset($project_detail) && $project_detail->project_division==$division['division_id']) || (isset($tem_formData) && array_key_exists('project_division', $tem_formData) && $tem_formData['project_division']==$division['division_id']) ) { ?> selected="selected" <?php } ?>>
+            					<?php echo $division['division_name']; ?>
+            			</option>
             		<?php } ?>
         		</select>
         	</div>
@@ -126,7 +136,9 @@ if(isset($program_detail)){
         		<select name="project_research_type" id="project_research_type" class="selectionbox">
             		<option value="">Select Research Type</option>
  					<?php foreach($research_types['data'] as $key=>$researchType) { ?>
-            			<option value="<?php echo $researchType['value']; ?>" <?php if(isset($project_detail) && $project_detail->project_research_type==$researchType['value']) { ?> selected="selected" <?php } ?>><?php echo $researchType['name']; ?></option>
+            			<option value="<?php echo $researchType['value']; ?>" <?php if((isset($project_detail) && $project_detail->project_research_type==$researchType['value']) || (isset($tem_formData) && array_key_exists('project_research_type', $tem_formData) && $tem_formData['project_research_type']==$researchType['value'])) { ?> selected="selected" <?php } ?>>
+            				<?php echo $researchType['name']; ?>
+            			</option>
             		<?php } ?>
         		</select>
         	</div>
@@ -139,7 +151,9 @@ if(isset($program_detail)){
         		<select name="project_research_priority" id="project_research_priority" class="selectionbox">
             		<option value="">Select Research Priority</option>
 					<?php foreach($research_priorities['data'] as $key=>$research_priority) { ?>
-            			<option value="<?php echo $research_priority['value']; ?>" <?php if(isset($project_detail) && $project_detail->project_research_priority==$research_priority['value']) { ?> selected="selected" <?php } ?>><?php echo $research_priority['name']; ?></option>
+            			<option value="<?php echo $research_priority['value']; ?>" <?php if((isset($project_detail) && $project_detail->project_research_priority==$research_priority['value']) || (isset($tem_formData) && array_key_exists('project_research_priority', $tem_formData) && $tem_formData['project_research_priority']==$research_priority['value'])) { ?> selected="selected" <?php } ?>>
+            				<?php echo $research_priority['name']; ?>
+            			</option>
             		<?php } ?>
          		</select>
         	</div>
@@ -152,7 +166,9 @@ if(isset($program_detail)){
         		<select name="project_research_status" id="project_research_status" class="selectionbox">
             		<option value="">Select Research Status</option>
 					<?php foreach($research_statuses['data'] as $key=>$research_status) { ?>
-           	 			<option value="<?php echo $research_status['value']; ?>" <?php if(isset($project_detail) && $project_detail->project_research_status==$research_status['value']) { ?> selected="selected" <?php } ?>><?php echo $research_status['name']; ?></option>
+           	 			<option value="<?php echo $research_status['value']; ?>" <?php if((isset($project_detail) && $project_detail->project_research_status==$research_status['value']) || (isset($tem_formData) && array_key_exists('project_research_status', $tem_formData) && $tem_formData['project_research_status']==$research_status['value'])) { ?> selected="selected" <?php } ?>>
+           	 				<?php echo $research_status['name']; ?>
+           	 			</option>
             		<?php } ?>
             	</select>
         	</div>
@@ -162,9 +178,9 @@ if(isset($program_detail)){
     	<div class="form_element">
         	<div class="label width_170px">Principal Investigator<br />(Or Pm/Coordintor) <span class="mandatory">*</span></div>
         	<div class="field">
-        		<input type="text" name="project_coordinator_name" id="project_coordinator_name" value="<?php if($project_detail) echo $project_detail->project_coordinator;?>" class="textbox" />
-                <input type="hidden" name="project_coordinator" id="project_coordinator" value="<?php if($project_detail) echo $project_detail->employee_id; ?>">
-            	<input type="hidden" name="employee_id" id="employee_id" value="<?php if($project_detail) echo $project_detail->employee_id; ?>">
+        		<input type="text" name="project_coordinator_name" id="project_coordinator_name" value="<?php if($project_detail) echo $project_detail->project_coordinator; elseif(isset($tem_formData) && array_key_exists('project_coordinator_name', $tem_formData)) echo $tem_formData['project_coordinator_name']; ?>" class="textbox" />
+                <input type="hidden" name="project_coordinator" id="project_coordinator" value="<?php if($project_detail) echo $project_detail->employee_id; elseif(isset($tem_formData) && array_key_exists('project_coordinator', $tem_formData)) echo $tem_formData['project_coordinator']; ?>">
+            	<input type="hidden" name="employee_id" id="employee_id" value="<?php if($project_detail) echo $project_detail->employee_id; elseif(isset($tem_formData) && array_key_exists('employee_id', $tem_formData)) echo $tem_formData['employee_id']; ?>">
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -172,7 +188,7 @@ if(isset($program_detail)){
      	<div class="form_element">
         	<div class="label width_170px">Designation </div>
         	<div class="field">
-        		<input type="text" name="project_coordinator_designation" id="project_coordinator_designation" value="<?php if($project_detail) echo $project_detail->project_coordinator_designation; ?>" class="textbox" readonly="readonly">
+        		<input type="text" name="project_coordinator_designation" id="project_coordinator_designation" value="<?php if($project_detail) echo $project_detail->project_coordinator_designation; elseif(isset($tem_formData) && array_key_exists('project_coordinator_designation', $tem_formData)) echo $tem_formData['project_coordinator_designation']; ?>" class="textbox" readonly="readonly">
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -180,7 +196,7 @@ if(isset($program_detail)){
     	<div class="form_element">
         	<div class="label width_170px">Planned Start Date <span class="mandatory">*</span> </div>
         	<div class="field">
-        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="project_planned_start_date" id="project_planned_start_date" value="<?php if($project_detail) echo $project_detail->project_planned_start_date; ?>" />
+        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="project_planned_start_date" id="project_planned_start_date" value="<?php if($project_detail) echo $project_detail->project_planned_start_date; elseif(isset($tem_formData) && array_key_exists('project_planned_start_date', $tem_formData)) echo $tem_formData['project_planned_start_date']; ?>" />
         		<span class="input-group-addon">
             		<i class="icon-calendar"></i>
         		</span>
@@ -191,7 +207,7 @@ if(isset($program_detail)){
     	<div class="form_element">
         	<div class="label width_170px">Planned End Date <span class="mandatory">*</span></div>
         	<div class="field">
-        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="project_planned_end_date" id="project_planned_end_date" value="<?php if($project_detail) echo $project_detail->project_planned_end_date; ?>" />
+        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="project_planned_end_date" id="project_planned_end_date" value="<?php if($project_detail) echo $project_detail->project_planned_end_date;  elseif(isset($tem_formData) && array_key_exists('project_planned_end_date', $tem_formData)) echo $tem_formData['project_planned_end_date']; ?>" />
         		<span class="input-group-addon">
             		<i class="icon-calendar"></i>
         		</span>
@@ -202,7 +218,7 @@ if(isset($program_detail)){
       	<div class="form_element">
         	<div class="label width_170px">Planned Budget(in Taka) </div>
         	<div class="field">
-       	 		<input type="text" name="project_planned_budget" id="project_planned_budget" value="<?php if($project_detail) echo $project_detail->project_planned_budget;?>" class="textbox">
+       	 		<input type="text" name="project_planned_budget" id="project_planned_budget" value="<?php if($project_detail) echo $project_detail->project_planned_budget;  elseif(isset($tem_formData) && array_key_exists('project_planned_budget', $tem_formData)) echo $tem_formData['project_planned_budget']; ?>" class="textbox">
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -210,18 +226,20 @@ if(isset($program_detail)){
     	<div class="form_element">
         	<div class="label width_170px">Approved Budget(in Taka) </div>
         	<div class="field">
-        		<input type="text" name="project_approved_budget" id="project_approved_budget" value="<?php if($project_detail) echo $project_detail->project_approved_budget;?>" class="textbox">
+        		<input type="text" name="project_approved_budget" id="project_approved_budget" value="<?php if($project_detail) echo $project_detail->project_approved_budget; elseif(isset($tem_formData) && array_key_exists('project_approved_budget', $tem_formData)) echo $tem_formData['project_approved_budget'];?>" class="textbox">
         	</div>
         	<div class="clear"></div>
     	</div>        
 	</div>
 
 	<div class="right_form">	
-     	<div class="form_element <?php if((isset($project_detail) && $project_detail->is_collaborate=="0") || !isset($project_detail)){ ?> display-none <?php } ?> " id="institute_name_div">
+     	<div class="form_element <?php if((isset($project_detail) && $project_detail->is_collaborate=="1") || (isset($tem_formData) && array_key_exists('is_collaborate', $tem_formData) && $tem_formData['is_collaborate']=="1") ){}else{ ?> display-none <?php } ?> " id="institute_name_div">
         	<?php
         		$project_instituteNames = array(); 
         		if(isset($project_detail))
-				$project_instituteNames = explode(",", $project_detail->project_institute_names);
+					$project_instituteNames = explode(",", $project_detail->project_institute_names);
+				elseif(isset($tem_formData) && array_key_exists('project_institute_names', $tem_formData))
+					$project_instituteNames = $tem_formData['project_institute_names'];
 			?>
         	<div class="label">Institute Name </div>
         	<div class="field">
@@ -240,7 +258,9 @@ if(isset($program_detail)){
         		<select name="project_department_name" id="project_department_name" class="selectionbox">
             		<option value="">Select Department</option>
             		<?php foreach($departments as $key=>$department) { ?>
-            			<option value="<?php echo $department->id; ?>" <?php if(isset($project_detail) && $project_detail->project_department_name==$department->id) { ?> selected="selected" <?php } ?>><?php echo $department->organogram_name ?></option>
+            			<option value="<?php echo $department->id; ?>" <?php if((isset($project_detail) && $project_detail->project_department_name==$department->id) || (isset($tem_formData) && array_key_exists('project_department_name', $tem_formData) && $tem_formData['project_department_name']==$department->id)) { ?> selected="selected" <?php } ?>>
+            				<?php echo $department->organogram_name ?>
+            			</option>
             		<?php } ?>
             	</select>
         	</div>
@@ -253,7 +273,9 @@ if(isset($program_detail)){
         		<select name="project_regional_station_name" id="project_regional_station_name" class="selectionbox">
             		<option value="">Select Regional Station</option>
 					<?php foreach($regional_stations['data'] as $key=>$regional_station) { ?>
-            			<option value="<?php echo $regional_station['station_id']; ?>"<?php if(isset($project_detail) && $project_detail->project_regional_station_name==$regional_station['station_id']) { ?> selected="selected" <?php } ?>><?php echo $regional_station['station_name']; ?></option>
+            			<option value="<?php echo $regional_station['station_id']; ?>"<?php if((isset($project_detail) && $project_detail->project_regional_station_name==$regional_station['station_id']) || (isset($tem_formData) && array_key_exists('project_regional_station_name', $tem_formData) && $tem_formData['project_regional_station_name']==$regional_station['station_id'])) { ?> selected="selected" <?php } ?>>
+            				<?php echo $regional_station['station_name']; ?>
+            			</option>
             		<?php } ?>
         		</select>
         	</div>
@@ -266,7 +288,9 @@ if(isset($program_detail)){
         		<select name="project_implementation_location" id="project_implementation_location" class="selectionbox">
             		<option value="">Select Implementation Site</option>
 					<?php foreach($implementation_locations['data'] as $key=>$implementation_location) { ?>
-            			<option value="<?php echo $implementation_location['implementation_site_id']; ?>" <?php if(isset($project_detail) && $project_detail->project_implementation_location==$implementation_location['implementation_site_id']) { ?> selected="selected" <?php } ?>><?php echo $implementation_location['implementation_site_name']; ?></option>
+            			<option value="<?php echo $implementation_location['implementation_site_id']; ?>" <?php if((isset($project_detail) && $project_detail->project_implementation_location==$implementation_location['implementation_site_id']) || (isset($tem_formData) && array_key_exists('project_implementation_location', $tem_formData) && $tem_formData['project_implementation_location']==$implementation_location['implementation_site_id'])){ ?> selected="selected" <?php } ?>>
+            				<?php echo $implementation_location['implementation_site_name']; ?>
+            			</option>
             		<?php } ?>
         		</select>
         	</div>
@@ -276,7 +300,7 @@ if(isset($program_detail)){
     	<div class="form_element">
         	<div class="label">Key Words </div>
         	<div class="field">
-        		<input type="text" name="project_keywords" id="project_keywords" class="textbox" value="<?php if($project_detail) echo $project_detail->project_keywords;?>">
+        		<input type="text" name="project_keywords" id="project_keywords" class="textbox" value="<?php if($project_detail) echo $project_detail->project_keywords; elseif(isset($tem_formData) && array_key_exists('project_keywords', $tem_formData)) echo $tem_formData['project_keywords'];?>">
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -285,7 +309,10 @@ if(isset($program_detail)){
     		<?php
         		$project_commodities = array(); 
         		if(isset($project_detail))
-				$project_commodities = explode(",", $project_detail->project_commodities);
+					$project_commodities = explode(",", $project_detail->project_commodities);
+				elseif(isset($tem_formData) && array_key_exists('project_commodities', $tem_formData))
+					$project_commodities = $tem_formData['project_commodities'];
+					
 			?>
         	<div class="label">Commodity </div>
         	<div class="field">
@@ -302,7 +329,9 @@ if(isset($program_detail)){
    			<?php
         		$project_aezs = array(); 
         		if(isset($project_detail))
-				$project_aezs = explode(",", $project_detail->project_aezs);
+					$project_aezs = explode(",", $project_detail->project_aezs);
+				elseif(isset($tem_formData) && array_key_exists('project_aezs', $tem_formData))
+					$project_commodities = $tem_formData['project_aezs'];
 			?>
         	<div class="label">AEZs </div>
         	<div class="field">
@@ -318,7 +347,7 @@ if(isset($program_detail)){
     	<div class="form_element">
         	<div class="label">Initial Date </div>
         	<div class="field">
-        		<input type="text" class="textbox disabled" readonly="readonly" name="project_initiation_date" id="project_initiation_date" data-date-format="yyyy-mm-dd" value="<?php if($project_detail){ if($project_detail->project_initiation_date=='0000-00-00'){echo '';} else {echo $project_detail->project_initiation_date;}}?>" />
+        		<input type="text" class="textbox disabled" readonly="readonly" name="project_initiation_date" id="project_initiation_date" data-date-format="yyyy-mm-dd" value="<?php if(isset($project_detail)){ if($project_detail->project_initiation_date=='0000-00-00'){echo '';} else {echo $project_detail->project_initiation_date;}} elseif(isset($tem_formData) && array_key_exists('project_initiation_date', $tem_formData)) echo $tem_formData['project_initiation_date']; ?>" />
         		<span class="input-group-addon">
            	 		<i class="icon-calendar"></i>
         		</span>
@@ -329,7 +358,7 @@ if(isset($program_detail)){
     	<div class="form_element">
         	<div class="label">Completion Date </div>
         	<div class="field">
-        		<input type="text" class="textbox disabled" readonly="readonly" name="project_completion_date" id="project_completion_date" data-date-format="yyyy-mm-dd" value="<?php if($project_detail){ if($project_detail->project_completion_date=='0000-00-00'){echo '';} else {echo $project_detail->project_completion_date;}}?>" />
+        		<input type="text" class="textbox disabled" readonly="readonly" name="project_completion_date" id="project_completion_date" data-date-format="yyyy-mm-dd" value="<?php if($project_detail){ if($project_detail->project_completion_date=='0000-00-00'){echo '';} else {echo $project_detail->project_completion_date;}} elseif(isset($tem_formData) && array_key_exists('project_completion_date', $tem_formData)) echo $tem_formData['project_completion_date']; ?>" />
         		<span class="input-group-addon">
             		<i class="icon-calendar"></i>
         		</span>
@@ -341,13 +370,13 @@ if(isset($program_detail)){
   	
     <div class="form_element">
     	<div class="label width_170px">Project Goal <span class="mandatory">*</span></div>
-       	<div class="textarea_field"><textarea name="project_goal" id="project_goal" class="textarea width_68_percent"><?php if($project_detail) echo $project_detail->project_goal;?></textarea></div>
+       	<div class="textarea_field"><textarea name="project_goal" id="project_goal" class="textarea width_68_percent"><?php if($project_detail) echo $project_detail->project_goal;  elseif(isset($tem_formData) && array_key_exists('project_goal', $tem_formData)) echo $tem_formData['project_goal']; ?></textarea></div>
         <div class="clear"></div>
   	</div>
     
   	<div class="form_element">
     	<div class="label width_170px">Purpose/Objective <span class="mandatory">*</span></div>
-       	<div class="textarea_field"><textarea name="project_objective" id="project_objective" class="textarea width_68_percent"><?php if($project_detail) echo $project_detail->project_objective;?></textarea></div>
+       	<div class="textarea_field"><textarea name="project_objective" id="project_objective" class="textarea width_68_percent"><?php if($project_detail) echo $project_detail->project_objective; elseif(isset($tem_formData) && array_key_exists('project_objective', $tem_formData)) echo $tem_formData['project_objective'];?></textarea></div>
         <div class="clear"></div>
   	</div>
 
@@ -356,7 +385,9 @@ if(isset($program_detail)){
 		<?php
         	$project_expectedOutputs = array(); 
         	if(isset($project_detail))
-			$project_expectedOutputs = explode("---##########---", $project_detail->project_expected_outputs);
+				$project_expectedOutputs = explode("---##########---", $project_detail->project_expected_outputs);
+			elseif(isset($tem_formData) && array_key_exists('project_expected_outputs', $tem_formData))
+				$project_expectedOutputs = $tem_formData['project_expected_outputs'];
 		?>
 		
 		<div class="label width_170px">Expected output <span class="mandatory">*</span></div>
@@ -387,6 +418,7 @@ if(isset($program_detail)){
     
     <div class="form_element">
         <div class="button_panel" style="margin-right: 110px;">
+        	<input type="hidden" name="program_id" id="program_id" value="<?php if(isset($program_id)) echo $program_id; ?>">
 			<?php if(isset($project_detail) && $project_detail->project_id!=NULL) { ?>
                 <input type="hidden" name="project_id" id="project_id" value="<?php echo $project_detail->project_id; ?>">
                 <input type="submit" name="update_project_information" id="update_project_information" value="Update" class="k-button button">

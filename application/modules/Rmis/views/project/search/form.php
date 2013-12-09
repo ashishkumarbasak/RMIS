@@ -2,25 +2,19 @@
 <script src="<?php echo site_url('assets/extensive/js/date-time/bootstrap-datepicker.min.js'); ?>"></script>
 <link rel="stylesheet" href="<?php echo site_url('assets/extensive/css/datepicker.css'); ?>" />
 <?php 
-	if(isset($project_detail)){
-		$project_detail = unserialize($project_detail);
+	if(isset($result)){
+		$result = unserialize($result);
 	}
 ?>
 
-<form name="project_info" id="project_info" method="post" action="">
+<form name="program_info" id="program_info" method="post" action="">
 <div class="main_form">
 	<div class="left_form">
     	<div class="form_element">
-        	<div class="label width_170px">Program Area <span class="mandatory">*</span></div>
+        	<div class="label width_170px">&nbsp;</div>
         	<div class="field">
-        		<select name="project_area" id="project_area" class="selectionbox">
-            		<option value="">Select Program Area</option>
-					<?php 
-					
-					foreach($project_areas['data'] as $key=>$project_area) { ?>
-            			<option value="<?php echo $project_area['project_area_id']; ?>" <?php if(isset($project_detail) && $project_detail->project_area==$project_area['project_area_id']) { ?> selected="selected" <?php } ?> ><?php echo $project_area['project_area_name']; ?></option>
-            		<?php } ?>
-        		</select>
+        		<input type="radio" name="project_type" id="project_type" value="Independent"  checked="checked" /> Independent 
+   				<input type="radio" name="project_type" id="project_type" value="Program" /> Program &nbsp; 
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -31,7 +25,7 @@
         		<select name="project_division" id="project_division" class="selectionbox">
             		<option value="">Select Division/Unit Name</option>
 					<?php foreach($divisions['data'] as $key=>$division) { ?>
-            			<option value="<?php echo $division['division_id']; ?>" <?php if(isset($project_detail) && $project_detail->division_or_unit_name==$division['division_id']) { ?> selected="selected" <?php } ?>><?php echo $division['division_name']; ?></option>
+            			<option value="<?php echo $division['division_id']; ?>" <?php if(isset($program_detail) && $program_detail->division_or_unit_name==$division['division_id']) { ?> selected="selected" <?php } ?>><?php echo $division['division_name']; ?></option>
             		<?php } ?>
         		</select>
         	</div>
@@ -44,7 +38,7 @@
         		<select name="project_research_type" id="project_research_type" class="selectionbox">
             		<option value="">Select Research Type</option>
  					<?php foreach($research_types['data'] as $key=>$researchType) { ?>
-            			<option value="<?php echo $researchType['value']; ?>" <?php if(isset($project_detail) && $project_detail->project_research_type==$researchType['value']) { ?> selected="selected" <?php } ?>><?php echo $researchType['name']; ?></option>
+            			<option value="<?php echo $researchType['value']; ?>" <?php if(isset($program_detail) && $program_detail->program_research_type==$researchType['value']) { ?> selected="selected" <?php } ?>><?php echo $researchType['name']; ?></option>
             		<?php } ?>
         		</select>
         	</div>
@@ -57,7 +51,7 @@
         		<select name="project_research_priority" id="project_research_priority" class="selectionbox">
             		<option value="">Select Research Priority</option>
 					<?php foreach($research_priorities['data'] as $key=>$research_priority) { ?>
-            			<option value="<?php echo $research_priority['value']; ?>" <?php if(isset($project_detail) && $project_detail->project_research_priority==$research_priority['value']) { ?> selected="selected" <?php } ?>><?php echo $research_priority['name']; ?></option>
+            			<option value="<?php echo $research_priority['value']; ?>" <?php if(isset($program_detail) && $program_detail->program_research_priority==$research_priority['value']) { ?> selected="selected" <?php } ?>><?php echo $research_priority['name']; ?></option>
             		<?php } ?>
          		</select>
         	</div>
@@ -70,7 +64,7 @@
         		<select name="project_research_status" id="project_research_status" class="selectionbox">
             		<option value="">Select Research Status</option>
 					<?php foreach($research_statuses['data'] as $key=>$research_status) { ?>
-           	 			<option value="<?php echo $research_status['value']; ?>" <?php if(isset($project_detail) && $project_detail->project_research_status==$research_status['value']) { ?> selected="selected" <?php } ?>><?php echo $research_status['name']; ?></option>
+           	 			<option value="<?php echo $research_status['value']; ?>" <?php if(isset($program_detail) && $program_detail->program_research_status==$research_status['value']) { ?> selected="selected" <?php } ?>><?php echo $research_status['name']; ?></option>
             		<?php } ?>
             	</select>
         	</div>
@@ -80,22 +74,22 @@
     	<div class="form_element">
         	<div class="label width_170px">Key Words </div>
         	<div class="field">
-        		<input type="text" name="project_keywords" id="project_keywords" class="textbox" value="<?php if($project_detail) echo $project_detail->keyword;?>">
+        		<input type="text" name="project_keywords" id="project_keywords" class="textbox" value="">
         	</div>
         	<div class="clear"></div>
     	</div>
     	
     	<div class="form_element">
         	<?php
-        		$project_aezs = array(); 
-        		if(isset($project_detail))
-				$project_aezs = explode(",", $project_detail->project_aezs);
+        		$program_aezs = array(); 
+        		if(isset($program_detail))
+				$program_aezs = explode(",", $program_detail->program_aezs);
 			?>
         	<div class="label width_170px">AEZs </div>
         	<div class="field">
         		<select name="project_aezs[]" id="project_aezs" class="selectionbox" multiple="multiple">
             		<?php foreach($aezs['data'] as $key=>$aez) { ?>
-            			<option value="<?php echo $aez['value']; ?>" <?php if(in_array($aez['value'], $project_aezs)) { ?> selected="selected" <?php } ?>><?php echo $aez['name']; ?></option>
+            			<option value="<?php echo $aez['value']; ?>" <?php if(in_array($aez['value'], $program_aezs)) { ?> selected="selected" <?php } ?>><?php echo $aez['name']; ?></option>
             		<?php } ?>
             	</select>
         	</div>
@@ -108,7 +102,7 @@
         		<select name="project_regionalStationName" id="project_regionalStationName" class="selectionbox">
             		<option value="">Select Regional Station</option>
 					<?php foreach($regional_stations['data'] as $key=>$regional_station) { ?>
-            			<option value="<?php echo $regional_station['station_id']; ?>"<?php if(isset($project_detail) && $project_detail->regional_station_name==$regional_station['station_id']) { ?> selected="selected" <?php } ?>><?php echo $regional_station['station_name']; ?></option>
+            			<option value="<?php echo $regional_station['station_id']; ?>"<?php if(isset($program_detail) && $program_detail->regional_station_name==$regional_station['station_id']) { ?> selected="selected" <?php } ?>><?php echo $regional_station['station_name']; ?></option>
             		<?php } ?>
         		</select>
         	</div>
@@ -121,7 +115,7 @@
         		<select name="project_implementationLocation" id="project_implementationLocation" class="selectionbox">
             		<option value="">Select Implementation Site</option>
 					<?php foreach($implementation_locations['data'] as $key=>$implementation_location) { ?>
-            			<option value="<?php echo $implementation_location['implementation_site_id']; ?>" <?php if(isset($project_detail) && $project_detail->implementation_location==$implementation_location['implementation_site_id']) { ?> selected="selected" <?php } ?>><?php echo $implementation_location['implementation_site_name']; ?></option>
+            			<option value="<?php echo $implementation_location['implementation_site_id']; ?>" <?php if(isset($program_detail) && $program_detail->implementation_location==$implementation_location['implementation_site_id']) { ?> selected="selected" <?php } ?>><?php echo $implementation_location['implementation_site_name']; ?></option>
             		<?php } ?>
         		</select>
         	</div>
@@ -129,11 +123,20 @@
     	</div>       
 	</div>
 
-	<div class="right_form">	
+	<div class="right_form">
+		<div class="form_element">
+        	<div class="label">Project Code </div>
+        	<div class="field">
+        		<input type="text" name="project_code" id="project_code" class="textbox" value="">
+        	</div>
+        	<div class="clear"></div>
+    	</div>
+    		
 		<div class="form_element">
         	<div class="label">Planned Date Range <span class="mandatory">*</span> </div>
         	<div class="field">
-        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="project_plannedStartDate" id="project_plannedStartDate" value="" />
+        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="project_plannedStartDate_from" id="project_plannedStartDate_from" value="" style="width:90px;" />
+        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="project_plannedStartDate_to" id="project_plannedStartDate_to" value="" style="width:90px;" />
         		<span class="input-group-addon">
             		<i class="icon-calendar"></i>
         		</span>
@@ -144,7 +147,8 @@
       	<div class="form_element">
         	<div class="label">Planned Budget Range </div>
         	<div class="field">
-       	 		<input type="text" name="project_plannedBudget" id="project_plannedBudget" value="<?php if($project_detail) echo $project_detail->planned_budget;?>" class="textbox">
+       	 		<input type="text" name="project_plannedBudget_from" id="project_plannedBudget_from" value="<?php if($program_detail) echo $program_detail->planned_budget;?>" class="textbox" style="width:90px;" />
+       	 		<input type="text" name="project_plannedBudget_to" id="project_plannedBudget_to" value="<?php if($program_detail) echo $program_detail->planned_budget;?>" class="textbox" style="width:90px;" />
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -152,7 +156,8 @@
     	<div class="form_element">
         	<div class="label">Initiation Date Range <span class="mandatory">*</span></div>
         	<div class="field">
-        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="project_plannedEndDate" id="project_plannedEndDate" value="" />
+        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="project_plannedEndDate_from" id="project_plannedEndDate_from" value=""  style="width: 90px;" />
+        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="project_plannedEndDate_to" id="project_plannedEndDate_to" value="" style="width: 90px;" />
         		<span class="input-group-addon">
             		<i class="icon-calendar"></i>
         		</span>
@@ -163,7 +168,7 @@
     	<div class="form_element">
         	<div class="label">Approved Budget Range </div>
         	<div class="field">
-        		<input type="text" name="project_approvedBudget" id="project_approvedBudget" value="<?php if($project_detail) echo $project_detail->approved_budget;?>" class="textbox">
+        		<input type="text" name="project_approvedBudget" id="project_approvedBudget" value="<?php if($program_detail) echo $program_detail->approved_budget;?>" class="textbox">
         	</div>
         	<div class="clear"></div>
     	</div> 
@@ -172,15 +177,15 @@
     	
     	<div class="form_element">
         	<?php
-        		$project_commodities = array(); 
-        		if(isset($project_detail))
-				$project_commodities = explode(",", $project_detail->project_commodities);
+        		$program_commodities = array(); 
+        		if(isset($program_detail))
+				$program_commodities = explode(",", $program_detail->program_commodities);
 			?>
         	<div class="label">Commodity </div>
         	<div class="field">
         		<select name="project_commodities[]" id="project_commodities" class="selectionbox" multiple="multiple">
             		<?php foreach($comodities['data'] as $key=>$comodity) { ?>
-            			<option value="<?php echo $comodity['value']; ?>" <?php if(in_array($comodity['value'],$project_commodities)) { ?> selected="selected" <?php } ?>><?php echo $comodity['name']; ?></option>
+            			<option value="<?php echo $comodity['value']; ?>" <?php if(in_array($comodity['value'],$program_commodities)) { ?> selected="selected" <?php } ?>><?php echo $comodity['name']; ?></option>
             		<?php } ?>
             	</select>
         	</div>
@@ -190,22 +195,22 @@
    		<div class="form_element">
         	<div class="label">Principal Investigator<br />(Or Pm/Coordintor) <span class="mandatory">*</span></div>
         	<div class="field">
-        		<input type="text" name="project_coordinator" id="project_coordinator" value="<?php if($project_detail) echo $project_detail->project_manager;?>" class="textbox">
+        		<input type="text" name="project_coordinator" id="project_coordinator" value="<?php if($program_detail) echo $program_detail->program_manager;?>" class="textbox">
         	</div>
         	<div class="clear"></div>
     	</div>
     	
     	<div class="form_element" id="institute_name_div">
         	<?php
-        		$project_instituteNames = array(); 
-        		if(isset($project_detail))
-				$project_instituteNames = explode(",", $project_detail->project_institute_names);
+        		$program_instituteNames = array(); 
+        		if(isset($program_detail))
+				$program_instituteNames = explode(",", $program_detail->program_institute_names);
 			?>
         	<div class="label">Institute Name </div>
         	<div class="field">
         		<select name="project_institute_names[]" id="project_institute_names" class="selectionbox" multiple="multiple">
             		<?php foreach($institues['data'] as $key=>$institue) { ?>
-            			<option value="<?php echo $institue['id']; ?>" <?php if(in_array($institue['id'],$project_instituteNames)) { ?> selected="selected" <?php } ?>><?php echo $institue['short_name']; ?></option>
+            			<option value="<?php echo $institue['id']; ?>" <?php if(in_array($institue['id'],$program_instituteNames)) { ?> selected="selected" <?php } ?>><?php echo $institue['short_name']; ?></option>
             		<?php } ?>
             	</select>
         	</div>
@@ -217,13 +222,13 @@
     <div class="left_form">
     	<div class="form_element">
 	    	<div class="label width_170px">Title of Research Program</div>
-	       	<div class="textarea_field"><textarea name="research_project_title" id="research_project_title" class="textarea_small width-92"><?php if($project_detail) echo $project_detail->title_of_research_program;?></textarea></div>
+	       	<div class="textarea_field"><textarea name="research_project_title" readonly="readonly" id="research_project_title" class=" disabled textarea_small width-92"><?php if($program_detail) echo $program_detail->title_of_research_program;?></textarea></div>
 	        <div class="clear"></div>
 	  	</div>
 	  	
 	  	<div class="form_element">
 	    	<div class="label width_170px">Research Program Team Info</div>
-	       	<div class="textarea_field"><textarea name="project_research_team_info" id="project_research_team_info" class="textarea_small width-92"><?php if($project_detail) echo $project_detail->title_of_research_program;?></textarea></div>
+	       	<div class="textarea_field"><textarea name="project_research_team_info" readonly="readonly" id="project_research_team_info" class=" disabled  width-92"><?php if($program_detail) echo $program_detail->title_of_research_program;?></textarea></div>
 	        <div class="clear"></div>
 	  	</div>
    	</div>
@@ -231,7 +236,7 @@
    	<div class="left_form">
     	<div class="form_element">
 	    	<div class="label width_170px">Executive Summary</div>
-	       	<div class="textarea_field"><textarea name="project_executive_summary" id="project_executive_summary" class="textarea width-92"><?php if($project_detail) echo $project_detail->title_of_research_program;?></textarea></div>
+	       	<div class="textarea_field"><textarea name="project_executive_summary" readonly="readonly" id="project_executive_summary" class="disabled width-92" style="height:130px;"><?php if($program_detail) echo $program_detail->title_of_research_program;?></textarea></div>
 	        <div class="clear"></div>
 	  	</div>
    	</div>
@@ -239,8 +244,8 @@
     
     <div class="form_element">
         <div class="button_panel" style="margin-right: 27px;">
-            	<input type="button" name="reset_project_information" id="reset_project_information" onclick="window.location='/Rmis/program/informations';" value="Add New Prog" class="k-button button">
-                <input type="submit" name="save_project_information" id="save_project_information" value="Search" class="k-button button">               
+            	<input type="button" name="reset_program_information" id="reset_project_information" onclick="window.location='/Rmis/project/informations';" value="Add New Proj." class="k-button button">
+                <input type="submit" name="search_project_information" id="search_project_information" value="Search" class="k-button button">               
         </div>
         <div class="clear"></div>
     </div>
@@ -248,11 +253,10 @@
 </div>
 </form>
 <script language="javascript">
-	$('#project_plannedStartDate').datepicker('setStartDate');
-	$('#project_plannedEndDate').datepicker('setEndDate');
-	
-	$('#project_initiationDate').datepicker('setStartDate');
-	$('#project_completionDate').datepicker('setEndDate');
+	$('#program_plannedStartDate_from').datepicker('setStartDate');
+	$('#program_plannedStartDate_to').datepicker('setStartDate');
+	$('#program_plannedEndDate_from').datepicker('setEndDate');
+	$('#program_plannedEndDate_to').datepicker('setEndDate');
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -261,3 +265,68 @@ $(document).ready(function() {
 	});
 });
 </script> 
+
+			<script>
+                $(document).ready(function() {
+                    $("#result").kendoGrid({
+                        dataSource: {
+                            data: <?php echo json_encode($result['data'], JSON_NUMERIC_CHECK); ; ?>,
+                            schema: {
+                                model: {
+                                    fields: {
+                                        project_id: { type: "number", editable:false, nullable:true },
+                                        program_id: { type: "number", editable:false, nullable:true },
+                                        project_type: { type: "string", editable:false},
+                                        project_title: { type: "string", editable:false},
+                                        project_goal:{ type: "string", editable:false},
+                                        project_objective:{ type: "string", editable:false},
+                                        project_division: { type: "string" },
+                                        project_research_type: { type: "string" },
+                                        project_research_priority: { type: "string" },
+                                        project_research_status: { type: "string" },
+                                        project_planned_budget: { type: "string" },
+                                        project_approved_budget: { type: "string" },
+                                        principal_investigator: { type: "string" }
+                                    }
+                                }
+                            },
+                            pageSize: 20
+                        },
+                        change: onChange,
+                        selectable: "multiple",
+                        height: 430,
+                        scrollable: true,
+                        sortable: false,
+                        filterable: false,
+                        pageable: {
+                            input: true,
+                            numeric: false
+                        },
+                        columns: [
+                            {field:"project_id", title:"S\/O", width: "40px"},
+                            {field:"project_type", title:"Proj. Type"},
+							{field:"project_division", title:"Division"},
+							{field:"project_research_type", title:"Research Type"},
+							{field:"project_research_priority", title:"Priority"},
+							{field:"project_research_status", title:"Status"},
+							{field:"project_planned_budget", title:"Planned Budget"},
+							{field:"project_approved_budget", title:"Actual Budget"},
+							{field:"principal_investigator", title:"PI"},
+							{ command: { text: "Edit", click: ClickEdit }, title: " ", width: "80px" }
+                        ]
+                    });
+                });
+                
+                function onChange(arg) {
+                	var grid = this;
+    				var model = grid.dataItem(this.select());
+    				$('#research_project_title').val(model.project_title); 
+    				$('#project_executive_summary').val('Project Goal:\n' + model.project_goal + '\n\n\Purpose/Objective:\n' + model.project_objective);
+                }
+                function ClickEdit(e) {
+			        e.preventDefault();
+			        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+			        var edit_url = "/Rmis/project/informations/"+dataItem.program_id+'/'+dataItem.project_id;
+			        window.location = edit_url;
+			    }
+            </script>

@@ -217,30 +217,7 @@
     </div>
     <div class="clear"></div>
     
-    <div class="left_form">
-    	<div class="form_element">
-	    	<div class="label width_170px">Title of Research Program</div>
-	       	<div class="textarea_field"><textarea name="research_program_title" readonly="readonly" id="research_program_title" class=" disabled textarea_small width-92"><?php if($program_detail) echo $program_detail->title_of_research_program;?></textarea></div>
-	        <div class="clear"></div>
-	  	</div>
-	  	
-	  	<div class="form_element">
-	    	<div class="label width_170px">Research Program Team Info</div>
-	       	<div class="textarea_field"><textarea name="program_research_team_info" readonly="readonly" id="program_research_team_info" class=" disabled  width-92"><?php if($program_detail) echo $program_detail->title_of_research_program;?></textarea></div>
-	        <div class="clear"></div>
-	  	</div>
-   	</div>
-   	
-   	<div class="left_form">
-    	<div class="form_element">
-	    	<div class="label width_170px">Executive Summary</div>
-	       	<div class="textarea_field"><textarea name="program_executive_summary" readonly="readonly" id="program_executive_summary" class="disabled width-92" style="height:130px;"><?php if($program_detail) echo $program_detail->title_of_research_program;?></textarea></div>
-	        <div class="clear"></div>
-	  	</div>
-   	</div>
-    
-    
-    <div class="form_element">
+   	<div class="form_element">
         <div class="button_panel" style="margin-right: 27px;">
             	<input type="button" name="reset_program_information" id="reset_program_information" onclick="window.location='/Rmis/program/informations';" value="Add New Prog" class="k-button button">
                 <input type="submit" name="search_program_information" id="search_program_information" value="Search" class="k-button button">               
@@ -300,7 +277,7 @@ $(document).ready(function() {
                             numeric: false
                         },
                         columns: [
-                            {field:"program_id", title:"S\/O", width: "40px"},
+                            {field:"program_id", title:"S\/O"},
 							{field:"program_area", title:"Program Area"},
 							{field:"program_division", title:"Division"},
 							{field:"program_research_type", title:"Research Type"},
@@ -308,8 +285,7 @@ $(document).ready(function() {
 							{field:"program_research_status", title:"Status"},
 							{field:"program_planned_budget", title:"Planned Budget"},
 							{field:"program_approved_budget", title:"Actual Budget"},
-							{field:"principal_investigator", title:"PI"},
-							{ command: { text: "Edit", click: ClickEdit }, title: " ", width: "80px" }
+							{field:"principal_investigator", title:"PI"}
                         ]
                     });
                 });
@@ -317,13 +293,12 @@ $(document).ready(function() {
                 function onChange(arg) {
                 	var grid = this;
     				var model = grid.dataItem(this.select());
-    				$('#research_program_title').val(model.program_title); 
-    				$('#program_executive_summary').val('Program Goal:\n' + model.program_goal + '\n\n\Purpose/Objective:\n' + model.program_objective);
+    				var program_id = model.program_id;
+    				var post_url = $('#project_info', opener.document).attr('action').split('/');
+    				post_url[post_url.length-2] = program_id;
+    				post_url = post_url.join('/');
+    				$('#project_info', opener.document).attr('action', post_url);
+    				$('#project_info', opener.document).submit();
+    				window.close();
                 }
-                function ClickEdit(e) {
-			        e.preventDefault();
-			        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-			        var edit_url = "/Rmis/program/informations/"+dataItem.program_id;
-			        window.location = edit_url;
-			    }
             </script>

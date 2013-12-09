@@ -1,10 +1,3 @@
-<div class="content-header">
-  <h2>
-  	<i <?php echo $content_header_icon; ?>></i> 
-  	<?php echo $content_header_title; ?>
-  </h2>
-</div>
-
 <!-- content-breadcrumb -->
 <div class="content-breadcrumb"> 
   <?php echo $breadcrumb; ?>
@@ -17,7 +10,8 @@
         <?php echo $template['partials']['divInfoForm']; ?>
         <div style="margin:15px;">
         	<div class="row-fluid">
-           		<?php echo $grid_data; ?>
+           		<?php //echo $grid_data; ?>
+           		<div id="result"></div>
         	</div>
        	</div>
     </div> 
