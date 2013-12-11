@@ -1,17 +1,16 @@
 <?php
-class Search extends MX_Controller{
+class SearchProject extends MX_Controller{
     private $_data;
     public function __construct(){
         parent::__construct();
         $this->load->model('Kendodatasource_model', 'grid');
-        $this->load->model('Experiment_model', 'experiment');
+        $this->load->model('Project_model', 'project');
 
-        $this->template->set_partial('header', 'layouts/header')
-						->set_layout('extensive/main_layout');
+        $this->template->set_layout('extensive/main_layout');
     }
     
     public function index($division_id=NULL){
-        $this->template->title('Research Management(RM)', ' Experiment', ' Search');
+        $this->template->title('Research Management(RM)', ' Program', ' Search');
         
 		
 		$_data['dashboard_menu_active'] = '';
@@ -25,17 +24,17 @@ class Search extends MX_Controller{
         $this->template->append_metadata('<script src="/assets/kendoui/js/kendo.all.min.js"></script>');
         $this->template->append_metadata('<script src="/assets/js/custom/rmis.js"></script>');
                 
-		if($this->input->post('search_experiment_information')){
+		if($this->input->post('search_project_information')){
 			$data = $this->input->post();
-			$result = $this->experiment->search_experiment_data($data);       
+			$result = $this->project->search_project_data($data);       
 			$this->template->set('result', serialize($result));	
 		}else{
-			$result = $this->experiment->read_experiment_data();       
+			$result = $this->project->read_project_data();       
 			$this->template->set('result', serialize($result));	
 		}
 		
         $this->template->set('content_header_icon', 'class="icofont-file"');
-        $this->template->set('content_header_title', 'Experiment Search');
+        $this->template->set('content_header_title', 'Project Search');
 		
 		//$program_areas = $this->grid->read('rmis_program_areas', array('id','program_area_id', 'program_area_name'), $request); 
 		//$this->template->set('program_areas',$program_areas); //$this->program->get_program_area()
@@ -67,17 +66,11 @@ class Search extends MX_Controller{
 		$institues = $this->grid->read('hrm_organizations', array('id', 'short_name', 'organization_name'), $request);
 		$this->template->set('institues',$institues);
 		
-		$departments = $this->experiment->get_department();
+		$departments = $this->project->get_department();
 		$this->template->set('departments',$departments);
-		
-        $breadcrumb = '<ul class="breadcrumb">
-						<li><a href="#"><i class="icofont-home"></i> RMIS</a> <span class="divider">&raquo;</span></li>
-						<li><a href="#">Experiment</a><span class="divider">&raquo;</span></li><li class="active">Search</li>
-					  </ul>';
-        $this->template->set('breadcrumb', $breadcrumb);		
-        $this->template->set_partial('divInfoForm','experiment/search/form');
-        $this->template->set_partial('sidebar', 'layouts/sidebar',$_data)
-               ->build('experiment/search/index');
+				
+        $this->template->set_partial('divInfoForm','experiment/project_search/form')
+               ->build('experiment/project_search/index');
     }           
 } 
 ?>

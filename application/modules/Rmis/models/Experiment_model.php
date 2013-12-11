@@ -506,6 +506,109 @@ class Experiment_model extends MY_Model {
 		}
 	}
 
+	public function read_experiment_data()
+    {
+    	$result = array();
+		$this->db->select('	rmis_experiment_informations.experiment_id as experiment_id,
+		 					rmis_experiment_informations.experiment_type as experiment_type,
+							rmis_experiment_informations.program_id as program_id, 
+							rmis_experiment_informations.project_id as project_id,  
+							rmis_experiment_informations.research_experiment_title as experiment_title, 
+							rmis_experiment_informations.experiment_goal as experiment_goal, 
+							rmis_experiment_informations.experiment_objective as experiment_objective, 
+							rmis_divisions.division_name as experiment_division, 
+							rmis_research_types.name as experiment_research_type, 
+							rmis_research_priorities.name as experiment_research_priority, 
+							rmis_research_statuses.name as experiment_research_status, 
+							rmis_experiment_informations.experiment_planned_budget, 
+							rmis_experiment_informations.experiment_approved_budget, 
+							hrm_employees.employee_name as principal_investigator');
+		$this->db->from('rmis_experiment_informations');
+		$this->db->join('rmis_divisions','rmis_experiment_informations.experiment_division = rmis_divisions.division_id', 'left');
+		$this->db->join('rmis_research_types','rmis_experiment_informations.experiment_research_type = rmis_research_types.id', 'left');
+		$this->db->join('rmis_research_priorities','rmis_experiment_informations.experiment_research_priority = rmis_research_priorities.id', 'left');
+		$this->db->join('rmis_research_statuses','rmis_experiment_informations.experiment_research_status = rmis_research_statuses.id', 'left');
+		$this->db->join('hrm_employees','rmis_experiment_informations.experiment_coordinator = hrm_employees.employee_id', 'left');
+		
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			$result['total'] = $query->num_rows();
+			$result_rs = $query->result();
+			$result['data'] = $result_rs;
+		}else{
+			$result['total'] = 0;
+			$result['data'] = "[]";
+		}
+        
+        return $result;
+    }
+
+	function search_experiment_data($data=array()){
+		//print_r($data);
+		if(!empty($data)){
+			$result = array();
+			$this->db->select('	rmis_experiment_informations.experiment_id as experiment_id,
+		 					rmis_experiment_informations.experiment_type as experiment_type,
+							rmis_experiment_informations.program_id as program_id, 
+							rmis_experiment_informations.project_id as project_id,  
+							rmis_experiment_informations.research_experiment_title as experiment_title, 
+							rmis_experiment_informations.experiment_goal as experiment_goal, 
+							rmis_experiment_informations.experiment_objective as experiment_objective, 
+							rmis_divisions.division_name as experiment_division, 
+							rmis_research_types.name as experiment_research_type, 
+							rmis_research_priorities.name as experiment_research_priority, 
+							rmis_research_statuses.name as experiment_research_status, 
+							rmis_experiment_informations.experiment_planned_budget, 
+							rmis_experiment_informations.experiment_approved_budget, 
+							hrm_employees.employee_name as principal_investigator');
+			$this->db->from('rmis_experiment_informations');
+			$this->db->join('rmis_divisions','rmis_experiment_informations.experiment_division = rmis_divisions.division_id', 'left');
+			$this->db->join('rmis_research_types','rmis_experiment_informations.experiment_research_type = rmis_research_types.id', 'left');
+			$this->db->join('rmis_research_priorities','rmis_experiment_informations.experiment_research_priority = rmis_research_priorities.id', 'left');
+			$this->db->join('rmis_research_statuses','rmis_experiment_informations.experiment_research_status = rmis_research_statuses.id', 'left');
+			$this->db->join('hrm_employees','rmis_experiment_informations.experiment_coordinator = hrm_employees.employee_id', 'left');
+			
+			if(array_key_exists('experiment_type', $data) && $data['experiment_type'] != NULL)
+				$this->db->where('rmis_experiment_informations.experiment_type', $data['experiment_type']);
+			
+			if(array_key_exists('experiment_division', $data) && $data['experiment_division'] != NULL)
+				$this->db->where('rmis_experiment_informations.experiment_division', $data['experiment_division']);
+			
+			if(array_key_exists('experiment_research_type', $data) && $data['experiment_research_type'] != NULL)
+				$this->db->where('rmis_experiment_informations.experiment_research_type', $data['experiment_research_type']);
+			
+			if(array_key_exists('experiment_research_priority', $data) && $data['experiment_research_priority'] != NULL)
+				$this->db->where('rmis_experiment_informations.experiment_research_priority', $data['experiment_research_priority']);
+			
+			if(array_key_exists('experiment_research_status', $data) && $data['experiment_research_status'] != NULL)
+				$this->db->where('rmis_experiment_informations.experiment_research_status', $data['experiment_research_status']);
+			
+			if(array_key_exists('experiment_regionalStationName', $data) && $data['experiment_regionalStationName'] != NULL)
+				$this->db->where('rmis_experiment_informations.experiment_regional_station_name', $data['experiment_regionalStationName']);
+			
+			if(array_key_exists('experiment_implementationLocation', $data) && $data['experiment_implementationLocation'] != NULL)
+				$this->db->where('rmis_experiment_informations.experiment_implementation_location', $data['experiment_implementationLocation']);
+		
+			if(array_key_exists('experiment_keywords', $data) && $data['experiment_keywords'] != NULL)
+				$this->db->or_like('rmis_experiment_informations.experiment_keywords', $data['experiment_keywords']);
+			
+			$query = $this->db->get();
+			if($query->num_rows() > 0){
+				$result['total'] = $query->num_rows();
+				$result_rs = $query->result();
+				$result['data'] = $result_rs;
+			}else{
+				$result['total'] = 0;
+				$result['data'] = "";
+			}
+	        
+	        return $result;
+		}else{
+			$result = $this->read_program_data();
+			return $result;
+		}
+	}
+
 	function delete($id=NULL){
 		//truncate rmis_experiment_activities;# MySQL returned an empty result set (i.e. zero rows).
 		//truncate rmis_experiment_areas;# MySQL returned an empty result set (i.e. zero rows).

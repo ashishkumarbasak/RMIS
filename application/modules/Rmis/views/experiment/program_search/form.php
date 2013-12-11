@@ -11,11 +11,16 @@
 <div class="main_form">
 	<div class="left_form">
     	<div class="form_element">
-        	<div class="label width_170px">&nbsp;</div>
+        	<div class="label width_170px">Program Area <span class="mandatory">*</span></div>
         	<div class="field">
-        		<input type="radio" name="experiment_type" id="experiment_type" value="Independent"  checked="checked" /> Independent 
-   				<input type="radio" name="experiment_type" id="experiment_type" value="Program" /> Program &nbsp; 
-   				<input type="radio" name="experiment_type" id="experiment_type" value="Project" /> Project &nbsp; 
+        		<select name="program_area" id="program_area" class="selectionbox">
+            		<option value="">Select Program Area</option>
+					<?php 
+					
+					foreach($program_areas['data'] as $key=>$program_area) { ?>
+            			<option value="<?php echo $program_area['program_area_id']; ?>" <?php if(isset($program_detail) && $program_detail->program_area==$program_area['program_area_id']) { ?> selected="selected" <?php } ?> ><?php echo $program_area['program_area_name']; ?></option>
+            		<?php } ?>
+        		</select>
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -23,7 +28,7 @@
     	<div class="form_element">
         	<div class="label width_170px">Division/Unit Name <span class="mandatory">*</span></div>
         	<div class="field">
-        		<select name="experiment_division" id="experiment_division" class="selectionbox">
+        		<select name="program_division" id="program_division" class="selectionbox">
             		<option value="">Select Division/Unit Name</option>
 					<?php foreach($divisions['data'] as $key=>$division) { ?>
             			<option value="<?php echo $division['division_id']; ?>" <?php if(isset($program_detail) && $program_detail->division_or_unit_name==$division['division_id']) { ?> selected="selected" <?php } ?>><?php echo $division['division_name']; ?></option>
@@ -36,7 +41,7 @@
     	<div class="form_element">
         	<div class="label width_170px">Research Type <span class="mandatory">*</span> </div>
         	<div class="field">
-        		<select name="experiment_research_type" id="experiment_research_type" class="selectionbox">
+        		<select name="program_research_type" id="program_research_type" class="selectionbox">
             		<option value="">Select Research Type</option>
  					<?php foreach($research_types['data'] as $key=>$researchType) { ?>
             			<option value="<?php echo $researchType['value']; ?>" <?php if(isset($program_detail) && $program_detail->program_research_type==$researchType['value']) { ?> selected="selected" <?php } ?>><?php echo $researchType['name']; ?></option>
@@ -49,7 +54,7 @@
     	<div class="form_element">
         	<div class="label width_170px">Research Priority <span class="mandatory">*</span></div>
         	<div class="field">
-        		<select name="experiment_research_priority" id="experiment_research_priority" class="selectionbox">
+        		<select name="program_research_priority" id="program_research_priority" class="selectionbox">
             		<option value="">Select Research Priority</option>
 					<?php foreach($research_priorities['data'] as $key=>$research_priority) { ?>
             			<option value="<?php echo $research_priority['value']; ?>" <?php if(isset($program_detail) && $program_detail->program_research_priority==$research_priority['value']) { ?> selected="selected" <?php } ?>><?php echo $research_priority['name']; ?></option>
@@ -62,7 +67,7 @@
      	<div class="form_element">
         	<div class="label width_170px">Research Status <span class="mandatory">*</span></div>
         	<div class="field">
-        		<select name="experiment_research_status" id="experiment_research_status" class="selectionbox">
+        		<select name="program_research_status" id="program_research_status" class="selectionbox">
             		<option value="">Select Research Status</option>
 					<?php foreach($research_statuses['data'] as $key=>$research_status) { ?>
            	 			<option value="<?php echo $research_status['value']; ?>" <?php if(isset($program_detail) && $program_detail->program_research_status==$research_status['value']) { ?> selected="selected" <?php } ?>><?php echo $research_status['name']; ?></option>
@@ -75,7 +80,7 @@
     	<div class="form_element">
         	<div class="label width_170px">Key Words </div>
         	<div class="field">
-        		<input type="text" name="experiment_keywords" id="experiment_keywords" class="textbox" value="">
+        		<input type="text" name="program_keywords" id="program_keywords" class="textbox" value="<?php if($program_detail) echo $program_detail->keyword;?>">
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -88,7 +93,7 @@
 			?>
         	<div class="label width_170px">AEZs </div>
         	<div class="field">
-        		<select name="experiment_aezs[]" id="experiment_aezs" class="selectionbox" multiple="multiple">
+        		<select name="program_aezs[]" id="program_aezs" class="selectionbox" multiple="multiple">
             		<?php foreach($aezs['data'] as $key=>$aez) { ?>
             			<option value="<?php echo $aez['value']; ?>" <?php if(in_array($aez['value'], $program_aezs)) { ?> selected="selected" <?php } ?>><?php echo $aez['name']; ?></option>
             		<?php } ?>
@@ -100,7 +105,7 @@
     	<div class="form_element">
         	<div class="label width_170px">Regional Station Name </div>
         	<div class="field">
-        		<select name="experiment_regionalStationName" id="experiment_regionalStationName" class="selectionbox">
+        		<select name="program_regionalStationName" id="program_regionalStationName" class="selectionbox">
             		<option value="">Select Regional Station</option>
 					<?php foreach($regional_stations['data'] as $key=>$regional_station) { ?>
             			<option value="<?php echo $regional_station['station_id']; ?>"<?php if(isset($program_detail) && $program_detail->regional_station_name==$regional_station['station_id']) { ?> selected="selected" <?php } ?>><?php echo $regional_station['station_name']; ?></option>
@@ -113,7 +118,7 @@
     	<div class="form_element">
         	<div class="label width_170px">Implementation Location/<br>Site/Area </div>
         	<div class="field">
-        		<select name="experiment_implementationLocation" id="experiment_implementationLocation" class="selectionbox">
+        		<select name="program_implementationLocation" id="program_implementationLocation" class="selectionbox">
             		<option value="">Select Implementation Site</option>
 					<?php foreach($implementation_locations['data'] as $key=>$implementation_location) { ?>
             			<option value="<?php echo $implementation_location['implementation_site_id']; ?>" <?php if(isset($program_detail) && $program_detail->implementation_location==$implementation_location['implementation_site_id']) { ?> selected="selected" <?php } ?>><?php echo $implementation_location['implementation_site_name']; ?></option>
@@ -124,12 +129,12 @@
     	</div>       
 	</div>
 
-	<div class="right_form">
+	<div class="right_form">	
 		<div class="form_element">
         	<div class="label">Planned Date Range <span class="mandatory">*</span> </div>
         	<div class="field">
-        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="experiment_plannedStartDate_from" id="experiment_plannedStartDate_from" value="" style="width:90px;" />
-        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="experiment_plannedStartDate_to" id="experiment_plannedStartDate_to" value="" style="width:90px;" />
+        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="program_plannedStartDate_from" id="program_plannedStartDate_from" value="" style="width:90px;" />
+        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="program_plannedStartDate_to" id="program_plannedStartDate_to" value="" style="width:90px;" />
         		<span class="input-group-addon">
             		<i class="icon-calendar"></i>
         		</span>
@@ -140,8 +145,8 @@
       	<div class="form_element">
         	<div class="label">Planned Budget Range </div>
         	<div class="field">
-       	 		<input type="text" name="experiment_plannedBudget_from" id="experiment_plannedBudget_from" value="<?php if($program_detail) echo $program_detail->planned_budget;?>" class="textbox" style="width:90px;" />
-       	 		<input type="text" name="experiment_plannedBudget_to" id="experiment_plannedBudget_to" value="<?php if($program_detail) echo $program_detail->planned_budget;?>" class="textbox" style="width:90px;" />
+       	 		<input type="text" name="program_plannedBudget_from" id="program_plannedBudget_from" value="<?php if($program_detail) echo $program_detail->planned_budget;?>" class="textbox" style="width:90px;" />
+       	 		<input type="text" name="program_plannedBudget_to" id="program_plannedBudget_to" value="<?php if($program_detail) echo $program_detail->planned_budget;?>" class="textbox" style="width:90px;" />
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -149,8 +154,8 @@
     	<div class="form_element">
         	<div class="label">Initiation Date Range <span class="mandatory">*</span></div>
         	<div class="field">
-        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="experiment_plannedEndDate_from" id="experiment_plannedEndDate_from" value=""  style="width: 90px;" />
-        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="experiment_plannedEndDate_to" id="experiment_plannedEndDate_to" value="" style="width: 90px;" />
+        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="program_plannedEndDate_from" id="program_plannedEndDate_from" value=""  style="width: 90px;" />
+        		<input type="text" class="textbox disabled" readonly="readonly" data-date-format="yyyy-mm-dd" name="program_plannedEndDate_to" id="program_plannedEndDate_to" value="" style="width: 90px;" />
         		<span class="input-group-addon">
             		<i class="icon-calendar"></i>
         		</span>
@@ -161,16 +166,34 @@
     	<div class="form_element">
         	<div class="label">Approved Budget Range </div>
         	<div class="field">
-        		<input type="text" name="experiment_approvedBudget" id="experiment_approvedBudget" value="<?php if($program_detail) echo $program_detail->approved_budget;?>" class="textbox">
+        		<input type="text" name="program_approvedBudget" id="program_approvedBudget" value="<?php if($program_detail) echo $program_detail->approved_budget;?>" class="textbox">
         	</div>
         	<div class="clear"></div>
     	</div> 
      
      	
+    	
     	<div class="form_element">
+        	<?php
+        		$program_commodities = array(); 
+        		if(isset($program_detail))
+				$program_commodities = explode(",", $program_detail->program_commodities);
+			?>
+        	<div class="label">Commodity </div>
+        	<div class="field">
+        		<select name="program_commodities[]" id="program_commodities" class="selectionbox" multiple="multiple">
+            		<?php foreach($comodities['data'] as $key=>$comodity) { ?>
+            			<option value="<?php echo $comodity['value']; ?>" <?php if(in_array($comodity['value'],$program_commodities)) { ?> selected="selected" <?php } ?>><?php echo $comodity['name']; ?></option>
+            		<?php } ?>
+            	</select>
+        	</div>
+        	<div class="clear"></div>
+    	</div>
+    
+   		<div class="form_element">
         	<div class="label">Principal Investigator<br />(Or Pm/Coordintor) <span class="mandatory">*</span></div>
         	<div class="field">
-        		<input type="text" name="experiment_coordinator" id="experiment_coordinator" value="<?php if($program_detail) echo $program_detail->program_manager;?>" class="textbox">
+        		<input type="text" name="program_coordinator" id="program_coordinator" value="<?php if($program_detail) echo $program_detail->program_manager;?>" class="textbox">
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -183,7 +206,7 @@
 			?>
         	<div class="label">Institute Name </div>
         	<div class="field">
-        		<select name="experiment_institute_names[]" id="experiment_institute_names" class="selectionbox" multiple="multiple">
+        		<select name="program_institute_names[]" id="program_institute_names" class="selectionbox" multiple="multiple">
             		<?php foreach($institues['data'] as $key=>$institue) { ?>
             			<option value="<?php echo $institue['id']; ?>" <?php if(in_array($institue['id'],$program_instituteNames)) { ?> selected="selected" <?php } ?>><?php echo $institue['short_name']; ?></option>
             		<?php } ?>
@@ -194,22 +217,10 @@
     </div>
     <div class="clear"></div>
     
-    <div class="left_form">
-    	<div class="form_element">
-	    	<div class="label width_170px">Title of Experiment</div>
-	       	<div class="textarea_field"><textarea name="research_experiment_title" readonly="readonly" id="research_experiment_title" class=" disabled textarea_small width-92"><?php if($program_detail) echo $program_detail->title_of_research_program;?></textarea></div>
-	        <div class="clear"></div>
-	  	</div>
-	  	
-   	</div>
-   	
-   	<div class="clear"></div>
-    
-    
-    <div class="form_element">
+   	<div class="form_element">
         <div class="button_panel" style="margin-right: 27px;">
-            	<input type="button" name="reset_experiment_information" id="reset_experiment_information" onclick="window.location='/Rmis/experiment/informations';" value="Add New Proj." class="k-button button">
-                <input type="submit" name="search_experiment_information" id="search_experiment_information" value="Search" class="k-button button">               
+            	<input type="button" name="reset_program_information" id="reset_program_information" onclick="window.location='/Rmis/program/informations';" value="Add New Prog" class="k-button button">
+                <input type="submit" name="search_program_information" id="search_program_information" value="Search" class="k-button button">               
         </div>
         <div class="clear"></div>
     </div>
@@ -217,11 +228,18 @@
 </div>
 </form>
 <script language="javascript">
-	$('#experiment_plannedStartDate_from').datepicker('setStartDate');
-	$('#experiment_plannedStartDate_to').datepicker('setStartDate');
-	$('#experiment_plannedEndDate_from').datepicker('setEndDate');
-	$('#experiment_plannedEndDate_to').datepicker('setEndDate');
+	$('#program_plannedStartDate_from').datepicker('setStartDate');
+	$('#program_plannedStartDate_to').datepicker('setStartDate');
+	$('#program_plannedEndDate_from').datepicker('setEndDate');
+	$('#program_plannedEndDate_to').datepicker('setEndDate');
 </script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#showInstituteName').change(function() {
+    	$('#collaborate_institute_name').toggle();
+	});
+});
+</script> 
 
 			<script>
                 $(document).ready(function() {
@@ -231,19 +249,17 @@
                             schema: {
                                 model: {
                                     fields: {
-                                        experiment_id: { type: "number", editable:false, nullable:true },
                                         program_id: { type: "number", editable:false, nullable:true },
-                                        project_id: { type: "number", editable:false, nullable:true },
-                                        experiment_type: { type: "string", editable:false},
-                                        experiment_title: { type: "string", editable:false},
-                                        experiment_goal:{ type: "string", editable:false},
-                                        experiment_objective:{ type: "string", editable:false},
-                                        experiment_division: { type: "string" },
-                                        experiment_research_type: { type: "string" },
-                                        experiment_research_priority: { type: "string" },
-                                        experiment_research_status: { type: "string" },
-                                        experiment_planned_budget: { type: "string" },
-                                        experiment_approved_budget: { type: "string" },
+                                        program_title: { type: "string", editable:false},
+                                        program_goal:{ type: "string", editable:false},
+                                        program_objective:{ type: "string", editable:false},
+                                        program_area: { type: "string" },
+                                        program_division: { type: "string" },
+                                        program_research_type: { type: "string" },
+                                        program_research_priority: { type: "string" },
+                                        program_research_status: { type: "string" },
+                                        program_planned_budget: { type: "string" },
+                                        program_approved_budget: { type: "string" },
                                         principal_investigator: { type: "string" }
                                     }
                                 }
@@ -261,16 +277,15 @@
                             numeric: false
                         },
                         columns: [
-                            {field:"experiment_id", title:"S\/O", width: "40px"},
-                            {field:"experiment_type", title:"Research Type"},
-							{field:"experiment_division", title:"Division"},
-							{field:"experiment_research_type", title:"Research Type"},
-							{field:"experiment_research_priority", title:"Priority"},
-							{field:"experiment_research_status", title:"Status"},
-							{field:"experiment_planned_budget", title:"Planned Budget"},
-							{field:"experiment_approved_budget", title:"Actual Budget"},
-							{field:"principal_investigator", title:"PI"},
-							{ command: { text: "Edit", click: ClickEdit }, title: " ", width: "80px" }
+                            {field:"program_id", title:"S\/O"},
+							{field:"program_area", title:"Program Area"},
+							{field:"program_division", title:"Division"},
+							{field:"program_research_type", title:"Research Type"},
+							{field:"program_research_priority", title:"Priority"},
+							{field:"program_research_status", title:"Status"},
+							{field:"program_planned_budget", title:"Planned Budget"},
+							{field:"program_approved_budget", title:"Actual Budget"},
+							{field:"principal_investigator", title:"PI"}
                         ]
                     });
                 });
@@ -278,20 +293,13 @@
                 function onChange(arg) {
                 	var grid = this;
     				var model = grid.dataItem(this.select());
-    				$('#research_project_title').val(model.project_title); 
-    				$('#project_executive_summary').val('Project Goal:\n' + model.project_goal + '\n\n\Purpose/Objective:\n' + model.project_objective);
+    				var program_id = model.program_id;
+    				var post_url = $('#experiment_info', opener.document).attr('action').split('/');
+    				post_url[post_url.length-3] = 'ProgID';
+    				post_url[post_url.length-2] = program_id;
+    				post_url = post_url.join('/');
+    				$('#experiment_info', opener.document).attr('action', post_url);
+    				$('#experiment_info', opener.document).submit();
+    				window.close();
                 }
-                function ClickEdit(e) {
-			        e.preventDefault();
-			        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-			        var edit_url = "/Rmis/experiment/informations/";
-			        if(dataItem.experiment_type=="Program")
-			        	edit_url = edit_url+"ProgID/"+dataItem.program_id+'/'+dataItem.experiment_id;
-			        else if(dataItem.experiment_type=="Project")
-			        	edit_url = edit_url+"ProjID/"+dataItem.project_id+'/'+dataItem.experiment_id;
-			        else
-			        	edit_url = edit_url+"Independent/0/"+dataItem.experiment_id;
-
-			        window.location = edit_url;
-			    }
             </script>

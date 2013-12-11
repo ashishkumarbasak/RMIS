@@ -1,16 +1,3 @@
-<div class="content-header">
-  <h2>
-  	<i <?php echo $content_header_icon; ?>></i> 
-  	<?php echo $content_header_title; ?>
-  </h2>
-</div>
-
-<!-- content-breadcrumb -->
-<div class="content-breadcrumb"> 
-  <?php echo $breadcrumb; ?>
-</div>
-<!-- /content-breadcrumb --> 
-
 <!-- content-body -->
 <div class="content-body">    
     <div class="row-fluid">

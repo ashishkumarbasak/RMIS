@@ -15,9 +15,17 @@ class Informations extends MX_Controller{
 						->set_layout('extensive/main_layout');
     }
     
-    public function index($experiment_id=NULL){
+    public function index($experiment_type=NULL, $experiment_ProjProg_id=NULL, $experiment_id=NULL){
         $this->template->title('Research Management(RM)', ' Programs', ' Information');
+		$this->template->set('experiment_type',$experiment_type);
+		$this->template->set('experiment_ProjProg_id',$experiment_ProjProg_id);
+		$this->template->set('experiment_id',$experiment_id);
+		$this->template->set('form_action_url', '/Rmis/experiment/informations/'.$experiment_type.'/'.$experiment_ProjProg_id.'/'.$experiment_id);
         
+		if($this->input->post()){
+			$this->template->set('tem_formData', serialize($this->input->post()));
+		}
+		
 		if($this->input->post('save_experiment_information')){
 			$request = json_encode($this->input->post());
 			$this->dataCreate($request);
@@ -41,11 +49,16 @@ class Informations extends MX_Controller{
 				
 			$experiment_detail = $this->experiment->get_details($experiment_id);
 			$this->template->set('experiment_detail', serialize($experiment_detail));
-			
-			$program_detail = $this->program->get_details($experiment_id);
+		}
+
+		if($experiment_type=="ProgID" && $experiment_ProjProg_id!=0){
+			$program_detail = $this->program->get_details($experiment_ProjProg_id);
 			$this->template->set('program_detail', serialize($program_detail));
-			
-			$this->template->set('experiment_id',$experiment_id);
+			$this->template->set('program_id',$experiment_ProjProg_id);
+		}else if($experiment_type=="ProjID" && $experiment_ProjProg_id!=0){
+			$project_detail = $this->project->get_details($experiment_ProjProg_id);
+			$this->template->set('project_detail', serialize($project_detail));
+			$this->template->set('project_id',$experiment_ProjProg_id);
 		}
 		
         $this->template->set('content_header_icon', 'class="icofont-file"');
@@ -116,15 +129,7 @@ class Informations extends MX_Controller{
 			$request->experiment_expected_outputs = "";
 		}
 		
-        $this->form_validation->set_rules($this->experiment->validation);
-        $this->experiment->isValidate((array) $request);
-        if ($this->form_validation->run() === false) {
-            header("HTTP/1.1 500 Internal Server Error");
-            echo "Wrong data ! try again" ;
-            //exit;
-        }
-       
-        $columns = array('research_experiment_title', 'experiment_type', 'experiment_division', 'experiment_research_type', 'experiment_research_priority', 'experiment_research_status', 
+       	$columns = array('research_experiment_title', 'experiment_type', 'program_id', 'project_id', 'experiment_division', 'experiment_research_type', 'experiment_research_priority', 'experiment_research_status', 
         					'experiment_coordinator', 'experiment_coordinator_designation', 'experiment_planned_start_date', 'experiment_planned_end_date', 'experiment_planned_budget',
 							'experiment_approved_budget', 'experiment_department_name', 'experiment_regional_station_name',
 							'experiment_implementation_location', 'experiment_keywords', 'experiment_commodities', 'experiment_aezs', 'experiment_initiation_date', 'experiment_completion_date',
@@ -138,7 +143,13 @@ class Informations extends MX_Controller{
         $request->created_by = $this->loginUser->id;
 
         $data = $this->grid->create('rmis_experiment_informations', $columns, $request, 'experiment_id');
-		redirect('Rmis/experiment/informations/'.$data['data'][0]->experiment_id, 'refresh'); 
+		if($request->experiment_type=="Program")
+			$redirect_url = '/Rmis/experiment/informations/ProgID/'.$request->program_id.'/'.$data['data'][0]->experiment_id;
+		else if($request->experiment_type=="Project")
+			$redirect_url = '/Rmis/experiment/informations/ProjID/'.$request->project_id.'/'.$data['data'][0]->experiment_id;
+		else
+			$redirect_url = '/Rmis/experiment/informations/Independent/0/'.$data['data'][0]->experiment_id;
+		redirect($redirect_url, 'refresh'); 
         $data['success'] ="Data created successfuly."; 
     }
 	 	
@@ -163,15 +174,7 @@ class Informations extends MX_Controller{
 			$request->experiment_expected_outputs = "";
 		}
 		
-        $this->form_validation->set_rules($this->experiment->validation);
-        $this->experiment->isValidate((array) $request);
-        if ($this->form_validation->run() === false) {
-            header("HTTP/1.1 500 Internal Server Error");
-            echo "Wrong data ! try again" ;
-            //exit;
-        }
-       
-        $columns = array('research_experiment_title', 'experiment_type', 'experiment_division', 'experiment_research_type', 'experiment_research_priority', 'experiment_research_status', 
+       	$columns = array('research_experiment_title', 'experiment_type', 'program_id', 'project_id', 'experiment_division', 'experiment_research_type', 'experiment_research_priority', 'experiment_research_status', 
         					'experiment_coordinator', 'experiment_coordinator_designation', 'experiment_planned_start_date', 'experiment_planned_end_date', 'experiment_planned_budget',
 							'experiment_approved_budget', 'experiment_department_name', 'experiment_regional_station_name',
 							'experiment_implementation_location', 'experiment_keywords', 'experiment_commodities', 'experiment_aezs', 'experiment_initiation_date', 'experiment_completion_date',

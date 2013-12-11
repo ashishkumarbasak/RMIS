@@ -110,10 +110,11 @@ $route['Rmis/project/monitorEvaluations/(:num)/(:num)'] = 'Rmis/project/monitorE
 $route['Rmis/project/relatedDocuments/(:num)/(:num)'] = 'Rmis/project/relatedDocuments/index/$1/$2';
 
 //experiment form
-$route['Rmis/experiment/informations/(:num)'] = 'Rmis/experiment/informations/index/$1';
-$route['Rmis/experiment/otherInformations/(:num)'] = 'Rmis/experiment/otherInformations/index/$1';
-$route['Rmis/experiment/researchTeams/(:num)'] = 'Rmis/experiment/researchTeams/index/$1';
-$route['Rmis/experiment/activityLists/(:num)'] = 'Rmis/experiment/activityLists/index/$1';
+$route['Rmis/experiment/informations'] = 'Rmis/experiment/informations/index/Independent/0/0';
+$route['Rmis/experiment/informations/(:any)/(:num)/(:num)'] = 'Rmis/experiment/informations/index/$1/$2/$3';
+$route['Rmis/experiment/otherInformations/(:any)/(:num)/(:num)'] = 'Rmis/experiment/otherInformations/index/$1/$2/$3';
+$route['Rmis/experiment/researchTeams/(:any)/(:num)/(:num)'] = 'Rmis/experiment/researchTeams/index/$1/$2/$3';
+$route['Rmis/experiment/activityLists/(:any)/(:num)/(:num)'] = 'Rmis/experiment/activityLists/index/$1/$2/$3';
 
 //program or project form
 $route['Rmis/closingInformation/(:num)'] = 'Rmis/closingInformation/index/$1';

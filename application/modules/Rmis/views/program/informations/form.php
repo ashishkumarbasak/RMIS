@@ -246,7 +246,7 @@
     	</div>
     
     	<div class="form_element">
-        	<div class="label">Initial Date </div>
+        	<div class="label">Initiation Date </div>
         	<div class="field">
         		<input type="text" class="textbox disabled" readonly="readonly" name="program_initiation_date" id="program_initiation_date" data-date-format="yyyy-mm-dd" value="<?php if($program_detail){ if($program_detail->program_initiation_date=='0000-00-00'){echo '';} else {echo $program_detail->program_initiation_date;}}?>" />
         		<span class="input-group-addon">

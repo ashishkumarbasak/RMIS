@@ -51,8 +51,68 @@
 		</div>                                                 
 	</div>
 
-	<!-- Project Info-->
-    <?php if(isset($experiment_detail) && $experiment_detail->experiment_type=="Project" && $experiment_detail->project_id!=""){ ?>
+	
+<!-- Program Info-->
+<div id="program_details">
+<?php if((isset($experiment_detail) && $experiment_detail->experiment_type=="Program") || (isset($program_id) && $program_id!=0 && $program_detail!=NULL )){ ?>
+<div class="main_form">
+    <div class="form_element">
+        <div class="label width_170px">Title of Research Program</div>
+        <div class="textarea_field"><textarea name="research_program_title" id="research_program_title" disabled="disabled" class="textarea_small disabled width_68_percent"><?php if($program_detail!=NULL) echo $program_detail->research_program_title; ?></textarea></div>
+        <div class="clear"></div>
+    </div>
+                
+    <div class="left_form">
+        <div class="form_element">
+            <div class="label width_170px">Initiation Date </div>
+            <div class="field">
+                <input type="text" name="program_initiation_date" id="program_initiation_date" value="<?php if($program_detail!=NULL) echo $program_detail->program_initiation_date; ?>" class="textbox disabled" disabled="disabled" />
+            </div>
+            <div class="clear"></div>
+        </div> 
+        
+        <div class="form_element">
+            <div class="label width_170px">Program Area </div>
+            <div class="field">
+                <select name="program_area" id="program_area" class="selectionbox disabled" disabled="disabled">
+                    <option value="">Select Program Area</option>
+                    <?php 
+                    
+                    foreach($program_areas['data'] as $key=>$program_area) { ?>
+                        <option value="<?php echo $program_area['program_area_id']; ?>" <?php if(isset($program_detail) && $program_detail->program_area==$program_area['program_area_id']) { ?> selected="selected" <?php } ?> ><?php echo $program_area['program_area_name']; ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+            <div class="clear"></div>
+        </div>
+        
+    </div>
+                
+    <div class="right_form">    
+        <div class="form_element">
+            <div class="label">Completion Date</div>
+            <div class="field">
+                <input type="text" name="program_completion_date" id="program_completion_date" value="<?php if($program_detail!=NULL) echo $program_detail->program_completion_date; ?>" class="textbox disabled" disabled="disabled" />
+            </div>
+            <div class="clear"></div>
+        </div>
+        
+        <div class="form_element">
+            <div class="label">Principal Investigator <br />(or PM/Coordinator)</div>
+            <div class="field">
+                <input type="text" name="program_coordinator" id="program_coordinator" value="<?php if($program_detail!=NULL) echo $program_detail->program_coordinator; ?>" class="textbox disabled" disabled="disabled" />
+            </div>
+            <div class="clear"></div>
+        </div>
+        
+    </div>
+</div>
+<?php } ?>
+</div>
+
+<!-- Project Info-->
+<div id="project_details">
+<?php if((isset($experiment_detail) && $experiment_detail->experiment_type=="Project") || (isset($project_id) && $project_id!=0 && $project_detail!=NULL )){ ?>
 	<div class="main_form">
    		<div class="form_element">
 	    	<div class="label width_170px">Title of Research Project <span class="mandatory">*</span></div>
@@ -70,13 +130,13 @@
                 <div class="clear"></div>
             </div>
       		
-      		<div class="form_element">
-           		<div class="label width_170px">Initiation Date </div>
-               	<div class="field">
-               		<input type="text" class="textbox disabled" disabled="disabled" name="project_initiation_date" id="project_initiation_date" data-date-format="yyyy-mm-dd" value="<?php if($project_detail) echo $project_detail->project_initiation_date;?>" />
-              	</div>
-              	<div class="clear"></div>
-          	</div>  
+      		<div class="form_element" style="margin-top: 20px;">
+           		<div class="label width_170px">Initiation Date</div>
+              	<div class="field">
+                   	<input type="text" class="textbox disabled" disabled="disabled" name="project_initiation_date" id="project_initiation_date" data-date-format="yyyy-mm-dd" value="<?php if($project_detail) echo $project_detail->project_initiation_date;?>" />
+               	</div>
+               	<div class="clear"></div>
+           	</div>
 		</div>
                         
 		<div class="right_form">    
@@ -87,7 +147,9 @@
              	</div>
                	<div class="clear"></div>
          	</div>
-
+         	
+         	
+                            
            	<div class="form_element">
            		<div class="label">Completion Date</div>
               	<div class="field">
@@ -97,61 +159,8 @@
            	</div>                        
 		</div>                                                 
 	</div>
-    <?php } ?>
-    
-    <!-- Program Info-->
-    <?php if(isset($experiment_detail) && $experiment_detail->experiment_type=="Project" && $experiment_detail->program_id!=""){ ?>
-    <div class="main_form">
-        <div class="form_element">
-            <div class="label width_170px">Title of Research Program</div>
-            <div class="textarea_field"><textarea name="research_program_title" id="research_program_title" disabled="disabled" class="textarea_small disabled width_68_percent"><?php if($program_detail!=NULL) echo $program_detail->research_program_title; ?></textarea></div>
-            <div class="clear"></div>
-        </div>
-                    
-        <div class="left_form">
-            <div class="form_element">
-                <div class="label width_170px">Program Area </div>
-                <div class="field">
-                    <select name="program_area" id="program_area" class="selectionbox disabled" disabled="disabled">
-                        <option value="">Select Program Area</option>
-                        <?php 
-                        
-                        foreach($program_areas['data'] as $key=>$program_area) { ?>
-                            <option value="<?php echo $program_area['program_area_id']; ?>" <?php if(isset($program_detail) && $program_detail->program_area==$program_area['program_area_id']) { ?> selected="selected" <?php } ?> ><?php echo $program_area['program_area_name']; ?></option>
-                        <?php } ?>
-                    </select>
-                </div>
-                <div class="clear"></div>
-            </div>
-                        
-            <div class="form_element">
-                <div class="label width_170px">Initiation Date </div>
-                <div class="field">
-                    <input type="text" class="textbox disabled" disabled="disabled" name="project_completion_date" id="project_completion_date" data-date-format="yyyy-mm-dd" value="<?php if($program_detail) echo $program_detail->program_initiation_date;?>" />
-                </div>
-                <div class="clear"></div>
-            </div> 
-        </div>
-                    
-        <div class="right_form">    
-            <div class="form_element">
-                <div class="label">Principal Investigator <br />(or PM/Coordinator)</div>
-                <div class="field">
-                    <input type="text" name="program_coordinator" id="program_coordinator" value="<?php if($program_detail!=NULL) echo $program_detail->program_coordinator; ?>" class="textbox disabled" disabled="disabled" />
-                </div>
-                <div class="clear"></div>
-            </div>
-                        
-            <div class="form_element">
-                <div class="label">Completion Date</div>
-                <div class="field">
-                    <input type="text" class="textbox disabled" disabled="disabled" name="program_completion_date" id="program_completion_date" data-date-format="yyyy-mm-dd" value="<?php if($program_detail) echo $program_detail->program_completion_date;?>" />
-                </div>
-                <div class="clear"></div>
-            </div>
-        </div>
-    </div>
-    <?php } ?>
+<?php } ?>
+</div>
 	
 	
 	<div class="main_form">

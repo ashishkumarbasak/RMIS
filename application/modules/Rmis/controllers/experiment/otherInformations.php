@@ -13,8 +13,11 @@ class OtherInformations extends MX_Controller{
 						->set_layout('extensive/main_layout');
     }
     
-    public function index($experiment_id=NULL){
+    public function index($experiment_type=NULL, $experiment_ProjProg_id=NULL, $experiment_id=NULL){
         $this->template->title('Research Management(RM)', ' Programs', ' Experiment Other Information');
+		$this->template->set('experiment_type',$experiment_type);
+		$this->template->set('experiment_ProjProg_id',$experiment_ProjProg_id);
+		$this->template->set('experiment_id',$experiment_id);
         
 		if($this->input->post('save_experiment_otherinfo')){
 			$request = json_encode($this->input->post());
@@ -41,13 +44,17 @@ class OtherInformations extends MX_Controller{
 			$experiment_detail = $this->experiment->get_other_details($experiment_id);
 			$this->template->set('experiment_detail', serialize($experiment_detail));
 			
-			$project_detail = $this->project->get_details($experiment_id);
-			$this->template->set('project_detail', serialize($project_detail));
-			
-			$program_detail = $this->program->get_details($experiment_id);
-			$this->template->set('program_detail', serialize($program_detail));
-			
 			$this->template->set('experiment_id',$experiment_id);
+		}
+
+		if($experiment_type=="ProgID" && $experiment_ProjProg_id!=0){
+			$program_detail = $this->program->get_details($experiment_ProjProg_id);
+			$this->template->set('program_detail', serialize($program_detail));
+			$this->template->set('program_id',$experiment_ProjProg_id);
+		}else if($experiment_type=="ProjID" && $experiment_ProjProg_id!=0){
+			$project_detail = $this->project->get_details($experiment_ProjProg_id);
+			$this->template->set('project_detail', serialize($project_detail));
+			$this->template->set('project_id',$experiment_ProjProg_id);
 		}
 		
 		$program_areas = $this->grid->read('rmis_program_areas', array('id','program_area_id', 'program_area_name'), $request); 

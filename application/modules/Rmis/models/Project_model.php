@@ -582,7 +582,7 @@ class Project_model extends MY_Model {
 				$result['data'] = $result_rs;
 			}else{
 				$result['total'] = 0;
-				$result['data'] = "[]";
+				$result['data'] = "";
 			}
 	        
 	        return $result;

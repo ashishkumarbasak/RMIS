@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 09, 2013 at 07:58 PM
+-- Generation Time: Dec 11, 2013 at 07:39 PM
 -- Server version: 5.5.29
 -- PHP Version: 5.4.10
 
@@ -618,15 +618,15 @@ CREATE TABLE `rmis_experiment_activities` (
   `updated_by` bigint(20) DEFAULT NULL,
   `experiment_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`,`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `rmis_experiment_activities`
 --
 
 INSERT INTO `rmis_experiment_activities` (`id`, `organization_id`, `sort_order`, `work_element`, `planned_start_date`, `planned_end_date`, `actual_start_date`, `actual_end_date`, `assign_resource`, `comments`, `activity_status`, `activity_point`, `created_at`, `created_by`, `updated_at`, `updated_by`, `experiment_id`) VALUES
-(9, 1, 1, 'work element 1', '2013-12-05', '2013-12-06', '2013-12-07', '2013-12-08', 101, NULL, NULL, NULL, '2013-12-04 08:32:20', 2, '2013-12-04 08:32:20', 2, 1),
-(10, 1, 2, 'work element2', '2013-12-01', '2013-12-02', '2013-12-03', '2013-12-04', 103, NULL, NULL, NULL, '2013-12-04 08:32:20', 2, '2013-12-04 08:32:20', 2, 1);
+(1, 1, 1, 'work element independent', '2013-12-11', '2013-12-12', '2013-12-13', '2013-12-14', 202, NULL, NULL, NULL, '2013-12-11 17:50:44', 2, '2013-12-11 17:50:44', NULL, 1),
+(2, 1, 2, 'work element independent 2', '2013-12-28', '2013-12-29', '2013-12-30', '2013-12-31', 101, NULL, NULL, NULL, '2013-12-11 17:50:44', 2, '2013-12-11 17:50:44', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -671,15 +671,14 @@ CREATE TABLE `rmis_experiment_informations` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_by` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`experiment_id`,`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `rmis_experiment_informations`
 --
 
 INSERT INTO `rmis_experiment_informations` (`experiment_id`, `organization_id`, `research_experiment_title`, `experiment_type`, `project_id`, `program_id`, `experiment_division`, `experiment_research_type`, `experiment_research_priority`, `experiment_research_status`, `experiment_coordinator`, `experiment_coordinator_designation`, `experiment_department_name`, `experiment_regional_station_name`, `experiment_implementation_location`, `experiment_keywords`, `experiment_commodities`, `experiment_aezs`, `experiment_planned_start_date`, `experiment_planned_end_date`, `experiment_initiation_date`, `experiment_completion_date`, `experiment_planned_budget`, `experiment_approved_budget`, `experiment_goal`, `experiment_objective`, `experiment_major_findings`, `experiment_progress_details`, `experiment_achievement_information`, `experiment_expected_outputs`, `experiment_actual_outputs`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 1, 'Title of Research Experiment', 'Project', '1', '1', 'BARIDIV0001', 1, 1, 1, 102, 'HR Manager', 1, 'BARIRS0001', 'BARIIMS0001', 'dhaka, tangail', '1,2', '1,2', '2013-12-04', '2013-12-05', '2013-12-05', '2013-12-13', '23432', '234234', 'Goal ', 'Objective ', NULL, NULL, NULL, 'output ---##########---', NULL, '2013-12-04 06:58:26', 2, '2013-12-04 07:18:59', 2),
-(2, 1, 'dfsadfsa', 'Project', NULL, NULL, 'BARIDIV0002', 1, 1, 1, 102, 'HR Manager', 0, '', '', '', '1,2', '1,2', '2013-12-04', '2013-12-05', '0000-00-00', '0000-00-00', '23432', '234234', 'asdfsa', 'asdfas', NULL, NULL, NULL, 'asdfas---##########---asdfasdf', NULL, '2013-12-04 06:55:45', 2, '2013-12-04 06:55:45', 0);
+(1, 1, 'Test research experiment independent Edited :)', 'Independent', '', '', 'BARIDIV0001', 1, 1, 1, 202, 'EFGH', 2, 'BARIRS0001', 'BARIIMS0001', 'keyword1, keyword2', '1,2', '1,2', '2013-12-11', '2013-12-12', '2013-12-12', '2013-12-12', '100000', '100000', 'Test experiment goal independent', 'Test purpose objective independent', NULL, NULL, NULL, 'Test expected output independent---##########---', NULL, '2013-12-11 17:47:12', 2, '2013-12-11 18:37:03', 2);
 
 -- --------------------------------------------------------
 
@@ -707,14 +706,14 @@ CREATE TABLE `rmis_experiment_other_informations` (
   `updated_by` bigint(20) DEFAULT NULL,
   `experiment_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`,`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `rmis_experiment_other_informations`
 --
 
 INSERT INTO `rmis_experiment_other_informations` (`id`, `organization_id`, `experiment_rationale`, `experiment_commodity`, `experiment_methodology`, `experiment_background`, `experiment_socio_economical_impact`, `experiment_environmental_impact`, `experiment_targeted_beneficiary`, `experiment_reference`, `experiment_external_affiliation`, `experiment_organization_policy`, `experiment_record_to_keep`, `created_at`, `created_by`, `updated_at`, `updated_by`, `experiment_id`) VALUES
-(2, 1, 'Rationale ', 'Commodity ', 'Methodology ', 'Background', 'Economical ', 'Impact', 'Beneficiary', 'Reference', 'External Affiliation', 'Organization Policy', 'Record to Keep', '2013-12-04 07:44:38', 2, '2013-12-04 07:45:24', 2, 1);
+(1, 1, 'Test rationale independent ', 'Test comodity independent ', 'Test methodology independent ', 'Test background independent ', 'Test socio economical impact independent ', 'Test environment impact independent ', 'Test targeted beneficiary independent ', 'Test reference independent ', 'Test external affiliation independent ', 'Test organization policy independent ', 'Test record to keep independent ', '2013-12-11 17:48:45', 2, '2013-12-11 17:48:45', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -739,7 +738,7 @@ CREATE TABLE `rmis_experiment_research_teams` (
 --
 
 INSERT INTO `rmis_experiment_research_teams` (`id`, `organization_id`, `team_formation_date`, `experiment_id`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 1, '2013-12-19', 1, '2013-12-06 16:51:59', 2, '2013-12-06 16:57:50', 2);
+(1, 1, '2013-12-27', 1, '2013-12-11 17:49:56', 2, '2013-12-11 17:49:56', NULL);
 
 -- --------------------------------------------------------
 
@@ -766,7 +765,8 @@ CREATE TABLE `rmis_experiment_research_team_members` (
 --
 
 INSERT INTO `rmis_experiment_research_team_members` (`id`, `member_type`, `institute_id`, `institute_name`, `employee_id`, `member_name`, `designation`, `contact_no`, `email`, `experiment_id`) VALUES
-(2, 1, 2, 'Bangladesh Agricultural Research Council', '1', 'Alimul Razi', 'HR Manager', '01716463156', 'alimulrazi@gmail.com', 1);
+(1, 1, 2, 'Bangladesh Agricultural Research Council', '', 'Kamrul Hossain', 'EFGH', '01779021581', 'kamrul@gmail.com', 1),
+(2, 2, 2, 'Bangladesh Agricultural Research Council', '', 'Amiya K. Saha', 'Scientific Officer', '01716434565', 'amiya@yahoo.com', 1);
 
 -- --------------------------------------------------------
 
@@ -2202,7 +2202,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `organization_id`, `email`, `password`, `permissions`, `activated`, `activation_code`, `activated_at`, `last_login`, `persist_code`, `reset_password_code`, `official_email`, `first_name`, `last_name`, `employee_id`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 (1, 1, 'admin', '$2y$10$EXKrVpLTj9TpFp/L6SmxweUvzZRN4Xkiyt8HRd/w9lMhFLVCvVeGm', NULL, 1, NULL, NULL, '2013-11-28 11:43:47', '$2y$10$ukHO5tRZ/8Ax2KRabsRp.eylayHovBbCgKwDqEZHnPmEDl7.jUNV2', NULL, 'admin@tvl.com', 'Administrator', 'User', 100, '2013-08-25 05:51:23', 1, '2013-11-28 05:43:47', 1),
-(2, 1, 'amiya', '$2y$10$UOwdLJ3dtJrO/K1elv9YhueOL/T47I4DvByOfH7cmig7vJi.4zthe', NULL, 1, NULL, NULL, '2013-12-09 20:24:08', '$2y$10$MhN4zKaEQaiqFm1QY03WE.8ktk3B4SBOJj.St6/5tFLmyHcXfdYX2', NULL, 'amiyasaha@yahoo.com', 'Amiya Kishore Saha', NULL, 325, '2013-08-25 05:52:39', 1, '2013-12-09 14:24:08', 2),
+(2, 1, 'amiya', '$2y$10$UOwdLJ3dtJrO/K1elv9YhueOL/T47I4DvByOfH7cmig7vJi.4zthe', NULL, 1, NULL, NULL, '2013-12-11 19:16:28', '$2y$10$GG8HFTtaZHAqkO0v8t85suJQRZK.XgnKhco64c/M0k2Cs/NeObbHa', NULL, 'amiyasaha@yahoo.com', 'Amiya Kishore Saha', NULL, 325, '2013-08-25 05:52:39', 1, '2013-12-11 13:16:28', 2),
 (3, 1, 'qqq@tvl.com', '$2y$10$WgNVsaeLAPO.Qhw0TFzoGuHkm/jsdOp4/fuvMq.sha3RGbXxdshba', NULL, 1, NULL, NULL, NULL, NULL, NULL, 'qqq@tvl.com', 'Kamrul Hasan', NULL, 202, '2013-09-01 05:53:20', 1, '2013-09-01 09:37:27', 1),
 (4, 1, 'qqq', '$2y$10$TFx/kgwZvWFYQ8/INt2k/.xsp4PyoxPblVCiRk4HEOv/.Zv5/kVJy', NULL, 0, NULL, NULL, NULL, NULL, NULL, 'wqwww@www.fdf', 'qqqwqw', NULL, 0, '2013-09-01 06:09:05', 1, '2013-09-01 06:09:05', NULL),
 (5, 1, 'lisa', '$2y$10$ZoLOfWfFl3Da2.l3yUc7meB1BpAAEGA3J31/XGWP4KTQAAhcvNdii', NULL, 1, NULL, NULL, '2013-11-28 08:39:11', '$2y$10$oc/hcnl2/30HxQCw8hWgjuFqSEB2Kc3O8NMXA.0WSjcq5wVywENoW', NULL, 'lisa@tvl.com', 'Lisa TVL', NULL, 0, '2013-09-05 05:49:06', 2, '2013-11-28 02:39:11', 5),
