@@ -117,10 +117,12 @@ $route['Rmis/experiment/researchTeams/(:any)/(:num)/(:num)'] = 'Rmis/experiment/
 $route['Rmis/experiment/activityLists/(:any)/(:num)/(:num)'] = 'Rmis/experiment/activityLists/index/$1/$2/$3';
 
 //program or project form
-$route['Rmis/closingInformation/(:num)'] = 'Rmis/closingInformation/index/$1';
+$route['Rmis/closing/information/(:any)/(:num)'] = 'Rmis/closing/information/index/$1/$2';
+$route['Rmis/closing/information/(:any)/(:num)/(:num)'] = 'Rmis/closing/information/index/$1/$2/$3';
 
 //logical framework form
-$route['Rmis/logicalFramework/(:num)'] = 'Rmis/logicalFramework/index/$1';
+$route['Rmis/framework/logical/(:any)/(:num)'] = 'Rmis/framework/logical/index/$1/$2';
+$route['Rmis/framework/logical/(:any)/(:num)/(:num)'] = 'Rmis/framework/logical/index/$1/$2/$3';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

@@ -18,6 +18,7 @@
         	<div class="row-fluid">
                 <?php echo $template['partials']['closingInfo']; ?>  
            		<?php //echo $grid_data; ?>
+           		<div id="result"></div>
         	</div>
        	</div>
     </div> 

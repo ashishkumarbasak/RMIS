@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 11, 2013 at 07:39 PM
+-- Generation Time: Dec 14, 2013 at 05:01 PM
 -- Server version: 5.5.29
 -- PHP Version: 5.4.10
 
@@ -921,7 +921,7 @@ CREATE TABLE `rmis_logical_framework` (
 --
 
 INSERT INTO `rmis_logical_framework` (`id`, `organization_id`, `type`, `verifiable_indicators_goal`, `verifiable_indicators_purpose`, `verifiable_indicators_outputs`, `verifiable_indicators_activities`, `means_of_verification_goal`, `means_of_verification_purpose`, `means_of_verification_outputs`, `means_of_verification_activities`, `important_assumptions_goal`, `important_assumptions_purpose`, `important_assumptions_outputs`, `important_assumptions_activities`, `program_id`, `project_id`, `experiment_id`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 1, 'Project', 'Verifiable Indicators1', 'Verifiable Indicators2', 'Verifiable Indicators3', 'Verifiable Indicators4', 'Means of Verification (MOV)1', 'Means of Verification (MOV)2', 'Means of Verification (MOV)3', 'Means of Verification (MOV)4', 'Important Assumptions1', 'Important Assumptions2', 'Important Assumptions3', 'Important Assumptions4', NULL, NULL, NULL, '2013-12-04 11:42:10', 2, '2013-12-04 11:44:34', 2);
+(1, 1, 'Experiment', 'Test goal edit', 'Test goal edit', 'Test goal edit', 'Test goal edit', 'Test goal edit', 'Test goal edit', 'Test goal edit', 'Test goal edit', 'Test goal edit', 'Test goal edit', 'Test goal edit', 'Test goal edit', '', '', '1', '2013-12-13 18:40:06', 2, '2013-12-14 15:53:08', 2);
 
 -- --------------------------------------------------------
 
@@ -2202,7 +2202,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `organization_id`, `email`, `password`, `permissions`, `activated`, `activation_code`, `activated_at`, `last_login`, `persist_code`, `reset_password_code`, `official_email`, `first_name`, `last_name`, `employee_id`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 (1, 1, 'admin', '$2y$10$EXKrVpLTj9TpFp/L6SmxweUvzZRN4Xkiyt8HRd/w9lMhFLVCvVeGm', NULL, 1, NULL, NULL, '2013-11-28 11:43:47', '$2y$10$ukHO5tRZ/8Ax2KRabsRp.eylayHovBbCgKwDqEZHnPmEDl7.jUNV2', NULL, 'admin@tvl.com', 'Administrator', 'User', 100, '2013-08-25 05:51:23', 1, '2013-11-28 05:43:47', 1),
-(2, 1, 'amiya', '$2y$10$UOwdLJ3dtJrO/K1elv9YhueOL/T47I4DvByOfH7cmig7vJi.4zthe', NULL, 1, NULL, NULL, '2013-12-11 19:16:28', '$2y$10$GG8HFTtaZHAqkO0v8t85suJQRZK.XgnKhco64c/M0k2Cs/NeObbHa', NULL, 'amiyasaha@yahoo.com', 'Amiya Kishore Saha', NULL, 325, '2013-08-25 05:52:39', 1, '2013-12-11 13:16:28', 2),
+(2, 1, 'amiya', '$2y$10$UOwdLJ3dtJrO/K1elv9YhueOL/T47I4DvByOfH7cmig7vJi.4zthe', NULL, 1, NULL, NULL, '2013-12-14 20:52:11', '$2y$10$706iPMl.HLw5yO0ZCLa2XOhOk795K1IDHf6EXYZgMYC/ktrjbU9za', NULL, 'amiyasaha@yahoo.com', 'Amiya Kishore Saha', NULL, 325, '2013-08-25 05:52:39', 1, '2013-12-14 14:52:11', 2),
 (3, 1, 'qqq@tvl.com', '$2y$10$WgNVsaeLAPO.Qhw0TFzoGuHkm/jsdOp4/fuvMq.sha3RGbXxdshba', NULL, 1, NULL, NULL, NULL, NULL, NULL, 'qqq@tvl.com', 'Kamrul Hasan', NULL, 202, '2013-09-01 05:53:20', 1, '2013-09-01 09:37:27', 1),
 (4, 1, 'qqq', '$2y$10$TFx/kgwZvWFYQ8/INt2k/.xsp4PyoxPblVCiRk4HEOv/.Zv5/kVJy', NULL, 0, NULL, NULL, NULL, NULL, NULL, 'wqwww@www.fdf', 'qqqwqw', NULL, 0, '2013-09-01 06:09:05', 1, '2013-09-01 06:09:05', NULL),
 (5, 1, 'lisa', '$2y$10$ZoLOfWfFl3Da2.l3yUc7meB1BpAAEGA3J31/XGWP4KTQAAhcvNdii', NULL, 1, NULL, NULL, '2013-11-28 08:39:11', '$2y$10$oc/hcnl2/30HxQCw8hWgjuFqSEB2Kc3O8NMXA.0WSjcq5wVywENoW', NULL, 'lisa@tvl.com', 'Lisa TVL', NULL, 0, '2013-09-05 05:49:06', 2, '2013-11-28 02:39:11', 5),

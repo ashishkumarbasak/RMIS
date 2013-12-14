@@ -42,9 +42,9 @@
       </ul>
     </li>
     
-    <li <?php echo $setup_menu_active; ?> > <a href="<?php echo site_url('Rmis/closingInformation');?>"> <i class="icon-desktop"></i> <span>Prog/Proj. Closing Info</span></a></li>
+    <li <?php echo $setup_menu_active; ?> > <a href="<?php echo site_url('Rmis/closing/information');?>"> <i class="icon-desktop"></i> <span>Prog/Proj. Closing Info</span></a></li>
     <li <?php echo $setup_menu_active; ?> > <a href="<?php echo site_url('Rmis/technologyRelease');?>"> <i class="icon-desktop"></i> <span>Technology Release Information</span></a></li>
-    <li <?php echo $setup_menu_active; ?> > <a href="<?php echo site_url('Rmis/logicalFramework');?>"> <i class="icon-desktop"></i> <span>Logical Framework Information</span></a></li>
+    <li <?php echo $setup_menu_active; ?> > <a href="<?php echo site_url('Rmis/framework/logical');?>"> <i class="icon-desktop"></i> <span>Logical Framework Information</span></a></li>
   </ul>
   <!--/.nav-list-->
   
