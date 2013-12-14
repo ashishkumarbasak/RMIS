@@ -18,8 +18,8 @@
         	<div class="form_element">
                 <div class="label width_170px">&nbsp;</div>
                 <div class="textarea_field">
-                    <input type="radio" name="experiment_type" id="experiment_type" value="Program" <?php if((isset($experiment_type) && $experiment_type=="ProgID")) { ?> checked="checked" <?php } else if( (isset($experiment_type) && $experiment_type!="ProjID") && (isset($experiment_detail) && $experiment_detail->experiment_type=="Program") ){ ?> checked="checked" <?php } ?> > Program &nbsp;
-        			<input type="radio" name="experiment_type" id="experiment_type" value="Project" <?php if((isset($experiment_type) && $experiment_type=="ProjID")) { ?> fuck checked="checked" <?php } else if( (isset($experiment_type) && $experiment_type!="ProgID") && (isset($experiment_detail) && $experiment_detail->experiment_type=="Project") ){ ?> checked="checked" <?php } ?> > Project &nbsp;
+                    <input type="radio" name="type" id="type" value="Program" <?php if((isset($experiment_type) && $experiment_type=="ProgID")) { ?> checked="checked" <?php } else if( (isset($experiment_type) && $experiment_type!="ProjID") && (isset($experiment_detail) && $experiment_detail->experiment_type=="Program") ){ ?> checked="checked" <?php } ?> > Program &nbsp;
+        			<input type="radio" name="type" id="type" value="Project" <?php if((isset($experiment_type) && $experiment_type=="ProjID")) { ?> fuck checked="checked" <?php } else if( (isset($experiment_type) && $experiment_type!="ProgID") && (isset($experiment_detail) && $experiment_detail->experiment_type=="Project") ){ ?> checked="checked" <?php } ?> > Project &nbsp;
                     <input type="button" name="search" id="search_panel" value="Search" class="k-button button">
                 </div>
                 <div class="clear"></div>
@@ -200,7 +200,7 @@
 
 <script type="text/javascript">
 	$( "#search_panel" ).click(function() {
-	 	var experiment_type = $('input[name=experiment_type]:radio:checked').val();
+	 	var experiment_type = $('input[name=type]:radio:checked').val();
 	 	if(experiment_type=="Program"){
 	 		window.open('<?php echo base_url(); ?>Rmis/closing/SearchProgram', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');
 	 	}else if(experiment_type=="Project"){

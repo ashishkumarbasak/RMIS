@@ -13,7 +13,7 @@ class Information extends MX_Controller{
 						->set_layout('extensive/main_layout');
     }
     
-    public function index($closingProgProjType=NULL, $closingProgProjID=NULL){
+    public function index($closingProgProjType = NULL, $closingProgProjID = NULL, $id = NULL){
         $this->template->title('Research Management(RM)', ' Program or Project Closing Info');
 		$this->template->set('experiment_type',$closingProgProjType);
 		$this->template->set('experiment_ProjProg_id',$closingProgProjID);
@@ -43,8 +43,6 @@ class Information extends MX_Controller{
 			
 			$closing_detail = $this->employee->get_closing_information($id);
 			$this->template->set('closing_detail', serialize($closing_detail));
-			
-			$this->template->set('id',$id);
 		}
 		
 		if($closingProgProjType=="ProgID" && $closingProgProjID!=0){
