@@ -124,6 +124,10 @@ $route['Rmis/closing/information/(:any)/(:num)/(:num)'] = 'Rmis/closing/informat
 $route['Rmis/framework/logical/(:any)/(:num)'] = 'Rmis/framework/logical/index/$1/$2';
 $route['Rmis/framework/logical/(:any)/(:num)/(:num)'] = 'Rmis/framework/logical/index/$1/$2/$3';
 
+//release technology
+$route['Rmis/release/technology/(:any)/(:num)'] = 'Rmis/release/technology/index/$1/$2';
+$route['Rmis/release/technology/(:any)/(:num)/(:num)'] = 'Rmis/release/technology/index/$1/$2/$3';
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
 
