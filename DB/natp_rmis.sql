@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 14, 2013 at 05:01 PM
+-- Generation Time: Dec 15, 2013 at 07:24 PM
 -- Server version: 5.5.29
 -- PHP Version: 5.4.10
 
@@ -434,7 +434,7 @@ CREATE TABLE `rmis_closing_informations` (
 --
 
 INSERT INTO `rmis_closing_informations` (`id`, `organization_id`, `type`, `executive_summary`, `actual_output`, `recommendation`, `program_id`, `project_id`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 1, 'Program', 'Summary', 'output', 'Recommendation', NULL, NULL, '2013-12-04 10:02:30', 2, '2013-12-04 10:15:34', 2);
+(1, 1, 'Project', 'Test executive summary :)', 'test actual output :)', 'test recomendation :)', '', '5', '2013-12-14 16:37:22', 2, '2013-12-14 16:37:22', NULL);
 
 -- --------------------------------------------------------
 
@@ -2166,6 +2166,39 @@ INSERT INTO `rmis_research_types` (`id`, `organization_id`, `value`, `name`, `we
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `rmis_technology_release_informations`
+--
+
+CREATE TABLE `rmis_technology_release_informations` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
+  `tech_knowledge_name` text NOT NULL,
+  `is_relased` set('0','1') NOT NULL DEFAULT '0',
+  `is_transferred` set('0','1') NOT NULL DEFAULT '0',
+  `version` varchar(255) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `about` text,
+  `type` set('Program','Project','Experiment') DEFAULT NULL,
+  `program_id` bigint(20) DEFAULT NULL,
+  `project_id` bigint(20) DEFAULT NULL,
+  `experiment_id` bigint(20) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
+  `created_by` bigint(20) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`,`organization_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `rmis_technology_release_informations`
+--
+
+INSERT INTO `rmis_technology_release_informations` (`id`, `organization_id`, `tech_knowledge_name`, `is_relased`, `is_transferred`, `version`, `date`, `about`, `type`, `program_id`, `project_id`, `experiment_id`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 1, 'Test technology knowledge name', '1', '1', '1.0', '2013-12-16', 'Test about', 'Project', 0, 5, 0, '2013-12-15 18:21:04', 2, '2013-12-15 18:21:04', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -2202,7 +2235,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `organization_id`, `email`, `password`, `permissions`, `activated`, `activation_code`, `activated_at`, `last_login`, `persist_code`, `reset_password_code`, `official_email`, `first_name`, `last_name`, `employee_id`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 (1, 1, 'admin', '$2y$10$EXKrVpLTj9TpFp/L6SmxweUvzZRN4Xkiyt8HRd/w9lMhFLVCvVeGm', NULL, 1, NULL, NULL, '2013-11-28 11:43:47', '$2y$10$ukHO5tRZ/8Ax2KRabsRp.eylayHovBbCgKwDqEZHnPmEDl7.jUNV2', NULL, 'admin@tvl.com', 'Administrator', 'User', 100, '2013-08-25 05:51:23', 1, '2013-11-28 05:43:47', 1),
-(2, 1, 'amiya', '$2y$10$UOwdLJ3dtJrO/K1elv9YhueOL/T47I4DvByOfH7cmig7vJi.4zthe', NULL, 1, NULL, NULL, '2013-12-14 20:52:11', '$2y$10$706iPMl.HLw5yO0ZCLa2XOhOk795K1IDHf6EXYZgMYC/ktrjbU9za', NULL, 'amiyasaha@yahoo.com', 'Amiya Kishore Saha', NULL, 325, '2013-08-25 05:52:39', 1, '2013-12-14 14:52:11', 2),
+(2, 1, 'amiya', '$2y$10$UOwdLJ3dtJrO/K1elv9YhueOL/T47I4DvByOfH7cmig7vJi.4zthe', NULL, 1, NULL, NULL, '2013-12-15 21:55:13', '$2y$10$chBPqySWR1tCyrrB3VXubuL1V0fgqTHxGL2PpQ7cZcqK0RpH97/S.', NULL, 'amiyasaha@yahoo.com', 'Amiya Kishore Saha', NULL, 325, '2013-08-25 05:52:39', 1, '2013-12-15 15:55:13', 2),
 (3, 1, 'qqq@tvl.com', '$2y$10$WgNVsaeLAPO.Qhw0TFzoGuHkm/jsdOp4/fuvMq.sha3RGbXxdshba', NULL, 1, NULL, NULL, NULL, NULL, NULL, 'qqq@tvl.com', 'Kamrul Hasan', NULL, 202, '2013-09-01 05:53:20', 1, '2013-09-01 09:37:27', 1),
 (4, 1, 'qqq', '$2y$10$TFx/kgwZvWFYQ8/INt2k/.xsp4PyoxPblVCiRk4HEOv/.Zv5/kVJy', NULL, 0, NULL, NULL, NULL, NULL, NULL, 'wqwww@www.fdf', 'qqqwqw', NULL, 0, '2013-09-01 06:09:05', 1, '2013-09-01 06:09:05', NULL),
 (5, 1, 'lisa', '$2y$10$ZoLOfWfFl3Da2.l3yUc7meB1BpAAEGA3J31/XGWP4KTQAAhcvNdii', NULL, 1, NULL, NULL, '2013-11-28 08:39:11', '$2y$10$oc/hcnl2/30HxQCw8hWgjuFqSEB2Kc3O8NMXA.0WSjcq5wVywENoW', NULL, 'lisa@tvl.com', 'Lisa TVL', NULL, 0, '2013-09-05 05:49:06', 2, '2013-11-28 02:39:11', 5),
