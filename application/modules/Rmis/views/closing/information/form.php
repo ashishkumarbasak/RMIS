@@ -35,8 +35,7 @@
 <!-- Program Info-->
 <div id="program_details">
 <?php if(
-		((isset($experiment_detail) && $experiment_detail->experiment_type=="Program") || (isset($program_id) && $program_id!=0 && $program_detail!=NULL )) &&
-			(isset($experiment_type) && $experiment_type!="ProjID")
+		((isset($experiment_detail) && $experiment_detail->experiment_type=="Program") || (isset($program_id) && $program_id!=0 && $program_detail!=NULL ))
 		){ ?>
 <div class="main_form">
     <div class="form_element">

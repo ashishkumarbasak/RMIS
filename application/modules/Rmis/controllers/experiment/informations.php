@@ -57,7 +57,13 @@ class Informations extends MX_Controller{
 			$this->template->set('program_id',$experiment_ProjProg_id);
 		}else if($experiment_type=="ProjID" && $experiment_ProjProg_id!=0){
 			$project_detail = $this->project->get_details($experiment_ProjProg_id);
+			if($project_detail!=NULL && $project_detail->program_id!="0"){
+				$program_detail = $this->program->get_details($project_detail->program_id);
+				$this->template->set('program_detail', serialize($program_detail));
+				$this->template->set('program_id',$project_detail->program_id);
+			}
 			$this->template->set('project_detail', serialize($project_detail));
+			
 			$this->template->set('project_id',$experiment_ProjProg_id);
 		}
 		

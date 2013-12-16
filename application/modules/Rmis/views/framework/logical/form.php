@@ -39,8 +39,7 @@
 <div id="experiment_details">
 <?php 
 		if(
-		((isset($logical_framework_details) && $logical_framework_details->type=="Experiment") || (isset($experiment_id) && $experiment_id!=0 && $experiment_detail!=NULL )) &&
-			(isset($Type) && $Type!="ProgID" && $type!="ProjID")
+		((isset($logical_framework_details) && $logical_framework_details->type=="Experiment") || (isset($experiment_id) && $experiment_id!=0 && $experiment_detail!=NULL ))
 		){ ?>
 	<div class="main_form">
    		<div class="form_element">
@@ -86,8 +85,7 @@
 <!-- Program Info-->
 <div id="program_details">
 <?php if(
-		((isset($logical_framework_details) && $logical_framework_details->type=="Program") || (isset($program_id) && $program_id!=0 && $program_detail!=NULL )) &&
-			(isset($Type) && $type!="ProjID" && $type!="ExpID")
+		((isset($logical_framework_details) && $logical_framework_details->type=="Program") || (isset($program_id) && $program_id!=0 && $program_detail!=NULL ))
 		){ ?>
 <div class="main_form">
     <div class="form_element">
@@ -148,7 +146,6 @@
 <div id="project_details">
 <?php if(
 			((isset($logical_framework_details) && $logical_framework_details->type=="Project") || (isset($project_id) && $project_id!=0 && $project_detail!=NULL ))
-			&& (isset($Type) && $Type!="ProgID" && $type!="ExpID")
 		){ ?>
 	<div class="main_form">
    		<div class="form_element">
