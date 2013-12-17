@@ -8,6 +8,7 @@ class Technology extends MX_Controller{
         $this->load->model('Program_model', 'program');
 		$this->load->model('Project_model', 'project');
 		$this->load->model('Employee_model', 'employee');
+		$this->load->model('Experiment_model', 'experiment');
 
         $this->template->set_partial('header', 'layouts/header')
 						->set_layout('extensive/main_layout');
