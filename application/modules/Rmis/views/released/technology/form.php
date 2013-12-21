@@ -123,68 +123,6 @@
 <?php } ?>
 </div>    
     
-    
-     
-
-<!-- Program Info-->
-<div id="program_details">
-<?php if(
-		((isset($logical_framework_details) && $logical_framework_details->type=="Program") || (isset($program_id) && $program_id!=0 && $program_detail!=NULL ))
-		){ ?>
-<div class="main_form">
-    <div class="form_element">
-        <div class="label width_170px">Title of Research Program</div>
-        <div class="textarea_field"><textarea name="research_program_title" id="research_program_title" disabled="disabled" class="textarea_small disabled width_68_percent"><?php if($program_detail!=NULL) echo $program_detail->research_program_title; ?></textarea></div>
-        <div class="clear"></div>
-    </div>
-                
-    <div class="left_form">
-        <div class="form_element">
-            <div class="label width_170px">Initiation Date </div>
-            <div class="field">
-                <input type="text" name="program_initiation_date" id="program_initiation_date" value="<?php if($program_detail!=NULL) echo $program_detail->program_initiation_date; ?>" class="textbox disabled" disabled="disabled" />
-            </div>
-            <div class="clear"></div>
-        </div> 
-        
-        <div class="form_element">
-            <div class="label width_170px">Program Area </div>
-            <div class="field">
-                <select name="program_area" id="program_area" class="selectionbox disabled" disabled="disabled">
-                    <option value="">Select Program Area</option>
-                    <?php 
-                    
-                    foreach($program_areas['data'] as $key=>$program_area) { ?>
-                        <option value="<?php echo $program_area['program_area_id']; ?>" <?php if(isset($program_detail) && $program_detail->program_area==$program_area['program_area_id']) { ?> selected="selected" <?php } ?> ><?php echo $program_area['program_area_name']; ?></option>
-                    <?php } ?>
-                </select>
-            </div>
-            <div class="clear"></div>
-        </div>
-        
-    </div>
-                
-    <div class="right_form">    
-        <div class="form_element">
-            <div class="label">Completion Date</div>
-            <div class="field">
-                <input type="text" name="program_completion_date" id="program_completion_date" value="<?php if($program_detail!=NULL) echo $program_detail->program_completion_date; ?>" class="textbox disabled" disabled="disabled" />
-            </div>
-            <div class="clear"></div>
-        </div>
-        
-        <div class="form_element">
-            <div class="label">Principal Investigator <br />(or PM/Coordinator)</div>
-            <div class="field">
-                <input type="text" name="program_coordinator" id="program_coordinator" value="<?php if($program_detail!=NULL) echo $program_detail->program_coordinator; ?>" class="textbox disabled" disabled="disabled" />
-            </div>
-            <div class="clear"></div>
-        </div>
-        
-    </div>
-</div>
-<?php } ?>
-</div>
 
 <!-- Project Info-->
 <div id="project_details">
@@ -239,7 +177,131 @@
 	</div>
 <?php } ?>
 </div>
-	
+	    
+     
+
+<!-- Program Info-->
+<div id="program_details">
+<?php if(
+		((isset($logical_framework_details) && $logical_framework_details->type=="Program") || (isset($program_id) && $program_id!=0 && $program_detail!=NULL ))
+		){ ?>
+	<div class="main_form">
+	    <div class="form_element">
+	        <div class="label width_170px">Title of Research Program</div>
+	        <div class="textarea_field"><textarea name="research_program_title" id="research_program_title" disabled="disabled" class="textarea_small disabled width_68_percent"><?php if($program_detail!=NULL) echo $program_detail->research_program_title; ?></textarea></div>
+	        <div class="clear"></div>
+	    </div>
+	                
+	    <div class="left_form">
+	        <div class="form_element">
+	            <div class="label width_170px">Initiation Date </div>
+	            <div class="field">
+	                <input type="text" name="program_initiation_date" id="program_initiation_date" value="<?php if($program_detail!=NULL) echo $program_detail->program_initiation_date; ?>" class="textbox disabled" disabled="disabled" />
+	            </div>
+	            <div class="clear"></div>
+	        </div> 
+	        
+	        <div class="form_element">
+	            <div class="label width_170px">Program Area </div>
+	            <div class="field">
+	                <select name="program_area" id="program_area" class="selectionbox disabled" disabled="disabled">
+	                    <option value="">Select Program Area</option>
+	                    <?php 
+	                    
+	                    foreach($program_areas['data'] as $key=>$program_area) { ?>
+	                        <option value="<?php echo $program_area['program_area_id']; ?>" <?php if(isset($program_detail) && $program_detail->program_area==$program_area['program_area_id']) { ?> selected="selected" <?php } ?> ><?php echo $program_area['program_area_name']; ?></option>
+	                    <?php } ?>
+	                </select>
+	            </div>
+	            <div class="clear"></div>
+	        </div>
+	        
+	    </div>
+	                
+	    <div class="right_form">    
+	        <div class="form_element">
+	            <div class="label">Completion Date</div>
+	            <div class="field">
+	                <input type="text" name="program_completion_date" id="program_completion_date" value="<?php if($program_detail!=NULL) echo $program_detail->program_completion_date; ?>" class="textbox disabled" disabled="disabled" />
+	            </div>
+	            <div class="clear"></div>
+	        </div>
+	        
+	        <div class="form_element">
+	            <div class="label">Principal Investigator <br />(or PM/Coordinator)</div>
+	            <div class="field">
+	                <input type="text" name="program_coordinator" id="program_coordinator" value="<?php if($program_detail!=NULL) echo $program_detail->program_coordinator; ?>" class="textbox disabled" disabled="disabled" />
+	            </div>
+	            <div class="clear"></div>
+	        </div>
+	        
+	    </div>
+	</div>
+
+	<div class="main_form">
+		<div class="form_element">
+	    	<div class="label">Expected & Actual Output</div>
+	        <div class="clear"></div>
+	    </div>
+	    <div class="left_form">
+	    	<div class="form_element">
+				<?php
+					$program_expectedOutputs = array(); 
+					$program_actualOutputs = array(); 
+		        	if(isset($program_detail)){
+		        		$program_expectedOutputs = explode("---##########---", $program_detail->program_expected_outputs);
+						$program_actualOutputs = explode("---##########---", $program_detail->program_actual_outputs);
+		        	}
+				?>
+				
+				<div class="label width_170px">Expected output <span class="mandatory">*</span></div>
+		        <div class="textarea_field" style="width:75%; float: left; display: inline;">
+		        	<?php 
+						if(!empty($program_expectedOutputs)) { 
+			    			foreach($program_expectedOutputs as $key=>$program_expectedOutput){
+			    				if($program_expectedOutput!=NULL){
+			    	?>
+			    		 
+				        	<div>
+				            	<textarea name="program_expected_outputs[]" id="program_expected_outputs[]" class="textarea width-100 disabled" disabled="disabled"><?php echo $program_expectedOutput; ?></textarea>
+				        	</div>
+				        	
+			    	<?php 		}
+							} 
+			    		}
+			    	?>
+		        </div>
+		        <div class="clear"></div>
+		 	</div>
+	    </div>
+	    
+	    <div class="right_form">
+	    	<div class="form_element">
+				<div class="label width_170px">Actual output <span class="mandatory">*</span></div>
+		        <div class="textarea_field" style="width:75%; float: left; display: inline;">
+		        	<?php 
+						if(!empty($program_expectedOutputs)) { 
+			    			foreach($program_expectedOutputs as $key=>$program_expectedOutput){
+			    				if($program_expectedOutput!=NULL){
+			    	?>			    		 
+				        	<div>
+				            	<textarea name="program_actual_outputs[]" id="program_actual_outputs[]" class="textarea width-100 disabled" disabled="disabled"><?php if(array_key_exists($key, $program_actualOutputs)) echo $program_actualOutputs[$key]; ?></textarea>
+				        	</div>  	
+			    	<?php 
+			    				}
+							} 
+			    		}
+			    	?>
+		        </div>
+		        <div class="clear"></div>
+		 	</div>
+        </div>
+	 </div>
+
+<?php } ?>
+</div>
+
+
 	
 	
 		<div class="form_element">
