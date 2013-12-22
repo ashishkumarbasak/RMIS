@@ -2,7 +2,7 @@
         <ul class="breadcrumb">
                 <li>
                         <i class="icon-home"></i>
-                        <a href="<?php echo site_url('rmis');?>">RMIS</a>
+                        <a href="<?php echo site_url('Rmis');?>">RMIS</a>
 
                         <span class="divider">
                                 <i class="icon-angle-right"></i>

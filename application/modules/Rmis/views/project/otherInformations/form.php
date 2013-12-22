@@ -197,6 +197,7 @@
 		                <input type="hidden" name="project_id" id="project_id" value="<?php if($project_id!=NULL) echo $project_id; ?>">
 		                <input type="hidden" name="id" id="id" value="<?php echo $project_detail->other_information_id; ?>">
 		                <input type="submit" name="update_project_otherinfo" id="update_project_otherinfo" value="Update" class="k-button button">
+                        <input type="submit" name="delete_project_otherinfo" id="delete_project_otherinfo" onclick="javascript:return confirm('Do you want to delete this project other information?');" value="Delete" class="k-button button">
 		            <?php } else { ?>
 	                <input type="hidden" name="project_id" id="project_id" value="<?php if($project_id!=NULL) echo $project_id; ?>">
 	        		<input type="submit" name="save_project_otherinfo" id="save_project_otherinfo" value="Save" class="k-button button">

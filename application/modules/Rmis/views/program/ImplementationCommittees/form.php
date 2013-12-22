@@ -208,7 +208,7 @@
         		<?php if(isset($program_detail) && ($researchTeam!=NULL || $teamMembers!=NULL)) { ?>
 		    		<input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
                     <input type="submit" name="update_program_implcommittee" id="update_program_implcommittee" value="Update" class="k-button button">
-		    		<input type="button" name="delete_program_implcommittee" id="delete_program_implcommittee" value="Delete" class="k-button button">		            
+		    		<input type="submit" name="delete_program_implcommittee" id="delete_program_implcommittee" value="Delete" onclick="javascript:return confirm('Do you want to delete this program implementation committee?');" class="k-button button">
 		    	<?php } else { ?>
 	                <input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
 	            	<input type="submit" name="save_program_implcommittee" id="save_program_implcommittee" value="Save" class="k-button button">
@@ -231,7 +231,7 @@ $(document).ready(function() {
 	function delete_implementationCommittee_member(team_member_id, program_id, row_id){
 		var r=confirm("Are you sure you want to delete this team member?");
 		if (r==true){
-		  	var jqxhr = $.post( "<?php echo site_url("Rmis/program/implementationCommittees/deleteTeamMember"); ?>", { team_member_id: team_member_id, program_id: program_id }, function() {
+		  	var jqxhr = $.post( "<?php echo site_url("Rmis/Program/ImplementationCommittees/deleteTeamMember"); ?>", { team_member_id: team_member_id, program_id: program_id }, function() {
 			  $("#row-" + parseInt(row_id)).remove();
 			})
 			.fail(function() {

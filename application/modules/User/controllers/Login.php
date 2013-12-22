@@ -37,7 +37,8 @@ class Login extends CI_Controller
             // Enable the Throttling Feature
             $throttleProvider->enable();
             //echo 'Login OK';
-            redirect('User/Role/Permission/1');
+            //redirect('User/Role/Permission/1');
+			redirect('Rmis');
         }
         catch (Cartalyst\Sentry\Users\LoginRequiredException $e) {
             //echo 'Login field is required.';

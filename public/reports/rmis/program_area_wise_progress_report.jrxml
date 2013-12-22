@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptBasicSalary" language="groovy" pageWidth="595" pageHeight="842" columnWidth="520" leftMargin="55" rightMargin="20" topMargin="20" bottomMargin="15" uuid="355f6e36-0ffe-4e9d-bf08-5607ff375708">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="natp_barc"/>
+	<property name="ireport.zoom" value="1.2418426461183185"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+rmis_program_informations.program_id,
+hrm_organizations.organization_name,
+rmis_program_informations.research_program_title,
+rmis_experiment_informations.research_experiment_title,
+rmis_program_areas.program_area_name as program_area,
+rmis_divisions.division_name as program_division,
+rmis_experiment_informations.experiment_planned_budget,
+rmis_experiment_informations.experiment_expected_outputs,
+rmis_experiment_informations.experiment_actual_outputs,
+rmis_experiment_informations.experiment_objective
+FROM
+rmis_experiment_informations
+LEFT JOIN rmis_program_informations ON  rmis_experiment_informations.program_id = rmis_program_informations.program_id
+LEFT JOIN `rmis_program_areas` ON `rmis_program_informations`.`program_area` = `rmis_program_areas`.`program_area_id`
+LEFT JOIN `rmis_divisions` ON `rmis_program_informations`.`program_division` = `rmis_divisions`.`division_id`
+LEFT JOIN `hrm_organizations` ON `rmis_program_informations`.`organization_id` = `hrm_organizations`.`id`]]>
+	</queryString>
+	<field name="program_id" class="java.math.BigInteger">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="organization_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="research_program_title" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="research_experiment_title" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="program_area" class="java.lang.String"/>
+	<field name="program_division" class="java.lang.String"/>
+	<field name="experiment_planned_budget" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="experiment_expected_outputs" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="experiment_actual_outputs" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="experiment_objective" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="97" splitType="Stretch">
+			<textField>
+				<reportElement uuid="18656a5a-73c3-49f3-a9c6-bd482fa4d840" x="81" y="0" width="421" height="20"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{organization_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e9934c90-2255-4adc-8347-1d3f8ef9a873" x="130" y="43" width="164" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{program_area}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9e54d712-52e4-4101-a239-9c0b3b2d37f7" x="130" y="65" width="164" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{program_division}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="bd7aea50-dc14-4070-b535-9de91fa88587" x="2" y="44" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Program Area:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="754fec8b-8fbc-41fa-9690-d6f59a4b3ae6" x="1" y="66" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Division/Unit Name:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="56" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="49de960b-fdca-45e3-838b-a1fe3bf81541" x="149" y="36" width="176" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Cost (in Taka)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ebe8c5cb-70d1-44ec-91c1-4ed5c4dc423a" x="325" y="36" width="96" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Expected Output]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6179bc30-ded7-4084-b4d7-f61e45149bc7" x="421" y="36" width="99" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Actual Output]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c716beb7-4810-4f82-a461-2d66940c28e3" x="0" y="36" width="149" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Title of Experiment:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bbad852b-85d4-42a1-a870-8eb89e6a03c1" x="0" y="16" width="149" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Title of Research Program:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="090b3c1b-f3a4-4e3e-ad72-1d1808398aae" x="149" y="16" width="371" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{research_program_title}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="16afaa25-2b12-4a9c-8f3f-7824f83fd0a7" x="1" y="20" width="148" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Purpose/ Objective:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="6db551da-4467-4287-b7c3-3ff559ba2e87" x="1" y="0" width="148" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{research_experiment_title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a75f9343-9dbc-431d-bb6f-204985b4e46e" x="149" y="0" width="176" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{experiment_planned_budget}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1f4413f4-fa45-4394-9313-118f9a95e9c7" x="325" y="0" width="96" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{experiment_expected_outputs}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3597cfae-b093-48ec-a193-c7942f39ed47" x="421" y="0" width="99" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{experiment_actual_outputs}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ded90727-1d1c-499a-86e5-6d7b1bcdd857" x="1" y="40" width="148" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{experiment_objective}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement uuid="66255106-220e-41ea-9987-eb4acba89705" x="361" y="2" width="92" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="08ac3b55-e11b-4929-96be-9321d375195d" x="455" y="2" width="70" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MMM-yyyy" isBlankWhenNull="true">
+				<reportElement uuid="53be4c4a-32a9-48f1-84d7-8cb0070c5317" x="0" y="5" width="130" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="a6e1b43c-681f-4d27-aee5-b4eebbf3b407" x="-3" y="2" width="520" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

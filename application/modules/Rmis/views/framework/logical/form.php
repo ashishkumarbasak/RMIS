@@ -254,11 +254,11 @@
 	$( "#search_panel" ).click(function() {
 	 	var experiment_type = $('input[name=type]:radio:checked').val();
 	 	if(experiment_type=="Program"){
-	 		window.open('<?php echo base_url(); ?>Rmis/framework/SearchProgram', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');
+	 		window.open('<?php echo base_url(); ?>Rmis/Framework/SearchProgram', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');
 	 	}else if(experiment_type=="Project"){
-	 		window.open('<?php echo base_url(); ?>Rmis/framework/SearchProject', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');
+	 		window.open('<?php echo base_url(); ?>Rmis/Framework/SearchProject', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');
 	 	}else if(experiment_type=="Experiment"){
-	 		window.open('<?php echo base_url(); ?>Rmis/framework/SearchExperiment', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');
+	 		window.open('<?php echo base_url(); ?>Rmis/Framework/SearchExperiment', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');
 	 	}
 	});
 </script>
@@ -284,9 +284,7 @@
                             },
                             pageSize: 20
                         },
-                        change: onChange,
-                        selectable: "multiple",
-                        height: 430,
+                        height: 300,
                         scrollable: true,
                         sortable: false,
                         filterable: false,
@@ -306,22 +304,10 @@
                     });
                 });
                 
-                function onChange(arg) {
-                	var grid = this;
-    				var model = grid.dataItem(this.select());
-    				var project_id = model.project_id;
-    				var post_url = $('#logicalFramework', opener.document).attr('action').split('/');
-    				post_url[post_url.length-3] = 'ProjID';
-    				post_url[post_url.length-2] = project_id;
-    				post_url = post_url.join('/');
-    				$('#logicalFramework', opener.document).attr('action', post_url);
-    				$('#logicalFramework', opener.document).submit();
-    				window.close();
-                }
-                function ClickEdit(e) {
+               	function ClickEdit(e) {
 			        e.preventDefault();
 			        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-			        var edit_url = "/Rmis/framework/logical/";
+			        var edit_url = "/Rmis/Framework/Logical/";
 			        if(dataItem.logical_framework_type=="Program")
 			        	edit_url = edit_url+"ProgID/"+dataItem.ref_id+'/'+dataItem.id;
 			        else if(dataItem.logical_framework_type=="Project")

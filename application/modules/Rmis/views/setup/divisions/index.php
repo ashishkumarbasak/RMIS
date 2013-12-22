@@ -28,7 +28,7 @@
 function ClickEdit(e) {
 	e.preventDefault();
   	var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-   	var edit_url = "/Rmis/setup/divisions/edit/"+dataItem.id;
+   	var edit_url = "/Rmis/Setup/Divisions/edit/"+dataItem.id;
    	window.location = edit_url;
 }
 </script>

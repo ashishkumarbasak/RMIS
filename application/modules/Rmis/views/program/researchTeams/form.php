@@ -116,9 +116,9 @@
 	<div class="form_element">
     	<div class="button_panel" style="margin-right:15px;">
     		<?php if(isset($program_detail) && ($researchTeam!=NULL || $teamMembers!=NULL)) { ?>
-		    		<input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
-		    		<input type="button" name="delete_researchTeam" id="delete_researchTeam" value="Delete" class="k-button button">
+		    		<input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">		    		
 		            <input type="submit" name="update_researchTeam" id="update_researchTeam" value="Update" class="k-button button">
+                    <input type="submit" name="delete_researchTeam" id="delete_researchTeam" value="Delete" onclick="javascript:return confirm('Do you want to delete this research team information?');" class="k-button button">
 		    <?php } else { ?>
                 <input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
             	<input type="submit" name="save_researchTeam" id="save_researchTeam" value="Save" class="k-button button">

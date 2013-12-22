@@ -242,7 +242,7 @@
     
     <div class="form_element">
         <div class="button_panel" style="margin-right: 27px;">
-            	<input type="button" name="reset_program_information" id="reset_program_information" onclick="window.location='/Rmis/program/informations';" value="Add New Prog" class="k-button button">
+            	<input type="button" name="reset_program_information" id="reset_program_information" onclick="window.location='/Rmis/Program/Informations';" value="Add New Prog" class="k-button button">
                 <input type="submit" name="search_program_information" id="search_program_information" value="Search" class="k-button button">               
         </div>
         <div class="clear"></div>
@@ -323,7 +323,7 @@ $(document).ready(function() {
                 function ClickEdit(e) {
 			        e.preventDefault();
 			        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-			        var edit_url = "/Rmis/program/informations/"+dataItem.program_id;
+			        var edit_url = "/Rmis/Program/Informations/"+dataItem.program_id;
 			        window.location = edit_url;
 			    }
             </script>

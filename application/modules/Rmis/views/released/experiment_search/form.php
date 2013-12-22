@@ -1,6 +1,7 @@
 <script src="<?php echo site_url('/assets/js/jquery-dynamic-form.js'); ?>"></script>
 <script src="<?php echo site_url('assets/extensive/js/date-time/bootstrap-datepicker.min.js'); ?>"></script>
 <link rel="stylesheet" href="<?php echo site_url('assets/extensive/css/datepicker.css'); ?>" />
+<link rel="stylesheet" href="<?php echo site_url('assets/css/custom/rmis.css'); ?>" />
 <?php 
 	if(isset($result)){
 		$result = unserialize($result);

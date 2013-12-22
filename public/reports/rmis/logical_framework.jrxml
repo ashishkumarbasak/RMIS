@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="logical_framework" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1987c995-7c92-4c26-8ecc-5515dfee9a09">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="d3ae6488-8d14-4f84-bd43-9d5078fc3db0"/>
+	<parameter name="pWhereCond" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+rmis_logical_framework.id,
+rmis_logical_framework.verifiable_indicators_goal,
+rmis_logical_framework.verifiable_indicators_purpose,
+rmis_logical_framework.verifiable_indicators_outputs,
+rmis_logical_framework.verifiable_indicators_activities,
+rmis_logical_framework.means_of_verification_goal,
+rmis_logical_framework.means_of_verification_purpose,
+rmis_logical_framework.means_of_verification_outputs,
+rmis_logical_framework.means_of_verification_activities,
+rmis_logical_framework.important_assumptions_goal,
+rmis_logical_framework.important_assumptions_purpose,
+rmis_logical_framework.important_assumptions_outputs,
+rmis_logical_framework.important_assumptions_activities,
+rmis_program_informations.program_id,
+rmis_logical_framework.program_id,
+rmis_program_areas.program_area_name as program_area,
+rmis_program_informations.program_initiation_date,
+rmis_program_informations.program_completion_date,
+rmis_program_informations.program_coordinator,
+rmis_program_informations.research_program_title,
+rmis_project_informations.research_project_title,
+hrm_organizations.organization_name,
+`hrm_employees`.`employee_name` as `principal_investigator`
+FROM
+rmis_logical_framework
+LEFT JOIN rmis_program_informations ON rmis_logical_framework.program_id = rmis_program_informations.program_id
+LEFT JOIN rmis_project_informations ON rmis_project_informations.project_id = rmis_logical_framework.project_id
+LEFT JOIN `rmis_program_areas` ON `rmis_program_informations`.`program_area` = `rmis_program_areas`.`program_area_id`
+LEFT JOIN `hrm_employees` ON `rmis_program_informations`.`program_coordinator` = `hrm_employees`.`employee_id`
+LEFT JOIN `hrm_organizations` ON `rmis_program_informations`.`organization_id` = `hrm_organizations`.`id`
+WHERE
+1=1 $P!{pWhereCond}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="verifiable_indicators_goal" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="verifiable_indicators_purpose" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="verifiable_indicators_outputs" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="verifiable_indicators_activities" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="means_of_verification_goal" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="means_of_verification_purpose" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="means_of_verification_outputs" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="means_of_verification_activities" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="important_assumptions_goal" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="important_assumptions_purpose" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="important_assumptions_outputs" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="important_assumptions_activities" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="program_id" class="java.math.BigInteger">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="program_area" class="java.lang.String"/>
+	<field name="program_initiation_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="program_completion_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="program_coordinator" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="research_project_title" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="organization_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="principal_investigator" class="java.lang.String"/>
+	<field name="research_program_title" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement uuid="86a02f45-71fa-4645-aa83-755e5da6c8c2" x="109" y="0" width="432" height="35"/>
+				<textElement textAlignment="Justified">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{organization_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="230" splitType="Stretch">
+			<textField>
+				<reportElement uuid="f677136e-25ce-4770-b6ae-2f3fd56d58c4" x="203" y="3" width="178" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{research_project_title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8fec9d9e-a266-4304-9eaa-c901b978f9d3" x="202" y="61" width="178" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{research_program_title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bdccb094-3716-407a-a309-13ff38e9753e" x="204" y="35" width="178" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{principal_investigator}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="43e6ecfa-09a5-48b7-8baf-ded4645c5642" x="202" y="91" width="178" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{program_initiation_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0bbf5aa9-0926-456b-8cb6-567484076450" x="203" y="119" width="178" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{program_completion_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4cad9a5c-b0bb-4b85-8c92-6ae4abb9ac97" x="0" y="2" width="176" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Title of Research Project:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="163e2f5a-559a-407c-9f86-84db848912d2" x="0" y="35" width="145" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Principal Investigator Name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f81d1fc8-2c8d-4300-be63-b8d0bca45e8e" x="1" y="63" width="155" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Title of Research Program:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cf4049e0-948f-4cb8-8445-acac8ddb60a4" x="3" y="92" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Initiation Date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="032bcd7e-874d-43b1-9c58-d3b7015357f4" x="4" y="120" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Completion Date:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="6a1ea749-a3ab-4973-970f-24f4a9dcddf4" x="464" y="2" width="156" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Important Assumptions]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1f5d84e8-69c8-4199-8182-489757d66b44" x="335" y="2" width="129" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Means Of Verification (MOV)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c3e49a6d-595b-4a0d-817b-0552ff10e2b5" x="156" y="2" width="179" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Verifiable Indicators (OVI)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="83bd83f5-a185-4e94-b7e6-f1c1256cd707" x="10" y="2" width="146" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Narrative Summary]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="102" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="cdc157dd-ec6a-4996-a4dc-6b27e8256f00" x="10" y="0" width="146" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Goal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d2b4de70-c2d7-4bf9-906e-2eaabe842c6b" x="10" y="20" width="146" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Purpose]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="22e4563d-051e-4c8b-821b-d3f25a0446a8" x="10" y="40" width="146" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Outputs]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1105dad6-55b7-45d7-a4cd-a9dadbd4bbb6" x="10" y="60" width="146" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Activities/ Input]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8d7a76ee-d795-47f6-b660-b42319ef0d2d" x="156" y="0" width="179" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{verifiable_indicators_goal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a7b6a63b-ef06-4b85-bfd2-3a8c7b314bd7" x="156" y="20" width="179" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{verifiable_indicators_purpose}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="64aca949-780e-404e-a335-41822fdf24ae" x="156" y="40" width="179" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{verifiable_indicators_outputs}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="29c9eb34-4b0e-4798-8706-6462b949c88c" x="156" y="60" width="179" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{verifiable_indicators_activities}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fc8ea999-3bb1-4079-a582-aa2834f684cd" x="335" y="0" width="129" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{means_of_verification_goal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6dc0b6a7-cbc6-44f0-9dfd-f6ed29463a14" x="335" y="20" width="129" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{means_of_verification_purpose}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="261fd1dd-cac5-4bb5-ba37-d208399e24ae" x="335" y="40" width="129" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{means_of_verification_outputs}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="42c25447-d56c-4019-842c-5cd7422781f0" x="335" y="60" width="129" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{means_of_verification_activities}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="48076927-7123-4bbf-905a-82e9f5176aab" x="464" y="0" width="156" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{important_assumptions_goal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="39076346-8bb4-425e-885e-fd38f3d831ef" x="464" y="20" width="156" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{important_assumptions_purpose}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8ee6eb08-6c2a-4a08-aeee-2adc1acf7ebb" x="464" y="40" width="156" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{important_assumptions_outputs}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="49aa2e8f-471a-485e-851c-3a6ff0212fd9" x="464" y="60" width="156" height="20"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{important_assumptions_activities}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="dd-MMM-yyyy" isBlankWhenNull="true">
+				<reportElement uuid="680c9621-09fe-49df-8e8d-bb830a47e15b" x="10" y="15" width="262" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fec982c6-5fe4-461d-9edd-05003b19c483" x="371" y="12" width="224" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="bbfec7f3-eed5-4689-b072-de33ea96c8dc" x="465" y="12" width="202" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="a8dddf9e-f862-4c7b-9e63-52c821af47e4" x="7" y="12" width="652" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -4,7 +4,7 @@
 <ul class="tabs-nav">
     <li<?php if($this->uri->segment($uri_segment_level)=='informations') echo " class=\"active\"";?>>
     	<?php if(isset($program_id) && is_numeric($program_id)) { ?>
-    	<a href="<?php echo site_url('Rmis/program/informations/'.$program_id);?>">
+    	<a href="<?php echo site_url('Rmis/Program/Informations/'.$program_id);?>">
     	<?php } else { ?>
     	<a href="javascript:void(0);">	
     	<?php } ?>	
@@ -13,7 +13,7 @@
     </li>
     <li<?php if($this->uri->segment($uri_segment_level)=='otherInformations') echo " class=\"active\"";?>>
     	<?php if(isset($program_id) && is_numeric($program_id)) { ?>
-    	<a href="<?php echo site_url('Rmis/program/otherInformations/'.$program_id);?>">
+    	<a href="<?php echo site_url('Rmis/Program/OtherInformations/'.$program_id);?>">
     	<?php } else { ?>
     	<a class="disabled" href="javascript:void(0);">	
     	<?php } ?>
@@ -22,7 +22,7 @@
     </li>
     <li<?php if($this->uri->segment($uri_segment_level)=='fundSources') echo " class=\"active\"";?>>
     	<?php if(isset($program_id) && is_numeric($program_id)) { ?>
-    	<a href="<?php echo site_url('Rmis/program/fundSources/'.$program_id);?>">
+    	<a href="<?php echo site_url('Rmis/Program/FundSources/'.$program_id);?>">
     	<?php } else { ?>
     	<a class="disabled" href="javascript:void(0);">	
     	<?php } ?>
@@ -31,7 +31,7 @@
     </li>
     <li<?php if($this->uri->segment($uri_segment_level)=='researchTeams') echo " class=\"active\"";?>>
     	<?php if(isset($program_id) && is_numeric($program_id)) { ?>
-    	<a href="<?php echo site_url('Rmis/program/researchTeams/'.$program_id);?>">
+    	<a href="<?php echo site_url('Rmis/Program/ResearchTeams/'.$program_id);?>">
     	<?php } else { ?>
     	<a class="disabled" href="javascript:void(0);">	
     	<?php } ?>
@@ -40,7 +40,7 @@
     </li>
     <li<?php if($this->uri->segment($uri_segment_level)=='steeringCommittees') echo " class=\"active\"";?>>
     	<?php if(isset($program_id) && is_numeric($program_id)) { ?>
-    	<a href="<?php echo site_url('Rmis/program/steeringCommittees/'.$program_id);?>">
+    	<a href="<?php echo site_url('Rmis/Program/SteeringCommittees/'.$program_id);?>">
     	<?php } else { ?>
     	<a class="disabled" href="javascript:void(0);">	
     	<?php } ?>
@@ -49,7 +49,7 @@
     </li>
     <li<?php if($this->uri->segment($uri_segment_level)=='implementationCommittees') echo " class=\"active\"";?>>
     	<?php if(isset($program_id) && is_numeric($program_id)) { ?>
-    	<a href="<?php echo site_url('Rmis/program/implementationCommittees/'.$program_id);?>">
+    	<a href="<?php echo site_url('Rmis/Program/ImplementationCommittees/'.$program_id);?>">
     	<?php } else { ?>
     	<a class="disabled" href="javascript:void(0);">	
     	<?php } ?>
@@ -58,7 +58,7 @@
     </li>
     <li<?php if($this->uri->segment($uri_segment_level)=='activityLists') echo " class=\"active\"";?>>
     	<?php if(isset($program_id) && is_numeric($program_id)) { ?>
-    	<a href="<?php echo site_url('Rmis/program/activityLists/'.$program_id);?>">
+    	<a href="<?php echo site_url('Rmis/Program/ActivityLists/'.$program_id);?>">
     	<?php } else { ?>
     	<a class="disabled" href="javascript:void(0);">	
     	<?php } ?>
@@ -67,7 +67,7 @@
     </li>
     <li<?php if($this->uri->segment($uri_segment_level)=='monitorEvaluations') echo " class=\"active\"";?>>
     	<?php if(isset($program_id) && is_numeric($program_id)) { ?>
-    	<a href="<?php echo site_url('Rmis/program/monitorEvaluations/'.$program_id);?>">
+    	<a href="<?php echo site_url('Rmis/Program/MonitorEvaluations/'.$program_id);?>">
     	<?php } else { ?>
     	<a class="disabled" href="javascript:void(0);">	
     	<?php } ?>
@@ -76,7 +76,7 @@
     </li>
     <li<?php if($this->uri->segment($uri_segment_level)=='relatedDocuments') echo " class=\"active\"";?>>
    		<?php if(isset($program_id) && is_numeric($program_id)) { ?>
-    	<a href="<?php echo site_url('Rmis/program/relatedDocuments/'.$program_id);?>">
+    	<a href="<?php echo site_url('Rmis/Program/RelatedDocuments/'.$program_id);?>">
     	<?php } else { ?>
     	<a class="disabled" href="javascript:void(0);">	
     	<?php } ?>

@@ -208,7 +208,7 @@
     
     <div class="form_element">
         <div class="button_panel" style="margin-right: 27px;">
-            	<input type="button" name="reset_experiment_information" id="reset_experiment_information" onclick="window.location='/Rmis/experiment/informations';" value="Add New Proj." class="k-button button">
+            	<input type="button" name="reset_experiment_information" id="reset_experiment_information" onclick="window.location='/Rmis/Experiment/Informations';" value="Add New Proj." class="k-button button">
                 <input type="submit" name="search_experiment_information" id="search_experiment_information" value="Search" class="k-button button">               
         </div>
         <div class="clear"></div>
@@ -278,13 +278,13 @@
                 function onChange(arg) {
                 	var grid = this;
     				var model = grid.dataItem(this.select());
-    				$('#research_project_title').val(model.project_title); 
-    				$('#project_executive_summary').val('Project Goal:\n' + model.project_goal + '\n\n\Purpose/Objective:\n' + model.project_objective);
+    				$('#research_experiment_title').val(model.experiment_title); 
+    				//$('#project_executive_summary').val('Project Goal:\n' + model.project_goal + '\n\n\Purpose/Objective:\n' + model.project_objective);
                 }
                 function ClickEdit(e) {
 			        e.preventDefault();
 			        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-			        var edit_url = "/Rmis/experiment/informations/";
+			        var edit_url = "/Rmis/Experiment/Informations/";
 			        if(dataItem.experiment_type=="Program")
 			        	edit_url = edit_url+"ProgID/"+dataItem.program_id+'/'+dataItem.experiment_id;
 			        else if(dataItem.experiment_type=="Project")

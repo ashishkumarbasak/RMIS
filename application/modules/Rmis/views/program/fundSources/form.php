@@ -198,7 +198,7 @@
         	<?php if(isset($program_detail) && ($fundSources!=NULL || $costEstimations!=NULL || $costBreakdowns!=NULL)) { ?>
 		    		<input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
                     <input type="submit" name="update_fundSources" id="update_fundSources" value="Update" class="k-button button">
-		    		<input type="button" name="delete_fundSources" id="delete_fundSources" value="Delete" class="k-button button">		            
+		    		<input type="submit" name="delete_fundSources" id="delete_fundSources" value="Delete" onclick="javascript:return confirm('Do you want to delete this program fund sources?');" class="k-button button">
 		    <?php } else { ?>
                 <input type="hidden" name="program_id" id="program_id" value="<?php if($program_id!=NULL) echo $program_id; ?>">
             	<input type="submit" name="save_fundSources" id="save_fundSources" value="Save" class="k-button button">
@@ -221,7 +221,7 @@ $(document).ready(function() {
 	function delete_costbreakdown_item(cbitem_id, program_id, row_id){
 		var r=confirm("Are you sure you want to delete this item?");
 		if (r==true){
-		  	var jqxhr = $.post( "<?php echo site_url("Rmis/program/fundSources/deleteCostBreakDown"); ?>", { cbitem_id: cbitem_id, program_id: program_id }, function() {
+		  	var jqxhr = $.post( "<?php echo site_url("Rmis/Program/FundSources/deleteCostBreakDown"); ?>", { cbitem_id: cbitem_id, program_id: program_id }, function() {
 			  $("#cbrow-" + parseInt(row_id)).remove();
 			})
 			.fail(function() {
@@ -236,20 +236,20 @@ $(document).ready(function () {
 		dataSource = new kendo.data.DataSource({
 			transport: {
 				read:  {
-					url: crudServiceBaseUrl + "Rmis/program/fundSources/getFundSources/<?php if(isset($program_detail) && $program_detail->program_id!=NULL) echo $program_detail->program_id; else echo 0; ?>"
+					url: crudServiceBaseUrl + "Rmis/Program/FundSources/getFundSources/<?php if(isset($program_detail) && $program_detail->program_id!=NULL) echo $program_detail->program_id; else echo 0; ?>"
 				},
 				update: {
-					url: crudServiceBaseUrl + "Rmis/program/fundSources/updateFundSource",
+					url: crudServiceBaseUrl + "Rmis/Program/FundSources/updateFundSource",
 					dataType: 'json',
 					type: 'POST',
 				},
 				destroy: {
-					url: crudServiceBaseUrl + "Rmis/program/fundSources/destroyFundSource",
+					url: crudServiceBaseUrl + "Rmis/Program/FundSources/destroyFundSource",
 					dataType: 'json',
 					type: 'POST',
 				},
 				create: {
-					url: crudServiceBaseUrl + "Rmis/program/fundSources/addFundSource",
+					url: crudServiceBaseUrl + "Rmis/Program/FundSources/addFundSource",
 					dataType: 'json',
 					type: 'POST'
 				},
@@ -313,16 +313,37 @@ $(document).ready(function () {
 		toolbar: [{text:"Add Fund Source", name: "create"}],
 		columns: [
 			{ field: "fund_source", title:"Funding Source", editor: fundSourcesDropDownEditor },
-			{ field: "amount", title:"Amount", format: "{0:0.00}" },
+			{ field: "amount", title:"Amount", format: "{0:0.00}", editor: AmountEditor },
 			{ field: "currency", title:"Currency", editor: currencyDropDownEditor },
-			{ field: "exchange_rate", title:"Exchange Rate", format: "{0:0.00}" },
+			{ field: "exchange_rate", title:"Exchange Rate", format: "{0:0.00}", editor: ExchangeRateEditor },
 			{ field: "date_of_exchange_rate", title:"Date of Exchange Rate", editor: exchangeDatepicker },
-			{ field: "amount_in_taka", title:"Amount in Taka",format: "{0:0.00}" },
+			{ field: "amount_in_taka", title:"Amount in Taka",format: "{0:0.00}", editor: TotalAmountEditor },
 			{ command: ["edit", "destroy"], title: "&nbsp;", width: "190px" }],
 		editable: "inline"
 	});
 });
-                
+function AmountEditor(container, options){
+	var input = $('<input name="' + options.field + '" id="'+ options.field +'" required="required" class="textbox" style="height:25px; width:95%;" />');
+	input.appendTo(container);
+	$('#amount').blur(function(e){
+		$('#amount').val(options.model.amount.toFixed(2));
+		var total = options.model.amount*options.model.exchange_rate;
+		$('#amount_in_taka').val(total.toFixed(2));
+	});
+}
+function ExchangeRateEditor(container, options){
+	var input = $('<input name="' + options.field + '" id="'+ options.field +'" required="required" class="textbox" style="height:25px; width:95%;" />');
+	input.appendTo(container);
+	$('#exchange_rate').blur(function(e){
+		$('#exchange_rate').val(options.model.exchange_rate.toFixed(2));
+		var total = options.model.amount*options.model.exchange_rate;
+		$('#amount_in_taka').val(total.toFixed(2));
+	});
+}
+function TotalAmountEditor(container, options){
+	var input = $('<input name="' + options.field + '" id="'+ options.field +'" required="required" class="textbox" readonly="readonly" style="height:25px; width:95%;" />');
+	input.appendTo(container);
+}
 function exchangeDatepicker(container, options){
 	var input = $('<input name="' + options.field + '" id="'+ options.field +'" required="required" data-date-format="yyyy-mm-dd" readonly="readonly" class="textbox" style="height:25px; width:95%;" />');
 	input.appendTo(container);
@@ -337,7 +358,7 @@ function fundSourcesDropDownEditor(container, options) {
 			optionLabel: "Select Source",
 			dataSource: {
 				transport: {
-					read: ServiceBaseUrl + "Rmis/program/fundSources/getListofFundSources"
+					read: ServiceBaseUrl + "Rmis/Program/FundSources/getListofFundSources"
 				}
 			},
 			select: function(e){
@@ -356,7 +377,7 @@ function currencyDropDownEditor(container, options) {
 			optionLabel: "Select Currency",
 			dataSource: {
 				transport: {
-					read: ServiceBaseUrl + "Rmis/program/fundSources/getListofCurrencies"
+					read: ServiceBaseUrl + "Rmis/Program/FundSources/getListofCurrencies"
 				}
 			},
 			select: function(e){

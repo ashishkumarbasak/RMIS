@@ -347,7 +347,7 @@
 			   		averagePoints = parseFloat((totalPoints/numberOfTaskElement) , 2);
 			   		$('#program_average_grade_point').val(averagePoints);
 			   		$.ajax({
-					    url : crudServiceBaseUrl + "Rmis/setup/gradings/getGradefromPoints",
+					    url : crudServiceBaseUrl + "Rmis/Setup/Gradings/getGradefromPoints",
 					    type: "POST",
 					    data : { averagePoints: averagePoints },
 					    success: function(data, textStatus, jqXHR){

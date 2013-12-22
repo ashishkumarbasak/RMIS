@@ -30,7 +30,7 @@
             <div class="button_panel" style="margin-right:123px;">
             	<?php if(isset($program_area_detail) && $program_area_detail->program_area_id!=NULL) { ?>
                 	<input type="hidden" name="id" id="id" value="<?php echo $program_area_detail->id; ?>">
-                    <input type="button" name="new_programarea" id="new_programarea" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('Rmis/setup/programAreas');?>'">
+                    <input type="button" name="new_programarea" id="new_programarea" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('Rmis/Setup/ProgramAreas');?>'">
                     <input type="submit" name="save_update" id="save_update" value="Update" class="k-button button">
         			<input type="submit" name="delete_programarea" id="delete_programarea" value="Delete" class="k-button button" onclick="return confirm('Are you sure you want to delete this record?');" >        			
                 <?php } else { ?>

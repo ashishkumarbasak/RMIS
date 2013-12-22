@@ -30,7 +30,7 @@
     function ClickEdit(e) {
         e.preventDefault();
         var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-        var edit_url = "/Rmis/setup/programCommittees/edit/"+dataItem.id;
+        var edit_url = "/Rmis/Setup/ProgramCommittees/edit/"+dataItem.id;
         window.location = edit_url;
     }	
 </script>

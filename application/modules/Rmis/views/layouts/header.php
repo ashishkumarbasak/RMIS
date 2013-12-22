@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="<?php echo site_url('assets/css/custom/rmis.css'); ?>" />
 <div class="navbar navbar-inverse">
 			<div class="navbar-inner">
 				<div class="container-fluid">

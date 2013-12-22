@@ -148,7 +148,7 @@
     		<?php if(isset($project_detail) && $activityLists!=NULL) { ?>
 		    		<input type="hidden" name="project_id" id="project_id" value="<?php if($project_id!=NULL) echo $project_id; ?>">
                     <input type="submit" name="update_activityLists" id="update_activityLists" value="Update" class="k-button button">
-		    		<input type="button" name="delete_activityLists" id="delete_activityLists" value="Delete" class="k-button button">		            
+		    		<input type="button" name="delete_activityLists" id="delete_activityLists" onclick="javascript:return confirm('Do you want to delete this project activity list information?');" value="Delete" class="k-button button">
 		    <?php } else { ?>
                 <input type="hidden" name="project_id" id="project_id" value="<?php if($project_id!=NULL) echo $project_id; ?>">
             	<input type="submit" name="save_activityLists" id="save_activityLists" value="Save" class="k-button button">
@@ -163,7 +163,7 @@
 	function delete_activity(activity_id, project_id, row_id){
 		var r=confirm("Are you sure you want to delete this activity?");
 		if (r==true){
-		  	var jqxhr = $.post( "<?php echo site_url("Rmis/project/activityLists/deleteActivity"); ?>", { activity_id: activity_id, project_id: project_id }, function() {
+		  	var jqxhr = $.post( "<?php echo site_url("Rmis/Project/ActivityLists/deleteActivity"); ?>", { activity_id: activity_id, project_id: project_id }, function() {
 			  $("#row-" + parseInt(row_id)).remove();
 			})
 			.fail(function() {
@@ -178,20 +178,20 @@ $(document).ready(function () {
 		dataSource = new kendo.data.DataSource({
 			transport: {
 				read:  {
-					url: crudServiceBaseUrl + "Rmis/project/activityLists/get_activityLists/<?php if(isset($project_detail) && $project_detail->project_id!=NULL) echo $project_detail->project_id; else echo 0; ?>"
+					url: crudServiceBaseUrl + "Rmis/Project/ActivityLists/get_activityLists/<?php if(isset($project_detail) && $project_detail->project_id!=NULL) echo $project_detail->project_id; else echo 0; ?>"
 				},
 				update: {
-					url: crudServiceBaseUrl + "Rmis/project/activityLists/updateMembers",
+					url: crudServiceBaseUrl + "Rmis/Project/ActivityLists/updateMembers",
 					dataType: 'json',
 					type: 'POST',
 				},
 				destroy: {
-					url: crudServiceBaseUrl + "Rmis/project/activityLists/destroyMembers",
+					url: crudServiceBaseUrl + "Rmis/Project/ActivityLists/destroyMembers",
 					dataType: 'json',
 					type: 'POST',
 				},
 				create: {
-					url: crudServiceBaseUrl + "Rmis/project/activityLists/addMembers",
+					url: crudServiceBaseUrl + "Rmis/Project/ActivityLists/addMembers",
 					dataType: 'json',
 					type: 'POST'
 				},

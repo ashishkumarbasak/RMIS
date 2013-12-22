@@ -169,7 +169,7 @@
     		<?php if(isset($project_detail) && ($researchTeam!=NULL || $teamMembers!=NULL)) { ?>
 		    		<input type="hidden" name="project_id" id="project_id" value="<?php if($project_id!=NULL) echo $project_id; ?>">		    		
 		            <input type="submit" name="update_researchTeam" id="update_researchTeam" value="Update" class="k-button button">
-                    <input type="button" name="delete_researchTeam" id="delete_researchTeam" value="Delete" class="k-button button">
+                    <input type="button" name="delete_researchTeam" id="delete_researchTeam" value="Delete"  onclick="javascript:return confirm('Do you want to delete this project research team information?');" class="k-button button">
 		    <?php } else { ?>
                 <input type="hidden" name="project_id" id="project_id" value="<?php if($project_id!=NULL) echo $project_id; ?>">
             	<input type="submit" name="save_researchTeam" id="save_researchTeam" value="Save" class="k-button button">

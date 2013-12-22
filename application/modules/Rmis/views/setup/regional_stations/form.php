@@ -62,7 +62,7 @@
             	
             	<?php if(isset($station_detail) && $station_detail->regional_stations_pk!=NULL) { ?>
                 	<input type="hidden" name="id" id="id" value="<?php echo $station_detail->regional_stations_pk; ?>">
-                    <input type="button" name="new_station" id="new_station" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('Rmis/setup/regionalStations');?>'" />
+                    <input type="button" name="new_station" id="new_station" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('Rmis/Setup/RegionalStations');?>'" />
                     <input type="submit" name="save_update" id="save_update" value="Update" class="k-button button" />
         			<input type="submit" name="delete_station" id="delete_station" value="Delete" class="k-button button" onclick="return confirm('Are you sure you want to delete this record?');" />        			
                 <?php } else { ?>

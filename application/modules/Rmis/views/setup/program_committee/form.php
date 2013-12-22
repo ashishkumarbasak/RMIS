@@ -49,7 +49,7 @@
     	<div class="button_panel" style="margin-right:115px;">
         	<?php if(isset($committee_detail) && $committee_detail->committee_id!=NULL) { ?>
                 <input type="hidden" name="id" id="id" value="<?php echo $committee_detail->committee_id; ?>">
-                <input type="button" name="new_committee" id="new_committee" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('Rmis/setup/programCommittees');?>'">
+                <input type="button" name="new_committee" id="new_committee" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('Rmis/Setup/ProgramCommittees');?>'">
                 <input type="submit" name="save_update" id="save_update" value="Update" class="k-button button">
                 <input type="submit" name="delete_committee" id="delete_committee" value="Delete" class="k-button button"  onclick="return confirm('Are you sure you want to delete this record?');" >        		
             <?php } else { ?>
@@ -125,20 +125,20 @@ $(document).ready(function() {
                         dataSource = new kendo.data.DataSource({
                             transport: {
                                 read:  {
-                                    url: crudServiceBaseUrl + "Rmis/setup/programCommittees/getMembers/<?php if(isset($committee_detail) && $committee_detail->committee_id!=NULL) echo $committee_detail->committee_id; else echo 0; ?>"
+                                    url: crudServiceBaseUrl + "Rmis/Setup/ProgramCommittees/getMembers/<?php if(isset($committee_detail) && $committee_detail->committee_id!=NULL) echo $committee_detail->committee_id; else echo 0; ?>"
                                 },
                                 update: {
-                                    url: crudServiceBaseUrl + "Rmis/setup/programCommittees/updateMembers",
+                                    url: crudServiceBaseUrl + "Rmis/Setup/ProgramCommittees/updateMembers",
                                     dataType: 'json',
            							type: 'POST',
                                 },
                                 destroy: {
-                                    url: crudServiceBaseUrl + "Rmis/setup/programCommittees/destroyMembers",
+                                    url: crudServiceBaseUrl + "Rmis/Setup/ProgramCommittees/destroyMembers",
                                     dataType: 'json',
            							type: 'POST',
                                 },
                                 create: {
-                                    url: crudServiceBaseUrl + "Rmis/setup/programCommittees/addMembers",
+                                    url: crudServiceBaseUrl + "Rmis/Setup/ProgramCommittees/addMembers",
                                     dataType: 'json',
            							type: 'POST'
                                 },

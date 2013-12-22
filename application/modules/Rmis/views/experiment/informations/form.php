@@ -517,9 +517,9 @@ $(document).ready(function() {
     $( "#search_panel" ).click(function() {
 	 	var experiment_type = $('input[name=experiment_type]:radio:checked').val();
 	 	if(experiment_type=="Program"){
-	 		window.open('<?php echo base_url(); ?>Rmis/experiment/SearchProgram', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');
+	 		window.open('<?php echo base_url(); ?>Rmis/Experiment/SearchProgram', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');
 	 	}else if(experiment_type=="Project"){
-	 		window.open('<?php echo base_url(); ?>Rmis/experiment/SearchProject', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');
+	 		window.open('<?php echo base_url(); ?>Rmis/Experiment/SearchProject', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');
 	 	}
 	});
 });

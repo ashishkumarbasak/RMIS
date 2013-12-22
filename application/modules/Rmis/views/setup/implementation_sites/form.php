@@ -53,7 +53,7 @@
             <div class="button_panel" style="margin-right:75px;">
             	<?php if(isset($implementation_detail) && $implementation_detail->implementation_pk!=NULL) { ?>
                 	<input type="hidden" name="id" id="id" value="<?php echo $implementation_detail->implementation_pk; ?>">
-                    <input type="button" name="new_implementation" id="new_implementation" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('Rmis/setup/implementationSites');?>'">
+                    <input type="button" name="new_implementation" id="new_implementation" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('Rmis/Setup/ImplementationSites');?>'">
                     <input type="submit" name="save_update" id="save_update" value="Update" class="k-button button">
                 	<input type="submit" name="delete_implementation" id="delete_implementation" value="Delete" class="k-button button" onclick="return confirm('Are you sure you want to delete this record?');"/>        			
                 <?php } else { ?>

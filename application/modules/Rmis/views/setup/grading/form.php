@@ -159,7 +159,7 @@ $(document).ready(function() {
 	function delete_grade_point_information(grade_point_id, row_id){
 		var r=confirm("Are you sure you want to delete this information?");
 		if (r==true){
-		  	var jqxhr = $.post( "<?php echo site_url("Rmis/setup/gradings/deleteGradePoint"); ?>", { grade_point_id: grade_point_id }, function() {
+		  	var jqxhr = $.post( "<?php echo site_url("Rmis/Setup/Gradings/deleteGradePoint"); ?>", { grade_point_id: grade_point_id }, function() {
 			  $("#row-" + parseInt(row_id)).remove();
 			})
 			.fail(function() {

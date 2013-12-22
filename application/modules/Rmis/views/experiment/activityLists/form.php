@@ -192,7 +192,7 @@
 	function delete_activity(activity_id, experiment_id, row_id){
 		var r=confirm("Are you sure you want to delete this activity?");
 		if (r==true){
-		  	var jqxhr = $.post( "<?php echo site_url("Rmis/experiment/activityLists/deleteActivity"); ?>", { activity_id: activity_id, experiment_id: experiment_id }, function() {
+		  	var jqxhr = $.post( "<?php echo site_url("Rmis/Experiment/ActivityLists/deleteActivity"); ?>", { activity_id: activity_id, experiment_id: experiment_id }, function() {
 			  $("#row-" + parseInt(row_id)).remove();
 			})
 			.fail(function() {
@@ -207,20 +207,20 @@ $(document).ready(function () {
 		dataSource = new kendo.data.DataSource({
 			transport: {
 				read:  {
-					url: crudServiceBaseUrl + "Rmis/experiment/activityLists/get_activityLists/<?php if(isset($experiment_detail) && $experiment_detail->experiment_id!=NULL) echo $experiment_detail->experiment_id; else echo 0; ?>"
+					url: crudServiceBaseUrl + "Rmis/Experiment/ActivityLists/get_activityLists/<?php if(isset($experiment_detail) && $experiment_detail->experiment_id!=NULL) echo $experiment_detail->experiment_id; else echo 0; ?>"
 				},
 				update: {
-					url: crudServiceBaseUrl + "Rmis/experiment/activityLists/updateMembers",
+					url: crudServiceBaseUrl + "Rmis/Experiment/ActivityLists/updateMembers",
 					dataType: 'json',
 					type: 'POST',
 				},
 				destroy: {
-					url: crudServiceBaseUrl + "Rmis/experiment/activityLists/destroyMembers",
+					url: crudServiceBaseUrl + "Rmis/Experiment/ActivityLists/destroyMembers",
 					dataType: 'json',
 					type: 'POST',
 				},
 				create: {
-					url: crudServiceBaseUrl + "Rmis/experiment/activityLists/addMembers",
+					url: crudServiceBaseUrl + "Rmis/Experiment/ActivityLists/addMembers",
 					dataType: 'json',
 					type: 'POST'
 				},

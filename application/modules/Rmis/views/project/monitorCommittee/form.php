@@ -266,7 +266,7 @@ $(document).ready(function() {
 	function delete_monitorCommittee_team_member(team_member_id, project_id, row_id){
 		var r=confirm("Are you sure you want to delete this team member?");
 		if (r==true){
-		  	var jqxhr = $.post( "<?php echo site_url("Rmis/project/monitorCommittee/deleteTeamMember"); ?>", { team_member_id: team_member_id, project_id: project_id }, function() {
+		  	var jqxhr = $.post( "<?php echo site_url("Rmis/Project/MonitorCommittee/deleteTeamMember"); ?>", { team_member_id: team_member_id, project_id: project_id }, function() {
 			  $("#row-" + parseInt(row_id)).remove();
 			})
 			.fail(function() {

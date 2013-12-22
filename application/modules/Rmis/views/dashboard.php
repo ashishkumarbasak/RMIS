@@ -1,41 +1,21 @@
 
 <div id="page-content" class="clearfix">
-<div class="page-header position-relative">
-            <h1>
-                    Dashboard
-            </h1>
+  <div class="page-header position-relative">
+    <h1> Dashboard </h1>
+  </div>
+    
+  <div class="row-fluid"> 
+    <div class="page-header position-relative">
+      <h4 > <i class="icon-star orange"></i> Quick Links </h4>
+      <p> 
+      	<a class="btn btn-purple btn-app" href="<?php echo site_url('Rmis/Setup/Divisions');?>"> <i class="icon-cog bigger-230"></i> Setup </a> 
+        <a class="btn btn-app btn-primary" href="<?php echo site_url('Rmis/Program/Informations');?>"> <i class="icon-edit bigger-230"></i> Program</a> 
+        <a class="btn btn-app btn-success" href="<?php echo site_url('Rmis/Project/Informations');?>"> <i class="icon-edit bigger-230"></i> Project </a>
+        <a class="btn btn-pink btn-app btn-success" href="<?php echo site_url('Rmis/Experiment/Informations');?>"> <i class="icon-edit bigger-200"></i> Experiment </a>
+        <a class="btn btn-app btn-inverse" href="<?php echo site_url('Rmis/Released/Technology');?>"> <i class="icon-undo bigger-230"></i> Release </a>
+        <a class="btn btn-app btn-yellow" href="<?php echo site_url('Rmis/Reports/LogicalFramework');?>"> <i class="icon-print bigger-160"></i> Rreport </a>
+     </p>
     </div>
-
-<div class="page-header position-relative">
-	<h4 >
-		<i class="icon-star orange"></i>
-		Sub Modules
-	</h4>
+  </div>
 </div>
-    
-    <div class="row-fluid">
-    
-    <div class="infobox infobox-green infobox-small infobox-dark">
-            <div class="infobox-progress">
-                    <div data-size="39" data-percent="61" class="easy-pie-chart percentage easyPieChart" style="width: 39px; height: 39px; line-height: 39px;">
-                            <span class="percent">61</span>%
-                    <canvas height="39" width="39"></canvas></div>
-            </div>
-
-            <div class="infobox-data">
-                    <div class="infobox-content">Task</div>
-                    <div class="infobox-content">Completion</div>
-            </div>
-    </div>
-    
-<div class="page-header position-relative">
-	<h4 >
-		<i class="icon-star orange"></i>
-		Quick Links
-	</h4>
-</div>  
-</div>    
-safasdf
-
-
-</div><!--/#page-content-->
+<!--/#page-content--> 

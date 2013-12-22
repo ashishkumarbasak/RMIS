@@ -16,6 +16,9 @@
 	if(isset($experiment_detail)){
 		$experiment_detail = unserialize($experiment_detail);
 	}
+	if(isset($result)){
+		$result = unserialize($result);
+	}
 ?>
 
 <form name="logicalFramework" id="logicalFramework" method="post" action="<?php if(isset($form_action_url) && $form_action_url!=NULL) echo $form_action_url; ?>">
@@ -23,7 +26,7 @@
 	<div class="main_form">    
         <div class="form_element">
 	    	<div class="label width_170px">Technology/Knowledge Name <span class="mandatory">*</span></div>
-	       	<div class="textarea_field"><textarea name="tech_knowledge_name" id="tech_knowledge_name" class="textarea_small width_68_percent"><?php if($experiment_detail) echo $experiment_detail->research_experiment_title;?></textarea></div>
+	       	<div class="textarea_field"><textarea name="tech_knowledge_name" id="tech_knowledge_name" class="textarea_small width_68_percent"><?php if($tech_release_details) echo $tech_release_details->tech_knowledge_name;?></textarea></div>
 	        <div class="clear"></div>
 	  	</div>
         
@@ -31,8 +34,8 @@
            	<div class="form_element">
            		<div class="label width_170px"> &nbsp; </div>
            		<div class="field">
-              		<input type="checkbox" name="is_relased" value="1" /> Is Released
-                    <input type="checkbox" name="is_transferred" value="1" /> Is Transferred 
+              		<input type="checkbox" name="is_relased" value="1" <?php if($tech_release_details && $tech_release_details->is_relased == "1") echo "checked";?> /> Is Released
+                    <input type="checkbox" name="is_transferred" value="1" <?php if($tech_release_details && $tech_release_details->is_transferred == "1") echo "checked";?> /> Is Transferred 
                	</div>
                	<div class="clear"></div>
            	</div>                        
@@ -43,7 +46,7 @@
       		<div class="form_element">
            		<div class="label width_170px">Version <span class="mandatory">*</span></div>
                	<div class="field">
-               		<input type="text" class="textbox" name="version" id="version" data-date-format="yyyy-mm-dd" value="<?php if($experiment_detail) echo $experiment_detail->experiment_initiation_date;?>" />
+               		<input type="text" class="textbox" name="version" id="version" data-date-format="yyyy-mm-dd" value="<?php if($tech_release_details) echo $tech_release_details->version;?>" />
               	</div>
               	<div class="clear"></div>
           	</div>  
@@ -53,7 +56,7 @@
            	<div class="form_element">
            		<div class="label">Date <span class="mandatory">*</span></div>
               	<div class="field">
-              		<input type="text" class="textbox disabled" name="date" id="technology_transfer_date" data-date-format="yyyy-mm-dd" value="<?php if($experiment_detail) echo $experiment_detail->technology_transfer_date;?>" />
+              		<input type="text" class="textbox disabled" name="date" id="technology_transfer_date" data-date-format="yyyy-mm-dd" value="<?php if($tech_release_details) echo $tech_release_details->date;?>" />
                	</div>
                	<div class="clear"></div>
            	</div>                        
@@ -61,7 +64,7 @@
         
         <div class="form_element">
 	    	<div class="label width_170px">About Technology/Knowledge</div>
-	       	<div class="textarea_field"><textarea name="about" id="research_experiment_title" class="textarea_small width_68_percent"><?php if($experiment_detail) echo $experiment_detail->research_experiment_title;?></textarea></div>
+	       	<div class="textarea_field"><textarea name="about" id="research_experiment_title" class="textarea_small width_68_percent"><?php if($tech_release_details) echo $tech_release_details->about;?></textarea></div>
 	        <div class="clear"></div>
 	  	</div>
                 
@@ -331,12 +334,73 @@
 	$( "#search_panel" ).click(function() {
 	 	var experiment_type = $('input[name=type]:radio:checked').val();
 	 	if(experiment_type=="Program"){
-	 		window.open('<?php echo base_url(); ?>Rmis/released/SearchProgram', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');
+	 		window.open('<?php echo base_url(); ?>Rmis/Released/SearchProgram', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');
 	 	}else if(experiment_type=="Project"){
-	 		window.open('<?php echo base_url(); ?>Rmis/released/SearchProject', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');
+	 		window.open('<?php echo base_url(); ?>Rmis/Released/SearchProject', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');
 	 	}else if(experiment_type=="Experiment"){
-	 		window.open('<?php echo base_url(); ?>Rmis/released/SearchExperiment', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');
+	 		window.open('<?php echo base_url(); ?>Rmis/Released/SearchExperiment', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');
 	 	}
 	});
 </script>
+
+
+
+
+			<script>
+                $(document).ready(function() {
+                    $("#result").kendoGrid({
+                        dataSource: {
+                            data: <?php echo json_encode($result['data'], JSON_NUMERIC_CHECK); ; ?>,
+                            schema: {
+                                model: {
+                                    fields: {
+                                        id: { type: "number", editable:false, nullable:true },
+                                        ref_id: { type: "number", editable:false, nullable:true },
+                                        tech_release_title: { type: "string", editable:false},
+                                        tech_release_version: { type: "string" },
+                                        tech_release_date: { type: "string" },
+                                        tech_release_is_rel: { type: "string" },
+                                        tech_release_type: { type: "string" },
+                                        tech_release_is_trnsed: { type: "string" }
+                                    }
+                                }
+                            },
+                            pageSize: 20
+                        },
+                        selectable: "multiple",
+                        height: 350,
+                        scrollable: true,
+                        sortable: false,
+                        filterable: false,
+                        pageable: {
+                            input: true,
+                            numeric: false
+                        },
+                        columns: [
+                            {field:"id", title:"S\/O", width: "40px"},
+                            {field:"tech_release_title", title:"Name of Technology"},
+							{field:"tech_release_version", title:"Version", width: "60px"},
+							{field:"tech_release_date", title:"Date", width: "100px"},
+							{field:"tech_release_is_rel", title:"Is Rel.", width: "60px"},
+							{field:"tech_release_is_trnsed", title:"Is Trnsed.", width: "75px"},
+							{field:"tech_release_type", title:"Prj/Prg/Exp", width: "150px"},
+							{ command: { text: "Edit", click: ClickEdit }, title: " ", width: "80px" }	
+                        ]
+                    });
+                });
+                
+               	function ClickEdit(e) {
+			        e.preventDefault();
+			        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+			        var edit_url = "/Rmis/Released/Technology/";
+			        if(dataItem.tech_release_type=="Program")
+			        	edit_url = edit_url+"ProgID/"+dataItem.ref_id+'/'+dataItem.id;
+			        else if(dataItem.tech_release_type=="Project")
+			        	edit_url = edit_url+"ProjID/"+dataItem.ref_id+'/'+dataItem.id;
+			        else if(dataItem.tech_release_type=="Experiment")
+			        	edit_url = edit_url+"ExpID/"+dataItem.ref_id+'/'+dataItem.id;
+
+			        window.location = edit_url;
+			    }
+            </script>
 

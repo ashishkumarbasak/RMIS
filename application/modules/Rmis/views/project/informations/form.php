@@ -45,7 +45,7 @@
    		<input type="radio" name="project_type" id="project_type" value="Independent" <?php if((isset($project_detail) && $project_detail->project_type=="Independent")){ ?> checked="checked" <?php } ?> onclick="$('#program_details').hide();" /> Independent 
    		<input type="radio" name="project_type" id="project_type" value="Program" <?php if((isset($project_detail) && $project_detail->project_type=="Program") || (isset($tem_formData) && array_key_exists('project_type', $tem_formData) && $tem_formData['project_type']=="Program" ) ){ ?> checked="checked" <?php } ?>  onclick="$('#program_details').show();" /> Program &nbsp; 
    		<input type="button" name="search_program" id="search_program" value="Search Program" class="k-button button" style="width: 120px !important;" 
-   			onclick="window.open('<?php echo base_url(); ?>Rmis/project/SearchProgram', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');">
+   			onclick="window.open('<?php echo base_url(); ?>Rmis/Project/SearchProgram', '_blank', 'location=yes,height=600,width=1024,scrollbars=yes,status=yes');">
    </div>
    <div class="clear"></div>
 </div> 
@@ -422,7 +422,7 @@
 			<?php if(isset($project_detail) && $project_detail->project_id!=NULL) { ?>
                 <input type="hidden" name="project_id" id="project_id" value="<?php echo $project_detail->project_id; ?>">
                 <input type="submit" name="update_project_information" id="update_project_information" value="Update" class="k-button button">
-                <input type="submit" name="delete_project_information" id="delete_project_information" onclick="javascript:return confirm('Do you want to delete this program?');" value="Delete" class="k-button button">            	
+                <input type="submit" name="delete_project_information" id="delete_project_information" onclick="javascript:return confirm('Do you want to delete this project information?');" value="Delete" class="k-button button">
             <?php } else { ?>
             	<input type="reset" name="reset_project_information" id="reset_project_information" value="Reset" class="k-button button">
                 <input type="submit" name="save_project_information" id="save_project_information" value="Save" class="k-button button">

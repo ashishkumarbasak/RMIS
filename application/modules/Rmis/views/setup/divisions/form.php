@@ -60,7 +60,7 @@
             <div class="button_panel">
                 <?php if(isset($division_detail) && $division_detail->division_pk!=NULL) { ?>
                 	<input type="hidden" name="id" id="id" value="<?php echo $division_detail->division_pk; ?>">
-                	<input type="button" name="new_division" id="new_division" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('Rmis/setup/divisions');?>'">
+                	<input type="button" name="new_division" id="new_division" value="New" class="k-button button" onclick="javascript:window.location='<?php echo site_url('Rmis/Setup/Divisions');?>'">
                     <input type="submit" name="save_update" id="save_update" value="Update" class="k-button button">
                     <input type="submit" name="delete_division" id="delete_division" value="Delete" class="k-button button" onclick="return confirm('Are you sure you want to delete this record?');">        			
                 <?php } else { ?>

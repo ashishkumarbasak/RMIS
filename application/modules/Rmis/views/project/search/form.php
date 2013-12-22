@@ -244,7 +244,7 @@
     
     <div class="form_element">
         <div class="button_panel" style="margin-right: 27px;">
-            	<input type="button" name="reset_program_information" id="reset_project_information" onclick="window.location='/Rmis/project/informations';" value="Add New Proj." class="k-button button">
+            	<input type="button" name="reset_program_information" id="reset_project_information" onclick="window.location='/Rmis/Project/Informations';" value="Add New Proj." class="k-button button">
                 <input type="submit" name="search_project_information" id="search_project_information" value="Search" class="k-button button">               
         </div>
         <div class="clear"></div>
@@ -326,7 +326,7 @@ $(document).ready(function() {
                 function ClickEdit(e) {
 			        e.preventDefault();
 			        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-			        var edit_url = "/Rmis/project/informations/"+dataItem.program_id+'/'+dataItem.project_id;
+			        var edit_url = "/Rmis/Project/Informations/"+dataItem.program_id+'/'+dataItem.project_id;
 			        window.location = edit_url;
 			    }
             </script>

@@ -1,6 +1,7 @@
 <script src="<?php echo site_url('/assets/js/jquery-dynamic-form.js'); ?>"></script>
 <script src="<?php echo site_url('assets/extensive/js/date-time/bootstrap-datepicker.min.js'); ?>"></script>
 <link rel="stylesheet" href="<?php echo site_url('assets/extensive/css/datepicker.css'); ?>" />
+<link rel="stylesheet" href="<?php echo site_url('assets/css/custom/rmis.css'); ?>" />
 <?php 
 	if(isset($result)){
 		$result = unserialize($result);
@@ -219,7 +220,7 @@
     
    	<div class="form_element">
         <div class="button_panel" style="margin-right: 27px;">
-            	<input type="button" name="reset_program_information" id="reset_program_information" onclick="window.location='/Rmis/program/informations';" value="Add New Prog" class="k-button button">
+            	<input type="button" name="reset_program_information" id="reset_program_information" onclick="window.location='/Rmis/Program/Informations';" value="Add New Prog" class="k-button button">
                 <input type="submit" name="search_program_information" id="search_program_information" value="Search" class="k-button button">               
         </div>
         <div class="clear"></div>
