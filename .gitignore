@@ -214,9 +214,5 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 application/logs
-application/config/development
-application/config/production
 
 application/logs/*.*
-application/config/development/*.*
-application/config/production/*.*
