@@ -17,7 +17,7 @@ class Information extends MX_Controller{
         $this->template->title('Research Management(RM)', ' Program or Project Closing Info');
 		$this->template->set('experiment_type',$closingProgProjType);
 		$this->template->set('experiment_ProjProg_id',$closingProgProjID);
-		$this->template->set('form_action_url', '/Rmis/Closing/Information/'.$closingProgProjType.'/'.$closingProgProjID);
+		$this->template->set('form_action_url', '/Rmis/Closing/Information/'.$closingProgProjType.'/'.$closingProgProjID.'/'.$id);
         
 		if($this->input->post('save_closing_info')){
 			$request = json_encode($this->input->post());
@@ -65,6 +65,11 @@ class Information extends MX_Controller{
 		
         $this->template->set('content_header_icon', 'class="icofont-file"');
         $this->template->set('content_header_title', ' Program or Project Closing Info');
+		
+		$result_program = $this->employee->read_closing_informations_programs();
+		$result_project = $this->employee->read_closing_informations_projects();    
+		$result['data'] = array_merge($result_program,$result_project);
+		$this->template->set('result', serialize($result));
 		
         $breadcrumb = '<ul class="breadcrumb">
 						<li><a href="#"><i class="icofont-home"></i> RMIS</a> <span class="divider">&raquo;</span></li>

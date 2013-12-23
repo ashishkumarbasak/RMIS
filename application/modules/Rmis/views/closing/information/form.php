@@ -10,6 +10,9 @@
 	if(isset($program_detail)){
 		$program_detail = unserialize($program_detail);
 	}
+	if(isset($result)){
+		$result = unserialize($result);
+	}
 ?>
 
 <form name="closing_information" id="closing_information" method="post" action="<?php if(isset($form_action_url) && $form_action_url!=NULL) echo $form_action_url; ?>">
@@ -207,3 +210,56 @@
 	 	}
 	});
 </script>
+
+
+
+			<script>
+                $(document).ready(function() {
+                    $("#result").kendoGrid({
+                        dataSource: {
+                            data: <?php echo json_encode($result['data'], JSON_NUMERIC_CHECK); ; ?>,
+                            schema: {
+                                model: {
+                                    fields: {
+                                        id: { type: "number", editable:false, nullable:true },
+                                        ref_id: { type: "number", editable:false, nullable:true },
+                                        title: { type: "string", editable:false},
+                                        actual_output: { type: "string" },
+                                   		type: { type: "string" },
+                                        principal_investigator: { type: "string" }
+                                    }
+                                }
+                            },
+                            pageSize: 20
+                        },
+                        height: 300,
+                        scrollable: true,
+                        sortable: false,
+                        filterable: false,
+                        pageable: {
+                            input: true,
+                            numeric: false
+                        },
+                        columns: [
+                            {field:"id", title:"S\/O", width: "40px"},
+                            {field:"title", title:"Title of Research"},
+							{field:"principal_investigator", title:"PI"},
+							{field:"type", title:"Prog./Proj."},
+							{field:"actual_output", title:"output"},
+							{ command: { text: "Edit", click: ClickEdit }, title: " ", width: "80px" }	
+                        ]
+                    });
+                });
+                
+               	function ClickEdit(e) {
+			        e.preventDefault();
+			        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+			        var edit_url = "/Rmis/Closing/Information/";
+			        if(dataItem.type=="Program")
+			        	edit_url = edit_url+"ProgID/"+dataItem.ref_id+'/'+dataItem.id;
+			        else if(dataItem.type=="Project")
+			        	edit_url = edit_url+"ProjID/"+dataItem.ref_id+'/'+dataItem.id;
+
+			        window.location = edit_url;
+			    }
+            </script>

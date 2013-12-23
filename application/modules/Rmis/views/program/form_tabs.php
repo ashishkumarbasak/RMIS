@@ -2,7 +2,7 @@
 <script src="<?php echo site_url('/assets/js/custom/rmis.js'); ?>"></script>
 <?php $uri_segment_level = 3;?>
 <ul class="tabs-nav">
-    <li<?php if($this->uri->segment($uri_segment_level)=='informations') echo " class=\"active\"";?>>
+    <li<?php if($this->uri->segment($uri_segment_level)=='Informations') echo " class=\"active\"";?>>
     	<?php if(isset($program_id) && is_numeric($program_id)) { ?>
     	<a href="<?php echo site_url('Rmis/Program/Informations/'.$program_id);?>">
     	<?php } else { ?>
@@ -11,7 +11,7 @@
     		Program Info
     	</a>
     </li>
-    <li<?php if($this->uri->segment($uri_segment_level)=='otherInformations') echo " class=\"active\"";?>>
+    <li<?php if($this->uri->segment($uri_segment_level)=='OtherInformations') echo " class=\"active\"";?>>
     	<?php if(isset($program_id) && is_numeric($program_id)) { ?>
     	<a href="<?php echo site_url('Rmis/Program/OtherInformations/'.$program_id);?>">
     	<?php } else { ?>
@@ -20,7 +20,7 @@
     		Other Info
     	</a>
     </li>
-    <li<?php if($this->uri->segment($uri_segment_level)=='fundSources') echo " class=\"active\"";?>>
+    <li<?php if($this->uri->segment($uri_segment_level)=='FundSources') echo " class=\"active\"";?>>
     	<?php if(isset($program_id) && is_numeric($program_id)) { ?>
     	<a href="<?php echo site_url('Rmis/Program/FundSources/'.$program_id);?>">
     	<?php } else { ?>
@@ -29,7 +29,7 @@
     		Fund Source & Cost Breakdown
     	</a>
     </li>
-    <li<?php if($this->uri->segment($uri_segment_level)=='researchTeams') echo " class=\"active\"";?>>
+    <li<?php if($this->uri->segment($uri_segment_level)=='ResearchTeams') echo " class=\"active\"";?>>
     	<?php if(isset($program_id) && is_numeric($program_id)) { ?>
     	<a href="<?php echo site_url('Rmis/Program/ResearchTeams/'.$program_id);?>">
     	<?php } else { ?>
@@ -38,7 +38,7 @@
     		Research Team Info
     	</a>
     </li>
-    <li<?php if($this->uri->segment($uri_segment_level)=='steeringCommittees') echo " class=\"active\"";?>>
+    <li<?php if($this->uri->segment($uri_segment_level)=='SteeringCommittees') echo " class=\"active\"";?>>
     	<?php if(isset($program_id) && is_numeric($program_id)) { ?>
     	<a href="<?php echo site_url('Rmis/Program/SteeringCommittees/'.$program_id);?>">
     	<?php } else { ?>
@@ -47,7 +47,7 @@
     		Steering Committee Info
     	</a>
     </li>
-    <li<?php if($this->uri->segment($uri_segment_level)=='implementationCommittees') echo " class=\"active\"";?>>
+    <li<?php if($this->uri->segment($uri_segment_level)=='ImplementationCommittees') echo " class=\"active\"";?>>
     	<?php if(isset($program_id) && is_numeric($program_id)) { ?>
     	<a href="<?php echo site_url('Rmis/Program/ImplementationCommittees/'.$program_id);?>">
     	<?php } else { ?>
@@ -56,7 +56,7 @@
     		Implementation Committee Info
     	</a>
     </li>
-    <li<?php if($this->uri->segment($uri_segment_level)=='activityLists') echo " class=\"active\"";?>>
+    <li<?php if($this->uri->segment($uri_segment_level)=='ActivityLists') echo " class=\"active\"";?>>
     	<?php if(isset($program_id) && is_numeric($program_id)) { ?>
     	<a href="<?php echo site_url('Rmis/Program/ActivityLists/'.$program_id);?>">
     	<?php } else { ?>
@@ -65,7 +65,7 @@
     		Activity List
     	</a>
     </li>
-    <li<?php if($this->uri->segment($uri_segment_level)=='monitorEvaluations') echo " class=\"active\"";?>>
+    <li<?php if($this->uri->segment($uri_segment_level)=='MonitorEvaluations') echo " class=\"active\"";?>>
     	<?php if(isset($program_id) && is_numeric($program_id)) { ?>
     	<a href="<?php echo site_url('Rmis/Program/MonitorEvaluations/'.$program_id);?>">
     	<?php } else { ?>
@@ -74,7 +74,7 @@
     		M&E Info
     	</a>
     </li>
-    <li<?php if($this->uri->segment($uri_segment_level)=='relatedDocuments') echo " class=\"active\"";?>>
+    <li<?php if($this->uri->segment($uri_segment_level)=='RelatedDocuments') echo " class=\"active\"";?>>
    		<?php if(isset($program_id) && is_numeric($program_id)) { ?>
     	<a href="<?php echo site_url('Rmis/Program/RelatedDocuments/'.$program_id);?>">
     	<?php } else { ?>

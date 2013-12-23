@@ -194,6 +194,44 @@ class Employee_model extends MY_Model {
 		}
 	}
 	
+	function read_closing_informations_programs(){
+		$this->db->select('	rmis_closing_informations.id, 
+							rmis_program_informations.research_program_title as title, 
+							rmis_closing_informations.actual_output as actual_output,
+							rmis_closing_informations.type as type,
+							employee_name as principal_investigator,
+							rmis_closing_informations.program_id as ref_id');
+		$this->db->from('rmis_closing_informations');
+		$this->db->join('rmis_program_informations', 'rmis_closing_informations.program_id = rmis_program_informations.program_id', 'left');
+		$this->db->join('hrm_employees','rmis_program_informations.program_coordinator=hrm_employees.employee_id','left');
+		$this->db->where('rmis_closing_informations.type','Program');
+			
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			return $query->result();
+		}else{
+			return array();
+		}
+	}
 	
+	function read_closing_informations_projects(){
+		$this->db->select('	rmis_closing_informations.id, 
+							rmis_project_informations.research_project_title as title, 
+							rmis_closing_informations.actual_output as actual_output,
+							rmis_closing_informations.type as type,
+							employee_name as principal_investigator,
+							rmis_closing_informations.project_id as ref_id');
+		$this->db->from('rmis_closing_informations');
+		$this->db->join('rmis_project_informations', 'rmis_closing_informations.project_id = rmis_project_informations.project_id', 'left');
+		$this->db->join('hrm_employees','rmis_project_informations.project_coordinator=hrm_employees.employee_id','left');
+		$this->db->where('rmis_closing_informations.type','Project');
+			
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			return $query->result();
+		}else{
+			return array();
+		}
+	}
 }
 ?>
