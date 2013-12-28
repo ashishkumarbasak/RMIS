@@ -45,6 +45,17 @@ class Rmis extends MX_Controller
 			$rows = $this->employee->search_employee(array('keyword' => $term));
 		    echo json_encode($rows);	
 		}
+	}
+
+	public function employees3($memTypeID=NULL){
+		if($memTypeID!=NULL && ($memTypeID == 1 || $memTypeID == 2)){
+			header('Content-Type: application/json');		
+			$term = $this->input->get('filter[filters][0][value]');
+			if (strlen($term) > 1) {
+				$rows = $this->employee->search_employee(array('keyword' => $term));
+			    echo json_encode($rows);	
+			}	
+		}
 	}	
 }
 ?>

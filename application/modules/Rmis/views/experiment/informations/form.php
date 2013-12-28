@@ -419,15 +419,16 @@
 		
 		<div class="label width_170px">Expected output <span class="mandatory">*</span></div>
         <div class="textarea_field" style="width:75%; float: left; display: inline;">
-        	<?php 
+        	<?php
+        		$i=0;  
 				if(!empty($experiment_expectedOutputs)) { 
 	    			foreach($experiment_expectedOutputs as $key=>$experiment_expectedOutput){
 						if(strlen($experiment_expectedOutput)>0){
 	    	?>
 	    		 
-		        	<div>
+		        	<div id="expected-output-<?php echo $i;?>">
 		            	<textarea name="experiment_expected_outputs[]" id="experiment_expected_outputs[]" class="textarea width-91"><?php echo $experiment_expectedOutput; ?></textarea>
-		            	<span style="font-size:16px;"><a id="minus2" href="">[-]</a></span>
+		            	<span style="font-size:16px;"><a href="javascript:void(0);" onclick="$('#expected-output-<?php echo $i;?>').remove();">[-]</a></span>
 		        	</div>
 		        	
 	    	<?php 

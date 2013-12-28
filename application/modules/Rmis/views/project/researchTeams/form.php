@@ -182,7 +182,8 @@
 <script language="javascript">
 	$('#team_formation_date').datepicker();
 </script>
-<script type="text/javascript">                
+<script type="text/javascript">
+var memTypeID = "1";                  
 $(document).ready(function () {
 	var crudServiceBaseUrl = "<?php echo base_url();?>",
 		dataSource = new kendo.data.DataSource({
@@ -311,7 +312,7 @@ function employee_auto_complete(container, options)
 				serverPaging: false,
 				pageSize: 20,
 				transport: {
-					read: "<?php echo site_url('rmis/employees2'); ?>"
+					read: "<?php echo site_url('rmis/employees3'); ?>/" + memTypeID
 				}
 			},
 			select: function(e){
@@ -324,12 +325,9 @@ function employee_auto_complete(container, options)
 				$("#Designation").val(dataItem.designation_name);
 				$("#ContactNo").val(dataItem.pre_mobile_no);
 				$("#Email").val(dataItem.email);
-				$('#MemberName-textarea2').val(dataItem.employee_name);
-				
+				//$('#MemberName-textarea2').val(dataItem.employee_name);
 			}
 	});
-	$('<input required class="textbox" name="' + options.field + '" id="' + options.field + '-textarea2" style="height:23px; width:96%; display:none;" />')
-		.appendTo(container);
 }
 
 function memberTypeDropDownEditor(container, options) {
@@ -352,16 +350,18 @@ function memberTypeDropDownEditor(container, options) {
 					$("#InstituteName").attr('readonly', 'readonly');
 					options.model.InstituteID = $("#loggedin_user_instituteID").val()
 					options.model.InstituteName = $("#loggedin_user_instituteName").val();
-					$('#MemberName-textarea1').show();
-					$("span.k-autocomplete").show();
-					$('#MemberName-textarea2').hide();
+					//$('#MemberName-textarea1').show();
+					//$("span.k-autocomplete").show();
+					//$('#MemberName-textarea2').hide();
+					memTypeID = dataItem.MemberTypeID;
 				}else{
 					$("#InstituteName").removeAttr('readonly');
 					$("#InstituteName").val('');
-					$('#MemberName-textarea1').hide();
-					$("span.k-autocomplete").hide();
-					$('#MemberName-textarea2').show();
+					//$('#MemberName-textarea1').hide();
+					//$("span.k-autocomplete").hide();
+					//$('#MemberName-textarea2').show();
 					options.model.EmployeeID = null;
+					memTypeID = dataItem.MemberTypeID;
 				}
 			}
  });
