@@ -353,7 +353,7 @@
 			            		</select>	
 					    	</div>
 					    	<div class="grid-1-6 left" style="width: 10%;">
-					        	<input class="activityPoints textbox no-margin" style="width: 85%;" type="text" name="activityPoints[]" id="activityPoints" value="<?php echo $activity->activity_point; ?>"/>	
+					        	<input class="activityPoints textbox no-margin" style="width: 85%;" type="text" name="activityPoints[]" id="activityPoints-<?php echo $key; ?>" value="<?php echo $activity->activity_point; ?>"/>	
 					    	</div>
 					    </div>
 				    </div>
@@ -372,13 +372,16 @@
 		var crudServiceBaseUrl = "<?php echo base_url(); ?>";
 		var totalPoints = 0;
 		var averagePoints = 0;
-		var numberOfTaskElement = 0;
+		var numberOfTaskElement = <?php echo sizeof($activityLists); ?>;
 		$('.activityPoints').each(function(){ 
 		   $(this).blur(function(){
 		   		if($(this).val()!=""){
-		   			totalPoints = totalPoints + parseInt($(this).val());
+		   			totalPoints=0;
+		   			for(var x=0; x<numberOfTaskElement; x++){
+		   				var textbox_id = "#activityPoints-"+x;
+		   				totalPoints = totalPoints + parseInt($(textbox_id).val());	
+		   			}
 			   		$('#project_total_point').val(totalPoints);
-			   		numberOfTaskElement = numberOfTaskElement+1;
 			   		averagePoints = parseFloat((totalPoints/numberOfTaskElement) , 2);
 			   		$('#project_average_grade_point').val(averagePoints);
 			   		$.ajax({
